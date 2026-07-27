@@ -112,7 +112,6 @@ const adminNavSections: NavSection[] = [
       { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
       { href: '/admin/blog', label: 'Blog', icon: FileText },
       { href: '/admin/faq', label: 'FAQ', icon: HelpCircle },
-      { href: '/admin/changelog', label: 'Changelog', icon: History },
       {
         href: '/admin/email-templates',
         label: 'Email Templates',
@@ -238,31 +237,31 @@ function Sidebar({
                 return (
                   <div key={item.href}>
                     <Link
-                        className={cn(
-                          'flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
-                          active
-                            ? 'bg-accent text-accent-foreground'
-                            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                        )}
-                        href={item.href}
-                        onClick={onNavigate}
-                      >
-                        <Icon className="size-4.5 shrink-0" />
-                        <span className="min-w-0 flex-1 truncate">
-                          {item.label}
+                      className={cn(
+                        'flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
+                        active
+                          ? 'bg-accent text-accent-foreground'
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                      )}
+                      href={item.href}
+                      onClick={onNavigate}
+                    >
+                      <Icon className="size-4.5 shrink-0" />
+                      <span className="min-w-0 flex-1 truncate">
+                        {item.label}
+                      </span>
+                      {item.count ? (
+                        <span
+                          className={cn(
+                            'rounded-full px-2 py-0.5 text-xs font-semibold leading-none',
+                            active
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted text-muted-foreground',
+                          )}
+                        >
+                          {item.count}
                         </span>
-                        {item.count ? (
-                          <span
-                            className={cn(
-                              'rounded-full px-2 py-0.5 text-xs font-semibold leading-none',
-                              active
-                                ? 'bg-primary text-primary-foreground'
-                                : 'bg-muted text-muted-foreground',
-                            )}
-                          >
-                            {item.count}
-                          </span>
-                        ) : null}
+                      ) : null}
                     </Link>
                   </div>
                 )
