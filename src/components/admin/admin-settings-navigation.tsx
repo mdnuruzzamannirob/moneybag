@@ -30,7 +30,7 @@ export function AdminSettingsNavigation() {
   return (
     <nav
       aria-label="Admin settings sections"
-      className="flex gap-1 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible"
+      className="flex max-w-full min-w-0 gap-1 overflow-x-auto overscroll-x-contain pb-2 lg:flex-col lg:overflow-visible lg:pb-1"
     >
       {items.map(({ href, icon: Icon, label }) => (
         <Link

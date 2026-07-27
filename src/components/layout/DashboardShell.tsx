@@ -3,7 +3,6 @@
 import {
   BarChart3,
   Bell,
-  ChevronDown,
   CircleDollarSign,
   CreditCard,
   FileText,
@@ -39,7 +38,6 @@ type NavItem = {
   label: string
   icon: React.ComponentType<{ className?: string }>
   count?: string
-  children?: Array<{ href: string; label: string }>
 }
 
 type NavSection = {
@@ -135,15 +133,6 @@ const adminNavSections: NavSection[] = [
         href: '/admin/settings',
         label: 'Settings',
         icon: Settings,
-        children: [
-          { href: '/admin/settings/general', label: 'General' },
-          { href: '/admin/settings/email', label: 'Email' },
-          { href: '/admin/settings/oauth', label: 'OAuth' },
-          { href: '/admin/settings/payment', label: 'Payment' },
-          { href: '/admin/settings/storage', label: 'Storage' },
-          { href: '/admin/settings/security', label: 'Security' },
-          { href: '/admin/settings/legal', label: 'Legal' },
-        ],
       },
     ],
   },
@@ -176,7 +165,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
       <div className="lg:pl-65">
         <Topbar onMenuClick={() => setOpen(true)} showAddButton={!isAdmin} />
-        <main className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <main className="mx-auto min-w-0 w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
           {children}
         </main>
       </div>
@@ -192,9 +181,6 @@ function Sidebar({
   onNavigate: () => void
 }) {
   const pathname = usePathname()
-  const [settingsOpen, setSettingsOpen] = useState(
-    pathname.startsWith('/admin/settings'),
-  )
 
   return (
     <>
@@ -249,35 +235,9 @@ function Sidebar({
                 const Icon = item.icon
                 const active =
                   pathname === item.href || pathname.startsWith(`${item.href}/`)
-                const hasChildren = Boolean(item.children?.length)
-
                 return (
                   <div key={item.href}>
-                    {hasChildren ? (
-                      <button
-                        aria-expanded={settingsOpen}
-                        className={cn(
-                          'flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
-                          active
-                            ? 'bg-accent text-accent-foreground'
-                            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                        )}
-                        onClick={() => setSettingsOpen((open) => !open)}
-                        type="button"
-                      >
-                        <Icon className="size-4.5 shrink-0" />
-                        <span className="min-w-0 flex-1 text-left truncate">
-                          {item.label}
-                        </span>
-                        <ChevronDown
-                          className={cn(
-                            'size-4 transition-transform',
-                            settingsOpen && 'rotate-180',
-                          )}
-                        />
-                      </button>
-                    ) : (
-                      <Link
+                    <Link
                         className={cn(
                           'flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
                           active
@@ -303,27 +263,7 @@ function Sidebar({
                             {item.count}
                           </span>
                         ) : null}
-                      </Link>
-                    )}
-                    {hasChildren && settingsOpen ? (
-                      <div className="mt-1 space-y-0.5 border-l border-border py-1 pl-3 ml-5">
-                        {item.children?.map((child) => (
-                          <Link
-                            className={cn(
-                              'flex h-8 items-center rounded-md px-3 text-sm transition-colors',
-                              pathname === child.href
-                                ? 'bg-accent text-accent-foreground font-medium'
-                                : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                            )}
-                            href={child.href}
-                            key={child.href}
-                            onClick={onNavigate}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    ) : null}
+                    </Link>
                   </div>
                 )
               })}

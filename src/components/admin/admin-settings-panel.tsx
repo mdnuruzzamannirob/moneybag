@@ -200,7 +200,7 @@ function Switch({
     <button
       aria-checked={checked}
       aria-label={label}
-      className="relative h-6 w-11 rounded-full bg-muted transition-colors data-[checked=true]:bg-primary after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform data-[checked=true]:after:translate-x-5"
+      className="relative h-6 w-11 shrink-0 whitespace-nowrap rounded-full bg-muted transition-colors data-[checked=true]:bg-primary after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform data-[checked=true]:after:translate-x-5"
       data-checked={checked}
       onClick={() => onChange(!checked)}
       role="switch"
