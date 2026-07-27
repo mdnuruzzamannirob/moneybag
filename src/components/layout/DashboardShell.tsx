@@ -283,9 +283,9 @@ function Sidebar({
             anika@moneybag.app
           </div>
         </div>
-        <button className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted">
+        <Link aria-label="Open profile" className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted" href={pathname.startsWith('/admin') ? '/admin/profile' : '/settings'} onClick={onNavigate}>
           <Settings className="size-4" />
-        </button>
+        </Link>
       </div>
     </>
   )
