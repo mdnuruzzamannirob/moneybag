@@ -13,7 +13,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
 
         <div className="relative z-10">
           <BrandLogo inverse className="mb-12" />
-          <h1 className="max-w-md text-4xl font-extrabold tracking-normal">
+          <h1 className="max-w-md text-4xl font-semibold tracking-normal">
             Take control of your money.
           </h1>
           <p className="mt-3 max-w-sm text-base leading-7 text-white/90">
@@ -64,10 +64,10 @@ export function BrandLogo({
 }) {
   return (
     <Link className={cn('inline-flex items-center gap-3', className)} href="/">
-      <span className="grid size-10 place-items-center rounded-md bg-linear-to-br from-primary to-brand-accent font-extrabold text-white shadow-md">
+      <span className="grid size-10 place-items-center rounded-md bg-linear-to-br from-primary to-brand-accent font-semibold text-white shadow-md">
         F
       </span>
-      <span className={cn('text-xl font-bold', inverse && 'text-white')}>
+      <span className={cn('text-xl font-semibold', inverse && 'text-white')}>
         MoneyBag
       </span>
     </Link>
@@ -77,7 +77,7 @@ export function BrandLogo({
 function AuthStat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="text-3xl font-extrabold tracking-normal">{value}</div>
+      <div className="text-3xl font-medium tracking-normal">{value}</div>
       <div className="text-xs text-white/85">{label}</div>
     </div>
   )

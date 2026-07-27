@@ -71,11 +71,11 @@ export function RegisterForm() {
           registration={form.register("terms")}
         >
           I agree to the{" "}
-          <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/terms">
+          <Link className="font-medium text-primary  hover:underline" href="/terms">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/privacy">
+          <Link className="font-medium text-primary  hover:underline" href="/privacy">
             Privacy Policy
           </Link>
         </AuthCheckboxField>
@@ -85,7 +85,7 @@ export function RegisterForm() {
       <SocialButtons />
       <AuthFooter>
         Already have an account?{" "}
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/login">
+        <Link className="font-medium text-primary  hover:underline" href="/login">
           Sign in
         </Link>
       </AuthFooter>

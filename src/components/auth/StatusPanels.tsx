@@ -31,14 +31,14 @@ export function AuthErrorPanel() {
       title="Sign in failed"
     >
       <Link
-        className="inline-flex h-11 w-full items-center justify-center rounded-md border border-primary bg-primary bg-clip-border px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary/80"
+        className="inline-flex h-10 w-full items-center justify-center rounded-md border border-primary bg-primary bg-clip-border px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary/80"
         href="/login"
       >
         Try again
       </Link>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         Need help?{" "}
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/contact">
+        <Link className="font-medium text-primary hover:underline" href="/contact">
           Contact support
         </Link>
       </div>
@@ -63,20 +63,27 @@ function AuthStatusPanel({
     <>
       <div
         className={cn(
-          "mb-5 grid size-12 place-items-center rounded-md",
-          tone === "info" ? "bg-info-soft text-info" : "bg-danger-soft text-destructive",
+          'mb-5 grid size-12 place-items-center rounded-md',
+          tone === 'info'
+            ? 'bg-info-soft text-info'
+            : 'bg-danger-soft text-destructive',
         )}
       >
         {icon}
       </div>
       <div className="mb-6">
-        <h2 className="text-3xl font-bold tracking-normal text-foreground">{title}</h2>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
+        <h2 className="text-3xl font-medium tracking-normal text-foreground">
+          {title}
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          {description}
+        </p>
       </div>
       {children}
     </>
   )
 }
+
 
 
 

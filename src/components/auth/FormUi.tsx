@@ -1,15 +1,21 @@
 "use client"
 
-import type { InputHTMLAttributes, ReactNode } from "react"
-import { useMemo, useState } from "react"
+import type { ReactNode } from "react"
 import Link from "next/link"
-import type { FieldError, UseFormRegisterReturn } from "react-hook-form"
-import { Eye } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import {
+  CheckboxField as AuthCheckboxField,
+  FieldErrorMessage,
+  PasswordField as AuthPasswordField,
+  TextField as AuthTextField,
+} from "@/components/ui/FormControls"
 import { cn } from "@/lib/utils"
 
-const authButtonClassName = "h-11 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+export { AuthCheckboxField, AuthPasswordField, AuthTextField, FieldErrorMessage }
+
+const authButtonClassName =
+  "h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
 
 export function AuthHeading({
   title,
@@ -20,156 +26,10 @@ export function AuthHeading({
 }) {
   return (
     <div className="mb-6">
-      <h2 className="text-3xl font-bold tracking-normal text-foreground">{title}</h2>
+      <h2 className="text-3xl font-medium tracking-normal text-foreground">
+        {title}
+      </h2>
       <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
-    </div>
-  )
-}
-
-export function AuthTextField({
-  error,
-  icon,
-  label,
-  registration,
-  type = "text",
-  ...props
-}: Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
-  error?: FieldError
-  icon: ReactNode
-  label: string
-  registration: UseFormRegisterReturn
-}) {
-  return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-foreground" htmlFor={props.id}>
-        {label}
-      </label>
-      <div className="relative">
-        <span className="pointer-events-none absolute left-3 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center text-muted-foreground [&_svg]:size-4">
-          {icon}
-        </span>
-        <input
-          {...props}
-          {...registration}
-          type={type}
-          aria-invalid={Boolean(error)}
-          className={cn(
-            "h-10 w-full rounded-md border border-input bg-card pl-10 pr-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20",
-            error && "border-destructive focus:border-destructive focus:ring-destructive/20",
-          )}
-        />
-      </div>
-      <FieldErrorMessage error={error} />
-    </div>
-  )
-}
-
-export function AuthPasswordField({
-  error,
-  label,
-  labelAction,
-  registration,
-  showStrength = false,
-  watchValue = "",
-  ...props
-}: Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "type"> & {
-  error?: FieldError
-  label?: string
-  labelAction?: ReactNode
-  registration: UseFormRegisterReturn
-  showStrength?: boolean
-  watchValue?: string
-}) {
-  const [visible, setVisible] = useState(false)
-  const score = usePasswordScore(watchValue)
-  const strength = score <= 1 ? "bg-destructive" : score === 2 ? "bg-warning" : "bg-success"
-  const labels = ["Too weak", "Weak", "Fair", "Good", "Strong"]
-
-  return (
-    <div className="space-y-2">
-      {label ? (
-        <div className="flex items-center justify-between text-sm">
-          <label className="font-medium text-foreground" htmlFor={props.id}>
-            {label}
-          </label>
-          {labelAction}
-        </div>
-      ) : null}
-      <div className="relative">
-        <span className="pointer-events-none absolute left-3 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center text-muted-foreground">
-          <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-        </span>
-        <input
-          {...props}
-          {...registration}
-          type={visible ? "text" : "password"}
-          aria-invalid={Boolean(error)}
-          className={cn(
-            "h-10 w-full rounded-md border border-input bg-card pl-10 pr-11 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20",
-            error && "border-destructive focus:border-destructive focus:ring-destructive/20",
-          )}
-        />
-        <button
-          aria-label={visible ? "Hide password" : "Show password"}
-          className={cn(
-            "absolute right-3 top-1/2 grid size-5 -translate-y-1/2 place-items-center text-muted-foreground transition-colors hover:text-foreground",
-            visible && "text-primary",
-          )}
-          type="button"
-          onClick={() => setVisible((current) => !current)}
-        >
-          <Eye className="size-4" aria-hidden="true" />
-        </button>
-      </div>
-      {showStrength ? (
-        <>
-          <div className="grid grid-cols-4 gap-1" aria-hidden="true">
-            {[0, 1, 2, 3].map((index) => (
-              <div
-                className={cn(
-                  "h-1 rounded-full bg-muted transition-colors",
-                  index < score && strength,
-                )}
-                key={index}
-              />
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground">
-            {watchValue.length === 0
-              ? "Use 8+ characters with letters, numbers & symbols"
-              : `Strength: ${labels[score]}`}
-          </p>
-        </>
-      ) : null}
-      <FieldErrorMessage error={error} />
-    </div>
-  )
-}
-
-export function AuthCheckboxField({
-  children,
-  error,
-  registration,
-}: {
-  children: ReactNode
-  error?: FieldError
-  registration: UseFormRegisterReturn
-}) {
-  return (
-    <div className="space-y-2">
-      <label className="flex cursor-pointer items-center gap-3 text-sm text-foreground">
-        <input className="peer sr-only" type="checkbox" {...registration} />
-        <span className="grid size-5 shrink-0 place-items-center rounded border border-input bg-card text-transparent transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
-          <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </span>
-        <span>{children}</span>
-      </label>
-      <FieldErrorMessage error={error} />
     </div>
   )
 }
@@ -195,6 +55,7 @@ export function AuthButtonLink({ children, href }: { children: ReactNode; href: 
     </Link>
   )
 }
+
 export function AuthDivider() {
   return (
     <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
@@ -206,11 +67,11 @@ export function AuthDivider() {
 export function SocialButtons() {
   return (
     <div className="grid grid-cols-2 gap-3">
-      <Button className="h-10 rounded-md bg-clip-border" type="button" variant="outline">
+      <Button className="h-9 rounded-md bg-clip-border text-sm" type="button" variant="outline">
         <GoogleIcon />
         Google
       </Button>
-      <Button className="h-10 rounded-md bg-clip-border" type="button" variant="outline">
+      <Button className="h-9 rounded-md bg-clip-border text-sm" type="button" variant="outline">
         <GitHubIcon />
         GitHub
       </Button>
@@ -224,15 +85,10 @@ export function AuthFooter({ children }: { children: ReactNode }) {
 
 export function AuthLink({ children, href }: { children: ReactNode; href: string }) {
   return (
-    <Link className="font-medium text-primary underline-offset-4 hover:underline" href={href}>
+    <Link className="font-medium text-primary hover:underline" href={href}>
       {children}
     </Link>
   )
-}
-
-export function FieldErrorMessage({ error }: { error?: FieldError }) {
-  if (!error?.message) return null
-  return <p className="text-xs text-destructive">{error.message}</p>
 }
 
 function GitHubIcon() {
@@ -253,23 +109,4 @@ function GoogleIcon() {
     </svg>
   )
 }
-
-function usePasswordScore(password: string) {
-  return useMemo(() => {
-    let score = 0
-    if (password.length >= 8) score += 1
-    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score += 1
-    if (/\d/.test(password)) score += 1
-    if (/[^A-Za-z0-9]/.test(password)) score += 1
-    return score
-  }, [password])
-}
-
-
-
-
-
-
-
-
 

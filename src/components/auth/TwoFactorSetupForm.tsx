@@ -51,7 +51,7 @@ export function TwoFactorSetupForm() {
         <SubmitButton>Enable 2FA</SubmitButton>
       </form>
       <AuthFooter>
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/settings/security">
+        <Link className="font-medium text-primary hover:underline" href="/settings/security">
           Do this later
         </Link>
       </AuthFooter>

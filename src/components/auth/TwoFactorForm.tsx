@@ -44,7 +44,7 @@ export function TwoFactorForm() {
       </form>
       <AuthFooter>
         Lost your device?{" "}
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/2fa/recovery">
+        <Link className="font-medium text-primary hover:underline" href="/2fa/recovery">
           Use recovery code
         </Link>
       </AuthFooter>

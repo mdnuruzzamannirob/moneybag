@@ -40,7 +40,7 @@ export function RecoveryCodeForm() {
         <SubmitButton>Continue securely</SubmitButton>
       </form>
       <AuthFooter>
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/2fa">
+        <Link className="font-medium text-primary  hover:underline" href="/2fa">
           Use authenticator code instead
         </Link>
       </AuthFooter>

@@ -30,7 +30,7 @@ export function VerifyEmailForm() {
         <SubmitButton>Resend verification email</SubmitButton>
       </form>
       <AuthFooter>
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/login">
+        <Link className="font-medium text-primary  hover:underline" href="/login">
           Back to sign in
         </Link>
       </AuthFooter>
