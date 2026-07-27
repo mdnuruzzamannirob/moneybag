@@ -1,3 +1,5 @@
+import { SettingsPanel } from "@/components/user/settings-panel"
+
 export default function Page() {
-  return <main>Preferences</main>
+  return <SettingsPanel section="preferences" />
 }
