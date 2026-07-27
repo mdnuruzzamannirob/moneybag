@@ -1,5 +1,6 @@
-import { AuthCallbackPanel } from '@/components/auth/status-panels'
+import { AuthCallbackPanel } from '@/components/auth/StatusPanels'
 
 export default function Page() {
   return <AuthCallbackPanel />
 }
+

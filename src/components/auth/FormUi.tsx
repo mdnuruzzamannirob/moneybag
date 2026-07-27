@@ -2,11 +2,14 @@
 
 import type { InputHTMLAttributes, ReactNode } from "react"
 import { useMemo, useState } from "react"
+import Link from "next/link"
 import type { FieldError, UseFormRegisterReturn } from "react-hook-form"
 import { Eye } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+const authButtonClassName = "h-11 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
 
 export function AuthHeading({
   title,
@@ -64,6 +67,7 @@ export function AuthTextField({
 export function AuthPasswordField({
   error,
   label,
+  labelAction,
   registration,
   showStrength = false,
   watchValue = "",
@@ -71,6 +75,7 @@ export function AuthPasswordField({
 }: Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "type"> & {
   error?: FieldError
   label?: string
+  labelAction?: ReactNode
   registration: UseFormRegisterReturn
   showStrength?: boolean
   watchValue?: string
@@ -83,9 +88,12 @@ export function AuthPasswordField({
   return (
     <div className="space-y-2">
       {label ? (
-        <label className="text-sm font-medium text-foreground" htmlFor={props.id}>
-          {label}
-        </label>
+        <div className="flex items-center justify-between text-sm">
+          <label className="font-medium text-foreground" htmlFor={props.id}>
+            {label}
+          </label>
+          {labelAction}
+        </div>
       ) : null}
       <div className="relative">
         <span className="pointer-events-none absolute left-3 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center text-muted-foreground">
@@ -152,9 +160,9 @@ export function AuthCheckboxField({
 }) {
   return (
     <div className="space-y-2">
-      <label className="flex items-center cursor-pointer gap-3 text-sm text-foreground">
+      <label className="flex cursor-pointer items-center gap-3 text-sm text-foreground">
         <input className="peer sr-only" type="checkbox" {...registration} />
-        <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded border border-input bg-card text-transparent transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
+        <span className="grid size-5 shrink-0 place-items-center rounded border border-input bg-card text-transparent transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
           <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <polyline points="20 6 9 17 4 12" />
           </svg>
@@ -168,12 +176,25 @@ export function AuthCheckboxField({
 
 export function SubmitButton({ children }: { children: ReactNode }) {
   return (
-    <Button className="h-11 w-full rounded-md text-sm font-semibold shadow-sm" size="lg" type="submit">
+    <Button className={authButtonClassName} size="lg" type="submit">
       {children}
     </Button>
   )
 }
 
+export function AuthButtonLink({ children, href }: { children: ReactNode; href: string }) {
+  return (
+    <Link
+      className={cn(
+        "inline-flex items-center justify-center bg-primary text-primary-foreground transition-colors hover:bg-primary/80",
+        authButtonClassName,
+      )}
+      href={href}
+    >
+      {children}
+    </Link>
+  )
+}
 export function AuthDivider() {
   return (
     <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
@@ -182,18 +203,17 @@ export function AuthDivider() {
   )
 }
 
-export function SocialButtons({ label }: { label: "sign in" | "sign up" }) {
+export function SocialButtons() {
   return (
     <div className="grid grid-cols-2 gap-3">
-      <Button className="h-10 rounded-md" type="button" variant="outline">
+      <Button className="h-10 rounded-md bg-clip-border" type="button" variant="outline">
         <GoogleIcon />
         Google
       </Button>
-      <Button className="h-10 rounded-md" type="button" variant="outline">
+      <Button className="h-10 rounded-md bg-clip-border" type="button" variant="outline">
         <GitHubIcon />
         GitHub
       </Button>
-      <span className="sr-only">Social {label} options</span>
     </div>
   )
 }
@@ -204,9 +224,9 @@ export function AuthFooter({ children }: { children: ReactNode }) {
 
 export function AuthLink({ children, href }: { children: ReactNode; href: string }) {
   return (
-    <a className="font-medium text-primary underline-offset-4 hover:underline" href={href}>
+    <Link className="font-medium text-primary underline-offset-4 hover:underline" href={href}>
       {children}
-    </a>
+    </Link>
   )
 }
 
@@ -222,6 +242,7 @@ function GitHubIcon() {
     </svg>
   )
 }
+
 function GoogleIcon() {
   return (
     <svg className="size-4" aria-hidden="true" viewBox="0 0 24 24">
@@ -243,6 +264,12 @@ function usePasswordScore(password: string) {
     return score
   }, [password])
 }
+
+
+
+
+
+
 
 
 

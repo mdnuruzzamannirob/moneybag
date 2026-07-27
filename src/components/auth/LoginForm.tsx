@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Info, Mail } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Info, Mail } from 'lucide-react'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
 
 import {
   AuthCheckboxField,
@@ -15,15 +15,15 @@ import {
   AuthTextField,
   SocialButtons,
   SubmitButton,
-} from "@/components/auth/form-ui"
-import { loginSchema, type LoginValues } from "@/schemas/auth.schema"
+} from '@/components/auth/FormUi'
+import { loginSchema, type LoginValues } from '@/schemas/auth.schema'
 
 export function LoginForm() {
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "anika@moneybag.app",
-      password: "demo1234",
+      email: 'anika@moneybag.app',
+      password: 'demo1234',
       remember: true,
     },
   })
@@ -44,38 +44,34 @@ export function LoginForm() {
           id="email"
           label="Email address"
           placeholder="you@example.com"
-          registration={form.register("email")}
+          registration={form.register('email')}
           type="email"
         />
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <label className="font-medium text-foreground" htmlFor="password">
-              Password
-            </label>
-            <AuthLink href="/forgot-password">Forgot password?</AuthLink>
-          </div>
-          <AuthPasswordField
-            autoComplete="current-password"
-            error={form.formState.errors.password}
-            id="password"
-            label=""
-            placeholder="Password"
-            registration={form.register("password")}
-          />
-        </div>
+        <AuthPasswordField
+          autoComplete="current-password"
+          error={form.formState.errors.password}
+          id="password"
+          label="Password"
+          labelAction={<AuthLink href="/forgot-password">Forgot password?</AuthLink>}
+          placeholder="Password"
+          registration={form.register('password')}
+        />
         <AuthCheckboxField
           error={form.formState.errors.remember}
-          registration={form.register("remember")}
+          registration={form.register('remember')}
         >
           Remember me for 30 days
         </AuthCheckboxField>
         <SubmitButton>Sign in</SubmitButton>
       </form>
       <AuthDivider />
-      <SocialButtons label="sign in" />
+      <SocialButtons />
       <AuthFooter>
-        Don&apos;t have an account?{" "}
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/register">
+        Don&apos;t have an account?{' '}
+        <Link
+          className="font-medium text-primary underline-offset-4 hover:underline"
+          href="/register"
+        >
           Sign up
         </Link>
       </AuthFooter>

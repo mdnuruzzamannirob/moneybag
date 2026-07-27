@@ -4,7 +4,7 @@ import Link from "next/link"
 import { MailCheck } from "lucide-react"
 import { useForm } from "react-hook-form"
 
-import { AuthFooter, AuthHeading, SubmitButton } from "@/components/auth/form-ui"
+import { AuthFooter, AuthHeading, SubmitButton } from "@/components/auth/FormUi"
 
 export function VerifyEmailForm() {
   const form = useForm({ defaultValues: {} })
@@ -37,4 +37,5 @@ export function VerifyEmailForm() {
     </>
   )
 }
+
 

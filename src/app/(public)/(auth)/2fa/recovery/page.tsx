@@ -1,5 +1,6 @@
-import { RecoveryCodeForm } from '@/components/auth/recovery-code-form'
+import { RecoveryCodeForm } from '@/components/auth/RecoveryCodeForm'
 
 export default function Page() {
   return <RecoveryCodeForm />
 }
+

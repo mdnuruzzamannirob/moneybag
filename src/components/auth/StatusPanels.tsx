@@ -31,7 +31,7 @@ export function AuthErrorPanel() {
       title="Sign in failed"
     >
       <Link
-        className="inline-flex h-11 w-full items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/80"
+        className="inline-flex h-11 w-full items-center justify-center rounded-md border border-primary bg-primary bg-clip-border px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary/80"
         href="/login"
       >
         Try again
@@ -77,4 +77,6 @@ function AuthStatusPanel({
     </>
   )
 }
+
+
 

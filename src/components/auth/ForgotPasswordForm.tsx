@@ -11,7 +11,7 @@ import {
   AuthLink,
   AuthTextField,
   SubmitButton,
-} from "@/components/auth/form-ui"
+} from "@/components/auth/FormUi"
 import {
   forgotPasswordSchema,
   type ForgotPasswordValues,
@@ -50,4 +50,5 @@ export function ForgotPasswordForm() {
     </>
   )
 }
+
 

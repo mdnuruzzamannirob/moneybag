@@ -14,7 +14,7 @@ import {
   AuthTextField,
   SocialButtons,
   SubmitButton,
-} from "@/components/auth/form-ui"
+} from "@/components/auth/FormUi"
 import { registerSchema, type RegisterValues } from "@/schemas/auth.schema"
 
 export function RegisterForm() {
@@ -82,7 +82,7 @@ export function RegisterForm() {
         <SubmitButton>Create account</SubmitButton>
       </form>
       <AuthDivider />
-      <SocialButtons label="sign up" />
+      <SocialButtons />
       <AuthFooter>
         Already have an account?{" "}
         <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/login">
@@ -92,4 +92,6 @@ export function RegisterForm() {
     </>
   )
 }
+
+
 

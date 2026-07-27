@@ -10,7 +10,7 @@ import {
   AuthLink,
   AuthPasswordField,
   SubmitButton,
-} from "@/components/auth/form-ui"
+} from "@/components/auth/FormUi"
 import { resetPasswordSchema, type ResetPasswordValues } from "@/schemas/auth.schema"
 
 export function ResetPasswordForm() {
@@ -54,4 +54,5 @@ export function ResetPasswordForm() {
     </>
   )
 }
+
 

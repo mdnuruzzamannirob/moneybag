@@ -2,19 +2,18 @@
 
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ShieldCheck } from "lucide-react"
+import { QrCode, ShieldCheck } from "lucide-react"
 import { useForm } from "react-hook-form"
 
 import {
   AuthFooter,
   AuthHeading,
-  AuthLink,
   AuthTextField,
   SubmitButton,
-} from "@/components/auth/form-ui"
+} from "@/components/auth/FormUi"
 import { twoFactorSchema, type TwoFactorValues } from "@/schemas/auth.schema"
 
-export function TwoFactorForm() {
+export function TwoFactorSetupForm() {
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(twoFactorSchema),
     defaultValues: { code: "" },
@@ -25,9 +24,18 @@ export function TwoFactorForm() {
   return (
     <>
       <AuthHeading
-        title="Two-factor authentication"
-        subtitle="Enter the 6-digit code from your authenticator app to continue."
+        title="Set up 2FA"
+        subtitle="Scan the QR code, then enter the first code from your authenticator app."
       />
+      <div className="mb-4 grid aspect-square w-40 place-items-center rounded-md border border-border bg-muted text-primary shadow-sm">
+        <QrCode className="size-20" aria-hidden="true" />
+      </div>
+      <div className="mb-4 rounded-md border border-border bg-card p-4">
+        <div className="text-sm font-semibold text-foreground">Manual setup key</div>
+        <code className="mt-2 block rounded-sm bg-muted px-3 py-2 text-xs text-muted-foreground">
+          MBAG-W7K9-P4Q2-L8TN
+        </code>
+      </div>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <AuthTextField
           autoComplete="one-time-code"
@@ -40,15 +48,15 @@ export function TwoFactorForm() {
           placeholder="000000"
           registration={form.register("code")}
         />
-        <SubmitButton>Verify code</SubmitButton>
+        <SubmitButton>Enable 2FA</SubmitButton>
       </form>
       <AuthFooter>
-        Lost your device?{" "}
-        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/2fa/recovery">
-          Use recovery code
+        <Link className="font-medium text-primary underline-offset-4 hover:underline" href="/settings/security">
+          Do this later
         </Link>
       </AuthFooter>
     </>
   )
 }
+
 

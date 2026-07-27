@@ -10,7 +10,7 @@ import {
   AuthHeading,
   AuthTextField,
   SubmitButton,
-} from "@/components/auth/form-ui"
+} from "@/components/auth/FormUi"
 import { recoveryCodeSchema, type RecoveryCodeValues } from "@/schemas/auth.schema"
 
 export function RecoveryCodeForm() {
@@ -47,4 +47,5 @@ export function RecoveryCodeForm() {
     </>
   )
 }
+
 
