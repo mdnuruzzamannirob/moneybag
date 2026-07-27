@@ -1,3 +1,2 @@
-export default function Page() {
-  return <main>Payment Gateways</main>
-}
+import { AdminSettingsSection } from "@/components/admin/admin-settings-panel"
+export default function Page() { return <AdminSettingsSection section="payment-gateways" /> }

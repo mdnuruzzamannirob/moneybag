@@ -1,3 +1,2 @@
-export default function Page() {
-  return <main>Auth Providers</main>
-}
+import { AdminSettingsSection } from "@/components/admin/admin-settings-panel"
+export default function Page() { return <AdminSettingsSection section="auth-providers" /> }

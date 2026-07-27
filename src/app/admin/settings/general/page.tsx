@@ -1,3 +1,3 @@
-export default function Page() {
-  return <main>General</main>
-}
+import { AdminSettingsSection } from "@/components/admin/admin-settings-panel"
+
+export default function Page() { return <AdminSettingsSection section="general" /> }

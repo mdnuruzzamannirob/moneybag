@@ -3,14 +3,16 @@
 import {
   BarChart3,
   Bell,
+  ChevronDown,
   CircleDollarSign,
-  ChevronRight,
+  CreditCard,
   FileText,
   Gauge,
   Grid2X2,
   HelpCircle,
   History,
   LogOut,
+  Megaphone,
   Menu,
   Moon,
   Plus,
@@ -22,15 +24,9 @@ import {
   Tags,
   Target,
   Ticket,
-  UserCog,
   Users,
   WalletCards,
   X,
-  Megaphone,
-  CreditCard,
-  Database,
-  Languages,
-  LockKeyhole,
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -43,6 +39,7 @@ type NavItem = {
   label: string
   icon: React.ComponentType<{ className?: string }>
   count?: string
+  children?: Array<{ href: string; label: string }>
 }
 
 type NavSection = {
@@ -55,7 +52,12 @@ const navSections: NavSection[] = [
     label: 'Main',
     items: [
       { href: '/dashboard', label: 'Overview', icon: Grid2X2 },
-      { href: '/transactions', label: 'Transactions', icon: ReceiptText, count: '20' },
+      {
+        href: '/transactions',
+        label: 'Transactions',
+        icon: ReceiptText,
+        count: '20',
+      },
       { href: '/budgets', label: 'Budgets', icon: Target },
       { href: '/goals', label: 'Savings Goals', icon: CircleDollarSign },
     ],
@@ -86,43 +88,66 @@ const navSections: NavSection[] = [
 
 const adminNavSections: NavSection[] = [
   {
-    label: 'Overview',
-    items: [
-      { href: '/admin/dashboard', label: 'Dashboard', icon: Gauge },
-      { href: '/admin/reports', label: 'Reports', icon: BarChart3 },
-      { href: '/admin/logs', label: 'Logs', icon: History },
-      { href: '/admin/system-health', label: 'System Health', icon: Shield },
-    ],
+    label: 'Main',
+    items: [{ href: '/admin/dashboard', label: 'Dashboard', icon: Gauge }],
   },
   {
-    label: 'People',
+    label: 'User & Subscriptions',
     items: [
       { href: '/admin/users', label: 'Users', icon: Users },
-      { href: '/admin/team', label: 'Team', icon: Users },
-      { href: '/admin/tickets', label: 'Tickets', icon: Ticket },
+      {
+        href: '/admin/subscriptions',
+        label: 'Subscriptions',
+        icon: WalletCards,
+      },
+      { href: '/admin/coupons', label: 'Coupons', icon: CreditCard },
+      { href: '/admin/plans', label: 'Plans', icon: CircleDollarSign },
     ],
   },
   {
-    label: 'Business',
+    label: 'Reports',
+    items: [{ href: '/admin/reports', label: 'Reports', icon: BarChart3 }],
+  },
+  {
+    label: 'Content',
     items: [
       { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
-      { href: '/admin/categories', label: 'Categories', icon: Tags },
-      { href: '/admin/plans', label: 'Plans', icon: CircleDollarSign },
-      { href: '/admin/subscriptions', label: 'Subscriptions', icon: WalletCards },
-      { href: '/admin/coupons', label: 'Coupons', icon: CreditCard },
-      { href: '/admin/email-templates', label: 'Email Templates', icon: FileText },
+      { href: '/admin/blog', label: 'Blog', icon: FileText },
+      { href: '/admin/faq', label: 'FAQ', icon: HelpCircle },
+      { href: '/admin/changelog', label: 'Changelog', icon: History },
+      {
+        href: '/admin/email-templates',
+        label: 'Email Templates',
+        icon: FileText,
+      },
     ],
   },
   {
-    label: 'Settings',
-    items: [{ href: '/admin/settings', label: 'Settings', icon: Settings }],
+    label: 'Support',
+    items: [{ href: '/admin/tickets', label: 'Tickets', icon: Ticket }],
   },
-
+  {
+    label: 'System & Security',
+    items: [
+      { href: '/admin/system-health', label: 'System Health', icon: Shield },
+      { href: '/admin/audit-logs', label: 'Audit Logs', icon: History },
+      {
+        href: '/admin/settings',
+        label: 'Settings',
+        icon: Settings,
+        children: [
+          { href: '/admin/settings/general', label: 'General' },
+          { href: '/admin/settings/email', label: 'Email' },
+          { href: '/admin/settings/oauth', label: 'OAuth' },
+          { href: '/admin/settings/payment', label: 'Payment' },
+          { href: '/admin/settings/storage', label: 'Storage' },
+          { href: '/admin/settings/security', label: 'Security' },
+          { href: '/admin/settings/legal', label: 'Legal' },
+        ],
+      },
+    ],
+  },
 ]
-
-function MailIcon({ className }: { className?: string }) {
-  return <ReceiptText className={className} />
-}
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
@@ -159,8 +184,17 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   )
 }
 
-function Sidebar({ sections, onNavigate }: { sections: NavSection[]; onNavigate: () => void }) {
+function Sidebar({
+  sections,
+  onNavigate,
+}: {
+  sections: NavSection[]
+  onNavigate: () => void
+}) {
   const pathname = usePathname()
+  const [settingsOpen, setSettingsOpen] = useState(
+    pathname.startsWith('/admin/settings'),
+  )
 
   return (
     <>
@@ -213,33 +247,84 @@ function Sidebar({ sections, onNavigate }: { sections: NavSection[]; onNavigate:
             <div className="space-y-1">
               {section.items.map((item) => {
                 const Icon = item.icon
-                const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+                const active =
+                  pathname === item.href || pathname.startsWith(`${item.href}/`)
+                const hasChildren = Boolean(item.children?.length)
 
                 return (
-                  <Link
-                    className={cn(
-                      'flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
-                      active
-                        ? 'bg-accent text-accent-foreground'
-                        : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                    )}
-                    href={item.href}
-                    key={item.href}
-                    onClick={onNavigate}
-                  >
-                    <Icon className="size-4.5 shrink-0" />
-                    <span className="min-w-0 flex-1 truncate">{item.label}</span>
-                    {item.count ? (
-                      <span
+                  <div key={item.href}>
+                    {hasChildren ? (
+                      <button
+                        aria-expanded={settingsOpen}
                         className={cn(
-                          'rounded-full px-2 py-0.5 text-xs font-semibold leading-none',
-                          active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground',
+                          'flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
+                          active
+                            ? 'bg-accent text-accent-foreground'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                         )}
+                        onClick={() => setSettingsOpen((open) => !open)}
+                        type="button"
                       >
-                        {item.count}
-                      </span>
+                        <Icon className="size-4.5 shrink-0" />
+                        <span className="min-w-0 flex-1 text-left truncate">
+                          {item.label}
+                        </span>
+                        <ChevronDown
+                          className={cn(
+                            'size-4 transition-transform',
+                            settingsOpen && 'rotate-180',
+                          )}
+                        />
+                      </button>
+                    ) : (
+                      <Link
+                        className={cn(
+                          'flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
+                          active
+                            ? 'bg-accent text-accent-foreground'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                        )}
+                        href={item.href}
+                        onClick={onNavigate}
+                      >
+                        <Icon className="size-4.5 shrink-0" />
+                        <span className="min-w-0 flex-1 truncate">
+                          {item.label}
+                        </span>
+                        {item.count ? (
+                          <span
+                            className={cn(
+                              'rounded-full px-2 py-0.5 text-xs font-semibold leading-none',
+                              active
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted text-muted-foreground',
+                            )}
+                          >
+                            {item.count}
+                          </span>
+                        ) : null}
+                      </Link>
+                    )}
+                    {hasChildren && settingsOpen ? (
+                      <div className="mt-1 space-y-0.5 border-l border-border py-1 pl-3 ml-5">
+                        {item.children?.map((child) => (
+                          <Link
+                            className={cn(
+                              'flex h-8 items-center rounded-md px-3 text-sm transition-colors',
+                              pathname === child.href
+                                ? 'bg-accent text-accent-foreground font-medium'
+                                : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                            )}
+                            href={child.href}
+                            key={child.href}
+                            onClick={onNavigate}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
                     ) : null}
-                  </Link>
+                  </div>
                 )
               })}
             </div>
@@ -252,8 +337,12 @@ function Sidebar({ sections, onNavigate }: { sections: NavSection[]; onNavigate:
           AT
         </div>
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-semibold text-foreground">Anika Tahsin</div>
-          <div className="truncate text-xs text-muted-foreground">anika@moneybag.app</div>
+          <div className="truncate text-sm font-semibold text-foreground">
+            Anika Tahsin
+          </div>
+          <div className="truncate text-xs text-muted-foreground">
+            anika@moneybag.app
+          </div>
         </div>
         <button className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted">
           <Settings className="size-4" />
@@ -307,4 +396,3 @@ function Topbar({
     </header>
   )
 }
-
