@@ -1,3 +1,10 @@
+import { AuthShell } from "@/components/auth/auth-shell"
+import { RecoveryCodeForm } from "@/components/auth/recovery-code-form"
+
 export default function Page() {
-  return <main>Recovery</main>
+  return (
+    <AuthShell>
+      <RecoveryCodeForm />
+    </AuthShell>
+  )
 }

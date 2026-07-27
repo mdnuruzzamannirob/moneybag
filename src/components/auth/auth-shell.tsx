@@ -1,0 +1,83 @@
+import Link from "next/link"
+import type { ReactNode } from "react"
+import { Check } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+export function AuthShell({ children }: { children: ReactNode }) {
+  return (
+    <main className="grid min-h-screen bg-background lg:grid-cols-2">
+      <section className="relative hidden overflow-hidden bg-gradient-to-br from-primary to-[#ec4899] p-12 text-white lg:flex lg:flex-col lg:justify-between">
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-white/10" />
+        <div className="absolute -bottom-40 -left-24 h-[31rem] w-[31rem] rounded-full bg-white/5" />
+
+        <div className="relative z-10">
+          <BrandLogo inverse className="mb-12" />
+          <h1 className="max-w-md text-4xl font-extrabold tracking-normal">
+            Take control of your money.
+          </h1>
+          <p className="mt-3 max-w-sm text-base leading-7 text-white/90">
+            Track income, manage budgets, smash savings goals, and unlock rich
+            reports - the modern personal finance manager built for everyone.
+          </p>
+        </div>
+
+        <div className="relative z-10 space-y-3">
+          {[
+            "Track income, expenses & wallets",
+            "Budgets, savings goals & alerts",
+            "Interactive charts & PDF reports",
+            "Family sharing (Pro) & OAuth 2.0",
+          ].map((feature) => (
+            <div className="flex items-center gap-3 text-sm" key={feature}>
+              <span className="grid size-8 shrink-0 place-items-center rounded-md bg-white/20">
+                <Check className="size-4" aria-hidden="true" />
+              </span>
+              <span>{feature}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="relative z-10 flex gap-8">
+          <AuthStat label="Active users" value="12K+" />
+          <AuthStat label="Tracked monthly" value="$48M+" />
+          <AuthStat label="User rating" value="4.8/5" />
+        </div>
+      </section>
+
+      <section className="flex items-center justify-center px-4 py-8 sm:px-8">
+        <div className="w-full max-w-[420px]">
+          <BrandLogo className="mb-8" />
+          {children}
+        </div>
+      </section>
+    </main>
+  )
+}
+
+export function BrandLogo({
+  className,
+  inverse = false,
+}: {
+  className?: string
+  inverse?: boolean
+}) {
+  return (
+    <Link className={cn("inline-flex items-center gap-3", className)} href="/">
+      <span className="grid size-10 place-items-center rounded-md bg-gradient-to-br from-primary to-[#ec4899] font-extrabold text-white shadow-md">
+        F
+      </span>
+      <span className={cn("text-xl font-bold", inverse && "text-white")}>MoneyBag</span>
+    </Link>
+  )
+}
+
+function AuthStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="text-3xl font-extrabold tracking-normal">{value}</div>
+      <div className="text-xs text-white/85">{label}</div>
+    </div>
+  )
+}
+

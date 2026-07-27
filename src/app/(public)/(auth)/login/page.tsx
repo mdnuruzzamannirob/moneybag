@@ -1,3 +1,10 @@
+import { AuthShell } from "@/components/auth/auth-shell"
+import { LoginForm } from "@/components/auth/login-form"
+
 export default function Page() {
-  return <main>Login</main>
+  return (
+    <AuthShell>
+      <LoginForm />
+    </AuthShell>
+  )
 }

@@ -1,3 +1,10 @@
+import { AuthShell } from "@/components/auth/auth-shell"
+import { VerifyEmailForm } from "@/components/auth/verify-email-form"
+
 export default function Page() {
-  return <main>Verify Email</main>
+  return (
+    <AuthShell>
+      <VerifyEmailForm />
+    </AuthShell>
+  )
 }
