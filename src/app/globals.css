@@ -217,9 +217,11 @@
   body {
     @apply min-h-full bg-background text-foreground antialiased;
   }
+
   button {
     @apply cursor-pointer;
   }
+
   button,
   input,
   textarea,

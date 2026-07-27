@@ -152,7 +152,7 @@ export function AuthCheckboxField({
 }) {
   return (
     <div className="space-y-2">
-      <label className="flex items-start gap-3 text-sm text-foreground">
+      <label className="flex items-center cursor-pointer gap-3 text-sm text-foreground">
         <input className="peer sr-only" type="checkbox" {...registration} />
         <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded border border-input bg-card text-transparent transition-colors peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground">
           <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

@@ -1,10 +1,5 @@
-import { AuthShell } from "@/components/auth/auth-shell"
-import { TwoFactorForm } from "@/components/auth/two-factor-form"
+import { TwoFactorForm } from '@/components/auth/two-factor-form'
 
 export default function Page() {
-  return (
-    <AuthShell>
-      <TwoFactorForm />
-    </AuthShell>
-  )
+  return <TwoFactorForm />
 }
