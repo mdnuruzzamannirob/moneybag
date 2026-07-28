@@ -83,7 +83,7 @@ export function AuthOtpInput({
           className={cn(
             'size-10 shrink-0 rounded-md border border-border bg-card px-0 text-center text-lg font-medium tabular-nums text-foreground shadow-none outline-none transition-all hover:border-border focus:border-primary focus:ring-3 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50 sm:size-12 sm:rounded-lg sm:text-xl',
             aria['aria-invalid'] &&
-              '!border-destructive hover:!border-destructive focus:!border-destructive focus:!ring-destructive/20',
+              'border-destructive! hover:border-destructive! focus:border-destructive! focus:ring-destructive/20!',
           )}
           disabled={disabled}
           id={index === 0 ? id : undefined}
