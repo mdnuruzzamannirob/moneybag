@@ -1,3 +1,5 @@
+import { GoalsPage } from '@/components/user/finance-pages'
+
 export default function Page() {
-  return <main>Goals</main>
+  return <GoalsPage />
 }
