@@ -1,3 +1,4 @@
-export function DateRangePicker() {
-  return null
-}
+export {
+  MoneybagDateRangePicker as DateRangePicker,
+  type MoneybagDateRangePickerProps as DateRangePickerProps,
+} from "@/components/moneybag-ui/date-pickers"
