@@ -69,13 +69,13 @@ export function FinanceDialog({
       description={saved ? undefined : getDialogDescription(kind)}
       footer={
         saved ? (
-          <AppButton onClick={onClose}>Done</AppButton>
+          <AppButton onClick={onClose} size="sm">Done</AppButton>
         ) : (
           <>
-            <AppButton onClick={onClose} tone="secondary" type="button">
+            <AppButton onClick={onClose} size="sm" tone="secondary" type="button">
               Cancel
             </AppButton>
-            <AppButton form="finance-dialog-form" type="submit">
+            <AppButton form="finance-dialog-form" size="sm" type="submit">
               {getSubmitLabel(kind, editing)}
             </AppButton>
           </>

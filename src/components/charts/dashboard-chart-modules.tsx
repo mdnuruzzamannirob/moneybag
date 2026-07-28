@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { EChartCanvas } from '@/components/charts/echart-canvas'
 import type {
@@ -9,13 +9,81 @@ import type {
   UserGrowthPoint,
 } from '@/types/dashboard-models'
 
-const axisLabel = { color: '#94a3b8', fontSize: 11 }
-const splitLine = { lineStyle: { color: 'rgba(148,163,184,.22)', type: 'dashed' as const } }
-const tooltip = {
-  trigger: 'axis' as const,
-  backgroundColor: '#0f172a',
-  borderWidth: 0,
-  textStyle: { color: '#f8fafc', fontSize: 12 },
+type ChartTheme = {
+  card: string
+  border: string
+  primary: string
+  text: string
+  textMuted: string
+  textSubtle: string
+  success: string
+  danger: string
+}
+
+const fallbackChartTheme: ChartTheme = {
+  card: '#ffffff',
+  border: '#e2e8f0',
+  primary: '#4f46e5',
+  text: '#0f172a',
+  textMuted: '#64748b',
+  textSubtle: '#94a3b8',
+  success: '#10b981',
+  danger: '#ef4444',
+}
+
+function readChartTheme() {
+  const styles = getComputedStyle(document.documentElement)
+  const token = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback
+  return {
+    card: token('--color-card', fallbackChartTheme.card),
+    border: token('--color-border', fallbackChartTheme.border),
+    primary: token('--color-primary', fallbackChartTheme.primary),
+    text: token('--color-text', fallbackChartTheme.text),
+    textMuted: token('--color-text-muted', fallbackChartTheme.textMuted),
+    textSubtle: token('--color-text-subtle', fallbackChartTheme.textSubtle),
+    success: token('--color-success', fallbackChartTheme.success),
+    danger: token('--color-danger', fallbackChartTheme.danger),
+  }
+}
+
+function useChartTheme() {
+  const [theme, setTheme] = useState(fallbackChartTheme)
+
+  useEffect(() => {
+    const update = () => setTheme(readChartTheme())
+    update()
+    const observer = new MutationObserver(update)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [])
+
+  return theme
+}
+
+function withAlpha(color: string, alpha: number) {
+  if (!color.startsWith('#')) return color
+  const hex = color.slice(1)
+  const normalized = hex.length === 3 ? hex.split('').map((part) => part + part).join('') : hex
+  const value = Number.parseInt(normalized, 16)
+  return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`
+}
+
+function getAxisLabel(theme: ChartTheme) {
+  return { color: theme.textMuted, fontSize: 11 }
+}
+
+function getSplitLine(theme: ChartTheme) {
+  return { lineStyle: { color: withAlpha(theme.border, 0.8), type: 'dashed' as const } }
+}
+
+function getTooltip(theme: ChartTheme) {
+  return {
+    trigger: 'axis' as const,
+    backgroundColor: theme.card,
+    borderColor: theme.border,
+    borderWidth: 1,
+    textStyle: { color: theme.text, fontSize: 12 },
+  }
 }
 
 export function IncomeExpenseChartModule({
@@ -23,37 +91,38 @@ export function IncomeExpenseChartModule({
 }: {
   data: IncomeExpensePoint[]
 }) {
+  const theme = useChartTheme()
   const option = useMemo(
     () => ({
       animationDuration: 550,
-      color: ['#10b981', '#ef4444'],
+      color: [theme.success, theme.danger],
       grid: { left: 8, right: 8, top: 16, bottom: 32, containLabel: true },
       legend: {
         bottom: 0,
         left: 'center',
         itemWidth: 9,
         itemHeight: 9,
-        textStyle: axisLabel,
+        textStyle: getAxisLabel(theme),
       },
       tooltip: {
-        ...tooltip,
+        ...getTooltip(theme),
         valueFormatter: (value: number | null | undefined) => value == null ? 'No data' : '\u09F3' + String(value.toLocaleString('en-US')),
       },
       xAxis: {
         type: 'category' as const,
         data: data.map((point) => point.label),
-        axisLabel,
-        axisLine: { lineStyle: { color: 'rgba(148,163,184,.3)' } },
+        axisLabel: getAxisLabel(theme),
+        axisLine: { lineStyle: { color: theme.border } },
         axisTick: { show: false },
       },
       yAxis: {
         type: 'value' as const,
         axisLabel: {
-          ...axisLabel,
+          ...getAxisLabel(theme),
           formatter: (value: number) =>
             value >= 1000 ? `${value / 1000}k` : value,
         },
-        splitLine,
+        splitLine: getSplitLine(theme),
       },
       series: [
         {
@@ -72,7 +141,7 @@ export function IncomeExpenseChartModule({
         },
       ],
     }),
-    [data],
+    [data, theme],
   )
 
   return (
@@ -94,15 +163,17 @@ export function DistributionChartModule({
   centerValue: string
   valuePrefix: string
 }) {
+  const theme = useChartTheme()
   const option = useMemo(
     () => ({
       animationDuration: 550,
       color: data.map((item) => item.color),
       tooltip: {
         trigger: 'item' as const,
-        backgroundColor: '#0f172a',
-        borderWidth: 0,
-        textStyle: { color: '#f8fafc', fontSize: 12 },
+        backgroundColor: theme.card,
+        borderColor: theme.border,
+        borderWidth: 1,
+        textStyle: { color: theme.text, fontSize: 12 },
         valueFormatter: (value: number) =>
           `${valuePrefix}${value.toLocaleString('en-US')}`,
       },
@@ -112,8 +183,8 @@ export function DistributionChartModule({
         left: '34%',
         top: '39%',
         textAlign: 'center' as const,
-        textStyle: { color: '#94a3b8', fontSize: 18, fontWeight: 600 },
-        subtextStyle: { color: '#64748b', fontSize: 11 },
+        textStyle: { color: theme.textMuted, fontSize: 18, fontWeight: 600 },
+        subtextStyle: { color: theme.textSubtle, fontSize: 11 },
       },
       legend: {
         orient: 'vertical' as const,
@@ -125,9 +196,9 @@ export function DistributionChartModule({
         itemGap: 13,
         formatter: (name: string) => `{name|${name}}`,
         textStyle: {
-          ...axisLabel,
+          ...getAxisLabel(theme),
           rich: {
-            name: { color: '#64748b', fontSize: 11 },
+            name: { color: theme.textSubtle, fontSize: 11 },
           },
         },
       },
@@ -144,7 +215,7 @@ export function DistributionChartModule({
         },
       ],
     }),
-    [centerLabel, centerValue, data, valuePrefix],
+    [centerLabel, centerValue, data, theme, valuePrefix],
   )
 
   return (
@@ -161,13 +232,14 @@ export function UserGrowthChartModule({
 }: {
   data: UserGrowthPoint[]
 }) {
+  const theme = useChartTheme()
   const option = useMemo(
     () => ({
       animationDuration: 600,
-      color: ['#6366f1'],
+      color: [theme.primary],
       grid: { left: 8, right: 12, top: 18, bottom: 4, containLabel: true },
       tooltip: {
-        ...tooltip,
+        ...getTooltip(theme),
         valueFormatter: (value: number | null | undefined) =>
           value == null ? 'No data' : String(value.toLocaleString('en-US')) + ' users',
       },
@@ -175,14 +247,14 @@ export function UserGrowthChartModule({
         type: 'category' as const,
         boundaryGap: false,
         data: data.map((point) => point.label),
-        axisLabel,
-        axisLine: { lineStyle: { color: 'rgba(148,163,184,.3)' } },
+        axisLabel: getAxisLabel(theme),
+        axisLine: { lineStyle: { color: theme.border } },
         axisTick: { show: false },
       },
       yAxis: {
         type: 'value' as const,
-        axisLabel,
-        splitLine,
+        axisLabel: getAxisLabel(theme),
+        splitLine: getSplitLine(theme),
       },
       series: [
         {
@@ -192,7 +264,7 @@ export function UserGrowthChartModule({
           symbol: 'circle',
           symbolSize: 7,
           lineStyle: { width: 3 },
-          itemStyle: { borderWidth: 2, borderColor: '#ffffff' },
+          itemStyle: { borderWidth: 2, borderColor: theme.card },
           areaStyle: {
             color: {
               type: 'linear',
@@ -201,8 +273,8 @@ export function UserGrowthChartModule({
               x2: 0,
               y2: 1,
               colorStops: [
-                { offset: 0, color: 'rgba(99,102,241,.32)' },
-                { offset: 1, color: 'rgba(99,102,241,.02)' },
+                { offset: 0, color: withAlpha(theme.primary, 0.32) },
+                { offset: 1, color: withAlpha(theme.primary, 0.02) },
               ],
             },
           },
@@ -210,7 +282,7 @@ export function UserGrowthChartModule({
         },
       ],
     }),
-    [data],
+    [data, theme],
   )
 
   return <EChartCanvas ariaLabel="Monthly user growth line chart" option={option} />

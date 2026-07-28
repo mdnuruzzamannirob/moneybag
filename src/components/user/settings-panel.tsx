@@ -52,9 +52,9 @@ export function SettingsPanel({ section }: { section: Section }) {
 function Security() {
   return (
     <SettingsCard title="Security & sign-in">
-      <Row action={<AppButton tone="secondary">Change password</AppButton>} hint="Last changed: 12 June 2026" label="Password" />
-      <Row action={<AppButton tone="secondary">Set up</AppButton>} hint="Add a verification code on top of your password for extra safety" label="Two-factor authentication (2FA)" />
-      <Row action={<AppButton tone="secondary">Connect</AppButton>} hint="Sign in faster with your Google account" label="Google account" />
+      <Row action={<AppButton size="sm" tone="secondary">Change password</AppButton>} hint="Last changed: 12 June 2026" label="Password" />
+      <Row action={<AppButton size="sm" tone="secondary">Set up</AppButton>} hint="Add a verification code on top of your password for extra safety" label="Two-factor authentication (2FA)" />
+      <Row action={<AppButton size="sm" tone="secondary">Connect</AppButton>} hint="Sign in faster with your Google account" label="Google account" />
       <Row action={<AppButton tone="secondary"><LogOut />Manage sessions</AppButton>} hint="You’re currently signed in on 2 devices" label="Active sessions" />
     </SettingsCard>
   )
@@ -130,14 +130,14 @@ function Profile() {
           <p className="text-sm font-medium">Profile photo</p>
           <p className="mt-1 text-xs text-muted-foreground">JPG, GIF or PNG. Max size 2MB.</p>
         </div>
-        <AppButton tone="secondary"><Camera />Change photo</AppButton>
+        <AppButton size="sm" tone="secondary"><Camera />Change photo</AppButton>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <AppField label="Full name"><AppInput onChange={(event) => setName(event.target.value)} value={name} /></AppField>
         <AppField label="Email address"><AppInput onChange={(event) => setEmail(event.target.value)} type="email" value={email} /></AppField>
       </div>
       <div className="mt-7 flex justify-end border-t border-border pt-5 max-sm:[&_button]:w-full">
-        <AppButton>Save changes</AppButton>
+        <AppButton size="sm">Save changes</AppButton>
       </div>
     </SettingsCard>
   )

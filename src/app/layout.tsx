@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { ThemeProvider } from '@/providers/theme-provider'
 import type { Metadata } from 'next'
 import { Google_Sans_Flex } from 'next/font/google'
 import './globals.css'
@@ -30,7 +31,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   )

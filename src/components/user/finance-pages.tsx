@@ -144,9 +144,9 @@ export function TransactionsPage() {
   return (
     <div className="space-y-6">
       <PageHeader description="Review, search, and manage every money movement." title="Transactions">
-        <AppButton onClick={() => setDialog('import')} tone="secondary"><Upload />Import CSV</AppButton>
-        <AppButton onClick={() => setDialog('export')} tone="secondary"><Download />Export</AppButton>
-        <AppButton onClick={() => setDialog('transaction')}><Plus />Add transaction</AppButton>
+        <AppButton onClick={() => setDialog('import')} size="sm" tone="secondary"><Upload />Import CSV</AppButton>
+        <AppButton onClick={() => setDialog('export')} size="sm" tone="secondary"><Download />Export</AppButton>
+        <AppButton onClick={() => setDialog('transaction')} size="sm"><Plus />Add transaction</AppButton>
       </PageHeader>
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat icon={ReceiptText} label="All transactions" value={`${items.length}`} />
@@ -249,7 +249,7 @@ export function BudgetsPage() {
   const totalBudget = budgetSeed.reduce((sum, item) => sum + item.limit, 0)
   const totalSpent = budgetSeed.reduce((sum, item) => sum + item.spent, 0)
   const attention = budgetSeed.filter((item) => item.spent / item.limit >= item.alert / 100).length
-  return <div className="space-y-6"><PageHeader description="Set category limits and track your spending this month." title="Budgets"><AppSelect defaultValue="july" options={[{ label: 'July 2026', value: 'july' }, { label: 'June 2026', value: 'june' }]} triggerClassName="w-40" /><AppButton onClick={() => setDialog('budget')}><Plus />Add budget</AppButton></PageHeader><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat icon={Target} label="Total budget" value={money(totalBudget)} /><Stat icon={TrendingDown} label="Total spent" tone="danger" value={money(totalSpent)} /><Stat icon={WalletCards} label="Remaining" tone="success" value={money(totalBudget - totalSpent)} /><Stat icon={Filter} label="Need attention" tone="warning" value={`${attention} categories`} /></section><section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{budgetSeed.map((budget) => <BudgetCard budget={budget} key={budget.id} />)}</section>{dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}</div>
+  return <div className="space-y-6"><PageHeader description="Set category limits and track your spending this month." title="Budgets"><AppSelect defaultValue="july" options={[{ label: 'July 2026', value: 'july' }, { label: 'June 2026', value: 'june' }]} triggerClassName="w-40" /><AppButton onClick={() => setDialog('budget')} size="sm"><Plus />Add budget</AppButton></PageHeader><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat icon={Target} label="Total budget" value={money(totalBudget)} /><Stat icon={TrendingDown} label="Total spent" tone="danger" value={money(totalSpent)} /><Stat icon={WalletCards} label="Remaining" tone="success" value={money(totalBudget - totalSpent)} /><Stat icon={Filter} label="Need attention" tone="warning" value={`${attention} categories`} /></section><section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{budgetSeed.map((budget) => <BudgetCard budget={budget} key={budget.id} />)}</section>{dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}</div>
 }
 
 function BudgetCard({ budget }: { budget: Budget }) {
@@ -264,7 +264,7 @@ export function GoalsPage() {
   const saved = goalSeed.reduce((sum, item) => sum + item.saved, 0)
   const target = goalSeed.reduce((sum, item) => sum + item.target, 0)
   const completed = goalSeed.filter((item) => item.saved >= item.target).length
-  return <div className="space-y-6"><PageHeader description="Build momentum towards the things that matter most." title="Savings goals"><AppButton onClick={() => setDialog('goal')}><Plus />New goal</AppButton></PageHeader><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat icon={Goal} label="Active goals" value={`${goalSeed.length}`} /><Stat icon={Landmark} label="Total saved" tone="success" value={money(saved)} /><Stat icon={Target} label="Overall progress" value={`${Math.round((saved / target) * 100)}%`} /><Stat icon={TrendingUp} label="Completed" tone="warning" value={`${completed} goals`} /></section><section className="grid gap-4 lg:grid-cols-2">{goalSeed.map((goal) => <GoalCard goal={goal} key={goal.id} onContribute={() => setDialog('contribution')} />)}</section>{dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}</div>
+  return <div className="space-y-6"><PageHeader description="Build momentum towards the things that matter most." title="Savings goals"><AppButton onClick={() => setDialog('goal')} size="sm"><Plus />New goal</AppButton></PageHeader><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat icon={Goal} label="Active goals" value={`${goalSeed.length}`} /><Stat icon={Landmark} label="Total saved" tone="success" value={money(saved)} /><Stat icon={Target} label="Overall progress" value={`${Math.round((saved / target) * 100)}%`} /><Stat icon={TrendingUp} label="Completed" tone="warning" value={`${completed} goals`} /></section><section className="grid gap-4 lg:grid-cols-2">{goalSeed.map((goal) => <GoalCard goal={goal} key={goal.id} onContribute={() => setDialog('contribution')} />)}</section>{dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}</div>
 }
 
 function GoalCard({ goal, onContribute }: { goal: SavingsGoal; onContribute: () => void }) {

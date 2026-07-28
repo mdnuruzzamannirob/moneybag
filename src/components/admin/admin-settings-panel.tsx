@@ -149,7 +149,7 @@ function SettingsForm({ children, schema, values }: FormProps) {
             </span>
           ) : null}
         </p>
-        <AppButton className="max-sm:w-full" type="submit">
+        <AppButton className="max-sm:w-full" size="sm" type="submit">
           Save changes
         </AppButton>
       </div>

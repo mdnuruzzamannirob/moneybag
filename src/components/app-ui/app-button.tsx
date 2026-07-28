@@ -26,7 +26,7 @@ export function AppButton({
             ? '!size-10 !px-0'
             : size === 'sm'
               ? '!h-8 !px-2.5'
-              : '!h-10 !px-4'
+            : '!h-9 !px-3'
   return (
     <Button
       {...props}

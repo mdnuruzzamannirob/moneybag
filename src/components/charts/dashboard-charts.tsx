@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
+import { AppSelect } from '@/components/app-ui'
 import type {
   DistributionItem,
   IncomeExpensePoint,
@@ -108,21 +109,13 @@ function YearChartFrame({
   return (
     <div className="relative -mt-[3.75rem] pt-[3.75rem]">
       <div className="absolute right-0 top-0 flex justify-end">
-        <label className="sr-only" htmlFor={`chart-year-${years.join('-')}`}>
-          Select chart year
-        </label>
-        <select
-          className="h-8 rounded-md border border-border bg-card px-2.5 text-xs font-medium text-foreground outline-none transition-colors hover:bg-muted focus:border-primary focus:ring-3 focus:ring-primary/15"
-          id={`chart-year-${years.join('-')}`}
-          onChange={(event) => onYearChange(event.target.value)}
+        <AppSelect
+          ariaLabel="Select chart year"
+          onValueChange={(value) => value && onYearChange(value)}
+          options={years.map((option) => ({ label: option, value: option }))}
+          triggerClassName="h-8 min-h-8 w-24 px-2.5 text-xs font-medium"
           value={year}
-        >
-          {years.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        />
       </div>
       {children}
     </div>

@@ -48,6 +48,7 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
             <AppButton
               nativeButton={false}
               render={<Link href="/reports" />}
+              size="sm"
               tone="secondary"
             >
               <Download />
@@ -56,6 +57,7 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
             <AppButton
               nativeButton={false}
               render={<Link href="/transactions" />}
+              size="sm"
             >
               <Plus />
               Add transaction

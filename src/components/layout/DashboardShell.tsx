@@ -32,6 +32,8 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 import { cn } from '@/lib/utils'
+import { AppButton } from '@/components/app-ui'
+import { useTheme } from '@/providers/theme-provider'
 
 type NavItem = {
   href: string
@@ -306,6 +308,8 @@ function Topbar({
   showAddButton: boolean
   title: string
 }) {
+  const { theme, toggleTheme } = useTheme()
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
@@ -323,22 +327,21 @@ function Topbar({
 
       <div className="flex shrink-0 items-center gap-2">
         {showAddButton ? (
-          <Link className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90" href="/transactions">
+          <AppButton nativeButton={false} render={<Link href="/transactions" />} size="sm">
             <Plus className="size-4" />
             <span className="hidden sm:inline">Add transaction</span>
-          </Link>
+          </AppButton>
         ) : null}
-        <button className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted">
-          <Sun className="size-4 dark:hidden" />
-          <Moon className="hidden size-4 dark:block" />
-        </button>
-        <button className="relative grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted">
+        <AppButton aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} aria-pressed={theme === 'dark'} onClick={toggleTheme} size="icon-sm" tone="secondary">
+          {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+        </AppButton>
+        <AppButton aria-label="Notifications" className="relative" size="icon-sm" tone="secondary">
           <Bell className="size-4" />
           <span className="absolute right-2 top-2 size-1.5 rounded-full bg-danger ring-2 ring-card" />
-        </button>
-        <button className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted">
+        </AppButton>
+        <AppButton aria-label="Log out" size="icon-sm" tone="secondary">
           <LogOut className="size-4" />
-        </button>
+        </AppButton>
       </div>
     </header>
   )

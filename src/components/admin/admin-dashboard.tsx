@@ -38,7 +38,7 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
             Admin dashboard
           </>
         }
-        actions={<AppButton nativeButton={false} render={<Link href="/admin/reports" />}>Open full report</AppButton>}
+        actions={<AppButton nativeButton={false} render={<Link href="/admin/reports" />} size="sm">Open full report</AppButton>}
       />
 
       <section
