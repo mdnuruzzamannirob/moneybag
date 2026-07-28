@@ -6,13 +6,26 @@ import { useState, type ReactNode } from 'react'
 import {
   Controller,
   useForm,
+  type Control,
   type FieldErrors,
   type UseFormRegister,
   type UseFormRegisterReturn,
 } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
+import {
+  AppBadge,
+  AppButton,
+  AppCard,
+  AppField,
+  AppInput,
+  AppSelect,
+  AppSwitch,
+  AppTable,
+  AppTextarea,
+  type AppSelectOption,
+  type AppTableColumn,
+} from '@/components/app-ui'
 
 export type AdminSettingsSectionName =
   | 'general'
@@ -93,21 +106,26 @@ const legalSchema = z.object({
 })
 
 type SettingsValues = Record<string, unknown>
+type SettingsControl = Control<SettingsValues>
 type FormProps = {
   children: (
     register: UseFormRegister<SettingsValues>,
     errors: FieldErrors<SettingsValues>,
-    control: ReturnType<typeof useForm<SettingsValues>>['control'],
+    control: SettingsControl,
   ) => ReactNode
   schema: z.ZodType
   values: SettingsValues
 }
-const inputClass =
-  'mt-2 h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20'
-const primaryButtonClass =
-  'h-9 rounded-md border-0 bg-primary px-3 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90'
-const outlineButtonClass =
-  'h-9 rounded-md border-border bg-transparent px-3 text-sm font-medium text-muted-foreground shadow-none hover:bg-muted hover:text-foreground'
+
+const currencyOptions: AppSelectOption[] = [
+  { label: 'USD — US Dollar', value: 'USD' },
+  { label: 'EUR — Euro', value: 'EUR' },
+  { label: 'BDT — Bangladeshi Taka', value: 'BDT' },
+]
+const languageOptions: AppSelectOption[] = [
+  { label: 'English', value: 'English' },
+  { label: 'Bengali', value: 'Bengali' },
+]
 
 function SettingsForm({ children, schema, values }: FormProps) {
   const [saved, setSaved] = useState(false)
@@ -131,15 +149,15 @@ function SettingsForm({ children, schema, values }: FormProps) {
             </span>
           ) : null}
         </p>
-        <Button className={`${primaryButtonClass} max-sm:w-full`} type="submit">
+        <AppButton className="max-sm:w-full" type="submit">
           Save changes
-        </Button>
+        </AppButton>
       </div>
     </form>
   )
 }
 
-function Card({
+function SettingsCard({
   children,
   description,
   title,
@@ -149,7 +167,7 @@ function Card({
   title: string
 }) {
   return (
-    <section className="rounded-xl border border-border bg-card shadow-xs">
+    <AppCard padding="none">
       <header className="border-b border-border px-5 py-4 sm:px-6">
         <h2 className="font-semibold">{title}</h2>
         {description ? (
@@ -157,98 +175,101 @@ function Card({
         ) : null}
       </header>
       <div className="p-5 sm:p-6">{children}</div>
-    </section>
+    </AppCard>
   )
 }
-function Field({
+
+function FormField({
   children,
+  description,
   error,
-  hint,
   label,
 }: {
   children: ReactNode
-  error?: { message?: string }
-  hint?: string
+  description?: string
+  error?: { message?: unknown }
   label: string
 }) {
   return (
-    <label className="block text-sm font-medium text-foreground">
-      <span>{label}</span>
+    <AppField
+      description={description}
+      error={error?.message ? String(error.message) : undefined}
+      label={label}
+    >
       {children}
-      {error?.message ? (
-        <span className="mt-2 block text-xs font-normal text-destructive">
-          {error.message}
-        </span>
-      ) : hint ? (
-        <span className="mt-2 block text-xs font-normal leading-5 text-muted-foreground">
-          {hint}
-        </span>
-      ) : null}
-    </label>
+    </AppField>
   )
 }
-function Switch({
-  checked,
-  label,
-  onChange,
+
+function ControlledSelect({
+  control,
+  name,
+  options,
 }: {
-  checked: boolean
-  label: string
-  onChange: (checked: boolean) => void
+  control: SettingsControl
+  name: string
+  options: readonly AppSelectOption[]
 }) {
   return (
-    <button
-      aria-checked={checked}
-      aria-label={label}
-      className="relative h-6 w-11 shrink-0 whitespace-nowrap rounded-full bg-muted transition-colors data-[checked=true]:bg-primary after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform data-[checked=true]:after:translate-x-5"
-      data-checked={checked}
-      onClick={() => onChange(!checked)}
-      role="switch"
-      type="button"
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <AppSelect
+          onValueChange={field.onChange}
+          options={options}
+          value={typeof field.value === 'string' ? field.value : undefined}
+        />
+      )}
     />
   )
 }
-function ToggleRow({
-  checked,
+
+function ControlledSwitch({
+  control,
   description,
   label,
-  onChange,
+  name,
 }: {
-  checked: unknown
+  control: SettingsControl
   description: string
   label: string
-  onChange: (checked: boolean) => void
+  name: string
 }) {
   return (
-    <div className="flex items-start justify-between gap-5">
-      <div>
-        <p className="text-sm font-medium">{label}</p>
-        <p className="mt-1 text-xs leading-5 text-muted-foreground">
-          {description}
-        </p>
-      </div>
-      <Switch checked={Boolean(checked)} label={label} onChange={onChange} />
-    </div>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <AppSwitch
+          checked={Boolean(field.value)}
+          description={description}
+          label={label}
+          onCheckedChange={field.onChange}
+        />
+      )}
+    />
   )
 }
+
 function PasswordInput({ register }: { register: UseFormRegisterReturn }) {
   const [shown, setShown] = useState(false)
   return (
-    <div className="relative">
-      <input
-        {...register}
-        className={inputClass}
-        type={shown ? 'text' : 'password'}
-      />
-      <button
-        aria-label={shown ? 'Hide password' : 'Show password'}
-        className="absolute right-3 top-1/2 mt-1 bg-background grid size-5 -translate-y-1/2 place-items-center text-muted-foreground transition-colors hover:text-foreground"
-        onClick={() => setShown(!shown)}
-        type="button"
-      >
-        {shown ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-      </button>
-    </div>
+    <AppInput
+      {...register}
+      trailing={
+        <AppButton
+          aria-label={shown ? 'Hide password' : 'Show password'}
+          onClick={() => setShown(!shown)}
+          size="icon-xs"
+          tone="secondary"
+          type="button"
+        >
+          {shown ? <EyeOff /> : <Eye />}
+        </AppButton>
+      }
+      type={shown ? 'text' : 'password'}
+    />
   )
 }
 
@@ -267,81 +288,73 @@ function GeneralForm() {
     >
       {(register, errors, control) => (
         <>
-          <Card
+          <SettingsCard
             description="Default platform rules for new MoneyBag accounts."
             title="General"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field error={errors.siteName} label="Site name">
-                <input {...register('siteName')} className={inputClass} />
-              </Field>
-              <Field error={errors.currency} label="Default currency">
-                <select {...register('currency')} className={inputClass}>
-                  <option value="USD">USD — US Dollar</option>
-                  <option value="EUR">EUR — Euro</option>
-                  <option value="BDT">BDT — Bangladeshi Taka</option>
-                </select>
-              </Field>
-              <Field error={errors.language} label="Default language">
-                <select {...register('language')} className={inputClass}>
-                  <option>English</option>
-                  <option>Bengali</option>
-                </select>
-              </Field>
-              <Controller
+              <FormField error={errors.siteName} label="Site name">
+                <AppInput {...register('siteName')} />
+              </FormField>
+              <FormField error={errors.currency} label="Default currency">
+                <ControlledSelect
+                  control={control}
+                  name="currency"
+                  options={currencyOptions}
+                />
+              </FormField>
+              <FormField error={errors.language} label="Default language">
+                <ControlledSelect
+                  control={control}
+                  name="language"
+                  options={languageOptions}
+                />
+              </FormField>
+              <ControlledSwitch
                 control={control}
+                description="Restrict regular-user access while maintenance is in progress."
+                label="Maintenance mode"
                 name="maintenance"
-                render={({ field }) => (
-                  <div className="pt-6">
-                    <ToggleRow
-                      checked={field.value}
-                      description="Restrict regular-user access while maintenance is in progress."
-                      label="Maintenance mode"
-                      onChange={field.onChange}
-                    />
-                  </div>
-                )}
               />
             </div>
-          </Card>
-          <Card
+          </SettingsCard>
+          <SettingsCard
             description="Limits apply to validated customer uploads."
             title="Upload limits"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field
+              <FormField
                 error={errors.csvSize}
                 label="Allowed CSV upload size (MB)"
               >
-                <input
+                <AppInput
                   {...register('csvSize')}
-                  className={inputClass}
-                  min="0.1"
                   max="10"
+                  min="0.1"
                   step="0.1"
                   type="number"
                 />
-              </Field>
-              <Field
+              </FormField>
+              <FormField
                 error={errors.receiptSize}
                 label="Allowed receipt upload size (MB)"
               >
-                <input
+                <AppInput
                   {...register('receiptSize')}
-                  className={inputClass}
-                  min="0.1"
                   max="20"
+                  min="0.1"
                   step="0.1"
                   type="number"
                 />
-              </Field>
+              </FormField>
             </div>
-          </Card>
+          </SettingsCard>
         </>
       )}
     </SettingsForm>
   )
 }
+
 function EmailForm() {
   return (
     <SettingsForm
@@ -356,61 +369,62 @@ function EmailForm() {
         fromEmail: 'hello@moneybag.app',
       }}
     >
-      {(register, errors) => (
+      {(register, errors, control) => (
         <>
-          <Card
+          <SettingsCard
             description="Used for verification, password recovery, receipts, and transaction alerts."
             title="SMTP connection"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field error={errors.host} label="SMTP host">
-                <input {...register('host')} className={inputClass} />
-              </Field>
-              <Field error={errors.port} label="SMTP port">
-                <input
-                  {...register('port')}
-                  className={inputClass}
-                  type="number"
-                />
-              </Field>
-              <Field error={errors.username} label="SMTP username">
-                <input {...register('username')} className={inputClass} />
-              </Field>
-              <Field error={errors.password} label="SMTP password">
+              <FormField error={errors.host} label="SMTP host">
+                <AppInput {...register('host')} />
+              </FormField>
+              <FormField error={errors.port} label="SMTP port">
+                <AppInput {...register('port')} type="number" />
+              </FormField>
+              <FormField error={errors.username} label="SMTP username">
+                <AppInput {...register('username')} />
+              </FormField>
+              <FormField error={errors.password} label="SMTP password">
                 <PasswordInput register={register('password')} />
-              </Field>
-              <Field error={errors.encryption} label="Encryption">
-                <select {...register('encryption')} className={inputClass}>
-                  <option>None</option>
-                  <option>TLS</option>
-                  <option>SSL</option>
-                </select>
-              </Field>
-            </div>
-          </Card>
-          <Card title="Sender identity">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field error={errors.fromName} label="From name">
-                <input {...register('fromName')} className={inputClass} />
-              </Field>
-              <Field error={errors.fromEmail} label="From email">
-                <input
-                  {...register('fromEmail')}
-                  className={inputClass}
-                  type="email"
+              </FormField>
+              <FormField error={errors.encryption} label="Encryption">
+                <ControlledSelect
+                  control={control}
+                  name="encryption"
+                  options={[
+                    { label: 'None', value: 'None' },
+                    { label: 'TLS', value: 'TLS' },
+                    { label: 'SSL', value: 'SSL' },
+                  ]}
                 />
-              </Field>
+              </FormField>
             </div>
-            <Button className={`mt-5 ${outlineButtonClass} max-sm:w-full`} type="button" variant="outline">
+          </SettingsCard>
+          <SettingsCard title="Sender identity">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <FormField error={errors.fromName} label="From name">
+                <AppInput {...register('fromName')} />
+              </FormField>
+              <FormField error={errors.fromEmail} label="From email">
+                <AppInput {...register('fromEmail')} type="email" />
+              </FormField>
+            </div>
+            <AppButton
+              className="mt-5 max-sm:w-full"
+              tone="secondary"
+              type="button"
+            >
               <Send />
               Test email
-            </Button>
-          </Card>
+            </AppButton>
+          </SettingsCard>
         </>
       )}
     </SettingsForm>
   )
 }
+
 function OAuthForm() {
   return (
     <SettingsForm
@@ -423,65 +437,106 @@ function OAuthForm() {
       }}
     >
       {(register, errors, control) => (
-        <Card
+        <SettingsCard
           description="Allow customers to sign in using their Google account."
           title="Google OAuth"
         >
-          <div className="grid mb-5 gap-5 sm:grid-cols-2">
-            <Field error={errors.clientId} label="Google client ID">
-              <input {...register('clientId')} className={inputClass} />
-            </Field>
-            <Field error={errors.clientSecret} label="Google client secret">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <FormField error={errors.clientId} label="Google client ID">
+              <AppInput {...register('clientId')} />
+            </FormField>
+            <FormField error={errors.clientSecret} label="Google client secret">
               <PasswordInput register={register('clientSecret')} />
-            </Field>
+            </FormField>
           </div>
-          <Field
-            error={errors.redirectUris}
-            hint="Enter one authorized callback URL per line."
-            label="Authorized redirect URIs"
-
-          >
-            <textarea
-              {...register('redirectUris')}
-              className="mt-2 min-h-28 w-full rounded-md border border-input bg-card p-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20"
-            />
-          </Field>
-          <div className="mt-5 border-t border-border pt-5">
-            <Controller
-              control={control}
-              name="enabled"
-              render={({ field }) => (
-                <ToggleRow
-                  checked={field.value}
-                  description="Display Google as a sign-in option on public authentication screens."
-                  label="Enable Google login"
-                  onChange={field.onChange}
-                />
-              )}
-            />
+          <div className="mt-5">
+            <FormField
+              description="Enter one authorized callback URL per line."
+              error={errors.redirectUris}
+              label="Authorized redirect URIs"
+            >
+              <AppTextarea {...register('redirectUris')} />
+            </FormField>
           </div>
-        </Card>
+          <ControlledSwitch
+            control={control}
+            description="Display Google as a sign-in option on public authentication screens."
+            label="Enable Google login"
+            name="enabled"
+          />
+        </SettingsCard>
       )}
     </SettingsForm>
   )
 }
-const webhookEvents = [
-  ['invoice.paid', 'evt_1Q7M…K18', 'Succeeded', 'Jul 26, 2026'],
-  [
-    'customer.subscription.updated',
-    'evt_1Q7L…J92',
-    'Succeeded',
-    'Jul 26, 2026',
-  ],
-  ['checkout.session.completed', 'evt_1Q7K…A43', 'Succeeded', 'Jul 25, 2026'],
-  ['invoice.payment_failed', 'evt_1Q7J…T15', 'Failed', 'Jul 24, 2026'],
-  [
-    'customer.subscription.deleted',
-    'evt_1Q7H…P67',
-    'Succeeded',
-    'Jul 23, 2026',
-  ],
+
+type WebhookEvent = {
+  date: string
+  event: string
+  id: string
+  status: 'Succeeded' | 'Failed'
+}
+const webhookEvents: WebhookEvent[] = [
+  {
+    event: 'invoice.paid',
+    id: 'evt_1Q7M…K18',
+    status: 'Succeeded',
+    date: 'Jul 26, 2026',
+  },
+  {
+    event: 'customer.subscription.updated',
+    id: 'evt_1Q7L…J92',
+    status: 'Succeeded',
+    date: 'Jul 26, 2026',
+  },
+  {
+    event: 'checkout.session.completed',
+    id: 'evt_1Q7K…A43',
+    status: 'Succeeded',
+    date: 'Jul 25, 2026',
+  },
+  {
+    event: 'invoice.payment_failed',
+    id: 'evt_1Q7J…T15',
+    status: 'Failed',
+    date: 'Jul 24, 2026',
+  },
+  {
+    event: 'customer.subscription.deleted',
+    id: 'evt_1Q7H…P67',
+    status: 'Succeeded',
+    date: 'Jul 23, 2026',
+  },
 ]
+const webhookColumns: readonly AppTableColumn<WebhookEvent>[] = [
+  {
+    header: 'Event',
+    key: 'event',
+    render: (row) => <span className="font-medium">{row.event}</span>,
+  },
+  {
+    header: 'ID',
+    key: 'id',
+    render: (row) => (
+      <span className="font-mono text-xs text-muted-foreground">{row.id}</span>
+    ),
+  },
+  {
+    header: 'Status',
+    key: 'status',
+    render: (row) => (
+      <AppBadge status={row.status === 'Succeeded' ? 'success' : 'danger'}>
+        {row.status}
+      </AppBadge>
+    ),
+  },
+  {
+    header: 'Received',
+    key: 'date',
+    render: (row) => <span className="text-muted-foreground">{row.date}</span>,
+  },
+]
+
 function PaymentForm() {
   return (
     <SettingsForm
@@ -490,83 +545,46 @@ function PaymentForm() {
     >
       {(register, errors, control) => (
         <>
-          <Card
+          <SettingsCard
             description="Stripe handles MoneyBag subscriptions and lifetime plan purchases."
             title="Stripe gateway"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field error={errors.secretKey} label="Stripe secret key">
+              <FormField error={errors.secretKey} label="Stripe secret key">
                 <PasswordInput register={register('secretKey')} />
-              </Field>
-              <Field
+              </FormField>
+              <FormField
                 error={errors.webhookSecret}
                 label="Webhook signing secret"
               >
                 <PasswordInput register={register('webhookSecret')} />
-              </Field>
+              </FormField>
             </div>
-            <div className="mt-5 border-t border-border pt-5">
-              <Controller
+            <div className="mt-5">
+              <ControlledSwitch
                 control={control}
+                description="Enable subscription checkout and payment processing."
+                label="Enable payment gateway"
                 name="enabled"
-                render={({ field }) => (
-                  <ToggleRow
-                    checked={field.value}
-                    description="Enable subscription checkout and payment processing."
-                    label="Enable payment gateway"
-                    onChange={field.onChange}
-                  />
-                )}
               />
             </div>
-          </Card>
-          <Card
+          </SettingsCard>
+          <SettingsCard
             description="Last five Stripe webhook deliveries. This data is read-only mock data."
             title="Webhook event log"
           >
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-150 text-left text-sm">
-                <thead className="border-b border-border text-xs uppercase text-muted-foreground">
-                  <tr>
-                    <th className="pb-3 font-medium">Event</th>
-                    <th className="pb-3 font-medium">ID</th>
-                    <th className="pb-3 font-medium">Status</th>
-                    <th className="pb-3 font-medium">Received</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {webhookEvents.map(([event, id, status, date]) => (
-                    <tr
-                      className="border-b border-border last:border-0"
-                      key={id}
-                    >
-                      <td className="py-3 font-medium">{event}</td>
-                      <td className="py-3 font-mono text-xs text-muted-foreground">
-                        {id}
-                      </td>
-                      <td className="py-3">
-                        <span
-                          className={
-                            status === 'Succeeded'
-                              ? 'text-success'
-                              : 'text-destructive'
-                          }
-                        >
-                          {status}
-                        </span>
-                      </td>
-                      <td className="py-3 text-muted-foreground">{date}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Card>
+            <AppTable
+              columns={webhookColumns}
+              getRowKey={(row) => row.id}
+              rows={webhookEvents}
+            />
+          </SettingsCard>
         </>
       )}
     </SettingsForm>
   )
 }
+
 function StorageForm() {
   return (
     <SettingsForm
@@ -580,38 +598,41 @@ function StorageForm() {
       }}
     >
       {(register, errors) => (
-        <Card
+        <SettingsCard
           description="Cloudinary stores receipt uploads through signed, time-limited upload URLs."
           title="Cloudinary"
         >
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field error={errors.cloudName} label="Cloud name">
-              <input {...register('cloudName')} className={inputClass} />
-            </Field>
-            <Field error={errors.apiKey} label="API key">
-              <input {...register('apiKey')} className={inputClass} />
-            </Field>
-            <Field error={errors.apiSecret} label="API secret">
+            <FormField error={errors.cloudName} label="Cloud name">
+              <AppInput {...register('cloudName')} />
+            </FormField>
+            <FormField error={errors.apiKey} label="API key">
+              <AppInput {...register('apiKey')} />
+            </FormField>
+            <FormField error={errors.apiSecret} label="API secret">
               <PasswordInput register={register('apiSecret')} />
-            </Field>
-            <Field error={errors.preset} label="Upload preset">
-              <input {...register('preset')} className={inputClass} />
-            </Field>
-            <Field error={errors.expiry} label="Presigned URL expiry (seconds)">
-              <input
+            </FormField>
+            <FormField error={errors.preset} label="Upload preset">
+              <AppInput {...register('preset')} />
+            </FormField>
+            <FormField
+              error={errors.expiry}
+              label="Presigned URL expiry (seconds)"
+            >
+              <AppInput
                 {...register('expiry')}
-                className={inputClass}
-                min="60"
                 max="3600"
+                min="60"
                 type="number"
               />
-            </Field>
+            </FormField>
           </div>
-        </Card>
+        </SettingsCard>
       )}
     </SettingsForm>
   )
 }
+
 function SecurityForm() {
   return (
     <SettingsForm
@@ -619,54 +640,45 @@ function SecurityForm() {
       values={{ whitelist: '', enforceTwoFactor: true, rateLimit: 120 }}
     >
       {(register, errors, control) => (
-        <Card
+        <SettingsCard
           description="Limit privileged access and protect public API resources."
           title="Security controls"
         >
-          <Field
+          <FormField
+            description="Enter one IPv4, IPv6, or CIDR range per line. Leave empty to allow trusted admins from any address."
             error={errors.whitelist}
-            hint="Enter one IPv4, IPv6, or CIDR range per line. Leave empty to allow trusted admins from any address."
             label="Admin IP whitelist"
           >
-            <textarea
+            <AppTextarea
               {...register('whitelist')}
-              className="mt-2 min-h-28 w-full rounded-md border border-input bg-card p-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20"
               placeholder="203.0.113.0/24"
             />
-          </Field>
+          </FormField>
           <div className="mt-5 grid gap-5 border-t border-border pt-5 sm:grid-cols-2">
-            <Field
+            <FormField
               error={errors.rateLimit}
               label="API rate limit (requests/min)"
             >
-              <input
+              <AppInput
                 {...register('rateLimit')}
-                className={inputClass}
-                min="10"
                 max="1000"
+                min="10"
                 type="number"
               />
-            </Field>
-            <Controller
+            </FormField>
+            <ControlledSwitch
               control={control}
+              description="Require TOTP 2FA before administrators can access the admin area."
+              label="Enforce 2FA for admins"
               name="enforceTwoFactor"
-              render={({ field }) => (
-                <div className="pt-6">
-                  <ToggleRow
-                    checked={field.value}
-                    description="Require TOTP 2FA before administrators can access the admin area."
-                    label="Enforce 2FA for admins"
-                    onChange={field.onChange}
-                  />
-                </div>
-              )}
             />
           </div>
-        </Card>
+        </SettingsCard>
       )}
     </SettingsForm>
   )
 }
+
 function LegalForm() {
   return (
     <SettingsForm
@@ -679,35 +691,35 @@ function LegalForm() {
       }}
     >
       {(register, errors) => (
-        <Card
+        <SettingsCard
           description="Manage the customer-facing documents shown during registration and throughout the product."
           title="Legal documents"
         >
           <div className="space-y-6">
-            <div>
-              <Field error={errors.terms} label="Terms of Service">
-                <textarea
-                  {...register('terms')}
-                  className="mt-2 min-h-48 w-full rounded-md border border-input bg-card p-3 text-sm leading-6 text-foreground outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/20"
-                />
-              </Field>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Last updated: July 12, 2026
-              </p>
-            </div>
+            <FormField
+              description="Last updated: July 12, 2026"
+              error={errors.terms}
+              label="Terms of Service"
+            >
+              <AppTextarea
+                {...register('terms')}
+                className="min-h-48 leading-6"
+              />
+            </FormField>
             <div className="border-t border-border pt-6">
-              <Field error={errors.privacy} label="Privacy Policy">
-                <textarea
+              <FormField
+                description="Last updated: July 12, 2026"
+                error={errors.privacy}
+                label="Privacy Policy"
+              >
+                <AppTextarea
                   {...register('privacy')}
-                  className="mt-2 min-h-48 w-full rounded-md border border-input bg-card p-3 text-sm leading-6 text-foreground outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/20"
+                  className="min-h-48 leading-6"
                 />
-              </Field>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Last updated: July 12, 2026
-              </p>
+              </FormField>
             </div>
           </div>
-        </Card>
+        </SettingsCard>
       )}
     </SettingsForm>
   )
@@ -726,6 +738,7 @@ const sections: Record<AdminSettingsSectionName, () => ReactNode> = {
   'payment-gateways': PaymentForm,
   localization: GeneralForm,
 }
+
 export function AdminSettingsPanel() {
   return <GeneralForm />
 }

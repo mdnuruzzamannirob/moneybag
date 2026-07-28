@@ -1,30 +1,144 @@
-"use client"
+'use client'
 
-import { Camera, ChevronRight, Download, LogOut } from "lucide-react"
-import { useState } from "react"
+import { Camera, Download, LogOut } from 'lucide-react'
+import { useState } from 'react'
 
-import { Button } from "@/components/ui/button"
+import {
+  AppAvatar,
+  AppButton,
+  AppCard,
+  AppConfirmDialog,
+  AppField,
+  AppInput,
+  AppSelect,
+  AppSwitch,
+} from '@/components/app-ui'
 
-type Section = "profile" | "security" | "preferences" | "notifications" | "billing" | "privacy"
+type Section =
+  | 'profile'
+  | 'security'
+  | 'preferences'
+  | 'notifications'
+  | 'billing'
+  | 'privacy'
 
-const inputClass = "h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20"
-const selectClass = "h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/20 sm:w-45"
-const toggleClass = "relative h-6 w-11 rounded-full bg-muted transition-colors data-[checked=true]:bg-primary after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform data-[checked=true]:after:translate-x-5"
-const primaryButtonClass = "h-9 rounded-md border-0 bg-primary px-3 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90"
-const outlineButtonClass = "h-9 rounded-md border-border bg-transparent px-3 text-sm font-medium text-muted-foreground shadow-none hover:bg-muted hover:text-foreground"
-const destructiveButtonClass = "h-9 rounded-md border-0 bg-destructive/10 px-3 text-sm font-medium text-destructive shadow-none hover:bg-destructive/20"
-
-function Toggle({ initial = false }: { initial?: boolean }) { const [checked, setChecked] = useState(initial); return <button aria-checked={checked} aria-label="Toggle setting" className={`${toggleClass} shrink-0`} data-checked={checked} data-switch="true" onClick={() => setChecked(!checked)} role="switch" type="button" /> }
-function Row({ action, hint, label }: { action: React.ReactNode; hint: string; label: string }) { return <div className="flex min-w-0 flex-col gap-4 border-b border-border py-5 first:pt-0 last:border-b-0 last:pb-0 max-sm:has-[button[data-switch]]:flex-row max-sm:has-[button[data-switch]]:items-center sm:flex-row sm:items-center sm:justify-between"><div className="min-w-0 flex-1"><p className="text-sm font-medium text-foreground">{label}</p><p className="mt-1 text-xs leading-5 text-muted-foreground">{hint}</p></div><div className="flex shrink-0 items-center max-sm:w-full max-sm:has-[button[data-switch]]:w-auto max-sm:has-[button[data-switch]]:justify-end max-sm:[&>button:not([role=switch])]:w-full">{action}</div></div> }
-function Card({ children, title }: { children: React.ReactNode; title: string }) { return <section className="rounded-xl border border-border bg-card p-5 shadow-xs sm:p-6"><h2 className="mb-6 text-base font-semibold text-foreground">{title}</h2>{children}</section> }
-
-export function SettingsPanel({ section }: { section: Section }) {
-  if (section === "profile") return <Profile />
-  if (section === "security") return <Card title="Security & sign-in"><Row action={<Button className={outlineButtonClass} variant="outline">Change password</Button>} hint="Last changed: 12 June 2026" label="Password" /><Row action={<Button className={outlineButtonClass} variant="outline">Set up</Button>} hint="Add a verification code on top of your password for extra safety" label="Two-factor authentication (2FA)" /><Row action={<Button className={outlineButtonClass} variant="outline">Connect</Button>} hint="Sign in faster with your Google account" label="Google account" /><Row action={<Button className={outlineButtonClass} variant="outline"><LogOut />Manage sessions</Button>} hint="You’re currently signed in on 2 devices" label="Active sessions" /></Card>
-  if (section === "preferences") return <Card title="Preferences"><Row action={<select className={selectClass}><option>৳ BDT — Taka</option><option>$ USD — Dollar</option><option>€ EUR — Euro</option></select>} hint="Used throughout the app" label="Currency" /><Row action={<select className={selectClass}><option>DD MMM, YYYY</option><option>MM/DD/YYYY</option></select>} hint="How dates are displayed" label="Date format" /><Row action={<Toggle />} hint="Use smaller spacing across the dashboard" label="Compact mode" /></Card>
-  if (section === "notifications") return <Card title="Notifications"><Row action={<Toggle initial />} hint="Notify me when I reach 80% of a budget" label="Budget warnings" /><Row action={<Toggle initial />} hint="Notify me of transactions over ৳5,000" label="Large transactions" /><Row action={<Toggle />} hint="Receive a spending summary every Sunday morning" label="Weekly summary" /></Card>
-  if (section === "billing") return <Card title="Plan & billing"><Row action={<Button className={primaryButtonClass}>Upgrade plan <ChevronRight /></Button>} hint="Free plan · Your next billing date is not set" label="Current plan" /><Row action={<Button className={outlineButtonClass} variant="outline">Add payment method</Button>} hint="Add a card to start a paid subscription" label="Payment method" /></Card>
-  return <Card title="Privacy & data"><Row action={<Button className={outlineButtonClass} variant="outline"><Download />Export data</Button>} hint="Download your wallets, transactions and budgets as a JSON file" label="Export all data" /><Row action={<Button className={destructiveButtonClass} variant="destructive">Delete account</Button>} hint="Permanently remove your account and all associated data. This cannot be undone." label="Delete account" /></Card>
+function Row({ action, hint, label }: { action: React.ReactNode; hint: string; label: string }) {
+  return (
+    <div className="flex min-w-0 flex-col gap-4 border-b border-border py-5 first:pt-0 last:border-b-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium text-foreground">{label}</p>
+        <p className="mt-1 text-xs leading-5 text-muted-foreground">{hint}</p>
+      </div>
+      <div className="flex shrink-0 items-center max-sm:w-full max-sm:[&>button]:w-full">
+        {action}
+      </div>
+    </div>
+  )
 }
 
-function Profile() { const [name, setName] = useState("Anika Tahsin"); const [email, setEmail] = useState("anika@moneybag.app"); return <Card title="Your profile"><div className="mb-7 flex flex-wrap items-center gap-4 border-b border-border pb-6"><div className="grid size-16 place-items-center rounded-full bg-primary/10 text-lg font-bold text-primary">AT</div><div className="min-w-0 flex-1"><p className="text-sm font-medium">Profile photo</p><p className="mt-1 text-xs text-muted-foreground">JPG, GIF or PNG. Max size 2MB.</p></div><Button className={outlineButtonClass} variant="outline"><Camera />Change photo</Button></div><div className="grid gap-5 sm:grid-cols-2"><label className="space-y-2 text-sm font-medium text-foreground">Full name<input className={inputClass} onChange={(event) => setName(event.target.value)} value={name} /></label><label className="space-y-2 text-sm font-medium text-foreground">Email address<input className={inputClass} onChange={(event) => setEmail(event.target.value)} type="email" value={email} /></label></div><div className="mt-7 flex justify-end border-t border-border pt-5 max-sm:[&_button]:w-full"><Button className={primaryButtonClass}>Save changes</Button></div></Card> }
+function SettingsCard({ children, title }: { children: React.ReactNode; title: string }) {
+  return <AppCard><h2 className="mb-6 text-base font-semibold text-foreground">{title}</h2>{children}</AppCard>
+}
+
+export function SettingsPanel({ section }: { section: Section }) {
+  if (section === 'profile') return <Profile />
+  if (section === 'security') return <Security />
+  if (section === 'preferences') return <Preferences />
+  if (section === 'notifications') return <Notifications />
+  if (section === 'billing') return <Billing />
+  return <Privacy />
+}
+
+function Security() {
+  return (
+    <SettingsCard title="Security & sign-in">
+      <Row action={<AppButton tone="secondary">Change password</AppButton>} hint="Last changed: 12 June 2026" label="Password" />
+      <Row action={<AppButton tone="secondary">Set up</AppButton>} hint="Add a verification code on top of your password for extra safety" label="Two-factor authentication (2FA)" />
+      <Row action={<AppButton tone="secondary">Connect</AppButton>} hint="Sign in faster with your Google account" label="Google account" />
+      <Row action={<AppButton tone="secondary"><LogOut />Manage sessions</AppButton>} hint="You’re currently signed in on 2 devices" label="Active sessions" />
+    </SettingsCard>
+  )
+}
+
+function Preferences() {
+  return (
+    <SettingsCard title="Preferences">
+      <Row
+        action={<AppSelect defaultValue="bdt" options={[{ label: '৳ BDT — Taka', value: 'bdt' }, { label: '$ USD — Dollar', value: 'usd' }, { label: '€ EUR — Euro', value: 'eur' }]} triggerClassName="w-full sm:w-52" />}
+        hint="Used throughout the app"
+        label="Currency"
+      />
+      <Row
+        action={<AppSelect defaultValue="dd" options={[{ label: 'DD MMM, YYYY', value: 'dd' }, { label: 'MM/DD/YYYY', value: 'mm' }]} triggerClassName="w-full sm:w-52" />}
+        hint="How dates are displayed"
+        label="Date format"
+      />
+      <div className="pt-5"><AppSwitch defaultChecked description="Use smaller spacing across the dashboard" label="Compact mode" /></div>
+    </SettingsCard>
+  )
+}
+
+function Notifications() {
+  return (
+    <SettingsCard title="Notifications">
+      <div className="space-y-3">
+        <AppSwitch defaultChecked description="Notify me when I reach 80% of a budget" label="Budget warnings" />
+        <AppSwitch defaultChecked description="Notify me of transactions over ৳5,000" label="Large transactions" />
+        <AppSwitch description="Receive a spending summary every Sunday morning" label="Weekly summary" />
+      </div>
+    </SettingsCard>
+  )
+}
+
+function Billing() {
+  return (
+    <SettingsCard title="Plan & billing">
+      <Row action={<AppButton>Upgrade plan</AppButton>} hint="Free plan · Your next billing date is not set" label="Current plan" />
+      <Row action={<AppButton tone="secondary">Add payment method</AppButton>} hint="Add a card to start a paid subscription" label="Payment method" />
+    </SettingsCard>
+  )
+}
+
+function Privacy() {
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  return (
+    <>
+      <SettingsCard title="Privacy & data">
+        <Row action={<AppButton tone="secondary"><Download />Export data</AppButton>} hint="Download your wallets, transactions and budgets as a JSON file" label="Export all data" />
+        <Row action={<AppButton onClick={() => setConfirmDelete(true)} tone="danger">Delete account</AppButton>} hint="Permanently remove your account and all associated data. This cannot be undone." label="Delete account" />
+      </SettingsCard>
+      <AppConfirmDialog
+        confirmLabel="Delete account"
+        description="Your account, transactions, budgets, and savings goals will be permanently deleted."
+        onConfirm={() => setConfirmDelete(false)}
+        onOpenChange={setConfirmDelete}
+        open={confirmDelete}
+        title="Delete your account?"
+      />
+    </>
+  )
+}
+
+function Profile() {
+  const [name, setName] = useState('Anika Tahsin')
+  const [email, setEmail] = useState('anika@moneybag.app')
+  return (
+    <SettingsCard title="Your profile">
+      <div className="mb-7 flex flex-wrap items-center gap-4 border-b border-border pb-6">
+        <AppAvatar alt="Anika Tahsin" fallback="AT" size="xl" />
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium">Profile photo</p>
+          <p className="mt-1 text-xs text-muted-foreground">JPG, GIF or PNG. Max size 2MB.</p>
+        </div>
+        <AppButton tone="secondary"><Camera />Change photo</AppButton>
+      </div>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <AppField label="Full name"><AppInput onChange={(event) => setName(event.target.value)} value={name} /></AppField>
+        <AppField label="Email address"><AppInput onChange={(event) => setEmail(event.target.value)} type="email" value={email} /></AppField>
+      </div>
+      <div className="mt-7 flex justify-end border-t border-border pt-5 max-sm:[&_button]:w-full">
+        <AppButton>Save changes</AppButton>
+      </div>
+    </SettingsCard>
+  )
+}

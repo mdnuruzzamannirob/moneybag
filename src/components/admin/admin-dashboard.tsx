@@ -12,8 +12,7 @@ import {
   CategoryPieChart,
   DailyTrendLineChart,
 } from '@/components/charts/dashboard-charts'
-import { DashboardStatCard } from '@/components/shared/dashboard-stat-card'
-import { buttonVariants } from '@/components/ui/button'
+import { AppBadge, AppButton, AppCard, AppPageHeader, AppStatCard } from '@/components/app-ui'
 import type {
   AdminActivityItem,
   AdminDashboardData,
@@ -29,25 +28,18 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
 
   return (
     <div className="space-y-6">
-      <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
-        <div>
-          <p className="mb-1 text-sm font-medium text-primary">
-            Tuesday, July 28, 2026
-          </p>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+      <AppPageHeader
+        description="Monitor MoneyBag growth, subscriptions and system health."
+        title={
+          <>
+            <span className="mb-1 block text-sm font-medium text-primary">
+              Tuesday, July 28, 2026
+            </span>
             Admin dashboard
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Monitor MoneyBag growth, subscriptions and system health.
-          </p>
-        </div>
-        <Link
-          className={buttonVariants({ variant: 'default' })}
-          href="/admin/reports"
-        >
-          Open full report
-        </Link>
-      </header>
+          </>
+        }
+        actions={<AppButton nativeButton={false} render={<Link href="/admin/reports" />}>Open full report</AppButton>}
+      />
 
       <section
         aria-label="Platform metrics"
@@ -55,13 +47,7 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
       >
         {data.metrics.map((metric, index) => {
           const Icon = metricIcons[index] ?? Activity
-          return (
-            <DashboardStatCard
-              icon={Icon}
-              key={metric.id}
-              metric={metric}
-            />
-          )
+          return <AppStatCard icon={<Icon />} key={metric.id} label={metric.label} value={metric.value} change={metric.change} tone={metric.tone === 'accent' ? 'primary' : metric.tone} />
         })}
       </section>
 
@@ -111,24 +97,21 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
       >
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {data.services.map((service) => (
-            <div
-              className="rounded-lg border border-border bg-muted/35 p-4"
-              key={service.id}
-            >
+            <AppCard className="bg-muted/35" key={service.id} padding="sm">
               <div className="flex items-center justify-between gap-3">
                 <span className="grid size-9 place-items-center rounded-lg bg-success-soft text-success">
                   <Server className="size-4" />
                 </span>
-                <span className="flex items-center gap-1.5 text-xs font-semibold capitalize text-success">
+                <AppBadge className="gap-1.5" status="success">
                   <i className="size-1.5 rounded-full bg-success" />
                   {service.status}
-                </span>
+                </AppBadge>
               </div>
               <p className="mt-4 text-sm font-semibold">{service.name}</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {service.detail}
               </p>
-            </div>
+            </AppCard>
           ))}
         </div>
       </AdminCard>
@@ -150,24 +133,26 @@ function AdminCard({
   children: React.ReactNode
 }) {
   return (
-    <article className="min-w-0 rounded-xl border border-border bg-card p-5 shadow-xs">
+    <AppCard className="min-w-0" padding="md">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>
           <h2 className="font-semibold">{title}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         </div>
         {href && action ? (
-          <Link
-            className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-            href={href}
+          <AppButton
+            nativeButton={false}
+            render={<Link href={href} />}
+            size="sm"
+            tone="secondary"
           >
             {action}
             <ArrowRight data-icon="inline-end" />
-          </Link>
+          </AppButton>
         ) : null}
       </div>
       {children}
-    </article>
+    </AppCard>
   )
 }
 

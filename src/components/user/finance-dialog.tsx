@@ -1,38 +1,372 @@
 'use client'
 
-import type { FormEvent, ReactNode } from 'react'
-import { Check, Ellipsis, FileSpreadsheet, Pencil, ReceiptText, Trash2, Upload, X } from 'lucide-react'
+import {
+  Ellipsis,
+  Pencil,
+  Trash2,
+} from 'lucide-react'
 import { useState } from 'react'
 
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import {
+  AppAlert,
+  AppButton,
+  AppConfirmDialog,
+  AppCurrencyInput,
+  AppDatePicker,
+  AppDropdownMenu,
+  AppField,
+  AppFileUpload,
+  AppInput,
+  AppModal,
+  AppSegmentedControl,
+  AppSelect,
+  AppSwitch,
+} from '@/components/app-ui'
 
-export type FinanceDialogKind = 'transaction' | 'import' | 'export' | 'budget' | 'goal' | 'contribution'
+export type FinanceDialogKind =
+  | 'transaction'
+  | 'import'
+  | 'export'
+  | 'budget'
+  | 'goal'
+  | 'contribution'
 
-const input = 'h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/15'
-const select = 'h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none focus:border-primary focus:ring-3 focus:ring-primary/15'
-
-export function FinanceDialog({ kind, onClose, editing = false }: { kind: FinanceDialogKind; onClose: () => void; editing?: boolean }) {
-  const [saved, setSaved] = useState(false)
-  const title = editing ? `Edit ${kind === 'transaction' ? 'transaction' : kind === 'budget' ? 'budget' : 'savings goal'}` : { transaction: 'Add transaction', import: 'Import transactions', export: 'Export transactions', budget: 'Add budget', goal: 'New savings goal', contribution: 'Add contribution' }[kind]
-  const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSaved(true) }
-  return <div aria-modal="true" className="fixed inset-0 z-60 grid place-items-end bg-foreground/40 p-0 backdrop-blur-[1px] sm:place-items-center sm:p-4" role="dialog"><section className="w-full max-w-lg rounded-t-xl border border-border bg-card shadow-xl sm:rounded-xl"><header className="flex items-center justify-between border-b border-border px-5 py-4"><h2 className="font-semibold">{title}</h2><button aria-label="Close dialog" className={buttonVariants({ variant: 'ghost', size: 'icon-xs' })} onClick={onClose} type="button"><X /></button></header><form className="max-h-[65vh] space-y-4 overflow-y-auto p-5" id="finance-dialog-form" onSubmit={submit}>{saved ? <Success kind={kind} /> : <Fields kind={kind} />}</form><footer className="flex items-center justify-end gap-2 border-t border-border bg-muted/25 px-5 py-4">{saved ? <button className={buttonVariants()} onClick={onClose} type="button"><Check data-icon="inline-start" />Done</button> : <><button className={buttonVariants({ variant: 'ghost' })} onClick={onClose} type="button">Cancel</button><button className={buttonVariants()} form="finance-dialog-form" type="submit">{kind === 'export' ? 'Export CSV' : kind === 'import' ? 'Import file' : kind === 'contribution' ? 'Add contribution' : editing ? 'Save changes' : 'Save'}</button></>}</footer></section></div>
+const dialogTitles: Record<FinanceDialogKind, string> = {
+  transaction: 'Add transaction',
+  import: 'Import transactions',
+  export: 'Export transactions',
+  budget: 'Create budget',
+  goal: 'Create savings goal',
+  contribution: 'Add contribution',
 }
 
-function Label({ title, children }: { title: string; children: ReactNode }) { return <label className="block space-y-1.5"><span className="text-sm font-medium">{title}</span>{children}</label> }
-function Switch({ defaultChecked = false, label, detail }: { defaultChecked?: boolean; label: string; detail?: string }) { return <label className="flex cursor-pointer items-start justify-between gap-4 rounded-lg border border-border p-3"><span><span className="block text-sm font-medium">{label}</span>{detail ? <span className="mt-0.5 block text-xs text-muted-foreground">{detail}</span> : null}</span><span className="relative mt-0.5 inline-flex shrink-0"><input className="peer sr-only" defaultChecked={defaultChecked} type="checkbox" /><span className="h-5 w-9 rounded-full bg-muted transition-colors peer-checked:bg-primary" /><span className="absolute left-0.5 top-0.5 size-4 rounded-full bg-card shadow-xs transition-transform peer-checked:translate-x-4" /></span></label> }
-function Fields({ kind }: { kind: FinanceDialogKind }) {
+const categoryOptions = [
+  { label: 'Food & dining', value: 'food' },
+  { label: 'Transport', value: 'transport' },
+  { label: 'Shopping', value: 'shopping' },
+  { label: 'Entertainment', value: 'entertainment' },
+  { label: 'Bills', value: 'bills' },
+]
+
+export function FinanceDialog({
+  editing = false,
+  kind,
+  onClose,
+}: {
+  editing?: boolean
+  kind: FinanceDialogKind
+  onClose: () => void
+}) {
+  const [saved, setSaved] = useState(false)
+  const title = editing ? `Edit ${kind}` : dialogTitles[kind]
+  const submit = (event: React.FormEvent) => {
+    event.preventDefault()
+    setSaved(true)
+  }
+
+  return (
+    <AppModal
+      description={saved ? undefined : getDialogDescription(kind)}
+      footer={
+        saved ? (
+          <AppButton onClick={onClose}>Done</AppButton>
+        ) : (
+          <>
+            <AppButton onClick={onClose} tone="secondary" type="button">
+              Cancel
+            </AppButton>
+            <AppButton form="finance-dialog-form" type="submit">
+              {getSubmitLabel(kind, editing)}
+            </AppButton>
+          </>
+        )
+      }
+      onOpenChange={(open) => {
+        if (!open) onClose()
+      }}
+      open
+      title={title}
+    >
+      {saved ? (
+        <AppAlert title="Ready to continue" tone="success">
+          {getSuccessMessage(kind)}
+        </AppAlert>
+      ) : (
+        <form className="space-y-4" id="finance-dialog-form" onSubmit={submit}>
+          <FinanceFields kind={kind} />
+        </form>
+      )}
+    </AppModal>
+  )
+}
+
+function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
   const [type, setType] = useState<'income' | 'expense'>('expense')
   const [fileName, setFileName] = useState('')
-  if (kind === 'import') return <><p className="text-sm text-muted-foreground">Upload a CSV file to add multiple transactions. You will get a validation preview before import.</p><label className="grid min-h-40 cursor-pointer place-items-center rounded-lg border border-dashed border-primary/35 bg-primary/5 p-6 text-center"><input accept=".csv,text/csv" className="sr-only" onChange={(event) => setFileName(event.target.files?.[0]?.name ?? '')} type="file" /><div><FileSpreadsheet className="mx-auto mb-3 size-8 text-primary" /><p className="text-sm font-medium">{fileName || 'Choose or drop a CSV file'}</p><p className="mt-1 text-xs text-muted-foreground">Maximum file size: 1 MB</p></div></label><p className="text-xs text-muted-foreground">Required: date, description, amount, type, category and wallet.</p></>
-  if (kind === 'export') return <><p className="text-sm text-muted-foreground">Choose the transactions and fields to include in your CSV export.</p><Label title="Date range"><select className={select}><option>July 2026</option><option>Last 3 months</option><option>This year</option><option>All time</option></select></Label><Switch defaultChecked detail="Add notes and wallet details to each row." label="Include additional details" /></>
-  if (kind === 'transaction') return <><Label title="Type"><div className="grid grid-cols-2 rounded-md bg-muted p-1"><button className={cn('rounded-sm px-3 py-2 text-sm font-medium', type === 'income' ? 'bg-card text-success shadow-xs' : 'text-muted-foreground')} onClick={() => setType('income')} type="button">Income</button><button className={cn('rounded-sm px-3 py-2 text-sm font-medium', type === 'expense' ? 'bg-card text-danger shadow-xs' : 'text-muted-foreground')} onClick={() => setType('expense')} type="button">Expense</button></div></Label><Label title="Description"><input className={input} placeholder="e.g. Grocery shopping" required /></Label><div className="grid gap-4 sm:grid-cols-2"><Label title="Amount"><input className={input} min="1" placeholder="0" required type="number" /></Label><Label title="Date"><input className={input} defaultValue="2026-07-28" required type="date" /></Label></div><div className="grid gap-4 sm:grid-cols-2"><Label title="Category"><select className={select}><option>{type === 'income' ? 'Salary' : 'Food'}</option><option>{type === 'income' ? 'Freelance' : 'Transport'}</option><option>{type === 'income' ? 'Other income' : 'Bills'}</option></select></Label><Label title="Wallet"><select className={select}><option>Cash</option><option>BRAC Bank</option><option>bKash</option></select></Label></div><Label title="Note (optional)"><input className={input} placeholder="Add a note" /></Label><label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-muted/35 p-3 text-center text-xs text-muted-foreground"><input accept="image/png,image/jpeg,application/pdf" className="sr-only" onChange={(event) => setFileName(event.target.files?.[0]?.name ?? '')} type="file" /><Upload className="size-4 text-primary" />{fileName || 'Attach receipt (JPG, PNG or PDF)'}</label></>
-  if (kind === 'budget') return <><Label title="Category"><select className={select}><option>Food & dining</option><option>Transport</option><option>Shopping</option><option>Entertainment</option><option>Health</option></select></Label><div className="grid gap-4 sm:grid-cols-2"><Label title="Monthly limit"><input className={input} min="1" placeholder="0" required type="number" /></Label><Label title="Alert threshold"><select className={select}><option>80%</option><option>90%</option></select></Label></div><Label title="Period"><select className={select}><option>Monthly</option><option>Yearly</option></select></Label><Switch detail="Add unused funds to the next month." label="Roll over unspent amount" /></>
-  if (kind === 'goal') return <><Label title="Goal name"><input className={input} placeholder="e.g. Emergency fund" required /></Label><div className="grid gap-4 sm:grid-cols-2"><Label title="Target amount"><input className={input} min="1" placeholder="0" required type="number" /></Label><Label title="Already saved"><input className={input} min="0" placeholder="0" type="number" /></Label></div><Label title="Target deadline"><input className={input} defaultValue="2026-12-31" required type="date" /></Label><Label title="Goal colour"><select className={select}><option>Indigo</option><option>Green</option><option>Pink</option><option>Amber</option></select></Label></>
-  return <><div className="rounded-lg bg-muted p-4 text-sm"><p className="text-muted-foreground">Add a one-time contribution to this goal.</p><p className="mt-1 text-xl font-semibold">Every amount counts</p></div><Label title="Contribution amount"><input autoFocus className={input} min="1" placeholder="0" required type="number" /></Label><Label title="Note (optional)"><input className={input} placeholder="e.g. July savings" /></Label></>
+
+  if (kind === 'import') {
+    return (
+      <>
+        <AppFileUpload
+          accept=".csv,text/csv"
+          description="CSV only · maximum file size 1 MB"
+          label={fileName || 'Choose or drop a CSV file'}
+          onFiles={(files) => setFileName(files?.[0]?.name ?? '')}
+        />
+        <p className="text-xs text-muted-foreground">
+          Required columns: date, description, amount, type, category and wallet.
+        </p>
+      </>
+    )
+  }
+
+  if (kind === 'export') {
+    return (
+      <>
+        <AppField label="Date range">
+          <AppSelect
+            defaultValue="july"
+            options={[
+              { label: 'July 2026', value: 'july' },
+              { label: 'Last 3 months', value: 'quarter' },
+              { label: 'This year', value: 'year' },
+              { label: 'All time', value: 'all' },
+            ]}
+          />
+        </AppField>
+        <AppSwitch
+          defaultChecked
+          description="Add notes and wallet details to each exported row."
+          label="Include additional details"
+        />
+      </>
+    )
+  }
+
+  if (kind === 'transaction') {
+    const transactionCategories =
+      type === 'income'
+        ? [
+            { label: 'Salary', value: 'salary' },
+            { label: 'Freelance', value: 'freelance' },
+            { label: 'Other income', value: 'other-income' },
+          ]
+        : categoryOptions
+    return (
+      <>
+        <AppField label="Type">
+          <AppSegmentedControl
+            onValueChange={(value) => {
+              if (value === 'income' || value === 'expense') setType(value)
+            }}
+            options={[
+              { label: 'Income', value: 'income' },
+              { label: 'Expense', value: 'expense' },
+            ]}
+            value={type}
+          />
+        </AppField>
+        <AppField label="Description" required>
+          <AppInput placeholder="e.g. Grocery shopping" required />
+        </AppField>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <AppField label="Amount" required>
+            <AppCurrencyInput placeholder="0" required />
+          </AppField>
+          <AppField label="Date" required>
+            <AppDatePicker value={new Date(2026, 6, 28)} />
+          </AppField>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <AppField label="Category">
+            <AppSelect defaultValue={transactionCategories[0]?.value} options={transactionCategories} />
+          </AppField>
+          <AppField label="Wallet">
+            <AppSelect
+              defaultValue="cash"
+              options={[
+                { label: 'Cash', value: 'cash' },
+                { label: 'BRAC Bank', value: 'brac' },
+                { label: 'bKash', value: 'bkash' },
+              ]}
+            />
+          </AppField>
+        </div>
+        <AppField label="Note (optional)">
+          <AppInput placeholder="Add a note" />
+        </AppField>
+        <AppFileUpload
+          accept="image/png,image/jpeg,application/pdf"
+          description="JPG, PNG or PDF"
+          label={fileName || 'Attach receipt'}
+          onFiles={(files) => setFileName(files?.[0]?.name ?? '')}
+        />
+      </>
+    )
+  }
+
+  if (kind === 'budget') {
+    return (
+      <>
+        <AppField label="Category">
+          <AppSelect defaultValue="food" options={categoryOptions} />
+        </AppField>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <AppField label="Monthly limit" required>
+            <AppCurrencyInput placeholder="0" required />
+          </AppField>
+          <AppField label="Alert threshold">
+            <AppSelect
+              defaultValue="80"
+              options={[
+                { label: '80%', value: '80' },
+                { label: '90%', value: '90' },
+              ]}
+            />
+          </AppField>
+        </div>
+        <AppField label="Period">
+          <AppSelect
+            defaultValue="monthly"
+            options={[
+              { label: 'Monthly', value: 'monthly' },
+              { label: 'Yearly', value: 'yearly' },
+            ]}
+          />
+        </AppField>
+        <AppSwitch
+          description="Add unused funds to the next month."
+          label="Roll over unspent amount"
+        />
+      </>
+    )
+  }
+
+  if (kind === 'goal') {
+    return (
+      <>
+        <AppField label="Goal name" required>
+          <AppInput placeholder="e.g. Emergency fund" required />
+        </AppField>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <AppField label="Target amount" required>
+            <AppCurrencyInput placeholder="0" required />
+          </AppField>
+          <AppField label="Already saved">
+            <AppCurrencyInput placeholder="0" />
+          </AppField>
+        </div>
+        <AppField label="Target deadline" required>
+          <AppDatePicker value={new Date(2026, 11, 31)} />
+        </AppField>
+        <AppField label="Goal colour">
+          <AppSelect
+            defaultValue="indigo"
+            options={[
+              { label: 'Indigo', value: 'indigo' },
+              { label: 'Green', value: 'green' },
+              { label: 'Pink', value: 'pink' },
+              { label: 'Amber', value: 'amber' },
+            ]}
+          />
+        </AppField>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <div className="rounded-lg bg-muted p-4 text-sm">
+        <p className="text-muted-foreground">Add a one-time contribution to this goal.</p>
+        <p className="mt-1 text-xl font-semibold">Every amount counts</p>
+      </div>
+      <AppField label="Contribution amount" required>
+        <AppCurrencyInput autoFocus placeholder="0" required />
+      </AppField>
+      <AppField label="Note (optional)">
+        <AppInput placeholder="e.g. July savings" />
+      </AppField>
+    </>
+  )
 }
-function Success({ kind }: { kind: FinanceDialogKind }) { return <div className="grid min-h-44 place-items-center text-center"><div><span className="mx-auto grid size-11 place-items-center rounded-full bg-success-soft text-success"><Check className="size-5" /></span><h3 className="mt-3 text-sm font-semibold">Ready to continue</h3><p className="mt-1 text-xs text-muted-foreground">Your {kind === 'import' ? 'file is ready for validation' : kind === 'export' ? 'export has been prepared' : 'changes have been saved'}.</p></div></div> }
 
-export function ConfirmDialog({ title, description, onClose }: { title: string; description: string; onClose: () => void }) { const [done, setDone] = useState(false); return <div aria-modal="true" className="fixed inset-0 z-70 grid place-items-center bg-foreground/40 p-4" role="dialog"><section className="w-full max-w-sm rounded-xl border border-border bg-card shadow-xl"><div className="p-5">{done ? <Success kind="goal" /> : <><h2 className="font-semibold">{title}</h2><p className="mt-2 text-sm text-muted-foreground">{description}</p></>}</div><footer className="flex justify-end gap-2 border-t border-border bg-muted/25 px-5 py-4">{done ? <button className={buttonVariants()} onClick={onClose} type="button">Done</button> : <><button className={buttonVariants({ variant: 'ghost' })} onClick={onClose} type="button">Cancel</button><button className={buttonVariants({ variant: 'destructive' })} onClick={() => setDone(true)} type="button">Delete</button></>}</footer></section></div> }
+function getDialogDescription(kind: FinanceDialogKind) {
+  if (kind === 'import') return 'Upload a CSV file and validate it before importing.'
+  if (kind === 'export') return 'Choose which transaction data to include.'
+  if (kind === 'contribution') return 'Record progress toward this savings goal.'
+  return 'Complete the details below, then save your changes.'
+}
 
-export function RowMenu({ kind }: { kind: 'transaction' | 'budget' | 'goal' }) { const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null); return <><details className="relative"><summary aria-label="More actions" className="grid size-7 cursor-pointer list-none place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground [&::-webkit-details-marker]:hidden"><Ellipsis className="size-4" /></summary><div className="absolute right-0 top-8 z-20 w-28 rounded-lg border border-border bg-card p-1 shadow-md"><button className="flex w-full items-center rounded-md px-2.5 py-2 text-left text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground" onClick={() => setDialog('edit')} type="button"><Pencil className="mr-2 size-3" />Edit</button><button className="flex w-full items-center rounded-md px-2.5 py-2 text-left text-xs font-medium text-danger hover:bg-danger-soft" onClick={() => setDialog('delete')} type="button"><Trash2 className="mr-2 size-3" />Delete</button></div></details>{dialog === 'edit' ? <FinanceDialog editing kind={kind} onClose={() => setDialog(null)} /> : null}{dialog === 'delete' ? <ConfirmDialog description="This action cannot be undone. Related information will remain available where required." onClose={() => setDialog(null)} title={`Delete ${kind}`} /> : null}</> }
+function getSubmitLabel(kind: FinanceDialogKind, editing: boolean) {
+  if (kind === 'export') return 'Export CSV'
+  if (kind === 'import') return 'Import file'
+  if (kind === 'contribution') return 'Add contribution'
+  return editing ? 'Save changes' : 'Save'
+}
+
+function getSuccessMessage(kind: FinanceDialogKind) {
+  if (kind === 'import') return 'The file is ready for validation.'
+  if (kind === 'export') return 'Your export has been prepared.'
+  return 'Your changes have been saved.'
+}
+
+export function ConfirmDialog({
+  description,
+  onClose,
+  title,
+}: {
+  description: string
+  onClose: () => void
+  title: string
+}) {
+  return (
+    <AppConfirmDialog
+      description={description}
+      onConfirm={onClose}
+      onOpenChange={(open) => {
+        if (!open) onClose()
+      }}
+      open
+      title={title}
+    />
+  )
+}
+
+export function RowMenu({ kind }: { kind: 'transaction' | 'budget' | 'goal' }) {
+  const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null)
+  return (
+    <>
+      <AppDropdownMenu
+        items={[
+          {
+            icon: <Pencil />,
+            label: 'Edit',
+            onSelect: () => setDialog('edit'),
+          },
+          {
+            icon: <Trash2 />,
+            label: 'Delete',
+            onSelect: () => setDialog('delete'),
+            separatorBefore: true,
+            variant: 'destructive',
+          },
+        ]}
+        trigger={
+          <AppButton aria-label="More actions" size="icon-xs" tone="secondary">
+            <Ellipsis />
+          </AppButton>
+        }
+      />
+      {dialog === 'edit' ? (
+        <FinanceDialog editing kind={kind} onClose={() => setDialog(null)} />
+      ) : null}
+      {dialog === 'delete' ? (
+        <ConfirmDialog
+          description="This action cannot be undone. Related information will remain available where required."
+          onClose={() => setDialog(null)}
+          title={`Delete ${kind}`}
+        />
+      ) : null}
+    </>
+  )
+}

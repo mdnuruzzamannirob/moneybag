@@ -4,11 +4,13 @@ export function AppFileUpload({
   accept,
   description = 'Drag and drop or click to browse',
   label = 'Upload a file',
+  multiple = false,
   onFiles,
 }: {
   accept?: string
   description?: string
   label?: string
+  multiple?: boolean
   onFiles?: (files: FileList | null) => void
 }) {
   return (
@@ -21,7 +23,7 @@ export function AppFileUpload({
       <input
         accept={accept}
         className="sr-only"
-        multiple
+        multiple={multiple}
         onChange={(event) => onFiles?.(event.target.files)}
         type="file"
       />
