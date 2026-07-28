@@ -1,12 +1,11 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { AuthTextField } from '@/components/moneybag-ui'
+import { AuthOtpInput } from '@/components/auth/AuthOtpInput'
 import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema'
 
 export function TwoFactorForm() {
@@ -28,17 +27,11 @@ export function TwoFactorForm() {
         </p>
       </div>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <AuthTextField
-          autoComplete="one-time-code"
-          error={form.formState.errors.code}
-          icon={<ShieldCheck />}
-          id="code"
-          inputMode="numeric"
-          label="Authentication code"
-          maxLength={6}
-          placeholder="000000"
-          registration={form.register('code')}
-        />
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-foreground" htmlFor="code">Authentication code</label>
+          <AuthOtpInput aria-invalid={Boolean(form.formState.errors.code)} autoComplete="one-time-code" id="code" name="code" onValueChange={(value) => form.setValue('code', value, { shouldTouch: true, shouldValidate: true })} value={form.watch('code')} />
+          {form.formState.errors.code?.message ? <p className="text-xs text-destructive">{form.formState.errors.code.message}</p> : null}
+        </div>
         <Button
           className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
           size="lg"
