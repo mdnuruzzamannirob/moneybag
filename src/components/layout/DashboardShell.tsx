@@ -159,11 +159,15 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <Sidebar sections={sections} onNavigate={() => setOpen(false)} />
+        <Sidebar isAdmin={isAdmin} sections={sections} onNavigate={() => setOpen(false)} />
       </aside>
 
       <div className="lg:pl-65">
-        <Topbar onMenuClick={() => setOpen(true)} showAddButton={!isAdmin} />
+        <Topbar
+          onMenuClick={() => setOpen(true)}
+          showAddButton={!isAdmin}
+          title={isAdmin ? 'Admin dashboard' : 'Overview'}
+        />
         <main className="mx-auto min-w-0 w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
           {children}
         </main>
@@ -175,9 +179,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 function Sidebar({
   sections,
   onNavigate,
+  isAdmin,
 }: {
   sections: NavSection[]
   onNavigate: () => void
+  isAdmin: boolean
 }) {
   const pathname = usePathname()
 
@@ -197,7 +203,7 @@ function Sidebar({
               MoneyBag
             </span>
             <span className="block truncate text-xs leading-4 text-muted-foreground">
-              Personal / BDT
+              {isAdmin ? 'Administration' : 'Personal / BDT'}
             </span>
           </span>
         </Link>
@@ -273,14 +279,14 @@ function Sidebar({
 
       <div className="mt-auto flex items-center gap-3 border-t border-border p-4">
         <div className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
-          AT
+          {isAdmin ? 'AD' : 'AT'}
         </div>
         <div className="min-w-0 flex-1">
           <div className="truncate text-sm font-semibold text-foreground">
-            Anika Tahsin
+            {isAdmin ? 'MoneyBag Admin' : 'Anika Tahsin'}
           </div>
           <div className="truncate text-xs text-muted-foreground">
-            anika@moneybag.app
+            {isAdmin ? 'admin@moneybag.app' : 'anika@moneybag.app'}
           </div>
         </div>
         <Link aria-label="Open profile" className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted" href={pathname.startsWith('/admin') ? '/admin/profile' : '/settings'} onClick={onNavigate}>
@@ -294,9 +300,11 @@ function Sidebar({
 function Topbar({
   onMenuClick,
   showAddButton,
+  title,
 }: {
   onMenuClick: () => void
   showAddButton: boolean
+  title: string
 }) {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
@@ -309,16 +317,16 @@ function Topbar({
           <Menu className="size-4" />
         </button>
         <div className="flex min-w-0 items-center gap-2 text-muted-foreground">
-          <span className="truncate font-medium text-foreground">Overview</span>
+          <span className="truncate font-medium text-foreground">{title}</span>
         </div>
       </div>
 
       <div className="flex shrink-0 items-center gap-2">
         {showAddButton ? (
-          <button className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90">
+          <Link className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90" href="/transactions">
             <Plus className="size-4" />
             <span className="hidden sm:inline">Add transaction</span>
-          </button>
+          </Link>
         ) : null}
         <button className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted">
           <Sun className="size-4 dark:hidden" />

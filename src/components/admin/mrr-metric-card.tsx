@@ -1,3 +1,1 @@
-export function MrrMetricCard() {
-  return null
-}
+export { DashboardStatCard as MrrMetricCard } from '@/components/shared/dashboard-stat-card'

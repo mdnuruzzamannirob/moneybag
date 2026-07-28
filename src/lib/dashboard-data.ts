@@ -1,0 +1,136 @@
+import type {
+  AdminDashboardData,
+  UserDashboardData,
+} from '@/types/dashboard-models'
+
+export const userDashboardDemoData: UserDashboardData = {
+  user: { firstName: 'Anika', overviewDate: 'July 2026' },
+  metrics: [
+    { id: 'balance', label: 'Total balance', value: '৳146,500', change: '+12.4% from last month', direction: 'up', tone: 'primary' },
+    { id: 'income', label: 'Income · July', value: '৳103,200', change: '3 income transactions', direction: 'up', tone: 'success' },
+    { id: 'expense', label: 'Expenses · July', value: '৳13,200', change: '12 expense transactions', direction: 'down', tone: 'danger' },
+    { id: 'savings', label: 'Net savings', value: '৳90,000', change: '87% of monthly income', direction: 'up', tone: 'accent' },
+  ],
+  cashFlowByYear: {
+    '2026': [
+      { label: 'Jan', income: 93000, expense: 44800 },
+      { label: 'Feb', income: 88000, expense: 41200 },
+      { label: 'Mar', income: 97000, expense: 46500 },
+      { label: 'Apr', income: 105000, expense: 49300 },
+      { label: 'May', income: 99000, expense: 42100 },
+      { label: 'Jun', income: 101000, expense: 38750 },
+      { label: 'Jul', income: 103200, expense: 13200 },
+    ],
+    '2025': [
+      { label: 'Jan', income: 78000, expense: 46200 },
+      { label: 'Feb', income: 79000, expense: 43100 },
+      { label: 'Mar', income: 81000, expense: 47800 },
+      { label: 'Apr', income: 82000, expense: 44100 },
+      { label: 'May', income: 84000, expense: 51200 },
+      { label: 'Jun', income: 85000, expense: 48700 },
+      { label: 'Jul', income: 87000, expense: 50300 },
+      { label: 'Aug', income: 89000, expense: 52600 },
+      { label: 'Sep', income: 90000, expense: 49100 },
+      { label: 'Oct', income: 93000, expense: 54500 },
+      { label: 'Nov', income: 95000, expense: 55800 },
+      { label: 'Dec', income: 98000, expense: 59200 },
+    ],
+    '2024': [
+      { label: 'Jan', income: 62000, expense: 38200 },
+      { label: 'Feb', income: 64000, expense: 39500 },
+      { label: 'Mar', income: 65000, expense: 40100 },
+      { label: 'Apr', income: 68000, expense: 42600 },
+      { label: 'May', income: 70000, expense: 41300 },
+      { label: 'Jun', income: 72000, expense: 44900 },
+      { label: 'Jul', income: 74000, expense: 43200 },
+      { label: 'Aug', income: 76000, expense: 46100 },
+      { label: 'Sep', income: 78000, expense: 47500 },
+      { label: 'Oct', income: 80000, expense: 48900 },
+      { label: 'Nov', income: 82000, expense: 50300 },
+      { label: 'Dec', income: 85000, expense: 51800 },
+    ],
+  },
+  categories: [
+    { name: 'Food', value: 3830, color: '#f59e0b' },
+    { name: 'Bills', value: 3550, color: '#ef4444' },
+    { name: 'Health', value: 1500, color: '#14b8a6' },
+    { name: 'Entertainment', value: 1450, color: '#8b5cf6' },
+    { name: 'Education', value: 1200, color: '#6366f1' },
+    { name: 'Other', value: 1670, color: '#94a3b8' },
+  ],
+  transactions: [
+    { id: 1001, title: 'Grocery shopping at Agora', category: 'Food', wallet: 'Cash', date: '26 Jul, 2026', amount: 2450, type: 'expense', icon: '🍔', color: '#f59e0b' },
+    { id: 1002, title: 'Monthly salary · BRAC', category: 'Salary', wallet: 'BRAC Bank', date: '25 Jul, 2026', amount: 85000, type: 'income', icon: '💰', color: '#10b981' },
+    { id: 1003, title: 'Uber ride to Dhanmondi', category: 'Transport', wallet: 'bKash', date: '25 Jul, 2026', amount: 320, type: 'expense', icon: '🚗', color: '#3b82f6' },
+    { id: 1004, title: 'Netflix subscription', category: 'Entertainment', wallet: 'City Bank Credit', date: '24 Jul, 2026', amount: 650, type: 'expense', icon: '🎬', color: '#8b5cf6' },
+    { id: 1005, title: 'Lunch with team at KFC', category: 'Food', wallet: 'City Bank Credit', date: '24 Jul, 2026', amount: 1200, type: 'expense', icon: '🍔', color: '#f59e0b' },
+  ],
+  budgets: [
+    { id: 1, category: 'Food', icon: '🍔', spent: 3830, limit: 8000, color: '#f59e0b' },
+    { id: 2, category: 'Transport', icon: '🚗', spent: 820, limit: 3000, color: '#3b82f6' },
+    { id: 3, category: 'Shopping', icon: '🛍️', spent: 850, limit: 5000, color: '#ec4899' },
+    { id: 4, category: 'Entertainment', icon: '🎬', spent: 1450, limit: 2000, color: '#8b5cf6' },
+  ],
+  goals: [
+    { id: 1, title: 'Emergency fund', icon: '🛟', currentAmount: 32500, targetAmount: 50000, deadline: '31 Dec, 2026', color: '#10b981' },
+    { id: 2, title: 'New MacBook Pro', icon: '💻', currentAmount: 95000, targetAmount: 180000, deadline: '15 Nov, 2026', color: '#6366f1' },
+    { id: 3, title: "Cox's Bazar trip", icon: '🏝️', currentAmount: 25000, targetAmount: 25000, deadline: '30 Aug, 2026', color: '#06b6d4' },
+  ],
+}
+
+export const adminDashboardDemoData: AdminDashboardData = {
+  metrics: [
+    { id: 'users', label: 'Total users', value: '3,248', change: '+12.4% this month', direction: 'up', tone: 'primary' },
+    { id: 'mrr', label: 'Monthly recurring revenue', value: '৳486,240', change: '+8.2% from June', direction: 'up', tone: 'success' },
+    { id: 'active', label: 'Daily active users', value: '1,284', change: '+5.6% this week', direction: 'up', tone: 'warning' },
+    { id: 'churn', label: 'Churn rate', value: '2.8%', change: '-0.4% this month', direction: 'down', tone: 'danger' },
+  ],
+  userGrowthByYear: {
+    '2026': [
+      { label: 'Jan', users: 326 }, { label: 'Feb', users: 351 },
+      { label: 'Mar', users: 398 }, { label: 'Apr', users: 426 },
+      { label: 'May', users: 472 }, { label: 'Jun', users: 518 },
+      { label: 'Jul', users: 584 },
+    ],
+    '2025': [
+      { label: 'Jan', users: 118 }, { label: 'Feb', users: 132 },
+      { label: 'Mar', users: 149 }, { label: 'Apr', users: 165 },
+      { label: 'May', users: 179 }, { label: 'Jun', users: 203 },
+      { label: 'Jul', users: 228 }, { label: 'Aug', users: 247 },
+      { label: 'Sep', users: 269 }, { label: 'Oct', users: 286 },
+      { label: 'Nov', users: 302 }, { label: 'Dec', users: 318 },
+    ],
+    '2024': [
+      { label: 'Jan', users: 36 }, { label: 'Feb', users: 42 },
+      { label: 'Mar', users: 51 }, { label: 'Apr', users: 58 },
+      { label: 'May', users: 64 }, { label: 'Jun', users: 73 },
+      { label: 'Jul', users: 81 }, { label: 'Aug', users: 89 },
+      { label: 'Sep', users: 94 }, { label: 'Oct', users: 101 },
+      { label: 'Nov', users: 108 }, { label: 'Dec', users: 114 },
+    ],
+  },
+  plans: [
+    { name: 'Free', value: 1842, color: '#94a3b8' },
+    { name: 'Pro monthly', value: 684, color: '#6366f1' },
+    { name: 'Pro yearly', value: 438, color: '#ec4899' },
+    { name: 'Unlimited', value: 284, color: '#10b981' },
+  ],
+  recentSignups: [
+    { id: 1, name: 'Sadia Rahman', initials: 'SR', meta: 'Free trial', timestamp: '12 minutes ago' },
+    { id: 2, name: 'Rahim Khan', initials: 'RK', meta: 'Pro yearly', timestamp: '38 minutes ago' },
+    { id: 3, name: 'Mahmudul Islam', initials: 'MI', meta: 'Free trial', timestamp: '1 hour ago' },
+    { id: 4, name: 'Nusrat Jahan', initials: 'NJ', meta: 'Unlimited', timestamp: '2 hours ago' },
+  ],
+  recentPayments: [
+    { id: 1, name: 'Anika Tahsin', initials: 'AT', meta: 'Pro monthly · Stripe', timestamp: '8 minutes ago', amount: 599 },
+    { id: 2, name: 'Rahim Khan', initials: 'RK', meta: 'Pro yearly · Stripe', timestamp: '43 minutes ago', amount: 5990 },
+    { id: 3, name: 'Nusrat Jahan', initials: 'NJ', meta: 'Unlimited · Stripe', timestamp: '2 hours ago', amount: 11999 },
+    { id: 4, name: 'Faisal Ahmed', initials: 'FA', meta: 'Pro monthly · Stripe', timestamp: '3 hours ago', amount: 599 },
+  ],
+  services: [
+    { id: 'api', name: 'Application API', status: 'healthy', detail: '99.99% uptime' },
+    { id: 'postgres', name: 'PostgreSQL', status: 'healthy', detail: '18 ms average query' },
+    { id: 'redis', name: 'Redis cache', status: 'healthy', detail: '0.8 ms response' },
+    { id: 'workers', name: 'Background workers', status: 'healthy', detail: '0 jobs waiting' },
+  ],
+}

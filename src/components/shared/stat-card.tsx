@@ -1,3 +1,1 @@
-export function StatCard() {
-  return null
-}
+export { DashboardStatCard as StatCard } from '@/components/shared/dashboard-stat-card'
