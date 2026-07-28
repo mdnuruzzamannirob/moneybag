@@ -5,8 +5,8 @@ import { Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
-import { AuthTextField } from '@/components/moneybag-ui'
+import { AppButton } from '@/components/app-ui'
+import { AuthTextField } from '@/components/auth/AuthFormFields'
 import {
   forgotPasswordSchema,
   type ForgotPasswordValues,
@@ -41,13 +41,13 @@ export function ForgotPasswordForm() {
           registration={form.register('email')}
           type="email"
         />
-        <Button
-          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+        <AppButton
+          className="w-full"
           size="lg"
           type="submit"
         >
           Send reset link
-        </Button>
+        </AppButton>
       </form>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         <Link className="font-medium text-primary hover:underline" href="/login">

@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { ReactNode } from "react"
 import { LoaderCircle, TriangleAlert } from "lucide-react"
 
+import { AppButton } from "@/components/app-ui"
 import { cn } from "@/lib/utils"
 
 export function AuthCallbackPanel() {
@@ -30,12 +31,9 @@ export function AuthErrorPanel() {
       tone="danger"
       title="Sign in failed"
     >
-      <Link
-        className="inline-flex h-10 w-full items-center justify-center rounded-md border border-primary bg-primary bg-clip-border px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary/80"
-        href="/login"
-      >
+      <AppButton className="w-full" nativeButton={false} render={<Link href="/login" />} size="lg">
         Try again
-      </Link>
+      </AppButton>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         Need help?{" "}
         <Link className="font-medium text-primary hover:underline" href="/contact">

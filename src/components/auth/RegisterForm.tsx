@@ -5,12 +5,9 @@ import { Mail, User } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
-import {
-  AuthCheckboxField,
-  AuthPasswordField,
-  AuthTextField,
-} from '@/components/moneybag-ui'
+import { AppButton } from '@/components/app-ui'
+import { AuthCheckboxField, AuthPasswordField, AuthTextField } from '@/components/auth/AuthFormFields'
+
 import { registerSchema, type RegisterValues } from '@/schemas/auth.schema'
 
 export function RegisterForm() {
@@ -77,26 +74,26 @@ export function RegisterForm() {
             Privacy Policy
           </Link>
         </AuthCheckboxField>
-        <Button
-          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+        <AppButton
+          className="w-full"
           size="lg"
           type="submit"
         >
           Create account
-        </Button>
+        </AppButton>
       </form>
       <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
         OR
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <Button className="h-9 rounded-md bg-clip-border text-sm" type="button" variant="outline">
+        <AppButton className="w-full" tone="secondary" type="button">
           <GoogleIcon />
           Google
-        </Button>
-        <Button className="h-9 rounded-md bg-clip-border text-sm" type="button" variant="outline">
+        </AppButton>
+        <AppButton className="w-full" tone="secondary" type="button">
           <GitHubIcon />
           GitHub
-        </Button>
+        </AppButton>
       </div>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         Already have an account?{' '}

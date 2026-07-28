@@ -5,7 +5,7 @@ import { QrCode } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
+import { AppButton, AppField } from '@/components/app-ui'
 import { AuthOtpInput } from '@/components/auth/AuthOtpInput'
 import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema'
 
@@ -35,18 +35,16 @@ export function TwoFactorSetupForm() {
         </code>
       </div>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground" htmlFor="code">Authentication code</label>
+        <AppField error={form.formState.errors.code?.message} label="Authentication code">
           <AuthOtpInput aria-invalid={Boolean(form.formState.errors.code)} autoComplete="one-time-code" id="code" name="code" onValueChange={(value) => form.setValue('code', value, { shouldTouch: true, shouldValidate: true })} value={form.watch('code')} />
-          {form.formState.errors.code?.message ? <p className="text-xs text-destructive">{form.formState.errors.code.message}</p> : null}
-        </div>
-        <Button
-          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+        </AppField>
+        <AppButton
+          className="w-full"
           size="lg"
           type="submit"
         >
           Enable 2FA
-        </Button>
+        </AppButton>
       </form>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         <Link className="font-medium text-primary hover:underline" href="/settings/security">

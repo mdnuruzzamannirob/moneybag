@@ -73,7 +73,7 @@ export function AuthOtpInput({
   }
   return (
     <div
-      className="flex items-center justify-between gap-2 sm:gap-3"
+      className="flex w-full items-center justify-center gap-1.5 xs:gap-2 sm:gap-3"
       role="group"
     >
       {digits.map((digit, index) => (
@@ -81,9 +81,9 @@ export function AuthOtpInput({
           {...aria}
           aria-label={`Digit ${index + 1} of ${OTP_LENGTH}`}
           className={cn(
-            'h-12 min-w-0 flex-1 mt-2 rounded-lg border border-input bg-card text-center text-xl font-medium tabular-nums text-foreground shadow-xs outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50 sm:h-12 sm:text-xl',
+            'size-10 shrink-0 rounded-md border border-border bg-card px-0 text-center text-lg font-medium tabular-nums text-foreground shadow-none outline-none transition-all hover:border-border focus:border-primary focus:ring-3 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50 sm:size-12 sm:rounded-lg sm:text-xl',
             aria['aria-invalid'] &&
-              'border-destructive focus:border-destructive focus:ring-destructive/20',
+              '!border-destructive hover:!border-destructive focus:!border-destructive focus:!ring-destructive/20',
           )}
           disabled={disabled}
           id={index === 0 ? id : undefined}

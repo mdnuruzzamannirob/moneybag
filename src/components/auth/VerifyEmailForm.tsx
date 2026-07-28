@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { MailCheck } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
+import { AppButton } from '@/components/app-ui'
 
 export function VerifyEmailForm() {
   const form = useForm({ defaultValues: {} })
@@ -29,13 +29,13 @@ export function VerifyEmailForm() {
         </div>
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Button
-          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+        <AppButton
+          className="w-full"
           size="lg"
           type="submit"
         >
           Resend verification email
-        </Button>
+        </AppButton>
       </form>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         <Link className="font-medium text-primary hover:underline" href="/login">

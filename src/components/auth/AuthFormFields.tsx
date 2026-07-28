@@ -5,25 +5,19 @@ import type { InputHTMLAttributes, ReactNode } from 'react'
 import { useMemo, useState } from 'react'
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
+import { AppButton, AppCheckbox, AppInput } from '@/components/app-ui'
 import { cn } from '@/lib/utils'
-import { MoneybagCheckbox, MoneybagInput } from './form-controls'
 
 type BaseFieldProps = {
   error?: FieldError
   label?: string
   labelAction?: ReactNode
 }
-
 type AuthTextFieldProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'className'
 > &
-  BaseFieldProps & {
-    icon?: ReactNode
-    registration: UseFormRegisterReturn
-  }
-
+  BaseFieldProps & { icon?: ReactNode; registration: UseFormRegisterReturn }
 type AuthPasswordFieldProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'className' | 'type'
@@ -58,7 +52,9 @@ function AuthFieldLayout({
         </div>
       ) : null}
       {children}
-      <FieldErrorMessage error={error} />
+      {error?.message ? (
+        <p className="text-xs text-destructive">{error.message}</p>
+      ) : null}
     </div>
   )
 }
@@ -73,8 +69,13 @@ export function AuthTextField({
   ...props
 }: AuthTextFieldProps) {
   return (
-    <AuthFieldLayout error={error} id={props.id} label={label} labelAction={labelAction}>
-      <MoneybagInput
+    <AuthFieldLayout
+      error={error}
+      id={props.id}
+      label={label}
+      labelAction={labelAction}
+    >
+      <AppInput
         {...props}
         {...registration}
         aria-invalid={Boolean(error)}
@@ -99,34 +100,38 @@ export function AuthPasswordField({
   const strength =
     score <= 1 ? 'bg-destructive' : score === 2 ? 'bg-warning' : 'bg-success'
   const labels = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong']
-
   return (
-    <AuthFieldLayout error={error} id={props.id} label={label} labelAction={labelAction}>
-      <MoneybagInput
+    <AuthFieldLayout
+      error={error}
+      id={props.id}
+      label={label}
+      labelAction={labelAction}
+    >
+      <AppInput
         {...props}
         {...registration}
         aria-invalid={Boolean(error)}
         leading={<LockKeyhole />}
         trailing={
-          <Button
+          <AppButton
             aria-label={visible ? 'Hide password' : 'Show password'}
             className={cn(
-              'text-muted-foreground hover:text-foreground',
+              'size-7! border-0! bg-transparent! px-0! text-muted-foreground hover:text-foreground',
               visible && 'text-primary',
             )}
             onClick={() => setVisible((current) => !current)}
             size="icon-xs"
+            tone="secondary"
             type="button"
-            variant="ghost"
           >
             <Eye className="size-4" />
-          </Button>
+          </AppButton>
         }
         type={visible ? 'text' : 'password'}
       />
       {showStrength ? (
         <>
-          <div className="grid grid-cols-4 gap-1" aria-hidden="true">
+          <div aria-hidden="true" className="grid grid-cols-4 gap-1">
             {[0, 1, 2, 3].map((index) => (
               <div
                 className={cn(
@@ -159,21 +164,18 @@ export function AuthCheckboxField({
 }) {
   return (
     <div className="space-y-2">
-      <MoneybagCheckbox
-        id={registration.name}
+      <AppCheckbox
         {...registration}
         aria-invalid={Boolean(error)}
+        className="mt-0.5"
+        id={registration.name}
         label={children}
       />
-      <FieldErrorMessage error={error} />
+      {error?.message ? (
+        <p className="text-xs text-destructive">{error.message}</p>
+      ) : null}
     </div>
   )
-}
-
-function FieldErrorMessage({ error }: { error?: FieldError }) {
-  if (!error?.message) return null
-
-  return <p className="text-xs text-destructive">{error.message}</p>
 }
 
 function usePasswordScore(password: string) {
@@ -186,4 +188,3 @@ function usePasswordScore(password: string) {
     return score
   }, [password])
 }
-

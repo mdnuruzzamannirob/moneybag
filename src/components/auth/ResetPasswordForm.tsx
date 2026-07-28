@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
-import { AuthPasswordField } from '@/components/moneybag-ui'
+import { AppButton } from '@/components/app-ui'
+import { AuthPasswordField } from '@/components/auth/AuthFormFields'
 import { resetPasswordSchema, type ResetPasswordValues } from '@/schemas/auth.schema'
 
 export function ResetPasswordForm() {
@@ -45,13 +45,13 @@ export function ResetPasswordForm() {
           placeholder="Repeat new password"
           registration={form.register('confirmPassword')}
         />
-        <Button
-          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+        <AppButton
+          className="w-full"
           size="lg"
           type="submit"
         >
           Update password
-        </Button>
+        </AppButton>
       </form>
       <div className="mt-6 text-center text-sm text-muted-foreground">
         <Link className="font-medium text-primary hover:underline" href="/login">
