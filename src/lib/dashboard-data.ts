@@ -20,6 +20,11 @@ export const userDashboardDemoData: UserDashboardData = {
       { label: 'May', income: 99000, expense: 42100 },
       { label: 'Jun', income: 101000, expense: 38750 },
       { label: 'Jul', income: 103200, expense: 13200 },
+      { label: 'Aug', income: null, expense: null },
+      { label: 'Sep', income: null, expense: null },
+      { label: 'Oct', income: null, expense: null },
+      { label: 'Nov', income: null, expense: null },
+      { label: 'Dec', income: null, expense: null },
     ],
     '2025': [
       { label: 'Jan', income: 78000, expense: 46200 },
@@ -90,7 +95,9 @@ export const adminDashboardDemoData: AdminDashboardData = {
       { label: 'Jan', users: 326 }, { label: 'Feb', users: 351 },
       { label: 'Mar', users: 398 }, { label: 'Apr', users: 426 },
       { label: 'May', users: 472 }, { label: 'Jun', users: 518 },
-      { label: 'Jul', users: 584 },
+      { label: 'Jul', users: 584 }, { label: 'Aug', users: null },
+      { label: 'Sep', users: null }, { label: 'Oct', users: null },
+      { label: 'Nov', users: null }, { label: 'Dec', users: null },
     ],
     '2025': [
       { label: 'Jan', users: 118 }, { label: 'Feb', users: 132 },

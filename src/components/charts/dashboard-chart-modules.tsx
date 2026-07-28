@@ -37,7 +37,7 @@ export function IncomeExpenseChartModule({
       },
       tooltip: {
         ...tooltip,
-        valueFormatter: (value: number) => `৳${value.toLocaleString('en-US')}`,
+        valueFormatter: (value: number | null | undefined) => value == null ? 'No data' : '\u09F3' + String(value.toLocaleString('en-US')),
       },
       xAxis: {
         type: 'category' as const,
@@ -168,8 +168,8 @@ export function UserGrowthChartModule({
       grid: { left: 8, right: 12, top: 18, bottom: 4, containLabel: true },
       tooltip: {
         ...tooltip,
-        valueFormatter: (value: number) =>
-          `${value.toLocaleString('en-US')} users`,
+        valueFormatter: (value: number | null | undefined) =>
+          value == null ? 'No data' : String(value.toLocaleString('en-US')) + ' users',
       },
       xAxis: {
         type: 'category' as const,

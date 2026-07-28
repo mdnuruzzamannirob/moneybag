@@ -11,8 +11,8 @@ export type DashboardMetric = {
 
 export type IncomeExpensePoint = {
   label: string
-  income: number
-  expense: number
+  income: number | null
+  expense: number | null
 }
 
 export type DistributionItem = {
@@ -64,7 +64,7 @@ export type UserDashboardData = {
 
 export type UserGrowthPoint = {
   label: string
-  users: number
+  users: number | null
 }
 
 export type AdminActivityItem = {
