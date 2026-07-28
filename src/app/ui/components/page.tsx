@@ -145,9 +145,9 @@ export default function UiComponentsPage() {
           <AppBadge status="success">36 components</AppBadge>
         </div>
       </header>
-      <main className="mx-auto max-w-375 px-5 py-8 lg:px-8 lg:py-10">
+      <main className="bg-background mx-auto max-w-375 px-5 pt-4 pb-8 lg:px-8 lg:pt-5 lg:pb-10">
         <div className="grid items-start gap-8 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
-          <aside className="sticky top-20 z-40 overflow-x-auto lg:border-r lg:border-border lg:pr-7 lg:overflow-visible">
+          <aside className="sticky top-20 z-40 overflow-x-auto bg-background lg:border-0 lg:bg-background lg:pr-7 lg:overflow-visible">
             <p className="mb-3 hidden px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground lg:block">
               Components
             </p>
@@ -779,3 +779,10 @@ function Metric({ label, value }: { label: string; value: string }) {
     </div>
   )
 }
+
+
+
+
+
+
+
