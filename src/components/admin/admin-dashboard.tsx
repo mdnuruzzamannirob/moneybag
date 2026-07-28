@@ -32,7 +32,7 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
       <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
           <p className="mb-1 text-sm font-medium text-primary">
-            Platform overview
+            Tuesday, July 28, 2026
           </p>
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Admin dashboard
@@ -42,7 +42,7 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
           </p>
         </div>
         <Link
-          className={buttonVariants({ variant: 'outline' })}
+          className={buttonVariants({ variant: 'default' })}
           href="/admin/reports"
         >
           Open full report

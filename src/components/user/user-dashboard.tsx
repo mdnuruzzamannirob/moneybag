@@ -43,10 +43,10 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
       <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
           <p className="mb-1 text-sm font-medium text-primary">
-            {data.user.overviewDate}
+            Tuesday, July 28, 2026
           </p>
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Good morning, {data.user.firstName}
+            Good morning, {data.user.firstName} 👋
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Here&apos;s your full financial overview—income, expenses, budgets

@@ -28,18 +28,11 @@ export function DashboardStatCard({
   const isPositive = metric.direction === 'up' || metric.id === 'churn'
 
   return (
-    <article className="group relative overflow-hidden rounded-xl border border-border bg-card p-5 shadow-xs transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-sm">
-      <div
-        aria-hidden="true"
-        className={cn(
-          'absolute -right-8 -top-8 size-28 rounded-full opacity-50 blur-2xl',
-          toneClasses[metric.tone].split(' ')[0],
-        )}
-      />
-      <div className="relative flex items-start justify-between gap-3">
+    <article className="rounded-xl border border-border bg-card p-5 shadow-xs">
+      <div className="flex items-start justify-between gap-3">
         <span
           className={cn(
-            'grid size-11 shrink-0 place-items-center rounded-xl ring-1 ring-inset ring-black/5 transition-transform group-hover:scale-105',
+            'grid size-10 shrink-0 place-items-center rounded-lg ring-1 ring-inset ring-black/5',
             toneClasses[metric.tone],
           )}
         >
@@ -57,16 +50,12 @@ export function DashboardStatCard({
           {metric.change.split(' ')[0]}
         </span>
       </div>
-      <div className="relative mt-5">
+      <div className="mt-5">
         <p className="text-sm font-medium text-muted-foreground">{metric.label}</p>
         <p className="mt-1 text-[1.75rem] font-semibold leading-none tracking-tight text-foreground">
           {metric.value}
         </p>
       </div>
-      <div className="relative mt-5 h-px bg-border" />
-      <p className="relative mt-3 text-xs text-muted-foreground">
-        Compared with the previous period
-      </p>
     </article>
   )
 }
