@@ -1,12 +1,39 @@
 import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/providers/theme-provider'
 import type { Metadata } from 'next'
-import { Google_Sans_Flex } from 'next/font/google'
+import {
+  Google_Sans_Flex,
+  Ubuntu,
+  Ubuntu_Mono,
+  Ubuntu_Sans,
+} from 'next/font/google'
 import './globals.css'
 
 const googleSansFlex = Google_Sans_Flex({
   subsets: ['latin'],
+  weight: 'variable',
   variable: '--font-sans',
+  display: 'swap',
+  fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
+  adjustFontFallback: false,
+})
+
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-ubuntu',
+})
+
+const ubuntuSans = Ubuntu_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-ubuntu-sans',
+})
+
+const ubuntuMono = Ubuntu_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-ubuntu-mono',
 })
 
 export const metadata: Metadata = {
@@ -26,6 +53,9 @@ export default function RootLayout({
         'h-full',
         'antialiased',
         googleSansFlex.variable,
+        ubuntu.variable,
+        ubuntuSans.variable,
+        ubuntuMono.variable,
         'font-sans',
       )}
       suppressHydrationWarning

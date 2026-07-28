@@ -30,7 +30,7 @@ export function AppTable<T>({
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-xl border border-border bg-card',
+        'overflow-hidden bg-card',
         className,
       )}
     >

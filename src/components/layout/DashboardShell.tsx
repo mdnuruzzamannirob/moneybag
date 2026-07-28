@@ -34,6 +34,7 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { AppButton } from '@/components/app-ui'
 import { useTheme } from '@/providers/theme-provider'
+import Logo from '../shared/Logo'
 
 type NavItem = {
   href: string
@@ -192,23 +193,7 @@ function Sidebar({
   return (
     <>
       <div className="flex h-16 items-center gap-3 border-b border-border px-5">
-        <Link
-          className="flex min-w-0 items-center gap-3"
-          href={pathname.startsWith('/admin') ? '/admin' : '/dashboard'}
-          onClick={onNavigate}
-        >
-          <span className="grid size-9 shrink-0 place-items-center rounded-md bg-linear-to-br from-primary to-brand-accent text-sm font-extrabold text-white shadow-md">
-            F
-          </span>
-          <span className="min-w-0">
-            <span className="block truncate text-base font-bold leading-5 text-foreground">
-              MoneyBag
-            </span>
-            <span className="block truncate text-xs leading-4 text-muted-foreground">
-              {isAdmin ? 'Administration' : 'Personal / BDT'}
-            </span>
-          </span>
-        </Link>
+        <Logo onNavigate={onNavigate} />
         <button
           className="ml-auto grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted lg:hidden"
           onClick={onNavigate}
@@ -291,7 +276,12 @@ function Sidebar({
             {isAdmin ? 'admin@moneybag.app' : 'anika@moneybag.app'}
           </div>
         </div>
-        <Link aria-label="Open profile" className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted" href={pathname.startsWith('/admin') ? '/admin/profile' : '/settings'} onClick={onNavigate}>
+        <Link
+          aria-label="Open profile"
+          className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted"
+          href={pathname.startsWith('/admin') ? '/admin/profile' : '/settings'}
+          onClick={onNavigate}
+        >
           <Settings className="size-4" />
         </Link>
       </div>
