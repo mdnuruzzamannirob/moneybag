@@ -1,0 +1,4 @@
+"use client"
+import type { ReactNode } from "react"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+export function AppSegmentedControl({ onValueChange, options, value }: { onValueChange?: (value: string | null) => void; options: readonly { icon?: ReactNode; label: ReactNode; value: string }[]; value?: string | null }) { return <ToggleGroup className="grid h-10 w-full grid-flow-col rounded-md bg-muted p-1" multiple={false} onValueChange={(next) => onValueChange?.(next[0] ?? null)} spacing={0} style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }} value={value ? [value] : undefined} variant="default">{options.map((option) => <ToggleGroupItem className="!h-8 min-w-0 rounded-sm px-3 text-sm data-[state=on]:bg-card data-[state=on]:shadow-xs" key={option.value} value={option.value}>{option.icon}{option.label}</ToggleGroupItem>)}</ToggleGroup> }

@@ -1,33 +1,32 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { ShieldCheck } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ShieldCheck } from 'lucide-react'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
 
-import {
-  AuthFooter,
-  AuthHeading,
-  AuthLink,
-  AuthTextField,
-  SubmitButton,
-} from "@/components/auth/FormUi"
-import { twoFactorSchema, type TwoFactorValues } from "@/schemas/auth.schema"
+import { Button } from '@/components/ui/button'
+import { AuthTextField } from '@/components/moneybag-ui'
+import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema'
 
 export function TwoFactorForm() {
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(twoFactorSchema),
-    defaultValues: { code: "" },
+    defaultValues: { code: '' },
   })
 
   function onSubmit(_values: TwoFactorValues) {}
 
   return (
     <>
-      <AuthHeading
-        title="Two-factor authentication"
-        subtitle="Enter the 6-digit code from your authenticator app to continue."
-      />
+      <div className="mb-6">
+        <h2 className="text-3xl font-medium tracking-normal text-foreground">
+          Two-factor authentication
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Enter the 6-digit code from your authenticator app to continue.
+        </p>
+      </div>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <AuthTextField
           autoComplete="one-time-code"
@@ -38,18 +37,22 @@ export function TwoFactorForm() {
           label="Authentication code"
           maxLength={6}
           placeholder="000000"
-          registration={form.register("code")}
+          registration={form.register('code')}
         />
-        <SubmitButton>Verify code</SubmitButton>
+        <Button
+          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+          size="lg"
+          type="submit"
+        >
+          Verify code
+        </Button>
       </form>
-      <AuthFooter>
-        Lost your device?{" "}
+      <div className="mt-6 text-center text-sm text-muted-foreground">
+        Lost your device?{' '}
         <Link className="font-medium text-primary hover:underline" href="/2fa/recovery">
           Use recovery code
         </Link>
-      </AuthFooter>
+      </div>
     </>
   )
 }
-
-

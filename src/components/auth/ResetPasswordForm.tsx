@@ -1,32 +1,31 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
 
-import {
-  AuthFooter,
-  AuthHeading,
-  AuthLink,
-  AuthPasswordField,
-  SubmitButton,
-} from "@/components/auth/FormUi"
-import { resetPasswordSchema, type ResetPasswordValues } from "@/schemas/auth.schema"
+import { Button } from '@/components/ui/button'
+import { AuthPasswordField } from '@/components/moneybag-ui'
+import { resetPasswordSchema, type ResetPasswordValues } from '@/schemas/auth.schema'
 
 export function ResetPasswordForm() {
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
-    defaultValues: { password: "", confirmPassword: "" },
+    defaultValues: { password: '', confirmPassword: '' },
   })
 
   function onSubmit(_values: ResetPasswordValues) {}
 
   return (
     <>
-      <AuthHeading
-        title="Reset your password"
-        subtitle="Choose a new password to secure your MoneyBag account."
-      />
+      <div className="mb-6">
+        <h2 className="text-3xl font-medium tracking-normal text-foreground">
+          Reset your password
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Choose a new password to secure your MoneyBag account.
+        </p>
+      </div>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <AuthPasswordField
           autoComplete="new-password"
@@ -34,9 +33,9 @@ export function ResetPasswordForm() {
           id="password"
           label="New password"
           placeholder="At least 8 characters"
-          registration={form.register("password")}
+          registration={form.register('password')}
           showStrength
-          watchValue={form.watch("password")}
+          watchValue={form.watch('password')}
         />
         <AuthPasswordField
           autoComplete="new-password"
@@ -44,15 +43,21 @@ export function ResetPasswordForm() {
           id="confirmPassword"
           label="Confirm password"
           placeholder="Repeat new password"
-          registration={form.register("confirmPassword")}
+          registration={form.register('confirmPassword')}
         />
-        <SubmitButton>Update password</SubmitButton>
+        <Button
+          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+          size="lg"
+          type="submit"
+        >
+          Update password
+        </Button>
       </form>
-      <AuthFooter>
-        <AuthLink href="/login">Back to sign in</AuthLink>
-      </AuthFooter>
+      <div className="mt-6 text-center text-sm text-muted-foreground">
+        <Link className="font-medium text-primary hover:underline" href="/login">
+          Back to sign in
+        </Link>
+      </div>
     </>
   )
 }
-
-

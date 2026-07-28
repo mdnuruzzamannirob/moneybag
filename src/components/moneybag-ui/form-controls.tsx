@@ -79,16 +79,31 @@ export function MoneybagInput({
   trailing,
   ...props
 }: MoneybagInputProps) {
+  const inputClassName = cn(
+    "h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20 aria-invalid:border-destructive aria-invalid:ring-destructive/20",
+    leading && "pl-10",
+    trailing && "pr-11",
+    className,
+  )
+
   if (!leading && !trailing) {
-    return <Input className={cn("h-10 rounded-md bg-card", className)} {...props} />
+    return <Input className={inputClassName} {...props} />
   }
 
   return (
-    <InputGroup className="h-10 rounded-md bg-card">
-      {leading ? <InputGroupAddon>{leading}</InputGroupAddon> : null}
-      <InputGroupInput className={className} {...props} />
-      {trailing ? <InputGroupAddon align="inline-end">{trailing}</InputGroupAddon> : null}
-    </InputGroup>
+    <div className="relative">
+      {leading ? (
+        <span className="pointer-events-none absolute inset-y-0 left-3 z-10 flex items-center text-muted-foreground [&>svg]:size-4">
+          {leading}
+        </span>
+      ) : null}
+      <Input className={inputClassName} {...props} />
+      {trailing ? (
+        <span className="absolute inset-y-0 right-1 z-10 flex items-center">
+          {trailing}
+        </span>
+      ) : null}
+    </div>
   )
 }
 
@@ -184,7 +199,11 @@ export function MoneybagCheckbox({
 }: MoneybagCheckboxProps) {
   return (
     <Field className={cn("flex-row items-start gap-3", className)}>
-      <Checkbox id={id} {...props} />
+      <Checkbox
+        id={id}
+        className="size-5 rounded-md border border-input bg-card text-primary-foreground data-checked:bg-primary"
+        {...props}
+      />
       <FieldContent className="gap-1">
         <FieldLabel htmlFor={id}>{label}</FieldLabel>
         {description ? <FieldDescription>{description}</FieldDescription> : null}

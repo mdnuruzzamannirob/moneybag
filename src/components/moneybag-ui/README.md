@@ -4,6 +4,10 @@ This folder is the application-facing UI layer. It composes the shadcn
 primitives in `@/components/ui` but keeps Moneybag's field spacing, validation
 states, date formatting, dialogs, and action patterns in one stable API.
 
+Use a raw shadcn primitive directly when it already fits the page. Add a
+Moneybag component only when the customization is shared across the project;
+keep page-only layout and copy in the page itself.
+
 Use this layer in feature components:
 
 ```tsx

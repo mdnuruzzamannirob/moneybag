@@ -1,32 +1,30 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { QrCode, ShieldCheck } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { QrCode, ShieldCheck } from 'lucide-react'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
 
-import {
-  AuthFooter,
-  AuthHeading,
-  AuthTextField,
-  SubmitButton,
-} from "@/components/auth/FormUi"
-import { twoFactorSchema, type TwoFactorValues } from "@/schemas/auth.schema"
+import { Button } from '@/components/ui/button'
+import { AuthTextField } from '@/components/moneybag-ui'
+import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema'
 
 export function TwoFactorSetupForm() {
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(twoFactorSchema),
-    defaultValues: { code: "" },
+    defaultValues: { code: '' },
   })
 
   function onSubmit(_values: TwoFactorValues) {}
 
   return (
     <>
-      <AuthHeading
-        title="Set up 2FA"
-        subtitle="Scan the QR code, then enter the first code from your authenticator app."
-      />
+      <div className="mb-6">
+        <h2 className="text-3xl font-medium tracking-normal text-foreground">Set up 2FA</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Scan the QR code, then enter the first code from your authenticator app.
+        </p>
+      </div>
       <div className="mb-4 grid aspect-square w-40 place-items-center rounded-md border border-border bg-muted text-primary shadow-sm">
         <QrCode className="size-20" aria-hidden="true" />
       </div>
@@ -46,17 +44,21 @@ export function TwoFactorSetupForm() {
           label="Authentication code"
           maxLength={6}
           placeholder="000000"
-          registration={form.register("code")}
+          registration={form.register('code')}
         />
-        <SubmitButton>Enable 2FA</SubmitButton>
+        <Button
+          className="h-10 w-full rounded-md border-primary bg-clip-border text-sm font-semibold shadow-sm hover:border-primary"
+          size="lg"
+          type="submit"
+        >
+          Enable 2FA
+        </Button>
       </form>
-      <AuthFooter>
+      <div className="mt-6 text-center text-sm text-muted-foreground">
         <Link className="font-medium text-primary hover:underline" href="/settings/security">
           Do this later
         </Link>
-      </AuthFooter>
+      </div>
     </>
   )
 }
-
-

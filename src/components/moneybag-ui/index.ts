@@ -48,3 +48,9 @@ export type {
   MoneybagPopupProps,
   MoneybagSheetProps,
 } from './overlays'
+
+export {
+  AuthCheckboxField,
+  AuthPasswordField,
+  AuthTextField,
+} from "./auth-controls"
