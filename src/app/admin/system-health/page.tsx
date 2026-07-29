@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>System Health</main>
+  return <main>System Health</main>;
 }

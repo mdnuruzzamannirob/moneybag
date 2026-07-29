@@ -1,2 +1,4 @@
-import { AdminSettingsSection } from "@/components/admin/admin-settings-panel"
-export default function Page() { return <AdminSettingsSection section="legal" /> }
+import { AdminSettingsSection } from '@/components/admin/admin-settings-panel';
+export default function Page() {
+  return <AdminSettingsSection section="legal" />;
+}

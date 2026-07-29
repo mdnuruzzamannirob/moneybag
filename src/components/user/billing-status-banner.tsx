@@ -1,3 +1,3 @@
 export function BillingStatusBanner() {
-  return null
+  return null;
 }

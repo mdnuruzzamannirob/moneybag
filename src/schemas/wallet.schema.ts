@@ -1,1 +1,1 @@
-export const walletschema = {}
+export const walletschema = {};

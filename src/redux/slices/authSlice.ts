@@ -1,1 +1,1 @@
-export const authSlice = {}
+export const authSlice = {};

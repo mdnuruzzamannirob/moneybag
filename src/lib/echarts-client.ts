@@ -1,13 +1,13 @@
-import { BarChart, GaugeChart, LineChart, PieChart } from 'echarts/charts'
+import { BarChart, GaugeChart, LineChart, PieChart } from 'echarts/charts';
 import {
   DatasetComponent,
   GridComponent,
   LegendComponent,
   TitleComponent,
   TooltipComponent,
-} from 'echarts/components'
-import * as echarts from 'echarts/core'
-import { CanvasRenderer } from 'echarts/renderers'
+} from 'echarts/components';
+import * as echarts from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
 
 echarts.use([
   BarChart,
@@ -20,7 +20,7 @@ echarts.use([
   TitleComponent,
   TooltipComponent,
   CanvasRenderer,
-])
+]);
 
-export { echarts }
-export type { EChartsCoreOption } from 'echarts/core'
+export { echarts };
+export type { EChartsCoreOption } from 'echarts/core';

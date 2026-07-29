@@ -1,1 +1,1 @@
-export const toastprovider = {}
+export const toastprovider = {};

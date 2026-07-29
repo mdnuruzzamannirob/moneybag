@@ -1,1 +1,1 @@
-export const categoriesApi = {}
+export const categoriesApi = {};

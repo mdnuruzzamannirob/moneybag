@@ -1,5 +1,5 @@
-import { AdminProfileSectionPanel } from '@/components/admin/admin-profile-panel'
+import { AdminProfileSectionPanel } from '@/components/admin/admin-profile-panel';
 
 export default function Page() {
-  return <AdminProfileSectionPanel section="security" />
+  return <AdminProfileSectionPanel section="security" />;
 }

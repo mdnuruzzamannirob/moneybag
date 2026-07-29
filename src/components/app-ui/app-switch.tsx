@@ -1,14 +1,14 @@
-'use client'
-import { cn } from '@/lib/utils'
-import { Switch as SwitchPrimitive } from '@base-ui/react/switch'
-import { useId } from 'react'
-export type AppSwitchSize = 'sm' | 'md' | 'lg'
-const tracks = { sm: 'h-4 w-7', md: 'h-5 w-9', lg: 'h-6 w-11' }
+'use client';
+import { cn } from '@/lib/utils';
+import { Switch as SwitchPrimitive } from '@base-ui/react/switch';
+import { useId } from 'react';
+export type AppSwitchSize = 'sm' | 'md' | 'lg';
+const tracks = { sm: 'h-4 w-7', md: 'h-5 w-9', lg: 'h-6 w-11' };
 const thumbs = {
   sm: 'size-3 data-checked:translate-x-3',
   md: 'size-4 data-checked:translate-x-4',
   lg: 'size-5 data-checked:translate-x-5',
-}
+};
 export function AppSwitch({
   checked,
   className,
@@ -19,16 +19,16 @@ export function AppSwitch({
   onCheckedChange,
   size = 'md',
 }: {
-  checked?: boolean
-  className?: string
-  defaultChecked?: boolean
-  description?: string
-  disabled?: boolean
-  label: string
-  onCheckedChange?: (checked: boolean) => void
-  size?: AppSwitchSize
+  checked?: boolean;
+  className?: string;
+  defaultChecked?: boolean;
+  description?: string;
+  disabled?: boolean;
+  label: string;
+  onCheckedChange?: (checked: boolean) => void;
+  size?: AppSwitchSize;
 }) {
-  const id = useId()
+  const id = useId();
   return (
     <div
       className={cn(
@@ -39,9 +39,7 @@ export function AppSwitch({
       <label htmlFor={id}>
         <span className="block text-sm font-medium">{label}</span>
         {description ? (
-          <span className="mt-0.5 block text-xs text-muted-foreground">
-            {description}
-          </span>
+          <span className="mt-0.5 block text-xs text-muted-foreground">{description}</span>
         ) : null}
       </label>
       <SwitchPrimitive.Root
@@ -63,5 +61,5 @@ export function AppSwitch({
         />
       </SwitchPrimitive.Root>
     </div>
-  )
+  );
 }

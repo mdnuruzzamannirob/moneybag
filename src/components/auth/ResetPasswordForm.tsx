@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 
-import { AppButton } from '@/components/app-ui'
-import { AuthPasswordField } from '@/components/auth/AuthFormFields'
-import { resetPasswordSchema, type ResetPasswordValues } from '@/schemas/auth.schema'
+import { AppButton } from '@/components/app-ui';
+import { AuthPasswordField } from '@/components/auth/AuthFormFields';
+import { resetPasswordSchema, type ResetPasswordValues } from '@/schemas/auth.schema';
 
 export function ResetPasswordForm() {
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: { password: '', confirmPassword: '' },
-  })
+  });
 
   function onSubmit(_values: ResetPasswordValues) {}
 
@@ -45,11 +45,7 @@ export function ResetPasswordForm() {
           placeholder="Repeat new password"
           registration={form.register('confirmPassword')}
         />
-        <AppButton
-          className="w-full"
-          size="lg"
-          type="submit"
-        >
+        <AppButton className="w-full" size="lg" type="submit">
           Update password
         </AppButton>
       </form>
@@ -59,5 +55,5 @@ export function ResetPasswordForm() {
         </Link>
       </div>
     </>
-  )
+  );
 }

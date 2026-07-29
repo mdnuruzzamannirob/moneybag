@@ -1,9 +1,7 @@
-import { AdminSettingsNavigation } from '@/components/admin/admin-settings-navigation'
-import { AppPageHeader } from '@/components/app-ui'
+import { AdminSettingsNavigation } from '@/components/admin/admin-settings-navigation';
+import { AppPageHeader } from '@/components/app-ui';
 
-export default function Layout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="min-w-0">
       <div className="mb-6 sm:mb-7">
@@ -19,5 +17,5 @@ export default function Layout({
         <div className="min-w-0">{children}</div>
       </div>
     </div>
-  )
+  );
 }

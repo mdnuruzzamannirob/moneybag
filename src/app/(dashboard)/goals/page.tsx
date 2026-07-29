@@ -1,5 +1,5 @@
-import { GoalsPage } from '@/components/user/finance-pages'
+import { GoalsPage } from '@/components/user/finance-pages';
 
 export default function Page() {
-  return <GoalsPage />
+  return <GoalsPage />;
 }

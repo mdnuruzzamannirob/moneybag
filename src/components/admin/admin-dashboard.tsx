@@ -1,30 +1,17 @@
-import {
-  Activity,
-  ArrowRight,
-  BadgeDollarSign,
-  Server,
-  UserMinus,
-  Users,
-} from 'lucide-react'
-import Link from 'next/link'
+import { Activity, ArrowRight, BadgeDollarSign, Server, UserMinus, Users } from 'lucide-react';
+import Link from 'next/link';
 
-import {
-  CategoryPieChart,
-  DailyTrendLineChart,
-} from '@/components/charts/dashboard-charts'
-import { AppBadge, AppButton, AppCard, AppPageHeader, AppStatCard } from '@/components/app-ui'
-import type {
-  AdminActivityItem,
-  AdminDashboardData,
-} from '@/types/dashboard-models'
+import { CategoryPieChart, DailyTrendLineChart } from '@/components/charts/dashboard-charts';
+import { AppBadge, AppButton, AppCard, AppPageHeader, AppStatCard } from '@/components/app-ui';
+import type { AdminActivityItem, AdminDashboardData } from '@/types/dashboard-models';
 
-const metricIcons = [Users, BadgeDollarSign, Activity, UserMinus]
+const metricIcons = [Users, BadgeDollarSign, Activity, UserMinus];
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
-})
+});
 
 export function AdminDashboard({ data }: { data: AdminDashboardData }) {
-  const userTotal = data.plans.reduce((total, plan) => total + plan.value, 0)
+  const userTotal = data.plans.reduce((total, plan) => total + plan.value, 0);
 
   return (
     <div className="space-y-6">
@@ -38,24 +25,31 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
             Admin dashboard
           </>
         }
-        actions={<AppButton nativeButton={false} render={<Link href="/admin/reports" />} size="sm">Open full report</AppButton>}
+        actions={
+          <AppButton nativeButton={false} render={<Link href="/admin/reports" />} size="sm">
+            Open full report
+          </AppButton>
+        }
       />
 
-      <section
-        aria-label="Platform metrics"
-        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-      >
+      <section aria-label="Platform metrics" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {data.metrics.map((metric, index) => {
-          const Icon = metricIcons[index] ?? Activity
-          return <AppStatCard icon={<Icon />} key={metric.id} label={metric.label} value={metric.value} change={metric.change} tone={metric.tone === 'accent' ? 'primary' : metric.tone} />
+          const Icon = metricIcons[index] ?? Activity;
+          return (
+            <AppStatCard
+              icon={<Icon />}
+              key={metric.id}
+              label={metric.label}
+              value={metric.value}
+              change={metric.change}
+              tone={metric.tone === 'accent' ? 'primary' : metric.tone}
+            />
+          );
         })}
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
-        <AdminCard
-          description="New registrations · last 12 months"
-          title="User growth"
-        >
+        <AdminCard description="New registrations · last 12 months" title="User growth">
           <DailyTrendLineChart dataByYear={data.userGrowthByYear} />
         </AdminCard>
         <AdminCard
@@ -108,15 +102,13 @@ export function AdminDashboard({ data }: { data: AdminDashboardData }) {
                 </AppBadge>
               </div>
               <p className="mt-4 text-sm font-semibold">{service.name}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {service.detail}
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">{service.detail}</p>
             </AppCard>
           ))}
         </div>
       </AdminCard>
     </div>
-  )
+  );
 }
 
 function AdminCard({
@@ -126,11 +118,11 @@ function AdminCard({
   action,
   children,
 }: {
-  title: string
-  description: string
-  href?: string
-  action?: string
-  children: React.ReactNode
+  title: string;
+  description: string;
+  href?: string;
+  action?: string;
+  children: React.ReactNode;
 }) {
   return (
     <AppCard className="min-w-0" padding="md">
@@ -140,12 +132,7 @@ function AdminCard({
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         </div>
         {href && action ? (
-          <AppButton
-            nativeButton={false}
-            render={<Link href={href} />}
-            size="sm"
-            tone="secondary"
-          >
+          <AppButton nativeButton={false} render={<Link href={href} />} size="sm" tone="secondary">
             {action}
             <ArrowRight data-icon="inline-end" />
           </AppButton>
@@ -153,7 +140,7 @@ function AdminCard({
       </div>
       {children}
     </AppCard>
-  )
+  );
 }
 
 function ActivityCard({
@@ -163,19 +150,14 @@ function ActivityCard({
   action,
   items,
 }: {
-  title: string
-  description: string
-  href: string
-  action: string
-  items: AdminActivityItem[]
+  title: string;
+  description: string;
+  href: string;
+  action: string;
+  items: AdminActivityItem[];
 }) {
   return (
-    <AdminCard
-      action={action}
-      description={description}
-      href={href}
-      title={title}
-    >
+    <AdminCard action={action} description={description} href={href} title={title}>
       <div className="-mx-5 -mb-5 divide-y divide-border">
         {items.map((item) => (
           <div className="flex items-center gap-3 px-5 py-3.5" key={item.id}>
@@ -183,9 +165,7 @@ function ActivityCard({
               {item.initials}
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-medium">
-                {item.name}
-              </span>
+              <span className="block truncate text-sm font-medium">{item.name}</span>
               <span className="mt-0.5 block truncate text-xs text-muted-foreground">
                 {item.meta} · {item.timestamp}
               </span>
@@ -199,5 +179,5 @@ function ActivityCard({
         ))}
       </div>
     </AdminCard>
-  )
+  );
 }

@@ -1,1 +1,1 @@
-export const couponsApi = {}
+export const couponsApi = {};

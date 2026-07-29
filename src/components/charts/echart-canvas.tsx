@@ -1,41 +1,34 @@
-'use client'
+'use client';
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
-import {
-  echarts,
-  type EChartsCoreOption,
-} from '@/lib/echarts-client'
-import { cn } from '@/lib/utils'
+import { echarts, type EChartsCoreOption } from '@/lib/echarts-client';
+import { cn } from '@/lib/utils';
 
 type EChartCanvasProps = {
-  option: EChartsCoreOption
-  className?: string
-  ariaLabel: string
-}
+  option: EChartsCoreOption;
+  className?: string;
+  ariaLabel: string;
+};
 
-export function EChartCanvas({
-  option,
-  className,
-  ariaLabel,
-}: EChartCanvasProps) {
-  const chartElementRef = useRef<HTMLDivElement>(null)
+export function EChartCanvas({ option, className, ariaLabel }: EChartCanvasProps) {
+  const chartElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = chartElementRef.current
-    if (!element) return
+    const element = chartElementRef.current;
+    if (!element) return;
 
-    const chart = echarts.init(element, undefined, { renderer: 'canvas' })
-    chart.setOption(option)
+    const chart = echarts.init(element, undefined, { renderer: 'canvas' });
+    chart.setOption(option);
 
-    const resizeObserver = new ResizeObserver(() => chart.resize())
-    resizeObserver.observe(element)
+    const resizeObserver = new ResizeObserver(() => chart.resize());
+    resizeObserver.observe(element);
 
     return () => {
-      resizeObserver.disconnect()
-      chart.dispose()
-    }
-  }, [option])
+      resizeObserver.disconnect();
+      chart.dispose();
+    };
+  }, [option]);
 
   return (
     <div
@@ -44,5 +37,5 @@ export function EChartCanvas({
       ref={chartElementRef}
       role="img"
     />
-  )
+  );
 }

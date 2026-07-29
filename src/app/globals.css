@@ -146,8 +146,7 @@
   --shadow-sm: 0 1px 3px rgb(15 23 42 / 0.08), 0 1px 2px rgb(15 23 42 / 0.04);
   --shadow-md: 0 8px 18px rgb(15 23 42 / 0.08), 0 2px 6px rgb(15 23 42 / 0.04);
   --shadow-lg: 0 14px 28px rgb(15 23 42 / 0.1), 0 4px 10px rgb(15 23 42 / 0.05);
-  --shadow-xl:
-    0 22px 44px rgb(15 23 42 / 0.14), 0 8px 18px rgb(15 23 42 / 0.06);
+  --shadow-xl: 0 22px 44px rgb(15 23 42 / 0.14), 0 8px 18px rgb(15 23 42 / 0.06);
   --shadow-2xl: 0 28px 64px rgb(15 23 42 / 0.18);
   --shadow-glow: 0 0 0 4px rgb(99 102 241 / 0.18);
 
@@ -254,7 +253,6 @@
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }
   .font-ubuntu {
-    font-family:
-      var(--font-ubuntu), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-ubuntu), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }
 }

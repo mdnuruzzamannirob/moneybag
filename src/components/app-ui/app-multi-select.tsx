@@ -1,45 +1,39 @@
-'use client'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
-import { Check, ChevronDown, X } from 'lucide-react'
-import { useMemo, useState } from 'react'
-import { AppInput } from './app-input'
-import type { AppSelectOption } from './app-select'
+'use client';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { Check, ChevronDown, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { AppInput } from './app-input';
+import type { AppSelectOption } from './app-select';
 export function AppMultiSelect({
   onValueChange,
   options,
   placeholder = 'Select options',
   value,
 }: {
-  onValueChange?: (values: string[]) => void
-  options: readonly AppSelectOption[]
-  placeholder?: string
-  value?: string[]
+  onValueChange?: (values: string[]) => void;
+  options: readonly AppSelectOption[];
+  placeholder?: string;
+  value?: string[];
 }) {
-  const [query, setQuery] = useState('')
-  const [internalValue, setInternalValue] = useState<string[]>([])
-  const currentValue = value ?? internalValue
+  const [query, setQuery] = useState('');
+  const [internalValue, setInternalValue] = useState<string[]>([]);
+  const currentValue = value ?? internalValue;
   const filtered = useMemo(
     () =>
-      options.filter((option) =>
-        String(option.label).toLowerCase().includes(query.toLowerCase()),
-      ),
+      options.filter((option) => String(option.label).toLowerCase().includes(query.toLowerCase())),
     [options, query],
-  )
+  );
   const update = (next: string[]) => {
-    if (value === undefined) setInternalValue(next)
-    onValueChange?.(next)
-  }
+    if (value === undefined) setInternalValue(next);
+    onValueChange?.(next);
+  };
   const toggle = (next: string) =>
     update(
       currentValue.includes(next)
         ? currentValue.filter((item) => item !== next)
         : [...currentValue, next],
-    )
+    );
   return (
     <Popover>
       <PopoverTrigger
@@ -51,14 +45,10 @@ export function AppMultiSelect({
             <span
               className={cn(
                 'min-w-0 flex-1 truncate text-left',
-                currentValue.length
-                  ? 'text-foreground'
-                  : 'text-muted-foreground',
+                currentValue.length ? 'text-foreground' : 'text-muted-foreground',
               )}
             >
-              {currentValue.length
-                ? `${currentValue.length} selected`
-                : placeholder}
+              {currentValue.length ? `${currentValue.length} selected` : placeholder}
             </span>
             <ChevronDown className="size-4 shrink-0 text-muted-foreground" />
           </button>
@@ -75,7 +65,7 @@ export function AppMultiSelect({
         />
         <div className="max-h-56 w-full space-y-0.5 overflow-y-auto">
           {filtered.map((option) => {
-            const selected = currentValue.includes(option.value)
+            const selected = currentValue.includes(option.value);
             return (
               <button
                 className={cn(
@@ -93,9 +83,7 @@ export function AppMultiSelect({
                   </span>
                 ) : null}
                 <span className="min-w-0 flex-1">
-                  <span className="block wrap-break-word text-sm font-medium">
-                    {option.label}
-                  </span>
+                  <span className="block wrap-break-word text-sm font-medium">{option.label}</span>
                   {option.description ? (
                     <span
                       className={cn(
@@ -109,7 +97,7 @@ export function AppMultiSelect({
                 </span>
                 {selected ? <Check className="mt-0.5 size-4 shrink-0" /> : null}
               </button>
-            )
+            );
           })}
         </div>
         {currentValue.length ? (
@@ -124,5 +112,5 @@ export function AppMultiSelect({
         ) : null}
       </PopoverContent>
     </Popover>
-  )
+  );
 }

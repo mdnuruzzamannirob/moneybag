@@ -1,1 +1,1 @@
-export const family = {}
+export const family = {};

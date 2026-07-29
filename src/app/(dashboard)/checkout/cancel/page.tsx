@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Cancel</main>
+  return <main>Cancel</main>;
 }

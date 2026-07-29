@@ -1,3 +1,3 @@
 export function AuditLogTable() {
-  return null
+  return null;
 }

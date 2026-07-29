@@ -6,8 +6,8 @@ import {
   TrendingDown,
   TrendingUp,
   WalletCards,
-} from 'lucide-react'
-import Link from 'next/link'
+} from 'lucide-react';
+import Link from 'next/link';
 
 import {
   AppBadge,
@@ -16,29 +16,23 @@ import {
   AppPageHeader,
   AppProgress,
   AppStatCard,
-} from '@/components/app-ui'
-import {
-  CategoryPieChart,
-  IncomeExpenseBarChart,
-} from '@/components/charts/dashboard-charts'
-import { cn } from '@/lib/utils'
+} from '@/components/app-ui';
+import { CategoryPieChart, IncomeExpenseBarChart } from '@/components/charts/dashboard-charts';
+import { cn } from '@/lib/utils';
 import type {
   BudgetSummary,
   SavingsGoalSummary,
   UserDashboardData,
-} from '@/types/dashboard-models'
+} from '@/types/dashboard-models';
 
-const metricIcons = [WalletCards, TrendingUp, TrendingDown, PiggyBank]
+const metricIcons = [WalletCards, TrendingUp, TrendingDown, PiggyBank];
 const numberFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
-})
-const formatCurrency = (value: number) => `৳${numberFormatter.format(value)}`
+});
+const formatCurrency = (value: number) => `৳${numberFormatter.format(value)}`;
 
 export function UserDashboard({ data }: { data: UserDashboardData }) {
-  const categoryTotal = data.categories.reduce(
-    (total, category) => total + category.value,
-    0,
-  )
+  const categoryTotal = data.categories.reduce((total, category) => total + category.value, 0);
 
   return (
     <div className="space-y-6">
@@ -54,11 +48,7 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
               <Download />
               Export
             </AppButton>
-            <AppButton
-              nativeButton={false}
-              render={<Link href="/transactions" />}
-              size="sm"
-            >
+            <AppButton nativeButton={false} render={<Link href="/transactions" />} size="sm">
               <Plus />
               Add transaction
             </AppButton>
@@ -75,12 +65,9 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
         }
       />
 
-      <section
-        aria-label="Financial summary"
-        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-      >
+      <section aria-label="Financial summary" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {data.metrics.map((metric, index) => {
-          const Icon = metricIcons[index] ?? WalletCards
+          const Icon = metricIcons[index] ?? WalletCards;
           return (
             <AppStatCard
               change={metric.change}
@@ -90,15 +77,12 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
               tone={metric.tone === 'accent' ? 'primary' : metric.tone}
               value={metric.value}
             />
-          )
+          );
         })}
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
-        <DashboardCard
-          description="Monthly cash flow comparison"
-          title="Income vs expense"
-        >
+        <DashboardCard description="Monthly cash flow comparison" title="Income vs expense">
           <IncomeExpenseBarChart dataByYear={data.cashFlowByYear} />
         </DashboardCard>
         <DashboardCard
@@ -140,9 +124,7 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
                   {transaction.icon}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-medium">
-                    {transaction.title}
-                  </span>
+                  <span className="block truncate text-sm font-medium">{transaction.title}</span>
                   <span className="mt-0.5 block truncate text-xs text-muted-foreground">
                     {transaction.category} · {transaction.wallet} · {transaction.date}
                   </span>
@@ -188,7 +170,7 @@ export function UserDashboard({ data }: { data: UserDashboardData }) {
         </div>
       </DashboardCard>
     </div>
-  )
+  );
 }
 
 function DashboardCard({
@@ -198,11 +180,11 @@ function DashboardCard({
   href,
   title,
 }: {
-  action?: string
-  children: React.ReactNode
-  description: string
-  href?: string
-  title: string
+  action?: string;
+  children: React.ReactNode;
+  description: string;
+  href?: string;
+  title: string;
 }) {
   return (
     <AppCard className="min-w-0">
@@ -212,12 +194,7 @@ function DashboardCard({
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         </div>
         {href && action ? (
-          <AppButton
-            nativeButton={false}
-            render={<Link href={href} />}
-            size="sm"
-            tone="secondary"
-          >
+          <AppButton nativeButton={false} render={<Link href={href} />} size="sm" tone="secondary">
             {action}
             <ArrowRight />
           </AppButton>
@@ -225,19 +202,19 @@ function DashboardCard({
       </div>
       {children}
     </AppCard>
-  )
+  );
 }
 
 function BudgetProgress({ budget }: { budget: BudgetSummary }) {
-  const progress = Math.min(100, Math.round((budget.spent / budget.limit) * 100))
-  const remaining = Math.max(0, budget.limit - budget.spent)
+  const progress = Math.min(100, Math.round((budget.spent / budget.limit) * 100));
+  const remaining = Math.max(0, budget.limit - budget.spent);
   return (
     <div>
       <div className="mb-2 flex items-center justify-between gap-3 text-sm">
-        <span className="font-medium">{budget.icon} {budget.category}</span>
-        <span className="text-xs text-muted-foreground">
-          {formatCurrency(remaining)} left
+        <span className="font-medium">
+          {budget.icon} {budget.category}
         </span>
+        <span className="text-xs text-muted-foreground">{formatCurrency(remaining)} left</span>
       </div>
       <AppProgress
         label={`${formatCurrency(budget.spent)} of ${formatCurrency(budget.limit)}`}
@@ -245,15 +222,12 @@ function BudgetProgress({ budget }: { budget: BudgetSummary }) {
         value={progress}
       />
     </div>
-  )
+  );
 }
 
 function GoalCard({ goal }: { goal: SavingsGoalSummary }) {
-  const progress = Math.min(
-    100,
-    Math.round((goal.currentAmount / goal.targetAmount) * 100),
-  )
-  const complete = progress === 100
+  const progress = Math.min(100, Math.round((goal.currentAmount / goal.targetAmount) * 100));
+  const complete = progress === 100;
   return (
     <AppCard className="bg-muted/35" padding="sm">
       <div className="flex items-center justify-between">
@@ -271,12 +245,8 @@ function GoalCard({ goal }: { goal: SavingsGoalSummary }) {
       <p className="mt-1 text-xs text-muted-foreground">
         {formatCurrency(goal.currentAmount)} of {formatCurrency(goal.targetAmount)}
       </p>
-      <AppProgress
-        className="mt-4"
-        tone={complete ? 'success' : 'primary'}
-        value={progress}
-      />
+      <AppProgress className="mt-4" tone={complete ? 'success' : 'primary'} value={progress} />
       <p className="mt-2 text-xs text-muted-foreground">Target · {goal.deadline}</p>
     </AppCard>
-  )
+  );
 }

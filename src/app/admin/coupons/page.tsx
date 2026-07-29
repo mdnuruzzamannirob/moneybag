@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Coupons</main>
+  return <main>Coupons</main>;
 }

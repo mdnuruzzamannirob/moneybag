@@ -1,8 +1,8 @@
-import { Check } from 'lucide-react'
-import Link from 'next/link'
-import type { ReactNode } from 'react'
+import { Check } from 'lucide-react';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 export function AuthShell({ children }: { children: ReactNode }) {
   return (
@@ -17,8 +17,8 @@ export function AuthShell({ children }: { children: ReactNode }) {
             Take control of your money.
           </h1>
           <p className="mt-3 max-w-sm text-base leading-7 text-white/90">
-            Track income, manage budgets, smash savings goals, and unlock rich
-            reports - the modern personal finance manager built for everyone.
+            Track income, manage budgets, smash savings goals, and unlock rich reports - the modern
+            personal finance manager built for everyone.
           </p>
         </div>
 
@@ -52,26 +52,24 @@ export function AuthShell({ children }: { children: ReactNode }) {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
 export function BrandLogo({
   className,
   inverse = false,
 }: {
-  className?: string
-  inverse?: boolean
+  className?: string;
+  inverse?: boolean;
 }) {
   return (
     <Link className={cn('inline-flex items-center gap-3', className)} href="/">
       <span className="grid size-10 place-items-center rounded-md bg-linear-to-br from-primary to-brand-accent font-semibold text-white shadow-md">
         F
       </span>
-      <span className={cn('text-xl font-semibold', inverse && 'text-white')}>
-        MoneyBag
-      </span>
+      <span className={cn('text-xl font-semibold', inverse && 'text-white')}>MoneyBag</span>
     </Link>
-  )
+  );
 }
 
 function AuthStat({ label, value }: { label: string; value: string }) {
@@ -80,5 +78,5 @@ function AuthStat({ label, value }: { label: string; value: string }) {
       <div className="text-3xl font-medium tracking-normal">{value}</div>
       <div className="text-xs text-white/85">{label}</div>
     </div>
-  )
+  );
 }

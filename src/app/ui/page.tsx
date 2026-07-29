@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   AppAlert,
@@ -40,8 +40,8 @@ import {
   AppTextarea,
   AppTimePicker,
   AppTooltip,
-} from '@/components/app-ui'
-import { cn } from '@/lib/utils'
+} from '@/components/app-ui';
+import { cn } from '@/lib/utils';
 import {
   ArrowUpRight,
   Bell,
@@ -62,8 +62,8 @@ import {
   TrendingDown,
   TrendingUp,
   WalletCards,
-} from 'lucide-react'
-import { useState } from 'react'
+} from 'lucide-react';
+import { useState } from 'react';
 
 const tabs = [
   'Alert',
@@ -104,8 +104,8 @@ const tabs = [
   'Textarea',
   'Time Picker',
   'Tooltip',
-] as const
-type CatalogueTab = (typeof tabs)[number]
+] as const;
+type CatalogueTab = (typeof tabs)[number];
 const options = [
   {
     description: 'Groceries, restaurants and delivery',
@@ -125,7 +125,7 @@ const options = [
     label: 'Bills & payments',
     value: 'bills',
   },
-]
+];
 const rows = [
   {
     amount: '-৳2,450',
@@ -148,14 +148,14 @@ const rows = [
     id: 3,
     title: 'Electricity bill',
   },
-]
+];
 
 export default function UiComponentsPage() {
-  const [active, setActive] = useState<CatalogueTab>('Button')
-  const [modal, setModal] = useState(false)
-  const [sheet, setSheet] = useState(false)
-  const [confirm, setConfirm] = useState(false)
-  const [page, setPage] = useState(2)
+  const [active, setActive] = useState<CatalogueTab>('Button');
+  const [modal, setModal] = useState(false);
+  const [sheet, setSheet] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [page, setPage] = useState(2);
 
   return (
     <>
@@ -167,9 +167,7 @@ export default function UiComponentsPage() {
             </span>
             <div>
               <p className="text-sm font-semibold">Moneybag Design System</p>
-              <p className="text-xs text-muted-foreground">
-                Components · Patterns · States
-              </p>
+              <p className="text-xs text-muted-foreground">Components · Patterns · States</p>
             </div>
           </div>
           <AppBadge status="success">{tabs.length} components</AppBadge>
@@ -217,9 +215,7 @@ export default function UiComponentsPage() {
             <AppButton onClick={() => setModal(false)} tone="secondary">
               Cancel
             </AppButton>
-            <AppButton onClick={() => setModal(false)}>
-              Save transaction
-            </AppButton>
+            <AppButton onClick={() => setModal(false)}>Save transaction</AppButton>
           </>
         }
         onOpenChange={setModal}
@@ -238,9 +234,7 @@ export default function UiComponentsPage() {
       </AppModal>
       <AppSheet
         description="Responsive filters and secondary workflows."
-        footer={
-          <AppButton onClick={() => setSheet(false)}>Apply filters</AppButton>
-        }
+        footer={<AppButton onClick={() => setSheet(false)}>Apply filters</AppButton>}
         onOpenChange={setSheet}
         open={sheet}
         title="Advanced filters"
@@ -259,7 +253,7 @@ export default function UiComponentsPage() {
         title="Delete transaction?"
       />
     </>
-  )
+  );
 }
 
 function ComponentDemo({
@@ -270,19 +264,16 @@ function ComponentDemo({
   page,
   setPage,
 }: {
-  active: CatalogueTab
-  openConfirm: () => void
-  openModal: () => void
-  openSheet: () => void
-  page: number
-  setPage: (page: number) => void
+  active: CatalogueTab;
+  openConfirm: () => void;
+  openModal: () => void;
+  openSheet: () => void;
+  page: number;
+  setPage: (page: number) => void;
 }) {
   if (active === 'Button') {
     return (
-      <TabLayout
-        title="Button"
-        description="Actions, variants, sizes and interaction states."
-      >
+      <TabLayout title="Button" description="Actions, variants, sizes and interaction states.">
         <Panel title="Variants">
           <Row label="Button tones">
             <AppButton>Primary</AppButton>
@@ -323,7 +314,7 @@ function ComponentDemo({
           </div>
         </Panel>
       </TabLayout>
-    )
+    );
   }
 
   if (active === 'Input') {
@@ -338,10 +329,7 @@ function ComponentDemo({
               <AppInput placeholder="Transaction title" />
             </AppField>
             <AppField label="Search">
-              <AppInput
-                leading={<Search />}
-                placeholder="Search transactions"
-              />
+              <AppInput leading={<Search />} placeholder="Search transactions" />
             </AppField>
             <AppField label="Email">
               <AppInput leading={<Mail />} placeholder="Email address" />
@@ -371,7 +359,7 @@ function ComponentDemo({
           </div>
         </Panel>
       </TabLayout>
-    )
+    );
   }
 
   if (active === 'Select') {
@@ -399,18 +387,28 @@ function ComponentDemo({
         <Panel title="Sizes and widths">
           <div className="grid items-end gap-4 md:grid-cols-3">
             <AppField label="Small — compact filters">
-              <AppSelect options={options} placeholder="Compact" size="sm" triggerClassName="w-40" />
+              <AppSelect
+                options={options}
+                placeholder="Compact"
+                size="sm"
+                triggerClassName="w-40"
+              />
             </AppField>
             <AppField label="Default — form fields">
               <AppSelect options={options} placeholder="Default" triggerClassName="w-full" />
             </AppField>
             <AppField label="Large — primary choice">
-              <AppSelect options={options} placeholder="Large" size="lg" triggerClassName="w-full" />
+              <AppSelect
+                options={options}
+                placeholder="Large"
+                size="lg"
+                triggerClassName="w-full"
+              />
             </AppField>
           </div>
         </Panel>
       </TabLayout>
-    )
+    );
   }
 
   if (active === 'Popover') {
@@ -455,7 +453,7 @@ function ComponentDemo({
           </Row>
         </Panel>
       </TabLayout>
-    )
+    );
   }
 
   if (active === 'Modal') {
@@ -466,10 +464,7 @@ function ComponentDemo({
       >
         <Panel title="Overlay examples">
           <div className="grid gap-3 md:grid-cols-2">
-            <DemoCard
-              description="Form workflow with header, body and footer."
-              label="Modal"
-            >
+            <DemoCard description="Form workflow with header, body and footer." label="Modal">
               <AppButton onClick={openModal}>Open modal</AppButton>
             </DemoCard>
             <DemoCard
@@ -483,7 +478,7 @@ function ComponentDemo({
           </div>
         </Panel>
       </TabLayout>
-    )
+    );
   }
 
   if (active === 'Skeleton') {
@@ -513,7 +508,10 @@ function ComponentDemo({
         <Panel title="Table loading state">
           <div className="space-y-3">
             {Array.from({ length: 4 }, (_, index) => (
-              <div className="grid grid-cols-[minmax(0,1fr)_5rem_4rem] items-center gap-4" key={index}>
+              <div
+                className="grid grid-cols-[minmax(0,1fr)_5rem_4rem] items-center gap-4"
+                key={index}
+              >
                 <AppSkeleton className="h-4 w-full" />
                 <AppSkeleton className="h-4 w-full" />
                 <AppSkeleton className="h-4 w-full" />
@@ -522,7 +520,7 @@ function ComponentDemo({
           </div>
         </Panel>
       </TabLayout>
-    )
+    );
   }
 
   return (
@@ -533,7 +531,7 @@ function ComponentDemo({
       page={page}
       setPage={setPage}
     />
-  )
+  );
 }
 
 function AdditionalComponentDemo({
@@ -543,20 +541,22 @@ function AdditionalComponentDemo({
   page,
   setPage,
 }: {
-  active: CatalogueTab
-  openConfirm: () => void
-  openSheet: () => void
-  page: number
-  setPage: (page: number) => void
+  active: CatalogueTab;
+  openConfirm: () => void;
+  openSheet: () => void;
+  page: number;
+  setPage: (page: number) => void;
 }) {
-  let description = `Usage and available states for the ${active} component.`
-  let demo: React.ReactNode
+  let description = `Usage and available states for the ${active} component.`;
+  let demo: React.ReactNode;
 
   switch (active) {
     case 'Alert':
       demo = (
         <div className="grid gap-3 md:grid-cols-2">
-          <AppAlert size="sm" title="Small information">Your report is ready.</AppAlert>
+          <AppAlert size="sm" title="Small information">
+            Your report is ready.
+          </AppAlert>
           <AppAlert size="sm" title="Small success" tone="success">
             Payment received.
           </AppAlert>
@@ -566,30 +566,63 @@ function AdditionalComponentDemo({
           <AppAlert title="Default error" tone="danger">
             Payment failed.
           </AppAlert>
-          <AppAlert size="lg" title="Large information">Use larger alerts for messages that need more context, supporting text, or a clearer visual priority.</AppAlert>
-          <AppAlert size="lg" title="Large danger" tone="danger">This action cannot be undone. Review the details before continuing.</AppAlert>
+          <AppAlert size="lg" title="Large information">
+            Use larger alerts for messages that need more context, supporting text, or a clearer
+            visual priority.
+          </AppAlert>
+          <AppAlert size="lg" title="Large danger" tone="danger">
+            This action cannot be undone. Review the details before continuing.
+          </AppAlert>
         </div>
-      )
-      break
+      );
+      break;
     case 'Avatar':
       demo = (
-        <div className="space-y-5"><Row label="Fallback scale"><AppAvatar alt="User" fallback="MH" size="sm" /><AppAvatar alt="User" fallback="MH" /><AppAvatar alt="User" fallback="MH" size="lg" /><AppAvatar alt="User" fallback="MH" size="xl" /></Row><Row label="Different initials"><AppAvatar alt="Anika Tahsin" fallback="AT" /><AppAvatar alt="MoneyBag Admin" fallback="AD" size="lg" /><AppAvatar alt="Family wallet" fallback="FW" size="xl" /></Row></div>
-      )
-      break
+        <div className="space-y-5">
+          <Row label="Fallback scale">
+            <AppAvatar alt="User" fallback="MH" size="sm" />
+            <AppAvatar alt="User" fallback="MH" />
+            <AppAvatar alt="User" fallback="MH" size="lg" />
+            <AppAvatar alt="User" fallback="MH" size="xl" />
+          </Row>
+          <Row label="Different initials">
+            <AppAvatar alt="Anika Tahsin" fallback="AT" />
+            <AppAvatar alt="MoneyBag Admin" fallback="AD" size="lg" />
+            <AppAvatar alt="Family wallet" fallback="FW" size="xl" />
+          </Row>
+        </div>
+      );
+      break;
     case 'Badge':
       demo = (
-        <div className="space-y-5"><Row label="Status colors"><AppBadge status="neutral">Neutral</AppBadge><AppBadge status="info">Info</AppBadge><AppBadge status="success">Success</AppBadge><AppBadge status="warning">Warning</AppBadge><AppBadge status="danger">Danger</AppBadge></Row><Row label="Small to large"><AppBadge size="sm" status="info">Small</AppBadge><AppBadge size="md" status="info">Default</AppBadge><AppBadge size="lg" status="info">Large</AppBadge></Row></div>
-      )
-      break
+        <div className="space-y-5">
+          <Row label="Status colors">
+            <AppBadge status="neutral">Neutral</AppBadge>
+            <AppBadge status="info">Info</AppBadge>
+            <AppBadge status="success">Success</AppBadge>
+            <AppBadge status="warning">Warning</AppBadge>
+            <AppBadge status="danger">Danger</AppBadge>
+          </Row>
+          <Row label="Small to large">
+            <AppBadge size="sm" status="info">
+              Small
+            </AppBadge>
+            <AppBadge size="md" status="info">
+              Default
+            </AppBadge>
+            <AppBadge size="lg" status="info">
+              Large
+            </AppBadge>
+          </Row>
+        </div>
+      );
+      break;
     case 'Breadcrumb':
       demo = (
         <div className="space-y-5">
           <Row label="Short path">
             <AppBreadcrumb
-              items={[
-                { href: '/dashboard', label: 'Dashboard' },
-                { label: 'Overview' },
-              ]}
+              items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Overview' }]}
             />
           </Row>
           <Row label="Deep path">
@@ -603,8 +636,8 @@ function AdditionalComponentDemo({
             />
           </Row>
         </div>
-      )
-      break
+      );
+      break;
     case 'Card':
       demo = (
         <div className="grid gap-3 md:grid-cols-3">
@@ -615,31 +648,30 @@ function AdditionalComponentDemo({
           <AppCard>
             <p className="text-xs text-muted-foreground">Default padding</p>
             <p className="mt-1 font-semibold">Standard card</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              For most dashboard content.
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">For most dashboard content.</p>
           </AppCard>
           <AppCard padding="lg">
             <p className="text-xs text-muted-foreground">Large padding</p>
             <p className="mt-1 text-lg font-semibold">Comfortable card</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              For prominent content blocks.
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">For prominent content blocks.</p>
           </AppCard>
         </div>
-      )
-      break
+      );
+      break;
     case 'Checkbox':
       demo = (
-        <div className="space-y-3"><Row label="Small to large"><AppCheckbox label="Small" size="sm" /><AppCheckbox defaultChecked label="Default" /><AppCheckbox defaultChecked label="Large" size="lg" /></Row><div className="border-t border-border/60 pt-3">
-          <AppCheckbox
-            description="This option cannot be changed."
-            disabled
-            label="Disabled"
-          />
-        </div></div>
-      )
-      break
+        <div className="space-y-3">
+          <Row label="Small to large">
+            <AppCheckbox label="Small" size="sm" />
+            <AppCheckbox defaultChecked label="Default" />
+            <AppCheckbox defaultChecked label="Large" size="lg" />
+          </Row>
+          <div className="border-t border-border/60 pt-3">
+            <AppCheckbox description="This option cannot be changed." disabled label="Disabled" />
+          </div>
+        </div>
+      );
+      break;
     case 'Combobox':
       demo = (
         <div className="grid gap-4 md:grid-cols-2">
@@ -653,16 +685,16 @@ function AdditionalComponentDemo({
             <AppCombobox options={options} placeholder="Click, search, then select" />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Confirm Dialog':
       demo = (
         <AppButton onClick={openConfirm} tone="danger">
           <Trash2 />
           Open confirmation
         </AppButton>
-      )
-      break
+      );
+      break;
     case 'Currency Input':
       demo = (
         <div className="grid gap-4 md:grid-cols-3">
@@ -676,8 +708,8 @@ function AdditionalComponentDemo({
             <AppCurrencyInput defaultValue="12,450.00" />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Date Picker':
       demo = (
         <div className="grid gap-4 md:grid-cols-2">
@@ -688,8 +720,8 @@ function AdditionalComponentDemo({
             <AppDatePicker value={new Date(2026, 6, 29)} />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Date Range Picker':
       demo = (
         <div className="grid gap-4 lg:grid-cols-2">
@@ -697,13 +729,11 @@ function AdditionalComponentDemo({
             <AppDateRangePicker />
           </AppField>
           <AppField label="Selected range">
-            <AppDateRangePicker
-              value={{ from: new Date(2026, 6, 1), to: new Date(2026, 6, 29) }}
-            />
+            <AppDateRangePicker value={{ from: new Date(2026, 6, 1), to: new Date(2026, 6, 29) }} />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Dropdown Menu':
       demo = (
         <AppDropdownMenu
@@ -724,8 +754,8 @@ function AdditionalComponentDemo({
             </AppButton>
           }
         />
-      )
-      break
+      );
+      break;
     case 'Empty State':
       demo = (
         <div className="grid gap-3 lg:grid-cols-2">
@@ -745,32 +775,24 @@ function AdditionalComponentDemo({
             />
           </AppCard>
         </div>
-      )
-      break
+      );
+      break;
     case 'Field':
       demo = (
         <div className="grid max-w-2xl gap-4 md:grid-cols-2">
-          <AppField
-            description="Use a clear, recognisable name."
-            label="Wallet name"
-            required
-          >
+          <AppField description="Use a clear, recognisable name." label="Wallet name" required>
             <AppInput placeholder="Main wallet" />
           </AppField>
           <AppField error="This field is required" label="Invalid field">
             <AppInput aria-invalid />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'File Upload':
       demo = (
         <div className="grid gap-4 lg:grid-cols-2">
-          <AppFileUpload
-            accept=".csv"
-            description="CSV up to 10 MB"
-            label="Import transactions"
-          />
+          <AppFileUpload accept=".csv" description="CSV up to 10 MB" label="Import transactions" />
           <AppFileUpload
             accept="image/*"
             description="PNG or JPG up to 5 MB"
@@ -778,8 +800,8 @@ function AdditionalComponentDemo({
             multiple
           />
         </div>
-      )
-      break
+      );
+      break;
     case 'Keyboard Key':
       demo = (
         <Row label="Shortcuts">
@@ -789,8 +811,8 @@ function AdditionalComponentDemo({
           <AppKbd>Ctrl</AppKbd>
           <AppKbd>P</AppKbd>
         </Row>
-      )
-      break
+      );
+      break;
     case 'Multi Select':
       demo = (
         <div className="grid gap-4 md:grid-cols-2">
@@ -801,8 +823,8 @@ function AdditionalComponentDemo({
             <AppMultiSelect options={options} value={['food', 'transport']} />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Number Input':
       demo = (
         <div className="grid gap-4 md:grid-cols-3">
@@ -810,25 +832,22 @@ function AdditionalComponentDemo({
           <AppNumberInput label="Current value" max={12} value={3} />
           <AppNumberInput label="Maximum" max={12} value={12} />
         </div>
-      )
-      break
+      );
+      break;
     case 'Page Header':
       demo = (
         <AppPageHeader
           actions={<AppButton size="sm">Add transaction</AppButton>}
           breadcrumb={
             <AppBreadcrumb
-              items={[
-                { href: '/dashboard', label: 'Dashboard' },
-                { label: 'Transactions' },
-              ]}
+              items={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Transactions' }]}
             />
           }
           description="Review and manage all money movements."
           title="Transactions"
         />
-      )
-      break
+      );
+      break;
     case 'Pagination':
       demo = (
         <div className="space-y-5">
@@ -842,8 +861,8 @@ function AdditionalComponentDemo({
             <AppPagination page={12} totalPages={12} />
           </Row>
         </div>
-      )
-      break
+      );
+      break;
     case 'Progress':
       demo = (
         <div className="grid gap-5 md:grid-cols-2">
@@ -852,8 +871,8 @@ function AdditionalComponentDemo({
           <AppProgress label="Warning level" tone="warning" value={76} />
           <AppProgress label="Overspent" tone="danger" value={92} />
         </div>
-      )
-      break
+      );
+      break;
     case 'Radio Group':
       demo = (
         <div className="max-w-md">
@@ -870,8 +889,8 @@ function AdditionalComponentDemo({
             ]}
           />
         </div>
-      )
-      break
+      );
+      break;
     case 'Range Slider':
       demo = (
         <div className="grid gap-6 md:grid-cols-2">
@@ -880,16 +899,15 @@ function AdditionalComponentDemo({
           <AppRangeSlider defaultValue={75} label="Budget alert" suffix="%" />
           <AppRangeSlider defaultValue={100} label="Maximum" suffix="%" />
         </div>
-      )
-      break
+      );
+      break;
     case 'Segmented Control':
-      description = 'Use this control for switching between two or three views of the same data, such as Grid/List or Day/Week/Month.'
+      description =
+        'Use this control for switching between two or three views of the same data, such as Grid/List or Day/Week/Month.';
       demo = (
         <div className="grid gap-5 lg:grid-cols-2">
           <div>
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Two options
-            </p>
+            <p className="mb-2 text-xs font-medium text-muted-foreground">Two options</p>
             <AppSegmentedControl
               options={[
                 { icon: <LayoutGrid />, label: 'Grid', value: 'grid' },
@@ -899,9 +917,7 @@ function AdditionalComponentDemo({
             />
           </div>
           <div>
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Three options
-            </p>
+            <p className="mb-2 text-xs font-medium text-muted-foreground">Three options</p>
             <AppSegmentedControl
               options={[
                 { label: 'Day', value: 'day' },
@@ -912,46 +928,51 @@ function AdditionalComponentDemo({
             />
           </div>
         </div>
-      )
-      break
+      );
+      break;
     case 'Sheet':
       demo = (
         <AppButton onClick={openSheet} tone="secondary">
           Open sheet
         </AppButton>
-      )
-      break
+      );
+      break;
     case 'Stat Card':
-      description = 'Dashboard metric cards in default, compact, featured and semantic-status styles.'
+      description =
+        'Dashboard metric cards in default, compact, featured and semantic-status styles.';
       demo = (
-        <div className="space-y-5"><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <AppStatCard
-            change="+8.2%"
-            icon={<WalletCards />}
-            label="Balance"
-            value="৳128,450"
-          />
-          <AppStatCard
-            icon={<TrendingUp />}
-            label="Income"
-            tone="success"
-            value="৳103,200"
-          />
-          <AppStatCard
-            icon={<TrendingDown />}
-            label="Expenses"
-            tone="danger"
-            value="৳24,870"
-          />
-          <AppStatCard
-            icon={<ReceiptText />}
-            label="Budget used"
-            tone="warning"
-            value="68%"
-          />
-        </div><div className="grid gap-3 md:grid-cols-3"><AppStatCard change="Live" icon={<WalletCards />} label="Featured balance" value="৳128,450" variant="featured" /><AppStatCard icon={<ReceiptText />} label="Compact transactions" value="248" variant="compact" /><AppStatCard change="This month" icon={<TrendingUp />} label="Projected income" tone="success" value="৳103,200" /></div></div>
-      )
-      break
+        <div className="space-y-5">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <AppStatCard change="+8.2%" icon={<WalletCards />} label="Balance" value="৳128,450" />
+            <AppStatCard icon={<TrendingUp />} label="Income" tone="success" value="৳103,200" />
+            <AppStatCard icon={<TrendingDown />} label="Expenses" tone="danger" value="৳24,870" />
+            <AppStatCard icon={<ReceiptText />} label="Budget used" tone="warning" value="68%" />
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            <AppStatCard
+              change="Live"
+              icon={<WalletCards />}
+              label="Featured balance"
+              value="৳128,450"
+              variant="featured"
+            />
+            <AppStatCard
+              icon={<ReceiptText />}
+              label="Compact transactions"
+              value="248"
+              variant="compact"
+            />
+            <AppStatCard
+              change="This month"
+              icon={<TrendingUp />}
+              label="Projected income"
+              tone="success"
+              value="৳103,200"
+            />
+          </div>
+        </div>
+      );
+      break;
     case 'Switch':
       demo = (
         <div className="grid gap-3 md:grid-cols-2">
@@ -963,8 +984,8 @@ function AdditionalComponentDemo({
           />
           <AppSwitch defaultChecked label="Large switch" size="lg" />
         </div>
-      )
-      break
+      );
+      break;
     case 'Table':
       demo = (
         <AppTable
@@ -992,32 +1013,22 @@ function AdditionalComponentDemo({
           getRowKey={(row) => row.id}
           rows={rows}
         />
-      )
-      break
+      );
+      break;
     case 'Tabs':
       demo = (
         <div className="space-y-6">
           <div>
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Two tabs
-            </p>
+            <p className="mb-2 text-xs font-medium text-muted-foreground">Two tabs</p>
             <AppTabs
               items={[
                 {
-                  content: (
-                    <p className="text-sm text-muted-foreground">
-                      Overview content
-                    </p>
-                  ),
+                  content: <p className="text-sm text-muted-foreground">Overview content</p>,
                   label: 'Overview',
                   value: 'overview',
                 },
                 {
-                  content: (
-                    <p className="text-sm text-muted-foreground">
-                      Activity content
-                    </p>
-                  ),
+                  content: <p className="text-sm text-muted-foreground">Activity content</p>,
                   label: 'Activity',
                   value: 'activity',
                 },
@@ -1051,8 +1062,8 @@ function AdditionalComponentDemo({
             />
           </div>
         </div>
-      )
-      break
+      );
+      break;
     case 'Textarea':
       demo = (
         <div className="grid gap-4 md:grid-cols-2">
@@ -1069,8 +1080,8 @@ function AdditionalComponentDemo({
             <AppTextarea disabled value="This note is locked." />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Time Picker':
       demo = (
         <div className="grid gap-4 md:grid-cols-2">
@@ -1081,8 +1092,8 @@ function AdditionalComponentDemo({
             <AppTimePicker value="14:30" />
           </AppField>
         </div>
-      )
-      break
+      );
+      break;
     case 'Tooltip':
       demo = (
         <Row label="Hover or focus">
@@ -1102,18 +1113,18 @@ function AdditionalComponentDemo({
             </AppButton>
           </AppTooltip>
         </Row>
-      )
-      break
+      );
+      break;
     default:
-      demo = null
-      description = 'Component example'
+      demo = null;
+      description = 'Component example';
   }
 
   return (
     <TabLayout description={description} title={active}>
       <Panel title="Example">{demo}</Panel>
     </TabLayout>
-  )
+  );
 }
 
 function OverviewTab() {
@@ -1123,24 +1134,9 @@ function OverviewTab() {
       description="Foundations, surfaces and the full component inventory."
     >
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <AppStatCard
-          change="+8.2%"
-          icon={<WalletCards />}
-          label="Balance"
-          value="৳128,450"
-        />
-        <AppStatCard
-          icon={<TrendingUp />}
-          label="Income"
-          tone="success"
-          value="৳103,200"
-        />
-        <AppStatCard
-          icon={<TrendingDown />}
-          label="Expenses"
-          tone="danger"
-          value="৳24,870"
-        />
+        <AppStatCard change="+8.2%" icon={<WalletCards />} label="Balance" value="৳128,450" />
+        <AppStatCard icon={<TrendingUp />} label="Income" tone="success" value="৳103,200" />
+        <AppStatCard icon={<TrendingDown />} label="Expenses" tone="danger" value="৳24,870" />
         <AppStatCard
           change={<ArrowUpRight className="size-4" />}
           icon={<ReceiptText />}
@@ -1179,10 +1175,7 @@ function OverviewTab() {
         <AppPageHeader
           breadcrumb={
             <AppBreadcrumb
-              items={[
-                { label: 'Transactions', href: '/transactions' },
-                { label: 'Details' },
-              ]}
+              items={[{ label: 'Transactions', href: '/transactions' }, { label: 'Details' }]}
             />
           }
           description="Reusable breadcrumb, title, description and action alignment."
@@ -1195,7 +1188,7 @@ function OverviewTab() {
         </div>
       </Panel>
     </TabLayout>
-  )
+  );
 }
 
 function ActionsTab() {
@@ -1267,7 +1260,7 @@ function ActionsTab() {
         </Row>
       </Panel>
     </TabLayout>
-  )
+  );
 }
 
 function FormsTab({
@@ -1276,10 +1269,10 @@ function FormsTab({
   setMulti,
   setNumber,
 }: {
-  multi: string[]
-  number: number
-  setMulti: (value: string[]) => void
-  setNumber: (value: number) => void
+  multi: string[];
+  number: number;
+  setMulti: (value: string[]) => void;
+  setNumber: (value: number) => void;
 }) {
   return (
     <TabLayout
@@ -1319,11 +1312,7 @@ function FormsTab({
             <AppSelect options={options} />
           </AppField>
           <AppField label="Multi select">
-            <AppMultiSelect
-              onValueChange={setMulti}
-              options={options}
-              value={multi}
-            />
+            <AppMultiSelect onValueChange={setMulti} options={options} value={multi} />
           </AppField>
           <AppField label="Single date">
             <AppDatePicker />
@@ -1339,12 +1328,7 @@ function FormsTab({
             <AppTextarea placeholder="Optional note" />
           </AppField>
           <AppRangeSlider defaultValue={75} label="Budget alert" suffix="%" />
-          <AppNumberInput
-            label="Installments"
-            max={12}
-            onValueChange={setNumber}
-            value={number}
-          />
+          <AppNumberInput label="Installments" max={12} onValueChange={setNumber} value={number} />
           <AppField label="Currency">
             <AppCurrencyInput placeholder="0.00" />
           </AppField>
@@ -1356,23 +1340,16 @@ function FormsTab({
           </AppField>
         </div>
         <div className="mt-4">
-          <AppFileUpload
-            accept=".csv"
-            description="CSV up to 10 MB"
-            label="Import transactions"
-          />
+          <AppFileUpload accept=".csv" description="CSV up to 10 MB" label="Import transactions" />
         </div>
       </Panel>
     </TabLayout>
-  )
+  );
 }
 
 function SelectionTab() {
   return (
-    <TabLayout
-      title="Selection"
-      description="Binary, single-choice and view-selection patterns."
-    >
+    <TabLayout title="Selection" description="Binary, single-choice and view-selection patterns.">
       <div className="grid gap-4 lg:grid-cols-2">
         <Panel title="Checkbox">
           <div className="space-y-4">
@@ -1415,29 +1392,17 @@ function SelectionTab() {
         <AppTabs
           items={[
             {
-              content: (
-                <p className="text-sm text-muted-foreground">
-                  Overview content
-                </p>
-              ),
+              content: <p className="text-sm text-muted-foreground">Overview content</p>,
               label: 'Overview',
               value: 'overview',
             },
             {
-              content: (
-                <p className="text-sm text-muted-foreground">
-                  Activity content
-                </p>
-              ),
+              content: <p className="text-sm text-muted-foreground">Activity content</p>,
               label: 'Activity',
               value: 'activity',
             },
             {
-              content: (
-                <p className="text-sm text-muted-foreground">
-                  Settings content
-                </p>
-              ),
+              content: <p className="text-sm text-muted-foreground">Settings content</p>,
               label: 'Settings',
               value: 'settings',
             },
@@ -1445,16 +1410,10 @@ function SelectionTab() {
         />
       </Panel>
     </TabLayout>
-  )
+  );
 }
 
-function DataTab({
-  page,
-  setPage,
-}: {
-  page: number
-  setPage: (page: number) => void
-}) {
+function DataTab({ page, setPage }: { page: number; setPage: (page: number) => void }) {
   return (
     <TabLayout
       title="Data & feedback"
@@ -1527,7 +1486,7 @@ function DataTab({
         </div>
       </Panel>
     </TabLayout>
-  )
+  );
 }
 
 function OverlaysTab({
@@ -1535,9 +1494,9 @@ function OverlaysTab({
   openModal,
   openSheet,
 }: {
-  openConfirm: () => void
-  openModal: () => void
-  openSheet: () => void
+  openConfirm: () => void;
+  openModal: () => void;
+  openSheet: () => void;
 }) {
   return (
     <TabLayout
@@ -1546,16 +1505,10 @@ function OverlaysTab({
     >
       <Panel title="Interactive examples">
         <div className="grid gap-3 md:grid-cols-3">
-          <DemoCard
-            description="Structured header, scrollable body and deep footer."
-            label="Modal"
-          >
+          <DemoCard description="Structured header, scrollable body and deep footer." label="Modal">
             <AppButton onClick={openModal}>Open modal</AppButton>
           </DemoCard>
-          <DemoCard
-            description="Responsive side panel for filters and mobile forms."
-            label="Sheet"
-          >
+          <DemoCard description="Responsive side panel for filters and mobile forms." label="Sheet">
             <AppButton onClick={openSheet} tone="secondary">
               Open sheet
             </AppButton>
@@ -1571,7 +1524,7 @@ function OverlaysTab({
         </div>
       </Panel>
     </TabLayout>
-  )
+  );
 }
 
 function TabLayout({
@@ -1579,9 +1532,9 @@ function TabLayout({
   description,
   title,
 }: {
-  children: React.ReactNode
-  description: string
-  title: string
+  children: React.ReactNode;
+  description: string;
+  title: string;
 }) {
   return (
     <section>
@@ -1590,26 +1543,16 @@ function TabLayout({
           <AppBadge size="sm" status="info">
             App UI
           </AppBadge>
-          <span className="text-xs text-muted-foreground">
-            Component reference
-          </span>
+          <span className="text-xs text-muted-foreground">Component reference</span>
         </div>
         <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
-        <p className="mt-1 max-w-3xl text-sm leading-6 text-muted-foreground">
-          {description}
-        </p>
+        <p className="mt-1 max-w-3xl text-sm leading-6 text-muted-foreground">{description}</p>
       </div>
       <div className="space-y-4">{children}</div>
     </section>
-  )
+  );
 }
-function Panel({
-  children,
-  title,
-}: {
-  children: React.ReactNode
-  title: string
-}) {
+function Panel({ children, title }: { children: React.ReactNode; title: string }) {
   return (
     <section className="overflow-hidden rounded-lg border border-border bg-card shadow-xs">
       <div className="border-b border-border bg-muted/30 px-4 py-2.5">
@@ -1617,15 +1560,9 @@ function Panel({
       </div>
       <div className="p-4 sm:p-5">{children}</div>
     </section>
-  )
+  );
 }
-function Row({
-  children,
-  label,
-}: {
-  children: React.ReactNode
-  label: string
-}) {
+function Row({ children, label }: { children: React.ReactNode; label: string }) {
   return (
     <div>
       <p className="mb-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -1633,28 +1570,26 @@ function Row({
       </p>
       <div className="flex flex-wrap items-center gap-2">{children}</div>
     </div>
-  )
+  );
 }
 function DemoCard({
   children,
   description,
   label,
 }: {
-  children: React.ReactNode
-  description: string
-  label: string
+  children: React.ReactNode;
+  description: string;
+  label: string;
 }) {
   return (
     <div className="rounded-md border border-border p-4">
       <p className="text-sm font-medium">{label}</p>
-      <p className="mt-1 min-h-10 text-sm text-muted-foreground">
-        {description}
-      </p>
+      <p className="mt-1 min-h-10 text-sm text-muted-foreground">{description}</p>
       <div className="mt-4">{children}</div>
     </div>
-  )
+  );
 }
 
 // Keep the extended catalogue examples available while the focused component
 // navigation above presents one documentation page at a time.
-void [OverviewTab, ActionsTab, FormsTab, SelectionTab, DataTab, OverlaysTab]
+void [OverviewTab, ActionsTab, FormsTab, SelectionTab, DataTab, OverlaysTab];

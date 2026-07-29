@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Recurring</main>
+  return <main>Recurring</main>;
 }

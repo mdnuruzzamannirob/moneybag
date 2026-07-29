@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Email Templates</main>
+  return <main>Email Templates</main>;
 }

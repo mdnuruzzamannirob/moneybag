@@ -1,1 +1,1 @@
-export const reduxprovider = {}
+export const reduxprovider = {};

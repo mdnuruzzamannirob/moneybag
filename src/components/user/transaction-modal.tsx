@@ -1,3 +1,3 @@
 export function TransactionModal() {
-  return null
+  return null;
 }

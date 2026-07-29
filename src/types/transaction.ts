@@ -1,1 +1,1 @@
-export const transaction = {}
+export const transaction = {};

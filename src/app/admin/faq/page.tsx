@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>FAQ</main>
+  return <main>FAQ</main>;
 }

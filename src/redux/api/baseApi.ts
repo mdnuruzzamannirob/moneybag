@@ -1,1 +1,1 @@
-export const baseApi = {}
+export const baseApi = {};

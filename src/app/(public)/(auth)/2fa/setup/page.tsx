@@ -1,6 +1,5 @@
-import { TwoFactorSetupForm } from '@/components/auth/TwoFactorSetupForm'
+import { TwoFactorSetupForm } from '@/components/auth/TwoFactorSetupForm';
 
 export default function Page() {
-  return <TwoFactorSetupForm />
+  return <TwoFactorSetupForm />;
 }
-

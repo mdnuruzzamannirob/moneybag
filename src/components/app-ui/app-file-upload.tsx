@@ -1,5 +1,5 @@
-'use client'
-import { UploadCloud } from 'lucide-react'
+'use client';
+import { UploadCloud } from 'lucide-react';
 export function AppFileUpload({
   accept,
   description = 'Drag and drop or click to browse',
@@ -7,11 +7,11 @@ export function AppFileUpload({
   multiple = false,
   onFiles,
 }: {
-  accept?: string
-  description?: string
-  label?: string
-  multiple?: boolean
-  onFiles?: (files: FileList | null) => void
+  accept?: string;
+  description?: string;
+  label?: string;
+  multiple?: boolean;
+  onFiles?: (files: FileList | null) => void;
 }) {
   return (
     <label className="flex cursor-pointer flex-col items-center rounded-lg border border-dashed border-border px-6 py-8 text-center hover:bg-muted/40">
@@ -28,5 +28,5 @@ export function AppFileUpload({
         type="file"
       />
     </label>
-  )
+  );
 }

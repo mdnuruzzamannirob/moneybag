@@ -1,3 +1,3 @@
 export function WalletModal() {
-  return null
+  return null;
 }

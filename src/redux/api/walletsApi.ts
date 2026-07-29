@@ -1,1 +1,1 @@
-export const walletsApi = {}
+export const walletsApi = {};

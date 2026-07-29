@@ -1,3 +1,3 @@
 export function BudgetCard() {
-  return null
+  return null;
 }

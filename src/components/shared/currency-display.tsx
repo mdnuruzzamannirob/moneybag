@@ -1,3 +1,3 @@
 export function CurrencyDisplay() {
-  return null
+  return null;
 }

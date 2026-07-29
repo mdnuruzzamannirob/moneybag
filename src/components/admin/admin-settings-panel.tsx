@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CheckCircle2, Eye, EyeOff, Send } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CheckCircle2, Eye, EyeOff, Send } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
 import {
   Controller,
   useForm,
@@ -10,8 +10,8 @@ import {
   type FieldErrors,
   type UseFormRegister,
   type UseFormRegisterReturn,
-} from 'react-hook-form'
-import { z } from 'zod'
+} from 'react-hook-form';
+import { z } from 'zod';
 
 import {
   AppBadge,
@@ -25,7 +25,7 @@ import {
   AppTextarea,
   type AppSelectOption,
   type AppTableColumn,
-} from '@/components/app-ui'
+} from '@/components/app-ui';
 
 export type AdminSettingsSectionName =
   | 'general'
@@ -38,24 +38,17 @@ export type AdminSettingsSectionName =
   | 'smtp'
   | 'auth-providers'
   | 'payment-gateways'
-  | 'localization'
+  | 'localization';
 
-const requiredText = (label: string) =>
-  z.string().trim().min(1, `${label} is required`)
+const requiredText = (label: string) => z.string().trim().min(1, `${label} is required`);
 const generalSchema = z.object({
   siteName: requiredText('Site name'),
   currency: requiredText('Default currency'),
   language: requiredText('Default language'),
   maintenance: z.boolean(),
-  csvSize: z.coerce
-    .number()
-    .min(0.1, 'Minimum 0.1 MB')
-    .max(10, 'Maximum 10 MB'),
-  receiptSize: z.coerce
-    .number()
-    .min(0.1, 'Minimum 0.1 MB')
-    .max(20, 'Maximum 20 MB'),
-})
+  csvSize: z.coerce.number().min(0.1, 'Minimum 0.1 MB').max(10, 'Maximum 10 MB'),
+  receiptSize: z.coerce.number().min(0.1, 'Minimum 0.1 MB').max(20, 'Maximum 20 MB'),
+});
 const emailSchema = z.object({
   host: requiredText('SMTP host'),
   port: z.coerce
@@ -68,29 +61,25 @@ const emailSchema = z.object({
   encryption: requiredText('Encryption'),
   fromName: requiredText('From name'),
   fromEmail: z.string().email('Enter a valid email address'),
-})
+});
 const oauthSchema = z.object({
   clientId: z.string(),
   clientSecret: z.string(),
   redirectUris: z.string(),
   enabled: z.boolean(),
-})
+});
 const paymentSchema = z.object({
   secretKey: z.string(),
   webhookSecret: z.string(),
   enabled: z.boolean(),
-})
+});
 const storageSchema = z.object({
   cloudName: requiredText('Cloud name'),
   apiKey: requiredText('API key'),
   apiSecret: requiredText('API secret'),
   preset: requiredText('Upload preset'),
-  expiry: z.coerce
-    .number()
-    .int()
-    .min(60, 'Minimum 60 seconds')
-    .max(3600, 'Maximum 3600 seconds'),
-})
+  expiry: z.coerce.number().int().min(60, 'Minimum 60 seconds').max(3600, 'Maximum 3600 seconds'),
+});
 const securitySchema = z.object({
   whitelist: z.string(),
   enforceTwoFactor: z.boolean(),
@@ -99,44 +88,44 @@ const securitySchema = z.object({
     .int()
     .min(10, 'Minimum 10 requests/minute')
     .max(1000, 'Maximum 1000 requests/minute'),
-})
+});
 const legalSchema = z.object({
   terms: requiredText('Terms of Service'),
   privacy: requiredText('Privacy Policy'),
-})
+});
 
-type SettingsValues = Record<string, unknown>
-type SettingsControl = Control<SettingsValues>
+type SettingsValues = Record<string, unknown>;
+type SettingsControl = Control<SettingsValues>;
 type FormProps = {
   children: (
     register: UseFormRegister<SettingsValues>,
     errors: FieldErrors<SettingsValues>,
     control: SettingsControl,
-  ) => ReactNode
-  schema: z.ZodType
-  values: SettingsValues
-}
+  ) => ReactNode;
+  schema: z.ZodType;
+  values: SettingsValues;
+};
 
 const currencyOptions: AppSelectOption[] = [
   { label: 'USD — US Dollar', value: 'USD' },
   { label: 'EUR — Euro', value: 'EUR' },
   { label: 'BDT — Bangladeshi Taka', value: 'BDT' },
-]
+];
 const languageOptions: AppSelectOption[] = [
   { label: 'English', value: 'English' },
   { label: 'Bengali', value: 'Bengali' },
-]
+];
 
 function SettingsForm({ children, schema, values }: FormProps) {
-  const [saved, setSaved] = useState(false)
+  const [saved, setSaved] = useState(false);
   const form = useForm<SettingsValues>({
     defaultValues: values,
     resolver: zodResolver(schema as never) as never,
-  })
+  });
   const submit = () => {
-    setSaved(true)
-    window.setTimeout(() => setSaved(false), 3000)
-  }
+    setSaved(true);
+    window.setTimeout(() => setSaved(false), 3000);
+  };
   return (
     <form className="space-y-6" onSubmit={form.handleSubmit(submit)}>
       {children(form.register, form.formState.errors, form.control)}
@@ -154,7 +143,7 @@ function SettingsForm({ children, schema, values }: FormProps) {
         </AppButton>
       </div>
     </form>
-  )
+  );
 }
 
 function SettingsCard({
@@ -162,21 +151,19 @@ function SettingsCard({
   description,
   title,
 }: {
-  children: ReactNode
-  description?: string
-  title: string
+  children: ReactNode;
+  description?: string;
+  title: string;
 }) {
   return (
     <AppCard padding="none">
       <header className="border-b border-border px-5 py-4 sm:px-6">
         <h2 className="font-semibold">{title}</h2>
-        {description ? (
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-        ) : null}
+        {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
       </header>
       <div className="p-5 sm:p-6">{children}</div>
     </AppCard>
-  )
+  );
 }
 
 function FormField({
@@ -185,10 +172,10 @@ function FormField({
   error,
   label,
 }: {
-  children: ReactNode
-  description?: string
-  error?: { message?: unknown }
-  label: string
+  children: ReactNode;
+  description?: string;
+  error?: { message?: unknown };
+  label: string;
 }) {
   return (
     <AppField
@@ -198,7 +185,7 @@ function FormField({
     >
       {children}
     </AppField>
-  )
+  );
 }
 
 function ControlledSelect({
@@ -206,9 +193,9 @@ function ControlledSelect({
   name,
   options,
 }: {
-  control: SettingsControl
-  name: string
-  options: readonly AppSelectOption[]
+  control: SettingsControl;
+  name: string;
+  options: readonly AppSelectOption[];
 }) {
   return (
     <Controller
@@ -222,7 +209,7 @@ function ControlledSelect({
         />
       )}
     />
-  )
+  );
 }
 
 function ControlledSwitch({
@@ -231,10 +218,10 @@ function ControlledSwitch({
   label,
   name,
 }: {
-  control: SettingsControl
-  description: string
-  label: string
-  name: string
+  control: SettingsControl;
+  description: string;
+  label: string;
+  name: string;
 }) {
   return (
     <Controller
@@ -249,11 +236,11 @@ function ControlledSwitch({
         />
       )}
     />
-  )
+  );
 }
 
 function PasswordInput({ register }: { register: UseFormRegisterReturn }) {
-  const [shown, setShown] = useState(false)
+  const [shown, setShown] = useState(false);
   return (
     <AppInput
       {...register}
@@ -270,7 +257,7 @@ function PasswordInput({ register }: { register: UseFormRegisterReturn }) {
       }
       type={shown ? 'text' : 'password'}
     />
-  )
+  );
 }
 
 function GeneralForm() {
@@ -297,18 +284,10 @@ function GeneralForm() {
                 <AppInput {...register('siteName')} />
               </FormField>
               <FormField error={errors.currency} label="Default currency">
-                <ControlledSelect
-                  control={control}
-                  name="currency"
-                  options={currencyOptions}
-                />
+                <ControlledSelect control={control} name="currency" options={currencyOptions} />
               </FormField>
               <FormField error={errors.language} label="Default language">
-                <ControlledSelect
-                  control={control}
-                  name="language"
-                  options={languageOptions}
-                />
+                <ControlledSelect control={control} name="language" options={languageOptions} />
               </FormField>
               <ControlledSwitch
                 control={control}
@@ -323,22 +302,10 @@ function GeneralForm() {
             title="Upload limits"
           >
             <div className="grid gap-5 sm:grid-cols-2">
-              <FormField
-                error={errors.csvSize}
-                label="Allowed CSV upload size (MB)"
-              >
-                <AppInput
-                  {...register('csvSize')}
-                  max="10"
-                  min="0.1"
-                  step="0.1"
-                  type="number"
-                />
+              <FormField error={errors.csvSize} label="Allowed CSV upload size (MB)">
+                <AppInput {...register('csvSize')} max="10" min="0.1" step="0.1" type="number" />
               </FormField>
-              <FormField
-                error={errors.receiptSize}
-                label="Allowed receipt upload size (MB)"
-              >
+              <FormField error={errors.receiptSize} label="Allowed receipt upload size (MB)">
                 <AppInput
                   {...register('receiptSize')}
                   max="20"
@@ -352,7 +319,7 @@ function GeneralForm() {
         </>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 function EmailForm() {
@@ -410,11 +377,7 @@ function EmailForm() {
                 <AppInput {...register('fromEmail')} type="email" />
               </FormField>
             </div>
-            <AppButton
-              className="mt-5 max-sm:w-full"
-              tone="secondary"
-              type="button"
-            >
+            <AppButton className="mt-5 max-sm:w-full" tone="secondary" type="button">
               <Send />
               Test email
             </AppButton>
@@ -422,7 +385,7 @@ function EmailForm() {
         </>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 function OAuthForm() {
@@ -467,15 +430,15 @@ function OAuthForm() {
         </SettingsCard>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 type WebhookEvent = {
-  date: string
-  event: string
-  id: string
-  status: 'Succeeded' | 'Failed'
-}
+  date: string;
+  event: string;
+  id: string;
+  status: 'Succeeded' | 'Failed';
+};
 const webhookEvents: WebhookEvent[] = [
   {
     event: 'invoice.paid',
@@ -507,7 +470,7 @@ const webhookEvents: WebhookEvent[] = [
     status: 'Succeeded',
     date: 'Jul 23, 2026',
   },
-]
+];
 const webhookColumns: readonly AppTableColumn<WebhookEvent>[] = [
   {
     header: 'Event',
@@ -517,17 +480,13 @@ const webhookColumns: readonly AppTableColumn<WebhookEvent>[] = [
   {
     header: 'ID',
     key: 'id',
-    render: (row) => (
-      <span className="font-mono text-xs text-muted-foreground">{row.id}</span>
-    ),
+    render: (row) => <span className="font-mono text-xs text-muted-foreground">{row.id}</span>,
   },
   {
     header: 'Status',
     key: 'status',
     render: (row) => (
-      <AppBadge status={row.status === 'Succeeded' ? 'success' : 'danger'}>
-        {row.status}
-      </AppBadge>
+      <AppBadge status={row.status === 'Succeeded' ? 'success' : 'danger'}>{row.status}</AppBadge>
     ),
   },
   {
@@ -535,7 +494,7 @@ const webhookColumns: readonly AppTableColumn<WebhookEvent>[] = [
     key: 'date',
     render: (row) => <span className="text-muted-foreground">{row.date}</span>,
   },
-]
+];
 
 function PaymentForm() {
   return (
@@ -553,10 +512,7 @@ function PaymentForm() {
               <FormField error={errors.secretKey} label="Stripe secret key">
                 <PasswordInput register={register('secretKey')} />
               </FormField>
-              <FormField
-                error={errors.webhookSecret}
-                label="Webhook signing secret"
-              >
+              <FormField error={errors.webhookSecret} label="Webhook signing secret">
                 <PasswordInput register={register('webhookSecret')} />
               </FormField>
             </div>
@@ -573,16 +529,12 @@ function PaymentForm() {
             description="Last five Stripe webhook deliveries. This data is read-only mock data."
             title="Webhook event log"
           >
-            <AppTable
-              columns={webhookColumns}
-              getRowKey={(row) => row.id}
-              rows={webhookEvents}
-            />
+            <AppTable columns={webhookColumns} getRowKey={(row) => row.id} rows={webhookEvents} />
           </SettingsCard>
         </>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 function StorageForm() {
@@ -615,22 +567,14 @@ function StorageForm() {
             <FormField error={errors.preset} label="Upload preset">
               <AppInput {...register('preset')} />
             </FormField>
-            <FormField
-              error={errors.expiry}
-              label="Presigned URL expiry (seconds)"
-            >
-              <AppInput
-                {...register('expiry')}
-                max="3600"
-                min="60"
-                type="number"
-              />
+            <FormField error={errors.expiry} label="Presigned URL expiry (seconds)">
+              <AppInput {...register('expiry')} max="3600" min="60" type="number" />
             </FormField>
           </div>
         </SettingsCard>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 function SecurityForm() {
@@ -649,22 +593,11 @@ function SecurityForm() {
             error={errors.whitelist}
             label="Admin IP whitelist"
           >
-            <AppTextarea
-              {...register('whitelist')}
-              placeholder="203.0.113.0/24"
-            />
+            <AppTextarea {...register('whitelist')} placeholder="203.0.113.0/24" />
           </FormField>
           <div className="mt-5 grid gap-5 border-t border-border pt-5 sm:grid-cols-2">
-            <FormField
-              error={errors.rateLimit}
-              label="API rate limit (requests/min)"
-            >
-              <AppInput
-                {...register('rateLimit')}
-                max="1000"
-                min="10"
-                type="number"
-              />
+            <FormField error={errors.rateLimit} label="API rate limit (requests/min)">
+              <AppInput {...register('rateLimit')} max="1000" min="10" type="number" />
             </FormField>
             <ControlledSwitch
               control={control}
@@ -676,7 +609,7 @@ function SecurityForm() {
         </SettingsCard>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 function LegalForm() {
@@ -684,10 +617,8 @@ function LegalForm() {
     <SettingsForm
       schema={legalSchema}
       values={{
-        terms:
-          'Terms of Service\n\nBy using MoneyBag, you agree to these terms.',
-        privacy:
-          'Privacy Policy\n\nWe protect and process personal finance data responsibly.',
+        terms: 'Terms of Service\n\nBy using MoneyBag, you agree to these terms.',
+        privacy: 'Privacy Policy\n\nWe protect and process personal finance data responsibly.',
       }}
     >
       {(register, errors) => (
@@ -701,10 +632,7 @@ function LegalForm() {
               error={errors.terms}
               label="Terms of Service"
             >
-              <AppTextarea
-                {...register('terms')}
-                className="min-h-48 leading-6"
-              />
+              <AppTextarea {...register('terms')} className="min-h-48 leading-6" />
             </FormField>
             <div className="border-t border-border pt-6">
               <FormField
@@ -712,17 +640,14 @@ function LegalForm() {
                 error={errors.privacy}
                 label="Privacy Policy"
               >
-                <AppTextarea
-                  {...register('privacy')}
-                  className="min-h-48 leading-6"
-                />
+                <AppTextarea {...register('privacy')} className="min-h-48 leading-6" />
               </FormField>
             </div>
           </div>
         </SettingsCard>
       )}
     </SettingsForm>
-  )
+  );
 }
 
 const sections: Record<AdminSettingsSectionName, () => ReactNode> = {
@@ -737,16 +662,12 @@ const sections: Record<AdminSettingsSectionName, () => ReactNode> = {
   'auth-providers': OAuthForm,
   'payment-gateways': PaymentForm,
   localization: GeneralForm,
-}
+};
 
 export function AdminSettingsPanel() {
-  return <GeneralForm />
+  return <GeneralForm />;
 }
-export function AdminSettingsSection({
-  section,
-}: {
-  section: AdminSettingsSectionName
-}) {
-  const Section = sections[section]
-  return <Section />
+export function AdminSettingsSection({ section }: { section: AdminSettingsSectionName }) {
+  const Section = sections[section];
+  return <Section />;
 }

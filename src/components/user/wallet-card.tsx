@@ -1,3 +1,3 @@
 export function WalletCard() {
-  return null
+  return null;
 }

@@ -1,22 +1,19 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Mail } from 'lucide-react'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Mail } from 'lucide-react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 
-import { AppButton } from '@/components/app-ui'
-import { AuthTextField } from '@/components/auth/AuthFormFields'
-import {
-  forgotPasswordSchema,
-  type ForgotPasswordValues,
-} from '@/schemas/auth.schema'
+import { AppButton } from '@/components/app-ui';
+import { AuthTextField } from '@/components/auth/AuthFormFields';
+import { forgotPasswordSchema, type ForgotPasswordValues } from '@/schemas/auth.schema';
 
 export function ForgotPasswordForm() {
   const form = useForm<ForgotPasswordValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email: '' },
-  })
+  });
 
   function onSubmit(_values: ForgotPasswordValues) {}
 
@@ -41,11 +38,7 @@ export function ForgotPasswordForm() {
           registration={form.register('email')}
           type="email"
         />
-        <AppButton
-          className="w-full"
-          size="lg"
-          type="submit"
-        >
+        <AppButton className="w-full" size="lg" type="submit">
           Send reset link
         </AppButton>
       </form>
@@ -55,5 +48,5 @@ export function ForgotPasswordForm() {
         </Link>
       </div>
     </>
-  )
+  );
 }

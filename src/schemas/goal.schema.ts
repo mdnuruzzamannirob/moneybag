@@ -1,1 +1,1 @@
-export const goalschema = {}
+export const goalschema = {};

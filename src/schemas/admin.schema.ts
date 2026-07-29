@@ -1,1 +1,1 @@
-export const adminschema = {}
+export const adminschema = {};

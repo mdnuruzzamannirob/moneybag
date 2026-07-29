@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Notifications</main>
+  return <main>Notifications</main>;
 }

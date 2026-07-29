@@ -1,32 +1,26 @@
-'use client'
+'use client';
 
-import { Eye, LockKeyhole } from 'lucide-react'
-import type { InputHTMLAttributes, ReactNode } from 'react'
-import { useMemo, useState } from 'react'
-import type { FieldError, UseFormRegisterReturn } from 'react-hook-form'
+import { Eye, LockKeyhole } from 'lucide-react';
+import type { InputHTMLAttributes, ReactNode } from 'react';
+import { useMemo, useState } from 'react';
+import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
-import { AppButton, AppCheckbox, AppInput } from '@/components/app-ui'
-import { cn } from '@/lib/utils'
+import { AppButton, AppCheckbox, AppInput } from '@/components/app-ui';
+import { cn } from '@/lib/utils';
 
 type BaseFieldProps = {
-  error?: FieldError
-  label?: string
-  labelAction?: ReactNode
-}
-type AuthTextFieldProps = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'className'
-> &
-  BaseFieldProps & { icon?: ReactNode; registration: UseFormRegisterReturn }
-type AuthPasswordFieldProps = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  'className' | 'type'
-> &
+  error?: FieldError;
+  label?: string;
+  labelAction?: ReactNode;
+};
+type AuthTextFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> &
+  BaseFieldProps & { icon?: ReactNode; registration: UseFormRegisterReturn };
+type AuthPasswordFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'type'> &
   BaseFieldProps & {
-    registration: UseFormRegisterReturn
-    showStrength?: boolean
-    watchValue?: string
-  }
+    registration: UseFormRegisterReturn;
+    showStrength?: boolean;
+    watchValue?: string;
+  };
 
 function AuthFieldLayout({
   children,
@@ -35,11 +29,11 @@ function AuthFieldLayout({
   label,
   labelAction,
 }: {
-  children: ReactNode
-  error?: FieldError
-  id?: string
-  label?: string
-  labelAction?: ReactNode
+  children: ReactNode;
+  error?: FieldError;
+  id?: string;
+  label?: string;
+  labelAction?: ReactNode;
 }) {
   return (
     <div className="space-y-2">
@@ -52,11 +46,9 @@ function AuthFieldLayout({
         </div>
       ) : null}
       {children}
-      {error?.message ? (
-        <p className="text-xs text-destructive">{error.message}</p>
-      ) : null}
+      {error?.message ? <p className="text-xs text-destructive">{error.message}</p> : null}
     </div>
-  )
+  );
 }
 
 export function AuthTextField({
@@ -69,12 +61,7 @@ export function AuthTextField({
   ...props
 }: AuthTextFieldProps) {
   return (
-    <AuthFieldLayout
-      error={error}
-      id={props.id}
-      label={label}
-      labelAction={labelAction}
-    >
+    <AuthFieldLayout error={error} id={props.id} label={label} labelAction={labelAction}>
       <AppInput
         {...props}
         {...registration}
@@ -83,7 +70,7 @@ export function AuthTextField({
         type={type}
       />
     </AuthFieldLayout>
-  )
+  );
 }
 
 export function AuthPasswordField({
@@ -95,18 +82,12 @@ export function AuthPasswordField({
   watchValue = '',
   ...props
 }: AuthPasswordFieldProps) {
-  const [visible, setVisible] = useState(false)
-  const score = usePasswordScore(watchValue)
-  const strength =
-    score <= 1 ? 'bg-destructive' : score === 2 ? 'bg-warning' : 'bg-success'
-  const labels = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong']
+  const [visible, setVisible] = useState(false);
+  const score = usePasswordScore(watchValue);
+  const strength = score <= 1 ? 'bg-destructive' : score === 2 ? 'bg-warning' : 'bg-success';
+  const labels = ['Too weak', 'Weak', 'Fair', 'Good', 'Strong'];
   return (
-    <AuthFieldLayout
-      error={error}
-      id={props.id}
-      label={label}
-      labelAction={labelAction}
-    >
+    <AuthFieldLayout error={error} id={props.id} label={label} labelAction={labelAction}>
       <AppInput
         {...props}
         {...registration}
@@ -150,7 +131,7 @@ export function AuthPasswordField({
         </>
       ) : null}
     </AuthFieldLayout>
-  )
+  );
 }
 
 export function AuthCheckboxField({
@@ -158,9 +139,9 @@ export function AuthCheckboxField({
   error,
   registration,
 }: {
-  children: ReactNode
-  error?: FieldError
-  registration: UseFormRegisterReturn
+  children: ReactNode;
+  error?: FieldError;
+  registration: UseFormRegisterReturn;
 }) {
   return (
     <div className="space-y-2">
@@ -171,20 +152,18 @@ export function AuthCheckboxField({
         id={registration.name}
         label={children}
       />
-      {error?.message ? (
-        <p className="text-xs text-destructive">{error.message}</p>
-      ) : null}
+      {error?.message ? <p className="text-xs text-destructive">{error.message}</p> : null}
     </div>
-  )
+  );
 }
 
 function usePasswordScore(password: string) {
   return useMemo(() => {
-    let score = 0
-    if (password.length >= 8) score += 1
-    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score += 1
-    if (/\d/.test(password)) score += 1
-    if (/[^A-Za-z0-9]/.test(password)) score += 1
-    return score
-  }, [password])
+    let score = 0;
+    if (password.length >= 8) score += 1;
+    if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score += 1;
+    if (/\d/.test(password)) score += 1;
+    if (/[^A-Za-z0-9]/.test(password)) score += 1;
+    return score;
+  }, [password]);
 }

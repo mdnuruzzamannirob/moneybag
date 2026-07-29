@@ -5,15 +5,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { cn } from '@/lib/utils'
-import type { ReactNode } from 'react'
+} from '@/components/ui/table';
+import { cn } from '@/lib/utils';
+import type { ReactNode } from 'react';
 export type AppTableColumn<T> = {
-  align?: 'left' | 'right'
-  header: ReactNode
-  key: string
-  render: (row: T) => ReactNode
-}
+  align?: 'left' | 'right';
+  header: ReactNode;
+  key: string;
+  render: (row: T) => ReactNode;
+};
 export function AppTable<T>({
   className,
   columns,
@@ -21,19 +21,14 @@ export function AppTable<T>({
   getRowKey,
   rows,
 }: {
-  className?: string
-  columns: readonly AppTableColumn<T>[]
-  empty?: ReactNode
-  getRowKey: (row: T) => string | number
-  rows: readonly T[]
+  className?: string;
+  columns: readonly AppTableColumn<T>[];
+  empty?: ReactNode;
+  getRowKey: (row: T) => string | number;
+  rows: readonly T[];
 }) {
   return (
-    <div
-      className={cn(
-        'overflow-hidden bg-card',
-        className,
-      )}
-    >
+    <div className={cn('overflow-hidden bg-card', className)}>
       <div className="overflow-x-auto">
         <Table className="min-w-180">
           <TableHeader className="border-b border-border/70 bg-muted/40">
@@ -87,5 +82,5 @@ export function AppTable<T>({
         </Table>
       </div>
     </div>
-  )
+  );
 }

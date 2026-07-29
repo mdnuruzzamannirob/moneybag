@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import type { ComponentType, ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react';
 import {
   CalendarDays,
   Download,
@@ -16,8 +16,8 @@ import {
   TrendingUp,
   Upload,
   WalletCards,
-} from 'lucide-react'
-import { useMemo, useState } from 'react'
+} from 'lucide-react';
+import { useMemo, useState } from 'react';
 
 import {
   AppBadge,
@@ -35,118 +35,306 @@ import {
   AppSwitch,
   AppTable,
   type AppTableColumn,
-} from '@/components/app-ui'
-import {
-  FinanceDialog,
-  RowMenu,
-  type FinanceDialogKind,
-} from '@/components/user/finance-dialog'
-import { cn } from '@/lib/utils'
+} from '@/components/app-ui';
+import { FinanceDialog, RowMenu, type FinanceDialogKind } from '@/components/user/finance-dialog';
+import { cn } from '@/lib/utils';
 
-const nf = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 })
-const money = (value: number) => `৳${nf.format(value)}`
+const nf = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
+const money = (value: number) => `৳${nf.format(value)}`;
 
 type Transaction = {
-  id: number
-  title: string
-  category: string
-  wallet: string
-  date: string
-  amount: number
-  type: 'income' | 'expense'
-  icon: string
-  color: string
-}
+  id: number;
+  title: string;
+  category: string;
+  wallet: string;
+  date: string;
+  amount: number;
+  type: 'income' | 'expense';
+  icon: string;
+  color: string;
+};
 type Budget = {
-  id: number
-  category: string
-  icon: string
-  spent: number
-  limit: number
-  color: string
-  rollover: boolean
-  alert: number
-}
+  id: number;
+  category: string;
+  icon: string;
+  spent: number;
+  limit: number;
+  color: string;
+  rollover: boolean;
+  alert: number;
+};
 type SavingsGoal = {
-  id: number
-  title: string
-  icon: string
-  saved: number
-  target: number
-  deadline: string
-  color: string
-  note: string
-}
+  id: number;
+  title: string;
+  icon: string;
+  saved: number;
+  target: number;
+  deadline: string;
+  color: string;
+  note: string;
+};
 
 const txSeed: Transaction[] = [
-  { id: 1, title: 'Monthly salary', category: 'Salary', wallet: 'BRAC Bank', date: '28 Jul, 2026', amount: 85000, type: 'income', icon: 'S', color: '#10b981' },
-  { id: 2, title: 'Grocery shopping at Agora', category: 'Food', wallet: 'Cash', date: '26 Jul, 2026', amount: 2450, type: 'expense', icon: 'F', color: '#f59e0b' },
-  { id: 3, title: 'Uber ride to Dhanmondi', category: 'Transport', wallet: 'bKash', date: '25 Jul, 2026', amount: 320, type: 'expense', icon: 'T', color: '#3b82f6' },
-  { id: 4, title: 'Freelance project payment', category: 'Freelance', wallet: 'BRAC Bank', date: '24 Jul, 2026', amount: 18200, type: 'income', icon: 'F', color: '#8b5cf6' },
-  { id: 5, title: 'Netflix subscription', category: 'Entertainment', wallet: 'City Bank Card', date: '24 Jul, 2026', amount: 650, type: 'expense', icon: 'E', color: '#ec4899' },
-  { id: 6, title: 'Electricity bill', category: 'Bills', wallet: 'bKash', date: '22 Jul, 2026', amount: 1840, type: 'expense', icon: 'B', color: '#ef4444' },
-]
+  {
+    id: 1,
+    title: 'Monthly salary',
+    category: 'Salary',
+    wallet: 'BRAC Bank',
+    date: '28 Jul, 2026',
+    amount: 85000,
+    type: 'income',
+    icon: 'S',
+    color: '#10b981',
+  },
+  {
+    id: 2,
+    title: 'Grocery shopping at Agora',
+    category: 'Food',
+    wallet: 'Cash',
+    date: '26 Jul, 2026',
+    amount: 2450,
+    type: 'expense',
+    icon: 'F',
+    color: '#f59e0b',
+  },
+  {
+    id: 3,
+    title: 'Uber ride to Dhanmondi',
+    category: 'Transport',
+    wallet: 'bKash',
+    date: '25 Jul, 2026',
+    amount: 320,
+    type: 'expense',
+    icon: 'T',
+    color: '#3b82f6',
+  },
+  {
+    id: 4,
+    title: 'Freelance project payment',
+    category: 'Freelance',
+    wallet: 'BRAC Bank',
+    date: '24 Jul, 2026',
+    amount: 18200,
+    type: 'income',
+    icon: 'F',
+    color: '#8b5cf6',
+  },
+  {
+    id: 5,
+    title: 'Netflix subscription',
+    category: 'Entertainment',
+    wallet: 'City Bank Card',
+    date: '24 Jul, 2026',
+    amount: 650,
+    type: 'expense',
+    icon: 'E',
+    color: '#ec4899',
+  },
+  {
+    id: 6,
+    title: 'Electricity bill',
+    category: 'Bills',
+    wallet: 'bKash',
+    date: '22 Jul, 2026',
+    amount: 1840,
+    type: 'expense',
+    icon: 'B',
+    color: '#ef4444',
+  },
+];
 const budgetSeed: Budget[] = [
-  { id: 1, category: 'Food & dining', icon: 'F', spent: 6830, limit: 9000, color: '#f59e0b', rollover: true, alert: 80 },
-  { id: 2, category: 'Transport', icon: 'T', spent: 820, limit: 3000, color: '#3b82f6', rollover: false, alert: 80 },
-  { id: 3, category: 'Shopping', icon: 'S', spent: 4850, limit: 5000, color: '#ec4899', rollover: false, alert: 90 },
-  { id: 4, category: 'Entertainment', icon: 'E', spent: 1450, limit: 2500, color: '#8b5cf6', rollover: true, alert: 80 },
-]
+  {
+    id: 1,
+    category: 'Food & dining',
+    icon: 'F',
+    spent: 6830,
+    limit: 9000,
+    color: '#f59e0b',
+    rollover: true,
+    alert: 80,
+  },
+  {
+    id: 2,
+    category: 'Transport',
+    icon: 'T',
+    spent: 820,
+    limit: 3000,
+    color: '#3b82f6',
+    rollover: false,
+    alert: 80,
+  },
+  {
+    id: 3,
+    category: 'Shopping',
+    icon: 'S',
+    spent: 4850,
+    limit: 5000,
+    color: '#ec4899',
+    rollover: false,
+    alert: 90,
+  },
+  {
+    id: 4,
+    category: 'Entertainment',
+    icon: 'E',
+    spent: 1450,
+    limit: 2500,
+    color: '#8b5cf6',
+    rollover: true,
+    alert: 80,
+  },
+];
 const goalSeed: SavingsGoal[] = [
-  { id: 1, title: 'Emergency fund', icon: 'E', saved: 32500, target: 50000, deadline: '31 Dec, 2026', color: '#10b981', note: '17,500 left to reach your safety net' },
-  { id: 2, title: 'New MacBook Pro', icon: 'M', saved: 95000, target: 180000, deadline: '15 Nov, 2026', color: '#6366f1', note: 'You are ahead of your monthly plan' },
-  { id: 3, title: "Cox's Bazar trip", icon: 'C', saved: 25000, target: 25000, deadline: '30 Aug, 2026', color: '#06b6d4', note: 'Goal completed - ready to go!' },
-  { id: 4, title: 'Home down payment', icon: 'H', saved: 120000, target: 500000, deadline: '30 Jun, 2027', color: '#ec4899', note: 'Set aside BDT 25,000 each month' },
-]
+  {
+    id: 1,
+    title: 'Emergency fund',
+    icon: 'E',
+    saved: 32500,
+    target: 50000,
+    deadline: '31 Dec, 2026',
+    color: '#10b981',
+    note: '17,500 left to reach your safety net',
+  },
+  {
+    id: 2,
+    title: 'New MacBook Pro',
+    icon: 'M',
+    saved: 95000,
+    target: 180000,
+    deadline: '15 Nov, 2026',
+    color: '#6366f1',
+    note: 'You are ahead of your monthly plan',
+  },
+  {
+    id: 3,
+    title: "Cox's Bazar trip",
+    icon: 'C',
+    saved: 25000,
+    target: 25000,
+    deadline: '30 Aug, 2026',
+    color: '#06b6d4',
+    note: 'Goal completed - ready to go!',
+  },
+  {
+    id: 4,
+    title: 'Home down payment',
+    icon: 'H',
+    saved: 120000,
+    target: 500000,
+    deadline: '30 Jun, 2027',
+    color: '#ec4899',
+    note: 'Set aside BDT 25,000 each month',
+  },
+];
 
-function PageHeader({ children, description, title }: { children: ReactNode; description: string; title: string }) {
-  return <AppPageHeader actions={children} description={description} title={title} />
+function PageHeader({
+  children,
+  description,
+  title,
+}: {
+  children: ReactNode;
+  description: string;
+  title: string;
+}) {
+  return <AppPageHeader actions={children} description={description} title={title} />;
 }
 
-function Stat({ icon: Icon, label, tone = 'primary', value }: { icon: ComponentType<{ className?: string }>; label: string; tone?: 'primary' | 'success' | 'danger' | 'warning'; value: string }) {
-  return <AppStatCard icon={<Icon />} label={label} tone={tone} value={value} />
+function Stat({
+  icon: Icon,
+  label,
+  tone = 'primary',
+  value,
+}: {
+  icon: ComponentType<{ className?: string }>;
+  label: string;
+  tone?: 'primary' | 'success' | 'danger' | 'warning';
+  value: string;
+}) {
+  return <AppStatCard icon={<Icon />} label={label} tone={tone} value={value} />;
 }
 
 export function TransactionsPage() {
-  const [items] = useState(txSeed)
-  const [type, setType] = useState<'all' | 'income' | 'expense'>('all')
-  const [query, setQuery] = useState('')
-  const [category, setCategory] = useState('all')
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
-  const [dialog, setDialog] = useState<FinanceDialogKind | null>(null)
+  const [items] = useState(txSeed);
+  const [type, setType] = useState<'all' | 'income' | 'expense'>('all');
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('all');
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [dialog, setDialog] = useState<FinanceDialogKind | null>(null);
   const categoryOptions = [
     { label: 'All categories', value: 'all' },
-    ...Array.from(new Set(items.map((item) => item.category))).map((item) => ({ label: item, value: item })),
-  ]
+    ...Array.from(new Set(items.map((item) => item.category))).map((item) => ({
+      label: item,
+      value: item,
+    })),
+  ];
   const filtered = useMemo(
     () =>
       items.filter(
         (item) =>
           (type === 'all' || item.type === type) &&
           (category === 'all' || item.category === category) &&
-          `${item.title} ${item.category} ${item.wallet}`.toLowerCase().includes(query.toLowerCase()),
+          `${item.title} ${item.category} ${item.wallet}`
+            .toLowerCase()
+            .includes(query.toLowerCase()),
       ),
     [items, type, category, query],
-  )
-  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize))
-  const safePage = Math.min(page, pageCount)
-  const visible = filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
+  );
+  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage = Math.min(page, pageCount);
+  const visible = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
   const columns: readonly AppTableColumn<Transaction>[] = [
-    { key: 'description', header: 'Description', render: (item) => <TransactionIdentity item={item} /> },
-    { key: 'category', header: 'Category', render: (item) => <AppBadge className="rounded-md" status={item.type === 'income' ? 'success' : 'neutral'}>{item.category}</AppBadge> },
-    { key: 'wallet', header: 'Wallet', render: (item) => <span className="text-muted-foreground">{item.wallet}</span> },
-    { key: 'date', header: 'Date', render: (item) => <span className="text-muted-foreground">{item.date}</span> },
-    { align: 'right', key: 'amount', header: 'Amount', render: (item) => <TransactionAmount item={item} /> },
+    {
+      key: 'description',
+      header: 'Description',
+      render: (item) => <TransactionIdentity item={item} />,
+    },
+    {
+      key: 'category',
+      header: 'Category',
+      render: (item) => (
+        <AppBadge className="rounded-md" status={item.type === 'income' ? 'success' : 'neutral'}>
+          {item.category}
+        </AppBadge>
+      ),
+    },
+    {
+      key: 'wallet',
+      header: 'Wallet',
+      render: (item) => <span className="text-muted-foreground">{item.wallet}</span>,
+    },
+    {
+      key: 'date',
+      header: 'Date',
+      render: (item) => <span className="text-muted-foreground">{item.date}</span>,
+    },
+    {
+      align: 'right',
+      key: 'amount',
+      header: 'Amount',
+      render: (item) => <TransactionAmount item={item} />,
+    },
     { align: 'right', key: 'actions', header: '', render: () => <RowMenu kind="transaction" /> },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
-      <PageHeader description="Review, search, and manage every money movement." title="Transactions">
-        <AppButton onClick={() => setDialog('import')} size="sm" tone="secondary"><Upload />Import CSV</AppButton>
-        <AppButton onClick={() => setDialog('export')} size="sm" tone="secondary"><Download />Export</AppButton>
-        <AppButton onClick={() => setDialog('transaction')} size="sm"><Plus />Add transaction</AppButton>
+      <PageHeader
+        description="Review, search, and manage every money movement."
+        title="Transactions"
+      >
+        <AppButton onClick={() => setDialog('import')} size="sm" tone="secondary">
+          <Upload />
+          Import CSV
+        </AppButton>
+        <AppButton onClick={() => setDialog('export')} size="sm" tone="secondary">
+          <Download />
+          Export
+        </AppButton>
+        <AppButton onClick={() => setDialog('transaction')} size="sm">
+          <Plus />
+          Add transaction
+        </AppButton>
       </PageHeader>
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat icon={ReceiptText} label="All transactions" value={`${items.length}`} />
@@ -160,8 +348,8 @@ export function TransactionsPage() {
             className="w-full sm:w-72 lg:w-64 lg:shrink-0"
             onValueChange={(value) => {
               if (value === 'all' || value === 'income' || value === 'expense') {
-                setType(value)
-                setPage(1)
+                setType(value);
+                setPage(1);
               }
             }}
             options={[
@@ -176,16 +364,16 @@ export function TransactionsPage() {
               containerClassName="w-full sm:w-64"
               leading={<Search />}
               onChange={(event) => {
-                setQuery(event.target.value)
-                setPage(1)
+                setQuery(event.target.value);
+                setPage(1);
               }}
               placeholder="Search transactions"
               value={query}
             />
             <AppSelect
               onValueChange={(value) => {
-                setCategory(value ?? 'all')
-                setPage(1)
+                setCategory(value ?? 'all');
+                setPage(1);
               }}
               options={categoryOptions}
               placeholder="All categories"
@@ -195,80 +383,285 @@ export function TransactionsPage() {
             <AppPopover
               description="Refine the transaction list without leaving this page."
               title="More filters"
-              trigger={<AppButton aria-label="More filters" size="icon" tone="secondary"><SlidersHorizontal /></AppButton>}
+              trigger={
+                <AppButton aria-label="More filters" size="icon" tone="secondary">
+                  <SlidersHorizontal />
+                </AppButton>
+              }
             >
               <div className="mt-4 space-y-3">
-                <AppSwitch description="Show transactions with receipt attachments." label="Has receipt" size="sm" />
-                <AppSwitch description="Include recurring transaction entries." label="Recurring only" size="sm" />
+                <AppSwitch
+                  description="Show transactions with receipt attachments."
+                  label="Has receipt"
+                  size="sm"
+                />
+                <AppSwitch
+                  description="Include recurring transaction entries."
+                  label="Recurring only"
+                  size="sm"
+                />
               </div>
             </AppPopover>
           </div>
         </div>
         <div className="hidden md:block">
-          <AppTable className="rounded-none border-x-0 border-b-0" columns={columns} empty="No transactions match your filters." getRowKey={(row) => row.id} rows={visible} />
+          <AppTable
+            className="rounded-none border-x-0 border-b-0"
+            columns={columns}
+            empty="No transactions match your filters."
+            getRowKey={(row) => row.id}
+            rows={visible}
+          />
         </div>
         <div className="divide-y divide-border border-t border-border md:hidden">
-          {visible.length ? visible.map((item) => <TransactionMobile item={item} key={item.id} />) : <AppEmptyState description="Try changing the type, category, or search term." icon={<Search />} title="No matching transactions" />}
+          {visible.length ? (
+            visible.map((item) => <TransactionMobile item={item} key={item.id} />)
+          ) : (
+            <AppEmptyState
+              description="Try changing the type, category, or search term."
+              icon={<Search />}
+              title="No matching transactions"
+            />
+          )}
         </div>
         <footer className="flex flex-col gap-3 border-t border-border px-4 py-3 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-2">
             <span>Rows</span>
             <AppSelect
               onValueChange={(value) => {
-                setPageSize(Number(value ?? 5))
-                setPage(1)
+                setPageSize(Number(value ?? 5));
+                setPage(1);
               }}
               options={[5, 10, 20].map((value) => ({ label: `${value}`, value: `${value}` }))}
               triggerClassName="w-20"
               value={`${pageSize}`}
             />
-            <span>Showing {visible.length} of {filtered.length}</span>
+            <span>
+              Showing {visible.length} of {filtered.length}
+            </span>
           </div>
           <AppPagination onPageChange={setPage} page={safePage} totalPages={pageCount} />
         </footer>
       </AppCard>
       {dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}
     </div>
-  )
+  );
 }
 
 function TransactionIdentity({ item }: { item: Transaction }) {
-  return <div className="flex items-center gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-lg text-xs font-semibold" style={{ backgroundColor: `${item.color}1c`, color: item.color }}>{item.icon}</span><span className="min-w-0"><span className="block truncate font-medium">{item.title}</span><span className="mt-0.5 block text-xs text-muted-foreground">{item.type === 'income' ? 'Income received' : 'Expense recorded'}</span></span></div>
+  return (
+    <div className="flex items-center gap-3">
+      <span
+        className="grid size-9 shrink-0 place-items-center rounded-lg text-xs font-semibold"
+        style={{ backgroundColor: `${item.color}1c`, color: item.color }}
+      >
+        {item.icon}
+      </span>
+      <span className="min-w-0">
+        <span className="block truncate font-medium">{item.title}</span>
+        <span className="mt-0.5 block text-xs text-muted-foreground">
+          {item.type === 'income' ? 'Income received' : 'Expense recorded'}
+        </span>
+      </span>
+    </div>
+  );
 }
 
 function TransactionAmount({ item }: { item: Transaction }) {
-  return <span className={cn('font-semibold', item.type === 'income' ? 'text-success' : 'text-danger')}>{item.type === 'income' ? '+' : '-'}{money(item.amount)}</span>
+  return (
+    <span className={cn('font-semibold', item.type === 'income' ? 'text-success' : 'text-danger')}>
+      {item.type === 'income' ? '+' : '-'}
+      {money(item.amount)}
+    </span>
+  );
 }
 
 function TransactionMobile({ item }: { item: Transaction }) {
-  return <div className="flex items-center gap-3 px-4 py-3.5"><TransactionIdentity item={item} /><span className="ml-auto shrink-0"><TransactionAmount item={item} /></span><RowMenu kind="transaction" /></div>
+  return (
+    <div className="flex items-center gap-3 px-4 py-3.5">
+      <TransactionIdentity item={item} />
+      <span className="ml-auto shrink-0">
+        <TransactionAmount item={item} />
+      </span>
+      <RowMenu kind="transaction" />
+    </div>
+  );
 }
 
 export function BudgetsPage() {
-  const [dialog, setDialog] = useState<FinanceDialogKind | null>(null)
-  const totalBudget = budgetSeed.reduce((sum, item) => sum + item.limit, 0)
-  const totalSpent = budgetSeed.reduce((sum, item) => sum + item.spent, 0)
-  const attention = budgetSeed.filter((item) => item.spent / item.limit >= item.alert / 100).length
-  return <div className="space-y-6"><PageHeader description="Set category limits and track your spending this month." title="Budgets"><AppSelect defaultValue="july" options={[{ label: 'July 2026', value: 'july' }, { label: 'June 2026', value: 'june' }]} triggerClassName="w-40" /><AppButton onClick={() => setDialog('budget')} size="sm"><Plus />Add budget</AppButton></PageHeader><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat icon={Target} label="Total budget" value={money(totalBudget)} /><Stat icon={TrendingDown} label="Total spent" tone="danger" value={money(totalSpent)} /><Stat icon={WalletCards} label="Remaining" tone="success" value={money(totalBudget - totalSpent)} /><Stat icon={Filter} label="Need attention" tone="warning" value={`${attention} categories`} /></section><section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{budgetSeed.map((budget) => <BudgetCard budget={budget} key={budget.id} />)}</section>{dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}</div>
+  const [dialog, setDialog] = useState<FinanceDialogKind | null>(null);
+  const totalBudget = budgetSeed.reduce((sum, item) => sum + item.limit, 0);
+  const totalSpent = budgetSeed.reduce((sum, item) => sum + item.spent, 0);
+  const attention = budgetSeed.filter((item) => item.spent / item.limit >= item.alert / 100).length;
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        description="Set category limits and track your spending this month."
+        title="Budgets"
+      >
+        <AppSelect
+          defaultValue="july"
+          options={[
+            { label: 'July 2026', value: 'july' },
+            { label: 'June 2026', value: 'june' },
+          ]}
+          triggerClassName="w-40"
+        />
+        <AppButton onClick={() => setDialog('budget')} size="sm">
+          <Plus />
+          Add budget
+        </AppButton>
+      </PageHeader>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Stat icon={Target} label="Total budget" value={money(totalBudget)} />
+        <Stat icon={TrendingDown} label="Total spent" tone="danger" value={money(totalSpent)} />
+        <Stat
+          icon={WalletCards}
+          label="Remaining"
+          tone="success"
+          value={money(totalBudget - totalSpent)}
+        />
+        <Stat
+          icon={Filter}
+          label="Need attention"
+          tone="warning"
+          value={`${attention} categories`}
+        />
+      </section>
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {budgetSeed.map((budget) => (
+          <BudgetCard budget={budget} key={budget.id} />
+        ))}
+      </section>
+      {dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}
+    </div>
+  );
 }
 
 function BudgetCard({ budget }: { budget: Budget }) {
-  const percentage = Math.round((budget.spent / budget.limit) * 100)
-  const left = Math.max(0, budget.limit - budget.spent)
-  const warning = percentage >= budget.alert
-  return <AppCard><div className="flex items-start justify-between gap-3"><div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-lg text-sm font-semibold" style={{ backgroundColor: `${budget.color}1c`, color: budget.color }}>{budget.icon}</span><div><h2 className="text-sm font-semibold">{budget.category}</h2><p className="mt-0.5 text-xs text-muted-foreground">Monthly budget</p></div></div><RowMenu kind="budget" /></div><div className="mt-6 flex items-end justify-between"><p className="text-xl font-semibold tracking-tight">{money(budget.spent)}</p><p className="text-xs text-muted-foreground">of {money(budget.limit)}</p></div><AppProgress className="mt-3" tone={warning ? 'danger' : 'primary'} value={percentage} /><div className="mt-3 flex items-center justify-between text-xs"><span className={warning ? 'font-medium text-danger' : 'text-muted-foreground'}>{percentage}% used</span><span className="text-muted-foreground">{money(left)} left</span></div><div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-xs"><span className="text-muted-foreground">Alert at {budget.alert}%</span><AppBadge status={budget.rollover ? 'info' : 'neutral'}>{budget.rollover ? 'Rollover on' : 'No rollover'}</AppBadge></div></AppCard>
+  const percentage = Math.round((budget.spent / budget.limit) * 100);
+  const left = Math.max(0, budget.limit - budget.spent);
+  const warning = percentage >= budget.alert;
+  return (
+    <AppCard>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span
+            className="grid size-10 place-items-center rounded-lg text-sm font-semibold"
+            style={{ backgroundColor: `${budget.color}1c`, color: budget.color }}
+          >
+            {budget.icon}
+          </span>
+          <div>
+            <h2 className="text-sm font-semibold">{budget.category}</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground">Monthly budget</p>
+          </div>
+        </div>
+        <RowMenu kind="budget" />
+      </div>
+      <div className="mt-6 flex items-end justify-between">
+        <p className="text-xl font-semibold tracking-tight">{money(budget.spent)}</p>
+        <p className="text-xs text-muted-foreground">of {money(budget.limit)}</p>
+      </div>
+      <AppProgress className="mt-3" tone={warning ? 'danger' : 'primary'} value={percentage} />
+      <div className="mt-3 flex items-center justify-between text-xs">
+        <span className={warning ? 'font-medium text-danger' : 'text-muted-foreground'}>
+          {percentage}% used
+        </span>
+        <span className="text-muted-foreground">{money(left)} left</span>
+      </div>
+      <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-xs">
+        <span className="text-muted-foreground">Alert at {budget.alert}%</span>
+        <AppBadge status={budget.rollover ? 'info' : 'neutral'}>
+          {budget.rollover ? 'Rollover on' : 'No rollover'}
+        </AppBadge>
+      </div>
+    </AppCard>
+  );
 }
 
 export function GoalsPage() {
-  const [dialog, setDialog] = useState<FinanceDialogKind | null>(null)
-  const saved = goalSeed.reduce((sum, item) => sum + item.saved, 0)
-  const target = goalSeed.reduce((sum, item) => sum + item.target, 0)
-  const completed = goalSeed.filter((item) => item.saved >= item.target).length
-  return <div className="space-y-6"><PageHeader description="Build momentum towards the things that matter most." title="Savings goals"><AppButton onClick={() => setDialog('goal')} size="sm"><Plus />New goal</AppButton></PageHeader><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat icon={Goal} label="Active goals" value={`${goalSeed.length}`} /><Stat icon={Landmark} label="Total saved" tone="success" value={money(saved)} /><Stat icon={Target} label="Overall progress" value={`${Math.round((saved / target) * 100)}%`} /><Stat icon={TrendingUp} label="Completed" tone="warning" value={`${completed} goals`} /></section><section className="grid gap-4 lg:grid-cols-2">{goalSeed.map((goal) => <GoalCard goal={goal} key={goal.id} onContribute={() => setDialog('contribution')} />)}</section>{dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}</div>
+  const [dialog, setDialog] = useState<FinanceDialogKind | null>(null);
+  const saved = goalSeed.reduce((sum, item) => sum + item.saved, 0);
+  const target = goalSeed.reduce((sum, item) => sum + item.target, 0);
+  const completed = goalSeed.filter((item) => item.saved >= item.target).length;
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        description="Build momentum towards the things that matter most."
+        title="Savings goals"
+      >
+        <AppButton onClick={() => setDialog('goal')} size="sm">
+          <Plus />
+          New goal
+        </AppButton>
+      </PageHeader>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Stat icon={Goal} label="Active goals" value={`${goalSeed.length}`} />
+        <Stat icon={Landmark} label="Total saved" tone="success" value={money(saved)} />
+        <Stat
+          icon={Target}
+          label="Overall progress"
+          value={`${Math.round((saved / target) * 100)}%`}
+        />
+        <Stat icon={TrendingUp} label="Completed" tone="warning" value={`${completed} goals`} />
+      </section>
+      <section className="grid gap-4 lg:grid-cols-2">
+        {goalSeed.map((goal) => (
+          <GoalCard goal={goal} key={goal.id} onContribute={() => setDialog('contribution')} />
+        ))}
+      </section>
+      {dialog ? <FinanceDialog kind={dialog} onClose={() => setDialog(null)} /> : null}
+    </div>
+  );
 }
 
 function GoalCard({ goal, onContribute }: { goal: SavingsGoal; onContribute: () => void }) {
-  const progress = Math.round((goal.saved / goal.target) * 100)
-  const completed = progress >= 100
-  return <AppCard><div className="flex items-start justify-between gap-4"><div className="flex min-w-0 items-center gap-3"><span className="grid size-11 place-items-center rounded-lg text-sm font-semibold" style={{ backgroundColor: `${goal.color}1c`, color: goal.color }}>{goal.icon}</span><div className="min-w-0"><h2 className="truncate font-semibold">{goal.title}</h2><p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground"><CalendarDays className="size-3" />Target {goal.deadline}</p></div></div><div className="flex items-center gap-1"><AppBadge status={completed ? 'success' : 'info'}>{completed ? 'Completed' : `${progress}%`}</AppBadge><RowMenu kind="goal" /></div></div><div className="mt-7 flex items-end justify-between gap-4"><p className="text-2xl font-semibold tracking-tight">{money(goal.saved)}</p><p className="pb-1 text-xs text-muted-foreground">of {money(goal.target)}</p></div><AppProgress className="mt-3" tone={completed ? 'success' : 'primary'} value={progress} /><p className={cn('mt-3 text-xs', completed ? 'text-success' : 'text-muted-foreground')}>{goal.note}</p><div className="mt-5 border-t border-border pt-4"><AppButton disabled={completed} onClick={onContribute} size="sm" tone={completed ? 'secondary' : 'primary'}>{completed ? 'Goal completed' : 'Add contribution'}</AppButton></div></AppCard>
+  const progress = Math.round((goal.saved / goal.target) * 100);
+  const completed = progress >= 100;
+  return (
+    <AppCard>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <span
+            className="grid size-11 place-items-center rounded-lg text-sm font-semibold"
+            style={{ backgroundColor: `${goal.color}1c`, color: goal.color }}
+          >
+            {goal.icon}
+          </span>
+          <div className="min-w-0">
+            <h2 className="truncate font-semibold">{goal.title}</h2>
+            <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
+              <CalendarDays className="size-3" />
+              Target {goal.deadline}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1">
+          <AppBadge status={completed ? 'success' : 'info'}>
+            {completed ? 'Completed' : `${progress}%`}
+          </AppBadge>
+          <RowMenu kind="goal" />
+        </div>
+      </div>
+      <div className="mt-7 flex items-end justify-between gap-4">
+        <p className="text-2xl font-semibold tracking-tight">{money(goal.saved)}</p>
+        <p className="pb-1 text-xs text-muted-foreground">of {money(goal.target)}</p>
+      </div>
+      <AppProgress className="mt-3" tone={completed ? 'success' : 'primary'} value={progress} />
+      <p className={cn('mt-3 text-xs', completed ? 'text-success' : 'text-muted-foreground')}>
+        {goal.note}
+      </p>
+      <div className="mt-5 border-t border-border pt-4">
+        <AppButton
+          disabled={completed}
+          onClick={onContribute}
+          size="sm"
+          tone={completed ? 'secondary' : 'primary'}
+        >
+          {completed ? 'Goal completed' : 'Add contribution'}
+        </AppButton>
+      </div>
+    </AppCard>
+  );
 }

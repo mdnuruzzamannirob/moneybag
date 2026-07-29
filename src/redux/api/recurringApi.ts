@@ -1,1 +1,1 @@
-export const recurringApi = {}
+export const recurringApi = {};

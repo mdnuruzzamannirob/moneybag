@@ -1,3 +1,3 @@
-'use client'
+'use client';
 
-export { UserGrowthChartModule as DailyTrendLineChart } from '@/components/charts/dashboard-chart-modules'
+export { UserGrowthChartModule as DailyTrendLineChart } from '@/components/charts/dashboard-chart-modules';

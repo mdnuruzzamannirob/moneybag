@@ -1,1 +1,1 @@
-export const familyApi = {}
+export const familyApi = {};

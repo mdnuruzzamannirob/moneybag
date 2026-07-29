@@ -1,1 +1,1 @@
-export const wallet = {}
+export const wallet = {};

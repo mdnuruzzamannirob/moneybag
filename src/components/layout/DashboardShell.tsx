@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   BarChart3,
@@ -26,27 +26,27 @@ import {
   Users,
   WalletCards,
   X,
-} from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
-import { cn } from '@/lib/utils'
-import { AppButton } from '@/components/app-ui'
-import { useTheme } from '@/providers/theme-provider'
-import Logo from '../shared/Logo'
+import { cn } from '@/lib/utils';
+import { AppButton } from '@/components/app-ui';
+import { useTheme } from '@/providers/theme-provider';
+import Logo from '../shared/Logo';
 
 type NavItem = {
-  href: string
-  label: string
-  icon: React.ComponentType<{ className?: string }>
-  count?: string
-}
+  href: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  count?: string;
+};
 
 type NavSection = {
-  label: string
-  items: NavItem[]
-}
+  label: string;
+  items: NavItem[];
+};
 
 const navSections: NavSection[] = [
   {
@@ -85,7 +85,7 @@ const navSections: NavSection[] = [
       { href: '/help', label: 'Help Center', icon: HelpCircle },
     ],
   },
-]
+];
 
 const adminNavSections: NavSection[] = [
   {
@@ -138,13 +138,13 @@ const adminNavSections: NavSection[] = [
       },
     ],
   },
-]
+];
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false)
-  const pathname = usePathname()
-  const isAdmin = pathname.startsWith('/admin')
-  const sections = isAdmin ? adminNavSections : navSections
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith('/admin');
+  const sections = isAdmin ? adminNavSections : navSections;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -176,7 +176,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 function Sidebar({
@@ -184,11 +184,11 @@ function Sidebar({
   onNavigate,
   isAdmin,
 }: {
-  sections: NavSection[]
-  onNavigate: () => void
-  isAdmin: boolean
+  sections: NavSection[];
+  onNavigate: () => void;
+  isAdmin: boolean;
 }) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <>
@@ -224,9 +224,8 @@ function Sidebar({
             </div>
             <div className="space-y-1">
               {section.items.map((item) => {
-                const Icon = item.icon
-                const active =
-                  pathname === item.href || pathname.startsWith(`${item.href}/`)
+                const Icon = item.icon;
+                const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                 return (
                   <div key={item.href}>
                     <Link
@@ -240,9 +239,7 @@ function Sidebar({
                       onClick={onNavigate}
                     >
                       <Icon className="size-4.5 shrink-0" />
-                      <span className="min-w-0 flex-1 truncate">
-                        {item.label}
-                      </span>
+                      <span className="min-w-0 flex-1 truncate">{item.label}</span>
                       {item.count ? (
                         <span
                           className={cn(
@@ -257,7 +254,7 @@ function Sidebar({
                       ) : null}
                     </Link>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -286,7 +283,7 @@ function Sidebar({
         </Link>
       </div>
     </>
-  )
+  );
 }
 
 function Topbar({
@@ -294,11 +291,11 @@ function Topbar({
   showAddButton,
   title,
 }: {
-  onMenuClick: () => void
-  showAddButton: boolean
-  title: string
+  onMenuClick: () => void;
+  showAddButton: boolean;
+  title: string;
 }) {
-  const { theme, toggleTheme } = useTheme()
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
@@ -322,7 +319,13 @@ function Topbar({
             <span className="hidden sm:inline">Add transaction</span>
           </AppButton>
         ) : null}
-        <AppButton aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} aria-pressed={theme === 'dark'} onClick={toggleTheme} size="icon-sm" tone="secondary">
+        <AppButton
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-pressed={theme === 'dark'}
+          onClick={toggleTheme}
+          size="icon-sm"
+          tone="secondary"
+        >
           {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
         </AppButton>
         <AppButton aria-label="Notifications" className="relative" size="icon-sm" tone="secondary">
@@ -334,5 +337,5 @@ function Topbar({
         </AppButton>
       </div>
     </header>
-  )
+  );
 }

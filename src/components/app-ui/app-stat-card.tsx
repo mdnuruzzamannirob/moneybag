@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
-import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils';
+import type { ReactNode } from 'react';
 export function AppStatCard({
   change,
   icon,
@@ -8,37 +8,70 @@ export function AppStatCard({
   variant = 'default',
   value,
 }: {
-  change?: ReactNode
-  icon: ReactNode
-  label: ReactNode
-  tone?: 'primary' | 'success' | 'warning' | 'danger'
-  variant?: 'default' | 'compact' | 'featured'
-  value: ReactNode
+  change?: ReactNode;
+  icon: ReactNode;
+  label: ReactNode;
+  tone?: 'primary' | 'success' | 'warning' | 'danger';
+  variant?: 'default' | 'compact' | 'featured';
+  value: ReactNode;
 }) {
   return (
-    <article className={cn('rounded-lg border border-border', { default: 'bg-card p-4', compact: 'bg-card p-3', featured: 'border-primary bg-primary text-primary-foreground p-5' }[variant])}>
+    <article
+      className={cn(
+        'rounded-lg border border-border',
+        {
+          default: 'bg-card p-4',
+          compact: 'bg-card p-3',
+          featured: 'border-primary bg-primary text-primary-foreground p-5',
+        }[variant],
+      )}
+    >
       <div className="flex items-start justify-between">
         <span
           className={cn(
             'grid size-9 place-items-center rounded-md [&>svg]:size-4',
             {
-              primary: variant === 'featured' ? 'bg-primary-foreground/15 text-primary-foreground' : 'bg-primary/10 text-primary',
-              success: variant === 'featured' ? 'bg-primary-foreground/15 text-primary-foreground' : 'bg-success-soft text-success',
-              warning: variant === 'featured' ? 'bg-primary-foreground/15 text-primary-foreground' : 'bg-warning-soft text-warning',
-              danger: variant === 'featured' ? 'bg-primary-foreground/15 text-primary-foreground' : 'bg-danger-soft text-danger',
+              primary:
+                variant === 'featured'
+                  ? 'bg-primary-foreground/15 text-primary-foreground'
+                  : 'bg-primary/10 text-primary',
+              success:
+                variant === 'featured'
+                  ? 'bg-primary-foreground/15 text-primary-foreground'
+                  : 'bg-success-soft text-success',
+              warning:
+                variant === 'featured'
+                  ? 'bg-primary-foreground/15 text-primary-foreground'
+                  : 'bg-warning-soft text-warning',
+              danger:
+                variant === 'featured'
+                  ? 'bg-primary-foreground/15 text-primary-foreground'
+                  : 'bg-danger-soft text-danger',
             }[tone],
           )}
         >
           {icon}
         </span>
         {change ? (
-          <span className={cn('text-xs font-medium', variant === 'featured' ? 'text-primary-foreground/80' : 'text-muted-foreground')}>
+          <span
+            className={cn(
+              'text-xs font-medium',
+              variant === 'featured' ? 'text-primary-foreground/80' : 'text-muted-foreground',
+            )}
+          >
             {change}
           </span>
         ) : null}
       </div>
-      <p className={cn('mt-4 text-sm', variant === 'featured' ? 'text-primary-foreground/80' : 'text-muted-foreground')}>{label}</p>
+      <p
+        className={cn(
+          'mt-4 text-sm',
+          variant === 'featured' ? 'text-primary-foreground/80' : 'text-muted-foreground',
+        )}
+      >
+        {label}
+      </p>
       <p className="mt-1 text-xl font-semibold tracking-tight">{value}</p>
     </article>
-  )
+  );
 }

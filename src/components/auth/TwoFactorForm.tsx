@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 
-import { AppButton, AppField } from '@/components/app-ui'
-import { AuthOtpInput } from '@/components/auth/AuthOtpInput'
-import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema'
+import { AppButton, AppField } from '@/components/app-ui';
+import { AuthOtpInput } from '@/components/auth/AuthOtpInput';
+import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema';
 
 export function TwoFactorForm() {
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(twoFactorSchema),
     defaultValues: { code: '' },
-  })
+  });
 
   function onSubmit(_values: TwoFactorValues) {}
 
@@ -28,13 +28,18 @@ export function TwoFactorForm() {
       </div>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <AppField error={form.formState.errors.code?.message} label="Authentication code">
-          <AuthOtpInput aria-invalid={Boolean(form.formState.errors.code)} autoComplete="one-time-code" id="code" name="code" onValueChange={(value) => form.setValue('code', value, { shouldTouch: true, shouldValidate: true })} value={form.watch('code')} />
+          <AuthOtpInput
+            aria-invalid={Boolean(form.formState.errors.code)}
+            autoComplete="one-time-code"
+            id="code"
+            name="code"
+            onValueChange={(value) =>
+              form.setValue('code', value, { shouldTouch: true, shouldValidate: true })
+            }
+            value={form.watch('code')}
+          />
         </AppField>
-        <AppButton
-          className="w-full"
-          size="lg"
-          type="submit"
-        >
+        <AppButton className="w-full" size="lg" type="submit">
           Verify code
         </AppButton>
       </form>
@@ -45,5 +50,5 @@ export function TwoFactorForm() {
         </Link>
       </div>
     </>
-  )
+  );
 }

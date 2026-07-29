@@ -1,24 +1,21 @@
-'use client'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { cn } from '@/lib/utils'
-import type { ReactNode } from 'react'
+'use client';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { cn } from '@/lib/utils';
+import type { ReactNode } from 'react';
 export function AppSegmentedControl({
   className,
   onValueChange,
   options,
   value,
 }: {
-  className?: string
-  onValueChange?: (value: string | null) => void
-  options: readonly { icon?: ReactNode; label: ReactNode; value: string }[]
-  value?: string | null
+  className?: string;
+  onValueChange?: (value: string | null) => void;
+  options: readonly { icon?: ReactNode; label: ReactNode; value: string }[];
+  value?: string | null;
 }) {
   return (
     <ToggleGroup
-      className={cn(
-        'grid h-10 w-full grid-flow-col rounded-md bg-muted p-1',
-        className,
-      )}
+      className={cn('grid h-10 w-full grid-flow-col rounded-md bg-muted p-1', className)}
       multiple={false}
       onValueChange={(next) => onValueChange?.(next[0] ?? null)}
       spacing={0}
@@ -39,5 +36,5 @@ export function AppSegmentedControl({
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
-  )
+  );
 }

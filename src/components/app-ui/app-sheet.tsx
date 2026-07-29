@@ -1,4 +1,39 @@
-"use client"
-import type { ReactNode } from "react"
-import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-export function AppSheet({ children, description, footer, side = "right", title, ...props }: React.ComponentProps<typeof Sheet> & { children: ReactNode; description?: ReactNode; footer?: ReactNode; side?: "top" | "right" | "bottom" | "left"; title: ReactNode }) { return <Sheet {...props}><SheetContent className="border-border" side={side}><SheetHeader className="border-b border-border"><SheetTitle>{title}</SheetTitle>{description ? <SheetDescription>{description}</SheetDescription> : null}</SheetHeader><div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">{children}</div>{footer ? <SheetFooter className="border-t border-border bg-secondary">{footer}</SheetFooter> : null}</SheetContent></Sheet> }
+'use client';
+import type { ReactNode } from 'react';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
+export function AppSheet({
+  children,
+  description,
+  footer,
+  side = 'right',
+  title,
+  ...props
+}: React.ComponentProps<typeof Sheet> & {
+  children: ReactNode;
+  description?: ReactNode;
+  footer?: ReactNode;
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  title: ReactNode;
+}) {
+  return (
+    <Sheet {...props}>
+      <SheetContent className="border-border" side={side}>
+        <SheetHeader className="border-b border-border">
+          <SheetTitle>{title}</SheetTitle>
+          {description ? <SheetDescription>{description}</SheetDescription> : null}
+        </SheetHeader>
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">{children}</div>
+        {footer ? (
+          <SheetFooter className="border-t border-border bg-secondary">{footer}</SheetFooter>
+        ) : null}
+      </SheetContent>
+    </Sheet>
+  );
+}

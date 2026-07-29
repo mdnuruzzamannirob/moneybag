@@ -1,1 +1,1 @@
-export const filterSlice = {}
+export const filterSlice = {};

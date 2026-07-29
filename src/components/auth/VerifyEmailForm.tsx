@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { MailCheck } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import Link from 'next/link';
+import { MailCheck } from 'lucide-react';
+import { useForm } from 'react-hook-form';
 
-import { AppButton } from '@/components/app-ui'
+import { AppButton } from '@/components/app-ui';
 
 export function VerifyEmailForm() {
-  const form = useForm({ defaultValues: {} })
+  const form = useForm({ defaultValues: {} });
 
   function onSubmit() {}
 
@@ -19,7 +19,8 @@ export function VerifyEmailForm() {
       <div className="mb-6">
         <h2 className="text-3xl font-medium tracking-normal text-foreground">Verify your email</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          We sent a verification link to your inbox. Confirm your address to start tracking with MoneyBag.
+          We sent a verification link to your inbox. Confirm your address to start tracking with
+          MoneyBag.
         </p>
       </div>
       <div className="mb-4 rounded-md border border-border bg-card p-4">
@@ -29,11 +30,7 @@ export function VerifyEmailForm() {
         </div>
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <AppButton
-          className="w-full"
-          size="lg"
-          type="submit"
-        >
+        <AppButton className="w-full" size="lg" type="submit">
           Resend verification email
         </AppButton>
       </form>
@@ -43,5 +40,5 @@ export function VerifyEmailForm() {
         </Link>
       </div>
     </>
-  )
+  );
 }

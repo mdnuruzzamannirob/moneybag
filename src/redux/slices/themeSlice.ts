@@ -1,1 +1,1 @@
-export const themeSlice = {}
+export const themeSlice = {};

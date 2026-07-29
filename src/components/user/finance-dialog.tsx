@@ -1,11 +1,7 @@
-'use client'
+'use client';
 
-import {
-  Ellipsis,
-  Pencil,
-  Trash2,
-} from 'lucide-react'
-import { useState } from 'react'
+import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 import {
   AppAlert,
@@ -21,15 +17,10 @@ import {
   AppSegmentedControl,
   AppSelect,
   AppSwitch,
-} from '@/components/app-ui'
+} from '@/components/app-ui';
 
 export type FinanceDialogKind =
-  | 'transaction'
-  | 'import'
-  | 'export'
-  | 'budget'
-  | 'goal'
-  | 'contribution'
+  'transaction' | 'import' | 'export' | 'budget' | 'goal' | 'contribution';
 
 const dialogTitles: Record<FinanceDialogKind, string> = {
   transaction: 'Add transaction',
@@ -38,7 +29,7 @@ const dialogTitles: Record<FinanceDialogKind, string> = {
   budget: 'Create budget',
   goal: 'Create savings goal',
   contribution: 'Add contribution',
-}
+};
 
 const categoryOptions = [
   { label: 'Food & dining', value: 'food' },
@@ -46,30 +37,32 @@ const categoryOptions = [
   { label: 'Shopping', value: 'shopping' },
   { label: 'Entertainment', value: 'entertainment' },
   { label: 'Bills', value: 'bills' },
-]
+];
 
 export function FinanceDialog({
   editing = false,
   kind,
   onClose,
 }: {
-  editing?: boolean
-  kind: FinanceDialogKind
-  onClose: () => void
+  editing?: boolean;
+  kind: FinanceDialogKind;
+  onClose: () => void;
 }) {
-  const [saved, setSaved] = useState(false)
-  const title = editing ? `Edit ${kind}` : dialogTitles[kind]
+  const [saved, setSaved] = useState(false);
+  const title = editing ? `Edit ${kind}` : dialogTitles[kind];
   const submit = (event: React.FormEvent) => {
-    event.preventDefault()
-    setSaved(true)
-  }
+    event.preventDefault();
+    setSaved(true);
+  };
 
   return (
     <AppModal
       description={saved ? undefined : getDialogDescription(kind)}
       footer={
         saved ? (
-          <AppButton onClick={onClose} size="sm">Done</AppButton>
+          <AppButton onClick={onClose} size="sm">
+            Done
+          </AppButton>
         ) : (
           <>
             <AppButton onClick={onClose} size="sm" tone="secondary" type="button">
@@ -82,7 +75,7 @@ export function FinanceDialog({
         )
       }
       onOpenChange={(open) => {
-        if (!open) onClose()
+        if (!open) onClose();
       }}
       open
       title={title}
@@ -97,12 +90,12 @@ export function FinanceDialog({
         </form>
       )}
     </AppModal>
-  )
+  );
 }
 
 function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
-  const [type, setType] = useState<'income' | 'expense'>('expense')
-  const [fileName, setFileName] = useState('')
+  const [type, setType] = useState<'income' | 'expense'>('expense');
+  const [fileName, setFileName] = useState('');
 
   if (kind === 'import') {
     return (
@@ -117,7 +110,7 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
           Required columns: date, description, amount, type, category and wallet.
         </p>
       </>
-    )
+    );
   }
 
   if (kind === 'export') {
@@ -140,7 +133,7 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
           label="Include additional details"
         />
       </>
-    )
+    );
   }
 
   if (kind === 'transaction') {
@@ -151,13 +144,13 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
             { label: 'Freelance', value: 'freelance' },
             { label: 'Other income', value: 'other-income' },
           ]
-        : categoryOptions
+        : categoryOptions;
     return (
       <>
         <AppField label="Type">
           <AppSegmentedControl
             onValueChange={(value) => {
-              if (value === 'income' || value === 'expense') setType(value)
+              if (value === 'income' || value === 'expense') setType(value);
             }}
             options={[
               { label: 'Income', value: 'income' },
@@ -179,7 +172,10 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <AppField label="Category">
-            <AppSelect defaultValue={transactionCategories[0]?.value} options={transactionCategories} />
+            <AppSelect
+              defaultValue={transactionCategories[0]?.value}
+              options={transactionCategories}
+            />
           </AppField>
           <AppField label="Wallet">
             <AppSelect
@@ -202,7 +198,7 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
           onFiles={(files) => setFileName(files?.[0]?.name ?? '')}
         />
       </>
-    )
+    );
   }
 
   if (kind === 'budget') {
@@ -239,7 +235,7 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
           label="Roll over unspent amount"
         />
       </>
-    )
+    );
   }
 
   if (kind === 'goal') {
@@ -271,7 +267,7 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
           />
         </AppField>
       </>
-    )
+    );
   }
 
   return (
@@ -287,27 +283,27 @@ function FinanceFields({ kind }: { kind: FinanceDialogKind }) {
         <AppInput placeholder="e.g. July savings" />
       </AppField>
     </>
-  )
+  );
 }
 
 function getDialogDescription(kind: FinanceDialogKind) {
-  if (kind === 'import') return 'Upload a CSV file and validate it before importing.'
-  if (kind === 'export') return 'Choose which transaction data to include.'
-  if (kind === 'contribution') return 'Record progress toward this savings goal.'
-  return 'Complete the details below, then save your changes.'
+  if (kind === 'import') return 'Upload a CSV file and validate it before importing.';
+  if (kind === 'export') return 'Choose which transaction data to include.';
+  if (kind === 'contribution') return 'Record progress toward this savings goal.';
+  return 'Complete the details below, then save your changes.';
 }
 
 function getSubmitLabel(kind: FinanceDialogKind, editing: boolean) {
-  if (kind === 'export') return 'Export CSV'
-  if (kind === 'import') return 'Import file'
-  if (kind === 'contribution') return 'Add contribution'
-  return editing ? 'Save changes' : 'Save'
+  if (kind === 'export') return 'Export CSV';
+  if (kind === 'import') return 'Import file';
+  if (kind === 'contribution') return 'Add contribution';
+  return editing ? 'Save changes' : 'Save';
 }
 
 function getSuccessMessage(kind: FinanceDialogKind) {
-  if (kind === 'import') return 'The file is ready for validation.'
-  if (kind === 'export') return 'Your export has been prepared.'
-  return 'Your changes have been saved.'
+  if (kind === 'import') return 'The file is ready for validation.';
+  if (kind === 'export') return 'Your export has been prepared.';
+  return 'Your changes have been saved.';
 }
 
 export function ConfirmDialog({
@@ -315,25 +311,25 @@ export function ConfirmDialog({
   onClose,
   title,
 }: {
-  description: string
-  onClose: () => void
-  title: string
+  description: string;
+  onClose: () => void;
+  title: string;
 }) {
   return (
     <AppConfirmDialog
       description={description}
       onConfirm={onClose}
       onOpenChange={(open) => {
-        if (!open) onClose()
+        if (!open) onClose();
       }}
       open
       title={title}
     />
-  )
+  );
 }
 
 export function RowMenu({ kind }: { kind: 'transaction' | 'budget' | 'goal' }) {
-  const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null)
+  const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null);
   return (
     <>
       <AppDropdownMenu
@@ -368,5 +364,5 @@ export function RowMenu({ kind }: { kind: 'transaction' | 'budget' | 'goal' }) {
         />
       ) : null}
     </>
-  )
+  );
 }

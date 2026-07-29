@@ -1,1 +1,1 @@
-export const familyschema = {}
+export const familyschema = {};

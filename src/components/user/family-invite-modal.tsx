@@ -1,3 +1,3 @@
 export function FamilyInviteModal() {
-  return null
+  return null;
 }

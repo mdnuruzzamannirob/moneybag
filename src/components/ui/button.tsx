@@ -1,19 +1,17 @@
-import { Button as ButtonPrimitive } from '@base-ui/react/button'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { Button as ButtonPrimitive } from '@base-ui/react/button';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap shadow-none transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/25 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default:
-          'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
+        default: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
         outline:
           'border-border bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground',
-        secondary:
-          'bg-secondary text-secondary-foreground hover:bg-muted aria-expanded:bg-muted',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-muted aria-expanded:bg-muted',
         ghost:
           'text-muted-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground',
         destructive:
@@ -37,7 +35,7 @@ const buttonVariants = cva(
       size: 'default',
     },
   },
-)
+);
 
 function Button({
   className,
@@ -51,7 +49,7 @@ function Button({
       data-slot="button"
       {...props}
     />
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

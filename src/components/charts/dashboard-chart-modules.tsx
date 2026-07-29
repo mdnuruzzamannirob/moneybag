@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react';
 
-import { EChartCanvas } from '@/components/charts/echart-canvas'
+import { EChartCanvas } from '@/components/charts/echart-canvas';
 import type {
   DistributionItem,
   IncomeExpensePoint,
   UserGrowthPoint,
-} from '@/types/dashboard-models'
+} from '@/types/dashboard-models';
 
 type ChartTheme = {
-  card: string
-  border: string
-  primary: string
-  text: string
-  textMuted: string
-  textSubtle: string
-  success: string
-  danger: string
-}
+  card: string;
+  border: string;
+  primary: string;
+  text: string;
+  textMuted: string;
+  textSubtle: string;
+  success: string;
+  danger: string;
+};
 
 const fallbackChartTheme: ChartTheme = {
   card: '#ffffff',
@@ -29,11 +29,12 @@ const fallbackChartTheme: ChartTheme = {
   textSubtle: '#94a3b8',
   success: '#10b981',
   danger: '#ef4444',
-}
+};
 
 function readChartTheme() {
-  const styles = getComputedStyle(document.documentElement)
-  const token = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback
+  const styles = getComputedStyle(document.documentElement);
+  const token = (name: string, fallback: string) =>
+    styles.getPropertyValue(name).trim() || fallback;
   return {
     card: token('--color-card', fallbackChartTheme.card),
     border: token('--color-border', fallbackChartTheme.border),
@@ -43,37 +44,43 @@ function readChartTheme() {
     textSubtle: token('--color-text-subtle', fallbackChartTheme.textSubtle),
     success: token('--color-success', fallbackChartTheme.success),
     danger: token('--color-danger', fallbackChartTheme.danger),
-  }
+  };
 }
 
 function useChartTheme() {
-  const [theme, setTheme] = useState(fallbackChartTheme)
+  const [theme, setTheme] = useState(fallbackChartTheme);
 
   useEffect(() => {
-    const update = () => setTheme(readChartTheme())
-    update()
-    const observer = new MutationObserver(update)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-    return () => observer.disconnect()
-  }, [])
+    const update = () => setTheme(readChartTheme());
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
-  return theme
+  return theme;
 }
 
 function withAlpha(color: string, alpha: number) {
-  if (!color.startsWith('#')) return color
-  const hex = color.slice(1)
-  const normalized = hex.length === 3 ? hex.split('').map((part) => part + part).join('') : hex
-  const value = Number.parseInt(normalized, 16)
-  return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`
+  if (!color.startsWith('#')) return color;
+  const hex = color.slice(1);
+  const normalized =
+    hex.length === 3
+      ? hex
+          .split('')
+          .map((part) => part + part)
+          .join('')
+      : hex;
+  const value = Number.parseInt(normalized, 16);
+  return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`;
 }
 
 function getAxisLabel(theme: ChartTheme) {
-  return { color: theme.textMuted, fontSize: 11 }
+  return { color: theme.textMuted, fontSize: 11 };
 }
 
 function getSplitLine(theme: ChartTheme) {
-  return { lineStyle: { color: withAlpha(theme.border, 0.8), type: 'dashed' as const } }
+  return { lineStyle: { color: withAlpha(theme.border, 0.8), type: 'dashed' as const } };
 }
 
 function getTooltip(theme: ChartTheme) {
@@ -83,15 +90,11 @@ function getTooltip(theme: ChartTheme) {
     borderColor: theme.border,
     borderWidth: 1,
     textStyle: { color: theme.text, fontSize: 12 },
-  }
+  };
 }
 
-export function IncomeExpenseChartModule({
-  data,
-}: {
-  data: IncomeExpensePoint[]
-}) {
-  const theme = useChartTheme()
+export function IncomeExpenseChartModule({ data }: { data: IncomeExpensePoint[] }) {
+  const theme = useChartTheme();
   const option = useMemo(
     () => ({
       animationDuration: 550,
@@ -106,7 +109,8 @@ export function IncomeExpenseChartModule({
       },
       tooltip: {
         ...getTooltip(theme),
-        valueFormatter: (value: number | null | undefined) => value == null ? 'No data' : '\u09F3' + String(value.toLocaleString('en-US')),
+        valueFormatter: (value: number | null | undefined) =>
+          value == null ? 'No data' : '\u09F3' + String(value.toLocaleString('en-US')),
       },
       xAxis: {
         type: 'category' as const,
@@ -119,8 +123,7 @@ export function IncomeExpenseChartModule({
         type: 'value' as const,
         axisLabel: {
           ...getAxisLabel(theme),
-          formatter: (value: number) =>
-            value >= 1000 ? `${value / 1000}k` : value,
+          formatter: (value: number) => (value >= 1000 ? `${value / 1000}k` : value),
         },
         splitLine: getSplitLine(theme),
       },
@@ -142,14 +145,9 @@ export function IncomeExpenseChartModule({
       ],
     }),
     [data, theme],
-  )
+  );
 
-  return (
-    <EChartCanvas
-      ariaLabel="Income and expense grouped bar chart"
-      option={option}
-    />
-  )
+  return <EChartCanvas ariaLabel="Income and expense grouped bar chart" option={option} />;
 }
 
 export function DistributionChartModule({
@@ -158,12 +156,12 @@ export function DistributionChartModule({
   centerValue,
   valuePrefix,
 }: {
-  data: DistributionItem[]
-  centerLabel: string
-  centerValue: string
-  valuePrefix: string
+  data: DistributionItem[];
+  centerLabel: string;
+  centerValue: string;
+  valuePrefix: string;
 }) {
-  const theme = useChartTheme()
+  const theme = useChartTheme();
   const option = useMemo(
     () => ({
       animationDuration: 550,
@@ -174,8 +172,7 @@ export function DistributionChartModule({
         borderColor: theme.border,
         borderWidth: 1,
         textStyle: { color: theme.text, fontSize: 12 },
-        valueFormatter: (value: number) =>
-          `${valuePrefix}${value.toLocaleString('en-US')}`,
+        valueFormatter: (value: number) => `${valuePrefix}${value.toLocaleString('en-US')}`,
       },
       title: {
         text: centerValue,
@@ -216,23 +213,13 @@ export function DistributionChartModule({
       ],
     }),
     [centerLabel, centerValue, data, theme, valuePrefix],
-  )
+  );
 
-  return (
-    <EChartCanvas
-      ariaLabel={`${centerLabel} donut chart`}
-      className="h-64"
-      option={option}
-    />
-  )
+  return <EChartCanvas ariaLabel={`${centerLabel} donut chart`} className="h-64" option={option} />;
 }
 
-export function UserGrowthChartModule({
-  data,
-}: {
-  data: UserGrowthPoint[]
-}) {
-  const theme = useChartTheme()
+export function UserGrowthChartModule({ data }: { data: UserGrowthPoint[] }) {
+  const theme = useChartTheme();
   const option = useMemo(
     () => ({
       animationDuration: 600,
@@ -283,7 +270,7 @@ export function UserGrowthChartModule({
       ],
     }),
     [data, theme],
-  )
+  );
 
-  return <EChartCanvas ariaLabel="Monthly user growth line chart" option={option} />
+  return <EChartCanvas ariaLabel="Monthly user growth line chart" option={option} />;
 }

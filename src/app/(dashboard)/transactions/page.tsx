@@ -1,5 +1,5 @@
-import { TransactionsPage } from '@/components/user/finance-pages'
+import { TransactionsPage } from '@/components/user/finance-pages';
 
 export default function Page() {
-  return <TransactionsPage />
+  return <TransactionsPage />;
 }

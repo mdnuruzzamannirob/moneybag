@@ -1,1 +1,1 @@
-export const recurringschema = {}
+export const recurringschema = {};

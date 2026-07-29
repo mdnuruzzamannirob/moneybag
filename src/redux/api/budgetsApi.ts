@@ -1,1 +1,1 @@
-export const budgetsApi = {}
+export const budgetsApi = {};

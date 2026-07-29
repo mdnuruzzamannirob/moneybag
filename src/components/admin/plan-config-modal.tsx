@@ -1,3 +1,3 @@
 export function PlanConfigModal() {
-  return null
+  return null;
 }

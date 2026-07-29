@@ -1,3 +1,3 @@
 export function CsvImportDialog() {
-  return null
+  return null;
 }

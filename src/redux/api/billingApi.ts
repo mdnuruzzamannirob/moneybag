@@ -1,1 +1,1 @@
-export const billingApi = {}
+export const billingApi = {};

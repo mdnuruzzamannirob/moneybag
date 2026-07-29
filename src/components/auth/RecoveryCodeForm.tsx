@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ShieldCheck } from 'lucide-react'
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 
-import { AppButton } from '@/components/app-ui'
-import { AuthTextField } from '@/components/auth/AuthFormFields'
-import { recoveryCodeSchema, type RecoveryCodeValues } from '@/schemas/auth.schema'
+import { AppButton } from '@/components/app-ui';
+import { AuthTextField } from '@/components/auth/AuthFormFields';
+import { recoveryCodeSchema, type RecoveryCodeValues } from '@/schemas/auth.schema';
 
 export function RecoveryCodeForm() {
   const form = useForm<RecoveryCodeValues>({
     resolver: zodResolver(recoveryCodeSchema),
     defaultValues: { recoveryCode: '' },
-  })
+  });
 
   function onSubmit(_values: RecoveryCodeValues) {}
 
@@ -35,11 +35,7 @@ export function RecoveryCodeForm() {
           placeholder="XXXX-XXXX-XXXX"
           registration={form.register('recoveryCode')}
         />
-        <AppButton
-          className="w-full"
-          size="lg"
-          type="submit"
-        >
+        <AppButton className="w-full" size="lg" type="submit">
           Continue securely
         </AppButton>
       </form>
@@ -49,5 +45,5 @@ export function RecoveryCodeForm() {
         </Link>
       </div>
     </>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { LoaderCircle } from 'lucide-react'
+'use client';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { LoaderCircle } from 'lucide-react';
 export type AppButtonProps = React.ComponentProps<typeof Button> & {
-  loading?: boolean
-  tone?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success'
-}
+  loading?: boolean;
+  tone?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success';
+};
 export function AppButton({
   children,
   className,
@@ -14,33 +14,31 @@ export function AppButton({
   tone = 'primary',
   ...props
 }: AppButtonProps) {
-  const variant = tone === 'secondary' ? 'outline' : tone === 'ghost' ? 'ghost' : 'default'
+  const variant = tone === 'secondary' ? 'outline' : tone === 'ghost' ? 'ghost' : 'default';
   const dimensions =
     size === 'xs'
       ? '!h-7 !px-2 text-xs'
       : size === 'icon-xs'
-      ? '!size-7 !px-0'
-      : size === 'icon-sm'
-        ? '!size-8 !px-0'
-        : size === 'icon'
-          ? '!size-9 !px-0'
-          : size === 'icon-lg'
-            ? '!size-10 !px-0'
-            : size === 'sm'
-              ? '!h-8 !px-2.5'
-              : size === 'lg'
-                ? '!h-10 !px-4'
-                : '!h-9 !px-3'
+        ? '!size-7 !px-0'
+        : size === 'icon-sm'
+          ? '!size-8 !px-0'
+          : size === 'icon'
+            ? '!size-9 !px-0'
+            : size === 'icon-lg'
+              ? '!size-10 !px-0'
+              : size === 'sm'
+                ? '!h-8 !px-2.5'
+                : size === 'lg'
+                  ? '!h-10 !px-4'
+                  : '!h-9 !px-3';
   return (
     <Button
       {...props}
       className={cn(
         dimensions,
         'rounded-md bg-clip-border font-medium transition-[transform,background-color,border-color] active:scale-[.98]',
-        tone === 'primary' &&
-          'border-primary! hover:border-primary! hover:bg-primary/90',
-        tone === 'secondary' &&
-          'border-border! bg-card hover:border-border! hover:bg-secondary',
+        tone === 'primary' && 'border-primary! hover:border-primary! hover:bg-primary/90',
+        tone === 'secondary' && 'border-border! bg-card hover:border-border! hover:bg-secondary',
         tone === 'ghost' && 'border-transparent! bg-transparent hover:bg-muted',
         tone === 'success' &&
           'border-success! bg-success text-white hover:border-success! hover:bg-success/90',
@@ -55,5 +53,5 @@ export function AppButton({
       {loading ? <LoaderCircle className="animate-spin" /> : null}
       {children}
     </Button>
-  )
+  );
 }

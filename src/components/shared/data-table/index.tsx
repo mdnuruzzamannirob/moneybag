@@ -1,3 +1,3 @@
 export function DataTable() {
-  return null
+  return null;
 }

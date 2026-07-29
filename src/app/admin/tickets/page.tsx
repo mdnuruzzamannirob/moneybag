@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Tickets</main>
+  return <main>Tickets</main>;
 }

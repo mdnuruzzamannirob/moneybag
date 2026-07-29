@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Privacy</main>
+  return <main>Privacy</main>;
 }

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   CreditCard,
@@ -8,11 +8,11 @@ import {
   Scale,
   Settings2,
   ShieldCheck,
-} from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 const items = [
   { href: '/admin/settings/general', icon: Settings2, label: 'General' },
@@ -22,10 +22,10 @@ const items = [
   { href: '/admin/settings/payment', icon: CreditCard, label: 'Payment' },
   { href: '/admin/settings/storage', icon: HardDrive, label: 'Storage' },
   { href: '/admin/settings/legal', icon: Scale, label: 'Legal' },
-]
+];
 
 export function AdminSettingsNavigation() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <nav
@@ -37,8 +37,7 @@ export function AdminSettingsNavigation() {
           className={cn(
             'inline-flex h-9 shrink-0 items-center gap-2.5 rounded-md px-3 text-sm font-medium transition-colors',
             pathname === href ||
-              (href === '/admin/settings/general' &&
-                pathname === '/admin/settings')
+              (href === '/admin/settings/general' && pathname === '/admin/settings')
               ? 'bg-primary/10 text-primary'
               : 'text-muted-foreground hover:bg-muted hover:text-foreground',
           )}
@@ -50,5 +49,5 @@ export function AdminSettingsNavigation() {
         </Link>
       ))}
     </nav>
-  )
+  );
 }

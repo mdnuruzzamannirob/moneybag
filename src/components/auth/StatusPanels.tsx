@@ -1,9 +1,9 @@
-import Link from "next/link"
-import type { ReactNode } from "react"
-import { LoaderCircle, TriangleAlert } from "lucide-react"
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { LoaderCircle, TriangleAlert } from 'lucide-react';
 
-import { AppButton } from "@/components/app-ui"
-import { cn } from "@/lib/utils"
+import { AppButton } from '@/components/app-ui';
+import { cn } from '@/lib/utils';
 
 export function AuthCallbackPanel() {
   return (
@@ -15,12 +15,10 @@ export function AuthCallbackPanel() {
     >
       <div className="rounded-md border border-border bg-card p-4">
         <div className="text-sm font-semibold text-foreground">OAuth callback</div>
-        <div className="mt-1 text-xs text-muted-foreground">
-          This usually takes just a moment.
-        </div>
+        <div className="mt-1 text-xs text-muted-foreground">This usually takes just a moment.</div>
       </div>
     </AuthStatusPanel>
-  )
+  );
 }
 
 export function AuthErrorPanel() {
@@ -35,13 +33,13 @@ export function AuthErrorPanel() {
         Try again
       </AppButton>
       <div className="mt-6 text-center text-sm text-muted-foreground">
-        Need help?{" "}
+        Need help?{' '}
         <Link className="font-medium text-primary hover:underline" href="/contact">
           Contact support
         </Link>
       </div>
     </AuthStatusPanel>
-  )
+  );
 }
 
 function AuthStatusPanel({
@@ -51,37 +49,27 @@ function AuthStatusPanel({
   title,
   tone,
 }: {
-  children: ReactNode
-  description: string
-  icon: ReactNode
-  title: string
-  tone: "info" | "danger"
+  children: ReactNode;
+  description: string;
+  icon: ReactNode;
+  title: string;
+  tone: 'info' | 'danger';
 }) {
   return (
     <>
       <div
         className={cn(
           'mb-5 grid size-12 place-items-center rounded-md',
-          tone === 'info'
-            ? 'bg-info-soft text-info'
-            : 'bg-danger-soft text-destructive',
+          tone === 'info' ? 'bg-info-soft text-info' : 'bg-danger-soft text-destructive',
         )}
       >
         {icon}
       </div>
       <div className="mb-6">
-        <h2 className="text-3xl font-medium tracking-normal text-foreground">
-          {title}
-        </h2>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          {description}
-        </p>
+        <h2 className="text-3xl font-medium tracking-normal text-foreground">{title}</h2>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
       </div>
       {children}
     </>
-  )
+  );
 }
-
-
-
-

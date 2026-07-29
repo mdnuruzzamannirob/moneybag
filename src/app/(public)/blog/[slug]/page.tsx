@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Slug</main>
+  return <main>Slug</main>;
 }

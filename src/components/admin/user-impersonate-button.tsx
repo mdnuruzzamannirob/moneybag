@@ -1,3 +1,3 @@
 export function UserImpersonateButton() {
-  return null
+  return null;
 }

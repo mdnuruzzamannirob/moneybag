@@ -1,3 +1,3 @@
 export function GoalContributionModal() {
-  return null
+  return null;
 }

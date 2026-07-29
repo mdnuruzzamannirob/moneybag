@@ -1,13 +1,13 @@
-'use client'
-import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
-import type { ReactNode } from 'react'
+'use client';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import type { ReactNode } from 'react';
 export type AppInputProps = React.ComponentProps<typeof Input> & {
-  containerClassName?: string
-  leading?: ReactNode
-  leadingClassName?: string
-  trailing?: ReactNode
-}
+  containerClassName?: string;
+  leading?: ReactNode;
+  leadingClassName?: string;
+  trailing?: ReactNode;
+};
 export function AppInput({
   className,
   containerClassName,
@@ -19,7 +19,12 @@ export function AppInput({
   return (
     <div className={cn('relative', containerClassName)}>
       {leading ? (
-        <span className={cn('pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted-foreground [&>svg]:size-4', leadingClassName)}>
+        <span
+          className={cn(
+            'pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted-foreground [&>svg]:size-4',
+            leadingClassName,
+          )}
+        >
           {leading}
         </span>
       ) : null}
@@ -33,10 +38,8 @@ export function AppInput({
         )}
       />
       {trailing ? (
-        <span className="absolute inset-y-0 right-2 flex items-center">
-          {trailing}
-        </span>
+        <span className="absolute inset-y-0 right-2 flex items-center">{trailing}</span>
       ) : null}
     </div>
-  )
+  );
 }

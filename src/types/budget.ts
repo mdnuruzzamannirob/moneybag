@@ -1,1 +1,1 @@
-export const budget = {}
+export const budget = {};

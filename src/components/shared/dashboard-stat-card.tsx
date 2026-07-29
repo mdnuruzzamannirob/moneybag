@@ -1,8 +1,8 @@
-import type { LucideIcon } from 'lucide-react'
-import { ArrowDownRight, ArrowUpRight, Minus } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Minus } from 'lucide-react';
 
-import { cn } from '@/lib/utils'
-import type { DashboardMetric, MetricTone } from '@/types/dashboard-models'
+import { cn } from '@/lib/utils';
+import type { DashboardMetric, MetricTone } from '@/types/dashboard-models';
 
 const toneClasses: Record<MetricTone, string> = {
   primary: 'bg-primary/10 text-primary',
@@ -10,22 +10,18 @@ const toneClasses: Record<MetricTone, string> = {
   warning: 'bg-warning-soft text-warning',
   danger: 'bg-danger-soft text-danger',
   accent: 'bg-brand-accent-soft text-brand-accent',
-}
+};
 
 export function DashboardStatCard({
   metric,
   icon: Icon,
 }: {
-  metric: DashboardMetric
-  icon: LucideIcon
+  metric: DashboardMetric;
+  icon: LucideIcon;
 }) {
   const TrendIcon =
-    metric.direction === 'up'
-      ? ArrowUpRight
-      : metric.direction === 'down'
-        ? ArrowDownRight
-        : Minus
-  const isPositive = metric.direction === 'up' || metric.id === 'churn'
+    metric.direction === 'up' ? ArrowUpRight : metric.direction === 'down' ? ArrowDownRight : Minus;
+  const isPositive = metric.direction === 'up' || metric.id === 'churn';
 
   return (
     <article className="rounded-xl border border-border bg-card p-5 shadow-xs">
@@ -41,9 +37,7 @@ export function DashboardStatCard({
         <span
           className={cn(
             'inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-semibold',
-            isPositive
-              ? 'bg-success-soft text-success'
-              : 'bg-danger-soft text-danger',
+            isPositive ? 'bg-success-soft text-success' : 'bg-danger-soft text-danger',
           )}
         >
           <TrendIcon className="size-3" />
@@ -57,5 +51,5 @@ export function DashboardStatCard({
         </p>
       </div>
     </article>
-  )
+  );
 }

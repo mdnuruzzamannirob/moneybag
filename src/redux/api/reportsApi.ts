@@ -1,1 +1,1 @@
-export const reportsApi = {}
+export const reportsApi = {};
