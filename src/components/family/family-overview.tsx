@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import {
@@ -69,7 +69,7 @@ const familyMembers = [
   },
 ];
 
-export default function Page() {
+export function FamilyOverview() {
   const [modal, setModal] = useState<'invite' | 'create' | 'join' | 'settings' | null>(null);
   const [removeId, setRemoveId] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
@@ -486,3 +486,6 @@ export default function Page() {
     </main>
   );
 }
+
+export default FamilyOverview;
+

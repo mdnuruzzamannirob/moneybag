@@ -3,6 +3,8 @@
 import {
   BarChart3,
   Bell,
+  Check,
+  ChevronsUpDown,
   CircleDollarSign,
   CreditCard,
   FileText,
@@ -23,16 +25,26 @@ import {
   Tags,
   Target,
   Ticket,
+  UserRound,
   Users,
+  UsersRound,
   WalletCards,
   X,
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
+import { AppButton, AppPopover } from '@/components/app-ui';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import { AppButton } from '@/components/app-ui';
 import { useTheme } from '@/providers/theme-provider';
 import Logo from '../shared/Logo';
 
@@ -87,6 +99,21 @@ const navSections: NavSection[] = [
   },
 ];
 
+const familyNavSections: NavSection[] = [
+  {
+    label: 'Family',
+    items: [
+      { href: '/family/dashboard', label: 'Dashboard', icon: Grid2X2 },
+      { href: '/family/wallets', label: 'Shared Wallets', icon: WalletCards },
+      { href: '/family/transactions', label: 'Transactions', icon: ReceiptText },
+      { href: '/family/budgets', label: 'Budgets', icon: Target },
+      { href: '/family/balances', label: 'Balances & Settlements', icon: CircleDollarSign },
+      { href: '/family/members', label: 'Members', icon: Users },
+      { href: '/family/reports', label: 'Reports', icon: FileText },
+      { href: '/family/settings', label: 'Settings', icon: Settings },
+    ],
+  },
+];
 const adminNavSections: NavSection[] = [
   {
     label: 'Main',
@@ -144,7 +171,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin');
-  const sections = isAdmin ? adminNavSections : navSections;
+  const isFamily = pathname.startsWith('/family');
+  const sections = isAdmin ? adminNavSections : isFamily ? familyNavSections : navSections;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -162,14 +190,21 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <Sidebar isAdmin={isAdmin} sections={sections} onNavigate={() => setOpen(false)} />
+        <Sidebar
+          isAdmin={isAdmin}
+          isFamily={isFamily}
+          sections={sections}
+          onNavigate={() => setOpen(false)}
+        />
       </aside>
 
       <div className="lg:pl-65">
         <Topbar
           onMenuClick={() => setOpen(true)}
           showAddButton={!isAdmin}
-          title={isAdmin ? 'Admin dashboard' : 'Overview'}
+          title={
+            isAdmin ? 'Admin dashboard' : isFamily ? 'Family > Dashboard' : 'Personal > Dashboard'
+          }
         />
         <main className="mx-auto min-w-0 w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
           {children}
@@ -183,10 +218,12 @@ function Sidebar({
   sections,
   onNavigate,
   isAdmin,
+  isFamily,
 }: {
   sections: NavSection[];
   onNavigate: () => void;
   isAdmin: boolean;
+  isFamily: boolean;
 }) {
   const pathname = usePathname();
 
@@ -202,7 +239,6 @@ function Sidebar({
           <X className="size-4" />
         </button>
       </div>
-
       <div className="p-4 pb-3">
         <div className="relative">
           <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -215,7 +251,6 @@ function Sidebar({
           </kbd>
         </div>
       </div>
-
       <nav className="flex-1 overflow-y-auto px-3 pb-3">
         {sections.map((section) => (
           <div className="mb-5" key={section.label}>
@@ -260,32 +295,169 @@ function Sidebar({
           </div>
         ))}
       </nav>
-
-      <div className="mt-auto flex items-center gap-3 border-t border-border p-4">
-        <div className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
-          {isAdmin ? 'AD' : 'AT'}
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-semibold text-foreground">
-            {isAdmin ? 'MoneyBag Admin' : 'Anika Tahsin'}
-          </div>
-          <div className="truncate text-xs text-muted-foreground">
-            {isAdmin ? 'admin@moneybag.app' : 'anika@moneybag.app'}
-          </div>
-        </div>
-        <Link
-          aria-label="Open profile"
-          className="grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted"
-          href={pathname.startsWith('/admin') ? '/admin/profile' : '/settings'}
-          onClick={onNavigate}
-        >
-          <Settings className="size-4" />
-        </Link>
-      </div>
+      <DashboardSwitcher isAdmin={isAdmin} isFamily={isFamily} onNavigate={onNavigate} />
     </>
   );
 }
 
+function DashboardSwitcher({
+  isAdmin,
+  isFamily,
+  onNavigate,
+}: {
+  isAdmin: boolean;
+  isFamily: boolean;
+  onNavigate: () => void;
+}) {
+  const router = useRouter();
+  const [hasFamily, setHasFamily] = useState(isFamily);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [familyName, setFamilyName] = useState('');
+  useEffect(() => {
+    if (isFamily || window.localStorage.getItem('moneybag-family-created') === 'true')
+      setHasFamily(true);
+  }, [isFamily]);
+  if (isAdmin)
+    return (
+      <div className="mt-auto border-t border-border p-4 text-sm font-semibold">MoneyBag Admin</div>
+    );
+  const go = (href: string) => {
+    onNavigate();
+    router.push(href);
+  };
+  const createFamily = () => {
+    window.localStorage.setItem('moneybag-family-created', 'true');
+    window.localStorage.setItem('moneybag-family-name', familyName.trim() || 'Rahman Family');
+    setHasFamily(true);
+    setCreateOpen(false);
+    go('/family/dashboard');
+  };
+  const trigger = (
+    <button
+      className="mt-auto flex w-full items-center gap-3 border-t border-border px-4 py-2.5 text-left outline-none hover:bg-muted"
+      type="button"
+    >
+      <div className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
+        {isFamily ? 'FM' : 'AT'}
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-semibold">
+          {isFamily ? 'Rahman Family' : 'Anika Tahsin'}
+        </div>
+        <div className="truncate text-xs text-muted-foreground">
+          {isFamily ? 'Family dashboard' : 'Personal dashboard'}
+        </div>
+      </div>
+      <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
+    </button>
+  );
+  return (
+    <>
+      <AppPopover trigger={trigger} side="top" contentClassName="w-64 p-0">
+        <div className="border-b border-border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          Switch to
+        </div>
+        <div className="space-y-0 pb-3">
+          <button
+            className={cn(
+              'm-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted',
+              !isFamily && 'bg-muted/70',
+            )}
+            onClick={() => go('/dashboard')}
+            type="button"
+          >
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-emerald-500 text-white">
+              <UserRound className="size-4" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold text-foreground">Personal</span>
+              <span className="block truncate text-[11px] text-muted-foreground">
+                Your private finance
+              </span>
+            </span>
+            {!isFamily ? <Check className="size-4 text-emerald-600" /> : null}
+          </button>
+
+          {hasFamily ? (
+            <button
+              className={cn(
+                'm-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted',
+                isFamily && 'bg-muted/70',
+              )}
+              onClick={() => go('/family/dashboard')}
+              type="button"
+            >
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber-500 text-white">
+                <UsersRound className="size-4" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-foreground">Family</span>
+                <span className="block truncate text-[11px] text-muted-foreground">
+                  Rahman Family · 4 members
+                </span>
+              </span>
+              {isFamily ? <Check className="size-4 text-emerald-600" /> : null}
+            </button>
+          ) : (
+            <button
+              className="m-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted"
+              onClick={() => setCreateOpen(true)}
+              type="button"
+            >
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber-500 text-white">
+                <UsersRound className="size-4" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-foreground">Create family</span>
+                <span className="block truncate text-[11px] text-muted-foreground">
+                  Start a shared finance space
+                </span>
+              </span>
+              <Plus className="size-4 text-muted-foreground" />
+            </button>
+          )}
+        </div>
+      </AppPopover>
+      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create your family group</DialogTitle>
+            <DialogDescription>Create one shared space for your family finances.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <label className="text-sm font-medium" htmlFor="family-name">
+              Family name
+            </label>
+            <input
+              autoFocus
+              className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/15"
+              id="family-name"
+              onChange={(event) => setFamilyName(event.target.value)}
+              placeholder="e.g. Rahman Family"
+              value={familyName}
+            />
+          </div>
+          <DialogFooter>
+            <button
+              className="rounded-md border border-border px-4 py-2 text-sm hover:bg-muted"
+              onClick={() => setCreateOpen(false)}
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90"
+              onClick={createFamily}
+              type="button"
+            >
+              Create family
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
 function Topbar({
   onMenuClick,
   showAddButton,
