@@ -2,7 +2,7 @@ import { useTheme } from '@/providers/theme-provider';
 import { Bell, Link, LogOut, Menu, Moon, Plus, Search, Sun } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { AppBreadcrumb, AppButton, AppInput, AppPopover } from '../app-ui';
+import { AppBreadcrumb, AppButton, AppInput, AppKbd, AppPopover, AppTooltip } from '../app-ui';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { NavSection } from './DashboardShell';
 
@@ -47,8 +47,11 @@ export default function Topbar({
   useEffect(() => {
     if (searchOpen) window.setTimeout(() => inputRef.current?.focus(), 0);
   }, [searchOpen]);
+  useEffect(() => {
+    setSearchOpen(false);
+  }, [pathname]);
   const base = pathname.startsWith('/admin')
-    ? { href: '/admin/dashboard', label: 'Admin' }
+    ? { href: '/admin/dashboard', label: 'Administrator' }
     : pathname.startsWith('/family')
       ? { href: '/family/dashboard', label: 'Family' }
       : { href: '/dashboard', label: 'Personal' };
@@ -65,16 +68,32 @@ export default function Topbar({
         <AppBreadcrumb items={[base, { label: active?.label || 'Dashboard' }]} />
       </div>
       <div className="flex shrink-0 items-center gap-2">
-        <AppButton
-          aria-label="Search"
+        <AppInput
+          aria-label="Search pages"
+          leading={<Search />}
+          className="h-8! bg-text-muted!"
+          containerClassName="shrink-0"
           onClick={() => setSearchOpen(true)}
-          size="icon-sm"
-          tone="secondary"
-        >
-          <Search className="size-4" />
-        </AppButton>
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setSearchOpen(true);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              setSearchOpen(true);
+            }
+          }}
+          placeholder="Search..."
+          value={query}
+          trailing={
+            <AppTooltip content="Shortcut">
+              <AppKbd>⌘K</AppKbd>
+            </AppTooltip>
+          }
+        />
         <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
-          <DialogContent className="max-w-xl gap-4">
+          <DialogContent className="top-20 max-w-xl translate-y-0 gap-4 sm:top-24">
             <DialogHeader>
               <DialogTitle>Search MoneyBag</DialogTitle>
               <DialogDescription>Find a page or finance section quickly.</DialogDescription>

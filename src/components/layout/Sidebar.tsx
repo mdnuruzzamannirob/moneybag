@@ -1,8 +1,8 @@
-import { usePathname, useRouter } from "next/navigation";
-import Logo from "../shared/Logo";
-import { useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Logo from '../shared/Logo';
 
-import { AppBreadcrumb, AppButton, AppInput, AppPopover } from '@/components/app-ui';
+import { AppPopover, AppTooltip } from '@/components/app-ui';
 import {
   Dialog,
   DialogContent,
@@ -11,10 +11,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { NavSection } from "./DashboardShell";
-import { Check, ChevronsUpDown, Plus, UserRound, UsersRound, X } from "lucide-react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
+import { Check, ChevronsUpDown, Plus, Settings, UserRound, UsersRound, X } from 'lucide-react';
+import Link from 'next/link';
+import { NavSection } from './DashboardShell';
 
 export default function Sidebar({
   sections,
@@ -109,7 +109,25 @@ function DashboardSwitcher({
   }, [isFamily]);
   if (isAdmin)
     return (
-      <div className="mt-auto border-t border-border p-4 text-sm font-semibold">MoneyBag Admin</div>
+      <div className="mt-auto flex items-center gap-3 border-t border-border px-4 py-3">
+        <div className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
+          AD
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-sm font-semibold">Moneybag Admin</div>
+          <div className="truncate text-xs text-muted-foreground">Administrator</div>
+        </div>
+        <AppTooltip content="Profile settings">
+          <Link
+            aria-label="Open admin profile settings"
+            className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            href="/admin/profile"
+            onClick={onNavigate}
+          >
+            <Settings className="size-4" />
+          </Link>
+        </AppTooltip>
+      </div>
     );
   const go = (href: string) => {
     onNavigate();

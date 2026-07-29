@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  ArrowLeftRight,
   BarChart3,
   CircleDollarSign,
   CreditCard,
@@ -9,6 +10,7 @@ import {
   Grid2X2,
   HelpCircle,
   History,
+  Mail,
   Megaphone,
   ReceiptText,
   Settings,
@@ -38,109 +40,112 @@ export type NavSection = {
   items: NavItem[];
 };
 
-const navSections: NavSection[] = [
+// ========== USER ==========
+export const userNavSections: NavSection[] = [
   {
-    label: 'Main',
+    label: "Main",
     items: [
-      { href: '/dashboard', label: 'Overview', icon: Grid2X2 },
-      {
-        href: '/transactions',
-        label: 'Transactions',
-        icon: ReceiptText,
-        count: '20',
-      },
-      { href: '/budgets', label: 'Budgets', icon: Target },
-      { href: '/goals', label: 'Savings Goals', icon: CircleDollarSign },
+      { href: "/dashboard", label: "Overview", icon: Grid2X2 },
+      { href: "/transactions", label: "Transactions", icon: ReceiptText, count: "20" },
+      { href: "/budgets", label: "Budgets", icon: Target },
+      { href: "/goals", label: "Savings Goals", icon: CircleDollarSign },
     ],
   },
   {
-    label: 'Manage',
+    label: "Manage",
     items: [
-      { href: '/categories', label: 'Categories', icon: Tags },
-      { href: '/wallets', label: 'Wallets', icon: WalletCards },
-      { href: '/family', label: 'Family', icon: Users },
+      { href: "/categories", label: "Categories", icon: Tags },
+      { href: "/wallets", label: "Wallets", icon: WalletCards },
+      { href: "/family", label: "Family", icon: Users },
     ],
   },
   {
-    label: 'Insights',
+    label: "Insights",
     items: [
-      { href: '/analytics', label: 'Analytics', icon: BarChart3 },
-      { href: '/reports', label: 'Reports', icon: FileText },
+      { href: "/analytics", label: "Analytics", icon: BarChart3 },
+      { href: "/reports", label: "Reports", icon: FileText },
     ],
   },
   {
-    label: 'Account',
+    label: "Account",
     items: [
-      { href: '/settings', label: 'Settings', icon: Settings },
-      { href: '/help', label: 'Help Center', icon: HelpCircle },
+      { href: "/settings", label: "Settings", icon: Settings },
+      { href: "/help", label: "Help Center", icon: HelpCircle },
     ],
   },
 ];
 
-const familyNavSections: NavSection[] = [
+// ========== FAMILY ==========
+export const familyNavSections: NavSection[] = [
   {
-    label: 'Family',
+    label: "Overview",
     items: [
-      { href: '/family/dashboard', label: 'Dashboard', icon: Grid2X2 },
-      { href: '/family/wallets', label: 'Shared Wallets', icon: WalletCards },
-      { href: '/family/transactions', label: 'Transactions', icon: ReceiptText },
-      { href: '/family/budgets', label: 'Budgets', icon: Target },
-      { href: '/family/balances', label: 'Balances & Settlements', icon: CircleDollarSign },
-      { href: '/family/members', label: 'Members', icon: Users },
-      { href: '/family/reports', label: 'Reports', icon: FileText },
-      { href: '/family/settings', label: 'Settings', icon: Settings },
+      { href: "/family/dashboard", label: "Dashboard", icon: Grid2X2 },
+      { href: "/family/wallets", label: "Shared Wallets", icon: WalletCards },
+    ],
+  },
+  {
+    label: "Activity",
+    items: [
+      { href: "/family/transactions", label: "Transactions", icon: ReceiptText },
+      { href: "/family/budgets", label: "Budgets", icon: Target },
+      { href: "/family/balances", label: "Balances", icon: CircleDollarSign },
+      { href: "/family/settlements", label: "Settlements", icon: ArrowLeftRight },
+    ],
+  },
+  {
+    label: "Members",
+    items: [
+      { href: "/family/members", label: "Members", icon: Users },
+    ],
+  },
+  {
+    label: "More",
+    items: [
+      { href: "/family/reports", label: "Reports", icon: FileText },
+      { href: "/family/settings", label: "Settings", icon: Settings },
     ],
   },
 ];
-const adminNavSections: NavSection[] = [
+
+// ========== ADMIN ==========
+export const adminNavSections: NavSection[] = [
   {
-    label: 'Main',
-    items: [{ href: '/admin/dashboard', label: 'Dashboard', icon: Gauge }],
+    label: "Main",
+    items: [{ href: "/admin/dashboard", label: "Dashboard", icon: Gauge }],
   },
   {
-    label: 'User & Subscriptions',
+    label: "Users & Subscriptions",
     items: [
-      { href: '/admin/users', label: 'Users', icon: Users },
-      {
-        href: '/admin/subscriptions',
-        label: 'Subscriptions',
-        icon: WalletCards,
-      },
-      { href: '/admin/coupons', label: 'Coupons', icon: CreditCard },
-      { href: '/admin/plans', label: 'Plans', icon: CircleDollarSign },
+      { href: "/admin/users", label: "Users", icon: Users },
+      { href: "/admin/subscriptions", label: "Subscriptions", icon: WalletCards },
+      { href: "/admin/coupons", label: "Coupons", icon: CreditCard },
+      { href: "/admin/plans", label: "Plans", icon: CircleDollarSign },
     ],
   },
   {
-    label: 'Reports',
-    items: [{ href: '/admin/reports', label: 'Reports', icon: BarChart3 }],
+    label: "Reports",
+    items: [{ href: "/admin/reports", label: "Reports", icon: BarChart3 }],
   },
   {
-    label: 'Content',
+    label: "Content",
     items: [
-      { href: '/admin/announcements', label: 'Announcements', icon: Megaphone },
-      { href: '/admin/blog', label: 'Blog', icon: FileText },
-      { href: '/admin/faq', label: 'FAQ', icon: HelpCircle },
-      {
-        href: '/admin/email-templates',
-        label: 'Email Templates',
-        icon: FileText,
-      },
+      { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
+      { href: "/admin/blog", label: "Blog", icon: FileText },
+      { href: "/admin/faq", label: "FAQ", icon: HelpCircle },
+      { href: "/admin/email-templates", label: "Email Templates", icon: Mail },
     ],
   },
   {
-    label: 'Support',
-    items: [{ href: '/admin/tickets', label: 'Tickets', icon: Ticket }],
+    label: "Support",
+    items: [{ href: "/admin/tickets", label: "Tickets", icon: Ticket }],
   },
   {
-    label: 'System & Security',
+    label: "System & Security",
     items: [
-      { href: '/admin/system-health', label: 'System Health', icon: Shield },
-      { href: '/admin/audit-logs', label: 'Audit Logs', icon: History },
-      {
-        href: '/admin/settings',
-        label: 'Settings',
-        icon: Settings,
-      },
+      { href: "/admin/system-health", label: "System Health", icon: Shield },
+      { href: "/admin/audit-logs", label: "Audit Logs", icon: History },
+      { href: "/admin/settings", label: "Settings", icon: Settings },
     ],
   },
 ];
@@ -150,7 +155,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin');
   const isFamily = pathname.startsWith('/family');
-  const sections = isAdmin ? adminNavSections : isFamily ? familyNavSections : navSections;
+  const sections = isAdmin ? adminNavSections : isFamily ? familyNavSections : userNavSections;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
