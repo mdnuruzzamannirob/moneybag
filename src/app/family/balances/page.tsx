@@ -1,4 +1,5 @@
-﻿import { FamilyOverview } from '@/components/family/family-overview';
-export default FamilyOverview;
+﻿const Balances = () => {
+  return <div>Balances</div>;
+};
 
-
+export default Balances;

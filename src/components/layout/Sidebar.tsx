@@ -1,0 +1,250 @@
+import { usePathname, useRouter } from "next/navigation";
+import Logo from "../shared/Logo";
+import { useEffect, useRef, useState } from 'react';
+
+import { AppBreadcrumb, AppButton, AppInput, AppPopover } from '@/components/app-ui';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { NavSection } from "./DashboardShell";
+import { Check, ChevronsUpDown, Plus, UserRound, UsersRound, X } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+export default function Sidebar({
+  sections,
+  onNavigate,
+  isAdmin,
+  isFamily,
+}: {
+  sections: NavSection[];
+  onNavigate: () => void;
+  isAdmin: boolean;
+  isFamily: boolean;
+}) {
+  const pathname = usePathname();
+
+  return (
+    <>
+      <div className="flex h-16 items-center gap-3 border-b border-border px-5">
+        <Logo onNavigate={onNavigate} />
+        <button
+          className="ml-auto grid size-8 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted lg:hidden"
+          onClick={onNavigate}
+          type="button"
+        >
+          <X className="size-4" />
+        </button>
+      </div>
+      <nav className="flex-1 overflow-y-auto px-3 py-3">
+        {sections.map((section) => (
+          <div className="mb-3" key={section.label}>
+            <div className="mb-2 px-3 text-[11px] font-medium uppercase text-muted-foreground/70">
+              {section.label}
+            </div>
+            <div className="space-y-1">
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                return (
+                  <div key={item.href}>
+                    <Link
+                      className={cn(
+                        'flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors',
+                        active
+                          ? 'bg-accent text-accent-foreground'
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                      )}
+                      href={item.href}
+                      onClick={onNavigate}
+                    >
+                      <Icon className="size-4.5 shrink-0" />
+                      <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                      {item.count ? (
+                        <span
+                          className={cn(
+                            'rounded-full px-2 py-0.5 text-xs font-semibold leading-none',
+                            active
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted text-muted-foreground',
+                          )}
+                        >
+                          {item.count}
+                        </span>
+                      ) : null}
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+      <DashboardSwitcher isAdmin={isAdmin} isFamily={isFamily} onNavigate={onNavigate} />
+    </>
+  );
+}
+
+function DashboardSwitcher({
+  isAdmin,
+  isFamily,
+  onNavigate,
+}: {
+  isAdmin: boolean;
+  isFamily: boolean;
+  onNavigate: () => void;
+}) {
+  const router = useRouter();
+  const [hasFamily, setHasFamily] = useState(isFamily);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [familyName, setFamilyName] = useState('');
+  useEffect(() => {
+    if (isFamily || window.localStorage.getItem('moneybag-family-created') === 'true')
+      setHasFamily(true);
+  }, [isFamily]);
+  if (isAdmin)
+    return (
+      <div className="mt-auto border-t border-border p-4 text-sm font-semibold">MoneyBag Admin</div>
+    );
+  const go = (href: string) => {
+    onNavigate();
+    router.push(href);
+  };
+  const createFamily = () => {
+    window.localStorage.setItem('moneybag-family-created', 'true');
+    window.localStorage.setItem('moneybag-family-name', familyName.trim() || 'Rahman Family');
+    setHasFamily(true);
+    setCreateOpen(false);
+    go('/family/dashboard');
+  };
+  const trigger = (
+    <button
+      className="mt-auto flex w-full items-center gap-3 border-t border-border px-4 py-2.5 text-left outline-none hover:bg-muted"
+      type="button"
+    >
+      <div className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
+        {isFamily ? 'FM' : 'AT'}
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-semibold">
+          {isFamily ? 'Rahman Family' : 'Anika Tahsin'}
+        </div>
+        <div className="truncate text-xs text-muted-foreground">
+          {isFamily ? 'Family dashboard' : 'Personal dashboard'}
+        </div>
+      </div>
+      <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
+    </button>
+  );
+  return (
+    <>
+      <AppPopover trigger={trigger} side="top" contentClassName="w-64 p-0">
+        <div className="border-b border-border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          Switch to
+        </div>
+        <div className="space-y-0 pb-3">
+          <button
+            className={cn(
+              'm-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted',
+              !isFamily && 'bg-muted/70',
+            )}
+            onClick={() => go('/dashboard')}
+            type="button"
+          >
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-emerald-500 text-white">
+              <UserRound className="size-4" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold text-foreground">Personal</span>
+              <span className="block truncate text-[11px] text-muted-foreground">
+                Your private finance
+              </span>
+            </span>
+            {!isFamily ? <Check className="size-4 text-emerald-600" /> : null}
+          </button>
+
+          {hasFamily ? (
+            <button
+              className={cn(
+                'm-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted',
+                isFamily && 'bg-muted/70',
+              )}
+              onClick={() => go('/family/dashboard')}
+              type="button"
+            >
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber-500 text-white">
+                <UsersRound className="size-4" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-foreground">Family</span>
+                <span className="block truncate text-[11px] text-muted-foreground">
+                  Rahman Family · 4 members
+                </span>
+              </span>
+              {isFamily ? <Check className="size-4 text-emerald-600" /> : null}
+            </button>
+          ) : (
+            <button
+              className="m-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted"
+              onClick={() => setCreateOpen(true)}
+              type="button"
+            >
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber-500 text-white">
+                <UsersRound className="size-4" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-foreground">Create family</span>
+                <span className="block truncate text-[11px] text-muted-foreground">
+                  Start a shared finance space
+                </span>
+              </span>
+              <Plus className="size-4 text-muted-foreground" />
+            </button>
+          )}
+        </div>
+      </AppPopover>
+      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create your family group</DialogTitle>
+            <DialogDescription>Create one shared space for your family finances.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <label className="text-sm font-medium" htmlFor="family-name">
+              Family name
+            </label>
+            <input
+              autoFocus
+              className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/15"
+              id="family-name"
+              onChange={(event) => setFamilyName(event.target.value)}
+              placeholder="e.g. Rahman Family"
+              value={familyName}
+            />
+          </div>
+          <DialogFooter>
+            <button
+              className="rounded-md border border-border px-4 py-2 text-sm hover:bg-muted"
+              onClick={() => setCreateOpen(false)}
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90"
+              onClick={createFamily}
+              type="button"
+            >
+              Create family
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}

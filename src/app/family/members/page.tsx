@@ -1,3 +1,5 @@
-﻿import { FamilyPage } from '@/components/family/family-page';
-export default function Page() { return <FamilyPage section='members' />; }
+﻿const Members = () => {
+  return <div>Members</div>;
+};
 
+export default Members;

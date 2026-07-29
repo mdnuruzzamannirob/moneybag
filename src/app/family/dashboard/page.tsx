@@ -1,2 +1,5 @@
-﻿import { FamilyPage } from '@/components/family/family-page';
-export default function FamilyDashboardPage() { return <FamilyPage section="dashboard" />; }
+﻿const Dashboard = () => {
+  return <div>Dashboard</div>;
+};
+
+export default Dashboard;
