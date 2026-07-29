@@ -2,15 +2,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Logo from '../shared/Logo';
 
-import { AppPopover, AppTooltip } from '@/components/app-ui';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  AppButton,
+  AppField,
+  AppInput,
+  AppModal,
+  AppPopover,
+  AppTooltip,
+} from '@/components/app-ui';
 import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown, Plus, Settings, UserRound, UsersRound, X } from 'lucide-react';
 import Link from 'next/link';
@@ -208,61 +207,43 @@ function DashboardSwitcher({
             </button>
           ) : (
             <button
-              className="m-0 flex w-full items-center gap-3 px-3 py-2.5 text-left leading-tight transition-colors hover:bg-muted"
+              className="flex w-full items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setCreateOpen(true)}
               type="button"
             >
-              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-amber-500 text-white">
-                <UsersRound className="size-4" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-sm font-semibold text-foreground">Create family</span>
-                <span className="block truncate text-[11px] text-muted-foreground">
-                  Start a shared finance space
-                </span>
-              </span>
-              <Plus className="size-4 text-muted-foreground" />
+              <Plus className="size-4" />
+              Create a family group
             </button>
           )}
         </div>
       </AppPopover>
-      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create your family group</DialogTitle>
-            <DialogDescription>Create one shared space for your family finances.</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="family-name">
-              Family name
-            </label>
-            <input
-              autoFocus
-              className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/15"
-              id="family-name"
-              onChange={(event) => setFamilyName(event.target.value)}
-              placeholder="e.g. Rahman Family"
-              value={familyName}
-            />
-          </div>
-          <DialogFooter>
-            <button
-              className="rounded-md border border-border px-4 py-2 text-sm hover:bg-muted"
-              onClick={() => setCreateOpen(false)}
-              type="button"
-            >
+      <AppModal
+        bodyClassName="space-y-4"
+        footer={
+          <>
+            <AppButton onClick={() => setCreateOpen(false)} tone="secondary" type="button">
               Cancel
-            </button>
-            <button
-              className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90"
-              onClick={createFamily}
-              type="button"
-            >
+            </AppButton>
+            <AppButton onClick={createFamily} type="button">
               Create family
-            </button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </AppButton>
+          </>
+        }
+        onOpenChange={setCreateOpen}
+        open={createOpen}
+        title="Create your family group"
+        description="Create one shared space for your family finances."
+      >
+        <AppField label="Family name">
+          <AppInput
+            autoFocus
+            id="family-name"
+            onChange={(event) => setFamilyName(event.target.value)}
+            placeholder="e.g. Rahman Family"
+            value={familyName}
+          />
+        </AppField>
+      </AppModal>
     </>
   );
 }

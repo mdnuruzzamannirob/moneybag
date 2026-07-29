@@ -348,13 +348,13 @@ function ComponentDemo({
         <Panel title="Input sizes">
           <div className="grid items-end gap-4 md:grid-cols-3">
             <AppField label="Small">
-              <AppInput className="!h-8 text-xs" placeholder="Small input" />
+              <AppInput className="h-8! text-xs" placeholder="Small input" />
             </AppField>
             <AppField label="Default">
               <AppInput placeholder="Default input" />
             </AppField>
             <AppField label="Large">
-              <AppInput className="!h-12 text-base" placeholder="Large input" />
+              <AppInput className="h-12! text-base" placeholder="Large input" />
             </AppField>
           </div>
         </Panel>

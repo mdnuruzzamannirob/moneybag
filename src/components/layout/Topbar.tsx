@@ -1,8 +1,16 @@
 import { useTheme } from '@/providers/theme-provider';
-import { Bell, Link, LogOut, Menu, Moon, Plus, Search, Sun } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { Bell, Link, LogOut, Menu, Moon, Search, Sun } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { AppBreadcrumb, AppButton, AppInput, AppKbd, AppPopover, AppTooltip } from '../app-ui';
+import {
+  AppBreadcrumb,
+  AppButton,
+  AppConfirmDialog,
+  AppInput,
+  AppKbd,
+  AppPopover,
+  AppTooltip,
+} from '../app-ui';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { NavSection } from './DashboardShell';
 
@@ -16,9 +24,11 @@ export default function Topbar({
   sections: NavSection[];
 }) {
   const { theme, toggleTheme } = useTheme();
+  const router = useRouter();
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [logoutOpen, setLogoutOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const items = sections.flatMap((section) =>
     section.items.map((item) => ({ ...item, section: section.label })),
@@ -55,6 +65,18 @@ export default function Topbar({
     : pathname.startsWith('/family')
       ? { href: '/family/dashboard', label: 'Family' }
       : { href: '/dashboard', label: 'Personal' };
+  const notifications = [
+    {
+      title: 'Budget reminder',
+      detail: 'Your July spending is near the planned limit.',
+      time: '5m ago',
+    },
+    {
+      title: 'Savings goal',
+      detail: 'Emergency fund received a new contribution.',
+      time: '1h ago',
+    },
+  ];
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
@@ -68,11 +90,20 @@ export default function Topbar({
         <AppBreadcrumb items={[base, { label: active?.label || 'Dashboard' }]} />
       </div>
       <div className="flex shrink-0 items-center gap-2">
+        <AppButton
+          aria-label="Search pages"
+          className="sm:hidden"
+          onClick={() => setSearchOpen(true)}
+          size="icon-sm"
+          tone="secondary"
+        >
+          <Search className="size-4" />
+        </AppButton>
         <AppInput
           aria-label="Search pages"
+          className="hidden h-8 bg-muted/40 shadow-none sm:block"
           leading={<Search />}
-          className="h-8! bg-text-muted!"
-          containerClassName="shrink-0"
+          containerClassName="hidden shrink-0 sm:block"
           onClick={() => setSearchOpen(true)}
           onChange={(event) => {
             setQuery(event.target.value);
@@ -130,7 +161,7 @@ export default function Topbar({
             </div>
           </DialogContent>
         </Dialog>
-        {showAddButton ? (
+        {/* {showAddButton ? (
           <AppPopover
             align="end"
             contentClassName="w-64 gap-2 p-2"
@@ -157,16 +188,60 @@ export default function Topbar({
               Transfer between wallets
             </Link>
           </AppPopover>
-        ) : null}
+        ) : null} */}
+        <AppPopover
+          align="end"
+          contentClassName="w-80 gap-2 p-2"
+          trigger={
+            <AppButton aria-label="Notifications" size="icon-sm" tone="secondary">
+              <Bell className="size-4" />
+            </AppButton>
+          }
+        >
+          <div className="px-2 pb-1 pt-1">
+            <div className="text-sm font-semibold">Notifications</div>
+            <p className="text-xs text-muted-foreground">Latest activity from your workspace.</p>
+          </div>
+          <div className="space-y-1">
+            {notifications.map((item) => (
+              <div className="rounded-md px-2 py-2.5 hover:bg-muted" key={item.title}>
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 size-2 rounded-full bg-primary" />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium">{item.title}</div>
+                    <div className="truncate text-xs text-muted-foreground">{item.detail}</div>
+                  </div>
+                  <span className="shrink-0 text-[11px] text-muted-foreground">{item.time}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AppPopover>
+
         <AppButton aria-label="Theme" onClick={toggleTheme} size="icon-sm" tone="secondary">
           {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
         </AppButton>
-        <AppButton aria-label="Notifications" size="icon-sm" tone="secondary">
-          <Bell className="size-4" />
-        </AppButton>
-        <AppButton aria-label="Log out" size="icon-sm" tone="secondary">
+        <AppButton
+          aria-label="Log out"
+          onClick={() => setLogoutOpen(true)}
+          size="icon-sm"
+          tone="secondary"
+        >
           <LogOut className="size-4" />
         </AppButton>
+        <AppConfirmDialog
+          cancelLabel="Stay"
+          confirmLabel="Log out"
+          description="You will be signed out of this account."
+          onConfirm={() => {
+            setLogoutOpen(false);
+            router.push('/login');
+          }}
+          onOpenChange={setLogoutOpen}
+          open={logoutOpen}
+          title="Confirm logout"
+          variant="danger"
+        />
       </div>
     </header>
   );
