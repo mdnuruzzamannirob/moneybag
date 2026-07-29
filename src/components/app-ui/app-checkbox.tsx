@@ -14,6 +14,7 @@ export type AppCheckboxProps = Omit<
   description?: string
   id?: string
   label: ReactNode
+  size?: 'sm' | 'md' | 'lg'
 }
 
 export function AppCheckbox({
@@ -21,6 +22,7 @@ export function AppCheckbox({
   description,
   id,
   label,
+  size = 'md',
   ...props
 }: AppCheckboxProps) {
   const generatedId = useId()
@@ -36,14 +38,15 @@ export function AppCheckbox({
       <Checkbox
         {...props}
         className={cn(
-          'size-5 rounded-sm border-border bg-card',
+          { sm: 'size-4', md: 'size-5', lg: 'size-6' }[size],
+          'rounded-sm border-border bg-card',
           description && 'mt-0.5',
           className,
         )}
         id={checkboxId}
       />
       <span>
-        <span className="block font-medium leading-5">{label}</span>
+        <span className={cn('block font-medium', { sm: 'text-xs leading-4', md: 'text-sm leading-5', lg: 'text-base leading-6' }[size])}>{label}</span>
         {description ? (
           <span className="mt-0.5 block text-xs text-muted-foreground">
             {description}

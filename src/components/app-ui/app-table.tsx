@@ -36,8 +36,8 @@ export function AppTable<T>({
     >
       <div className="overflow-x-auto">
         <Table className="min-w-180">
-          <TableHeader className="border-b border-border bg-muted/40">
-            <TableRow className="border-b border-border hover:bg-transparent">
+          <TableHeader className="border-b border-border/70 bg-muted/40">
+            <TableRow className="border-b border-border/70 hover:bg-transparent">
               {columns.map((column, index) => (
                 <TableHead
                   className={cn(
@@ -56,7 +56,7 @@ export function AppTable<T>({
             {rows.length ? (
               rows.map((row) => (
                 <TableRow
-                  className="border-b border-border transition-colors last:border-b-0 hover:bg-muted/45"
+                  className="border-b border-border/55 transition-colors last:border-b-0 hover:bg-muted/45"
                   key={getRowKey(row)}
                 >
                   {columns.map((column, index) => (

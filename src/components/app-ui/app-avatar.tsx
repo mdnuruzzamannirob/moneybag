@@ -16,7 +16,7 @@ export function AppAvatar({
   return (
     <Avatar
       className={cn(
-        { sm: 'size-7', md: 'size-9', lg: 'size-12', xl: 'size-16' }[size],
+        { sm: 'size-7 text-[10px]', md: 'size-9 text-xs', lg: 'size-12 text-sm', xl: 'size-16 text-base' }[size],
         className,
       )}
     >

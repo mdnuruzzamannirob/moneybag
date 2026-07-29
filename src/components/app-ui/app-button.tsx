@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { LoaderCircle } from 'lucide-react'
 export type AppButtonProps = React.ComponentProps<typeof Button> & {
   loading?: boolean
-  tone?: 'primary' | 'secondary' | 'danger' | 'success'
+  tone?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success'
 }
 export function AppButton({
   children,
@@ -14,9 +14,11 @@ export function AppButton({
   tone = 'primary',
   ...props
 }: AppButtonProps) {
-  const variant = tone === 'secondary' ? 'outline' : 'default'
+  const variant = tone === 'secondary' ? 'outline' : tone === 'ghost' ? 'ghost' : 'default'
   const dimensions =
-    size === 'icon-xs'
+    size === 'xs'
+      ? '!h-7 !px-2 text-xs'
+      : size === 'icon-xs'
       ? '!size-7 !px-0'
       : size === 'icon-sm'
         ? '!size-8 !px-0'
@@ -26,7 +28,9 @@ export function AppButton({
             ? '!size-10 !px-0'
             : size === 'sm'
               ? '!h-8 !px-2.5'
-            : '!h-9 !px-3'
+              : size === 'lg'
+                ? '!h-10 !px-4'
+                : '!h-9 !px-3'
   return (
     <Button
       {...props}
@@ -37,6 +41,7 @@ export function AppButton({
           'border-primary! hover:border-primary! hover:bg-primary/90',
         tone === 'secondary' &&
           'border-border! bg-card hover:border-border! hover:bg-secondary',
+        tone === 'ghost' && 'border-transparent! bg-transparent hover:bg-muted',
         tone === 'success' &&
           'border-success! bg-success text-white hover:border-success! hover:bg-success/90',
         tone === 'danger' &&

@@ -30,7 +30,7 @@ export function AppSegmentedControl({
     >
       {options.map((option) => (
         <ToggleGroupItem
-          className="h-8! min-w-0 rounded-sm px-3 text-sm data-[state=on]:bg-card data-[state=on]:shadow-xs"
+          className="h-8! min-w-0 rounded-sm px-3 text-sm data-[state=on]:bg-primary/10 data-[state=on]:text-primary data-[state=on]:shadow-xs"
           key={option.value}
           value={option.value}
         >

@@ -12,17 +12,17 @@ export function AppPageHeader({
 }) {
   return (
     <header>
-      {breadcrumb ? <div className="mb-4">{breadcrumb}</div> : null}
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+      {breadcrumb ? <div className="mb-3">{breadcrumb}</div> : null}
+      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
             {title}
           </h1>
           {description ? (
             <p className="mt-1 text-sm text-muted-foreground">{description}</p>
           ) : null}
         </div>
-        {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
+        {actions ? <div className="flex w-full flex-wrap gap-2 sm:w-auto sm:justify-end [&>[data-slot=button]]:w-full sm:[&>[data-slot=button]]:w-auto">{actions}</div> : null}
       </div>
     </header>
   )
