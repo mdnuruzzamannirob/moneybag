@@ -2,10 +2,11 @@
 
 import { cn } from '@/lib/utils';
 import { AppButton } from '@/components/app-ui';
-import { ArrowRight, Mail, Menu, Wallet, X } from 'lucide-react';
+import { ArrowRight, Mail, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import Logo from '../shared/Logo';
 
 const navigation = [
   { href: '/', label: 'Home' },
@@ -29,14 +30,7 @@ function isActive(pathname: string, href: string) {
 }
 
 export function PublicLogo() {
-  return (
-    <Link className="group inline-flex items-center gap-2.5" href="/">
-      <span className="grid size-9 place-items-center rounded-md bg-linear-to-br from-primary to-brand-accent text-white shadow-sm">
-        <Wallet className="size-5" aria-hidden="true" />
-      </span>
-      <span className="font-ubuntu text-lg font-bold tracking-tight">MoneyBag</span>
-    </Link>
-  );
+  return <Logo className="text-lg font-bold tracking-tight" href="/" />;
 }
 
 export function PublicShell({ children }: { children: React.ReactNode }) {
