@@ -26,7 +26,7 @@ export function AppPagination({
         <button
           className={
             number === page
-              ? 'grid size-8 place-items-center rounded-md bg-primary text-xs font-medium text-primary-foreground'
+              ? 'ui-gradient-primary grid size-8 place-items-center rounded-md text-xs font-medium'
               : 'grid size-8 place-items-center rounded-md text-xs font-medium text-muted-foreground hover:bg-muted'
           }
           key={number}

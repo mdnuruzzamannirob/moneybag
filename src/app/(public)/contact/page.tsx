@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Clock3, LifeBuoy, Mail, MapPin, MessageSquare } from 'lucide-react';
 import { FeatureIcon, PageHero } from '@/components/public/public-ui';
+import { AppButton } from '@/components/app-ui';
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -94,12 +95,9 @@ export default function ContactPage() {
               placeholder="Tell us a little about what you need…"
             />
           </label>
-          <button
-            className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm mt-6 px-5 py-3 text-sm font-semibold"
-            type="submit"
-          >
+          <AppButton className="mt-6" size="lg" type="submit">
             Send message
-          </button>
+          </AppButton>
           <p className="mt-4 text-xs leading-5 text-muted-foreground">
             By submitting, you agree that we may use your details to respond to this request.
           </p>

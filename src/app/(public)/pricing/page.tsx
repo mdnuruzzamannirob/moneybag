@@ -143,7 +143,7 @@ export default function PricingPage() {
                 'mt-6 block rounded-md py-2.5 text-center text-sm font-semibold',
                 plan.name === 'Free' || plan.name === 'Unlimited'
                   ? 'inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs'
-                  : 'inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm',
+                  : 'ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm',
               )}
             >
               {plan.action}

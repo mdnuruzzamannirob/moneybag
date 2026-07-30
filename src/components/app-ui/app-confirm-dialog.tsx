@@ -41,8 +41,8 @@ export function AppConfirmDialog({
           <AlertDialogAction
             className={
               variant === 'danger'
-                ? 'border border-danger bg-danger text-white hover:bg-danger/90'
-                : ''
+                ? 'ui-gradient-danger border-0! hover:brightness-[.98] hover:shadow-sm'
+                : 'ui-gradient-primary border-0! hover:brightness-[.98] hover:shadow-sm'
             }
             onClick={onConfirm}
             variant="default"

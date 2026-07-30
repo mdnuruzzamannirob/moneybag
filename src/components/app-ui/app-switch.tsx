@@ -45,7 +45,7 @@ export function AppSwitch({
       <SwitchPrimitive.Root
         checked={checked}
         className={cn(
-          'relative inline-flex shrink-0 items-center rounded-full border-2 border-transparent bg-input outline-none transition-colors data-checked:bg-primary focus-visible:ring-3 focus-visible:ring-primary/20 disabled:opacity-50',
+          'ui-checked-gradient relative inline-flex shrink-0 items-center rounded-full border-0! bg-input p-0.5 outline-none transition-[background-color,box-shadow] focus-visible:ring-0 disabled:opacity-50',
           tracks[size],
         )}
         defaultChecked={defaultChecked}
@@ -55,7 +55,7 @@ export function AppSwitch({
       >
         <SwitchPrimitive.Thumb
           className={cn(
-            'block translate-x-0 rounded-full bg-background shadow-sm transition-transform',
+            'block translate-x-0 rounded-full bg-primary-foreground shadow-sm transition-transform',
             thumbs[size],
           )}
         />

@@ -959,6 +959,7 @@ function AdditionalComponentDemo({
             <AppStatCard
               icon={<ReceiptText />}
               label="Compact transactions"
+              tone="info"
               value="248"
               variant="compact"
             />

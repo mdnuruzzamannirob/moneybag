@@ -89,7 +89,7 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
+                className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
                 href="/register"
               >
                 Start your 14-day trial <ArrowRight className="size-4" />
@@ -375,7 +375,7 @@ function FamilyCard() {
           <p className="text-xs text-muted-foreground">Settle up</p>
           <p className="text-sm font-semibold">Jordan → Amelia</p>
         </div>
-        <span className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm px-3 py-2 text-xs font-semibold">Settle $48.50</span>
+        <span className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm px-3 py-2 text-xs font-semibold">Settle $48.50</span>
       </div>
     </div>
   );

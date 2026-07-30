@@ -30,7 +30,7 @@ export function AppRangeSlider({
       </div>
       <input
         aria-label={label}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
+        className="ui-slider-thumb h-2 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
         max={max}
         min={min}
         onChange={(event) => {

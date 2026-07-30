@@ -22,7 +22,7 @@ export function AppTabs({
       >
         {items.map((item) => (
           <TabsTrigger
-            className="h-8! min-w-0 rounded-sm px-3 text-sm leading-none data-active:bg-primary/10! data-active:text-primary data-active:shadow-xs"
+            className="ui-active-gradient h-8! min-w-0 rounded-sm px-3 text-sm leading-none"
             disabled={item.disabled}
             key={item.value}
             value={item.value}

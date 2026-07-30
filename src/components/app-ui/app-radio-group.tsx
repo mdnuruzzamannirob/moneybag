@@ -21,7 +21,7 @@ export function AppRadioGroup({
           key={option.value}
         >
           <RadioGroupItem
-            className="mt-0.5 border-border bg-card"
+            className="ui-checked-gradient mt-0.5 border-border bg-card data-checked:border-0! focus-visible:border-0! focus-visible:ring-0"
             disabled={option.disabled}
             value={option.value}
           />

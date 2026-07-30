@@ -46,6 +46,7 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -80,13 +81,24 @@
   --color-input: #e2e8f0;
 
   --color-success: #10b981;
+  --color-success-hover: #059669;
   --color-success-soft: #d1fae5;
   --color-warning: #f59e0b;
+  --color-warning-hover: #d97706;
   --color-warning-soft: #fef3c7;
   --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
   --color-danger-soft: #fee2e2;
   --color-info: #3b82f6;
+  --color-info-hover: #2563eb;
   --color-info-soft: #dbeafe;
+
+  --shadow-primary-control: 0 4px 10px -6px rgb(99 102 241 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
+  --shadow-success-control: 0 4px 10px -6px rgb(16 185 129 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
+  --shadow-warning-control: 0 4px 10px -6px rgb(245 158 11 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
+  --shadow-danger-control: 0 4px 10px -6px rgb(239 68 68 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
+  --shadow-info-control: 0 4px 10px -6px rgb(59 130 246 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
+  --shadow-slider-thumb: 0 2px 6px rgb(99 102 241 / 45%), inset 0 1px 0 rgb(255 255 255 / 25%);
 
   --background: var(--color-bg);
   --foreground: var(--color-text);
@@ -96,6 +108,7 @@
   --popover-foreground: var(--color-text);
   --primary: var(--color-primary);
   --primary-foreground: var(--color-primary-fg);
+  --primary-hover: var(--color-primary-hover);
   --secondary: var(--color-surface-2);
   --secondary-foreground: var(--color-text);
   --muted: var(--color-surface-2);
@@ -188,13 +201,24 @@
   --color-input: #34343c;
 
   --color-success: #4ade80;
+  --color-success-hover: #22c55e;
   --color-success-soft: #052e16;
   --color-warning: #fbbf24;
+  --color-warning-hover: #f59e0b;
   --color-warning-soft: #422006;
   --color-danger: #f87171;
+  --color-danger-hover: #ef4444;
   --color-danger-soft: #450a0a;
   --color-info: #60a5fa;
+  --color-info-hover: #3b82f6;
   --color-info-soft: #172554;
+
+  --shadow-primary-control: 0 4px 10px -6px rgb(99 102 241 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
+  --shadow-success-control: 0 4px 10px -6px rgb(34 197 94 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
+  --shadow-warning-control: 0 4px 10px -6px rgb(245 158 11 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
+  --shadow-danger-control: 0 4px 10px -6px rgb(239 68 68 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
+  --shadow-info-control: 0 4px 10px -6px rgb(59 130 246 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
+  --shadow-slider-thumb: 0 2px 6px rgb(99 102 241 / 55%), inset 0 1px 0 rgb(255 255 255 / 30%);
 
   --background: var(--color-bg);
   --foreground: var(--color-text);
@@ -204,6 +228,7 @@
   --popover-foreground: var(--color-text);
   --primary: var(--color-primary);
   --primary-foreground: var(--color-primary-fg);
+  --primary-hover: var(--color-primary-hover);
   --secondary: var(--color-surface-2);
   --secondary-foreground: var(--color-text);
   --muted: var(--color-surface-2);
@@ -275,9 +300,68 @@
 }
 
 @layer utilities {
+  .ui-gradient-primary {
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-hover));
+    color: var(--primary-foreground);
+    box-shadow: var(--shadow-primary-control);
+  }
+
+  .ui-gradient-success {
+    background: linear-gradient(to bottom, var(--color-success), var(--color-success-hover));
+    color: white;
+    box-shadow: var(--shadow-success-control);
+  }
+
+  .ui-gradient-danger {
+    background: linear-gradient(to bottom, var(--color-danger), var(--color-danger-hover));
+    color: white;
+    box-shadow: var(--shadow-danger-control);
+  }
+
+  .ui-gradient-info {
+    background: linear-gradient(to bottom, var(--color-info), var(--color-info-hover));
+    color: white;
+    box-shadow: var(--shadow-info-control);
+  }
+
+  .ui-gradient-warning {
+    background: linear-gradient(to bottom, var(--color-warning), var(--color-warning-hover));
+    color: white;
+    box-shadow: var(--shadow-warning-control);
+  }
+
+  .ui-checked-gradient[data-checked],
+  .ui-active-gradient[data-state='on'],
+  .ui-active-gradient[data-active] {
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-hover));
+    color: var(--primary-foreground);
+    box-shadow: var(--shadow-primary-control);
+  }
+
+  .ui-slider-thumb::-webkit-slider-thumb {
+    width: 1rem;
+    height: 1rem;
+    appearance: none;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    box-shadow: var(--shadow-slider-thumb);
+  }
+
+  .ui-slider-thumb::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    appearance: none;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    box-shadow: var(--shadow-slider-thumb);
+  }
+
   .font-sans {
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }
+
   .font-ubuntu {
     font-family: var(--font-ubuntu), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }

@@ -93,7 +93,7 @@ function SiteHeader({
             Sign in
           </Link>
           <Link
-            className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold"
+            className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm gap-1.5 px-3.5 py-2 text-sm font-semibold"
             href="/register"
           >
             Get started <ArrowRight className="size-4" />
@@ -154,7 +154,11 @@ function SiteFooter() {
               interface.
             </p>
             <div className="mt-5 flex gap-3">
-              <a className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-[transform,color,border-color] hover:-translate-y-px hover:border-primary hover:text-primary" href="#" aria-label="MoneyBag on GitHub">
+              <a
+                className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-[transform,color,border-color] hover:-translate-y-px hover:border-primary hover:text-primary"
+                href="#"
+                aria-label="MoneyBag on GitHub"
+              >
                 <Mail className="size-4" />
               </a>
               <a

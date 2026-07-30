@@ -11,7 +11,7 @@ export function AppStatCard({
   change?: ReactNode;
   icon: ReactNode;
   label: ReactNode;
-  tone?: 'primary' | 'success' | 'warning' | 'danger';
+  tone?: 'primary' | 'success' | 'warning' | 'danger' | 'info';
   variant?: 'default' | 'compact' | 'featured';
   value: ReactNode;
 }) {
@@ -22,7 +22,7 @@ export function AppStatCard({
         {
           default: 'bg-card p-4',
           compact: 'bg-card p-3',
-          featured: 'border-primary bg-primary text-primary-foreground p-5',
+          featured: 'border-primary ui-gradient-primary p-5',
         }[variant],
       )}
     >
@@ -34,19 +34,23 @@ export function AppStatCard({
               primary:
                 variant === 'featured'
                   ? 'bg-primary-foreground/15 text-primary-foreground'
-                  : 'bg-primary/10 text-primary',
+                  : 'ui-gradient-primary',
               success:
                 variant === 'featured'
                   ? 'bg-primary-foreground/15 text-primary-foreground'
-                  : 'bg-success-soft text-success',
+                  : 'ui-gradient-success',
               warning:
                 variant === 'featured'
                   ? 'bg-primary-foreground/15 text-primary-foreground'
-                  : 'bg-warning-soft text-warning',
+                  : 'ui-gradient-warning',
               danger:
                 variant === 'featured'
                   ? 'bg-primary-foreground/15 text-primary-foreground'
-                  : 'bg-danger-soft text-danger',
+                  : 'ui-gradient-danger',
+              info:
+                variant === 'featured'
+                  ? 'bg-primary-foreground/15 text-primary-foreground'
+                  : 'ui-gradient-info',
             }[tone],
           )}
         >

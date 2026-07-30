@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { LoaderCircle } from 'lucide-react';
 export type AppButtonProps = React.ComponentProps<typeof Button> & {
   loading?: boolean;
-  tone?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success';
+  tone?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'info';
 };
 export function AppButton({
   children,
@@ -14,7 +14,8 @@ export function AppButton({
   tone = 'primary',
   ...props
 }: AppButtonProps) {
-  const variant = tone === 'secondary' ? 'outline' : tone === 'ghost' ? 'ghost' : 'default';
+  const variant =
+    tone === 'secondary' ? 'outline' : tone === 'ghost' || tone === 'primary' ? 'ghost' : 'default';
   const dimensions =
     size === 'xs'
       ? '!h-7 !px-2 text-xs'
@@ -38,13 +39,15 @@ export function AppButton({
         dimensions,
         'rounded-md bg-clip-border font-medium transition-[transform,background-color,border-color,box-shadow,filter] active:scale-[.98]',
         tone === 'primary' &&
-          'border-transparent! bg-linear-to-b from-primary to-primary-hover text-primary-foreground shadow-sm hover:-translate-y-px hover:border-transparent! hover:brightness-[.98] hover:shadow-sm',
+          'border-0! bg-clip-border ui-gradient-primary focus-visible:border-0! focus-visible:ring-0 hover:brightness-[.98] hover:shadow-sm',
         tone === 'secondary' && 'border-border! bg-card hover:border-border! hover:bg-secondary',
         tone === 'ghost' && 'border-transparent! bg-transparent hover:bg-muted',
         tone === 'success' &&
-          'border-success! bg-success text-white hover:border-success! hover:bg-success/90',
+          'border-0! ui-gradient-success hover:brightness-[.98] hover:shadow-sm',
         tone === 'danger' &&
-          'border-danger! bg-danger text-white hover:border-danger! hover:bg-danger/90 focus-visible:border-danger! focus-visible:ring-danger/20',
+          'border-0! ui-gradient-danger focus-visible:border-0! focus-visible:ring-0 hover:brightness-[.98] hover:shadow-sm',
+        tone === 'info' &&
+          'border-0! ui-gradient-info focus-visible:border-0! focus-visible:ring-0 hover:brightness-[.98] hover:shadow-sm',
         className,
       )}
       disabled={props.disabled || loading}
