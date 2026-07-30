@@ -36,8 +36,9 @@ export function AppButton({
       {...props}
       className={cn(
         dimensions,
-        'rounded-md bg-clip-border font-medium transition-[transform,background-color,border-color] active:scale-[.98]',
-        tone === 'primary' && 'border-primary! hover:border-primary! hover:bg-primary/90',
+        'rounded-md bg-clip-border font-medium transition-[transform,background-color,border-color,box-shadow,filter] active:scale-[.98]',
+        tone === 'primary' &&
+          'border-transparent! bg-linear-to-b from-primary to-primary-hover text-primary-foreground shadow-sm hover:-translate-y-px hover:border-transparent! hover:brightness-[.98] hover:shadow-sm',
         tone === 'secondary' && 'border-border! bg-card hover:border-border! hover:bg-secondary',
         tone === 'ghost' && 'border-transparent! bg-transparent hover:bg-muted',
         tone === 'success' &&

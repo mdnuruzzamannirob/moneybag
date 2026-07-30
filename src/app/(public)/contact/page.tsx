@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Get in touch with the MoneyBag team.',
 };
 const inputClass =
-  'mt-2 w-full rounded-xl border border-border bg-background px-3.5 py-3 text-sm outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10';
+  'mt-2 w-full rounded-md border border-border bg-background px-3.5 py-3 text-sm outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10';
 
 export default function ContactPage() {
   return (
@@ -18,7 +18,7 @@ export default function ContactPage() {
         icon={<MessageSquare className="size-3.5" />}
         title={
           <>
-            Let’s talk about <span className="public-text-gradient">your money goals.</span>
+            Let’s talk about <span className="text-primary">your money goals.</span>
           </>
         }
         description="Whether you need product help or want to share an idea, the right person on our team will get back to you."
@@ -34,7 +34,7 @@ export default function ContactPage() {
             const I = Icon as typeof Mail;
             return (
               <div
-                className="flex gap-4 rounded-2xl border border-border bg-card p-5"
+                className="flex gap-4 rounded-lg border border-border bg-card p-5"
                 key={title as string}
               >
                 <FeatureIcon
@@ -53,7 +53,7 @@ export default function ContactPage() {
             );
           })}
         </div>
-        <form className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8 lg:col-span-3">
+        <form className="rounded-lg border border-border bg-card p-6 shadow-sm sm:p-8 lg:col-span-3">
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="text-sm font-medium">
               First name
@@ -95,7 +95,7 @@ export default function ContactPage() {
             />
           </label>
           <button
-            className="public-button-primary mt-6 px-5 py-3 text-sm font-semibold"
+            className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm mt-6 px-5 py-3 text-sm font-semibold"
             type="submit"
           >
             Send message

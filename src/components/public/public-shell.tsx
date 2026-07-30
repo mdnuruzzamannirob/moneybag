@@ -30,7 +30,7 @@ function isActive(pathname: string, href: string) {
 export function PublicLogo() {
   return (
     <Link className="group inline-flex items-center gap-2.5" href="/">
-      <span className="grid size-9 place-items-center rounded-xl bg-linear-to-br from-primary to-brand-accent text-white shadow-sm">
+      <span className="grid size-9 place-items-center rounded-md bg-linear-to-br from-primary to-brand-accent text-white shadow-sm">
         <Wallet className="size-5" aria-hidden="true" />
       </span>
       <span className="font-ubuntu text-lg font-bold tracking-tight">MoneyBag</span>
@@ -46,7 +46,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
     return children;
 
   return (
-    <div className="public-site flex min-h-dvh flex-col overflow-x-clip">
+    <div className="flex min-h-dvh flex-col overflow-x-clip bg-background">
       <SiteHeader pathname={pathname} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <main className="flex-1">{children}</main>
       <SiteFooter />
@@ -64,7 +64,7 @@ function SiteHeader({
   setMenuOpen: (open: boolean) => void;
 }) {
   return (
-    <header className="public-glass sticky top-0 z-50 border-b border-border/70">
+    <header className="sticky top-0 z-50 border-b border-border/70 bg-card/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <PublicLogo />
         <nav
@@ -74,7 +74,11 @@ function SiteHeader({
           {navigation.map((item) => (
             <Link
               key={item.href}
-              className={cn('public-nav-link', isActive(pathname, item.href) && 'is-active')}
+              className={cn(
+                'relative text-muted-foreground transition-colors hover:text-foreground',
+                isActive(pathname, item.href) &&
+                  'text-primary hover:text-primary after:absolute after:inset-x-0 after:-bottom-[7px] after:h-0.5 after:rounded-full after:bg-primary',
+              )}
               href={item.href}
             >
               {item.label}
@@ -83,20 +87,20 @@ function SiteHeader({
         </nav>
         <div className="flex items-center gap-2">
           <Link
-            className="public-button-secondary hidden px-3.5 py-2 text-sm font-medium sm:inline-flex"
+            className="inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs hidden px-3.5 py-2 text-sm font-medium sm:inline-flex"
             href="/login"
           >
             Sign in
           </Link>
           <Link
-            className="public-button-primary inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold"
+            className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold"
             href="/register"
           >
             Get started <ArrowRight className="size-4" />
           </Link>
           <button
             type="button"
-            className="grid size-10 place-items-center rounded-xl text-muted-foreground hover:bg-secondary md:hidden"
+            className="grid size-10 place-items-center rounded-md text-muted-foreground hover:bg-secondary md:hidden"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -150,11 +154,11 @@ function SiteFooter() {
               interface.
             </p>
             <div className="mt-5 flex gap-3">
-              <a className="public-social" href="#" aria-label="MoneyBag on GitHub">
+              <a className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-[transform,color,border-color] hover:-translate-y-px hover:border-primary hover:text-primary" href="#" aria-label="MoneyBag on GitHub">
                 <Mail className="size-4" />
               </a>
               <a
-                className="public-social"
+                className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-[transform,color,border-color] hover:-translate-y-px hover:border-primary hover:text-primary"
                 href="mailto:hello@moneybag.app"
                 aria-label="Email MoneyBag"
               >

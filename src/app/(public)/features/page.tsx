@@ -110,7 +110,7 @@ export default function FeaturesPage() {
         title={
           <>
             Everything your money needs.{' '}
-            <span className="public-text-gradient">Nothing it doesn’t.</span>
+            <span className="text-primary">Nothing it doesn’t.</span>
           </>
         }
         description="A focused set of tools for tracking, planning, saving, and sharing—designed to stay clear as your financial life grows."
@@ -144,7 +144,7 @@ export default function FeaturesPage() {
               {group.items.map(([Icon, title, text], index) => {
                 const I = Icon as typeof LockKeyhole;
                 return (
-                  <article className="public-card p-6" key={title as string}>
+                  <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md p-6" key={title as string}>
                     <FeatureIcon
                       tone={
                         ['primary', 'accent', 'success', 'info'][index] as

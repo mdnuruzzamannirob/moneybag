@@ -82,7 +82,7 @@ export default function FaqPage() {
       />
       <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-20 sm:px-6 lg:grid-cols-2 lg:px-8">
         {sections.map(({ icon: Icon, title, items }, index) => (
-          <div className="rounded-3xl border border-border bg-card p-6 sm:p-7" key={title}>
+          <div className="rounded-lg border border-border bg-card p-6 sm:p-7" key={title}>
             <FeatureIcon
               tone={
                 ['primary', 'accent', 'violet', 'success'][index] as

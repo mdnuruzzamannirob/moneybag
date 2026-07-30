@@ -102,7 +102,7 @@ export default function PricingPage() {
         {plans.map((plan) => (
           <article
             className={cn(
-              'relative flex flex-col rounded-2xl border bg-card p-6 transition hover:-translate-y-1 hover:shadow-xl',
+              'relative flex flex-col rounded-lg border bg-card p-6 transition hover:-translate-y-1 hover:shadow-xl',
               plan.featured
                 ? 'border-2 border-primary/35 bg-linear-to-b from-card to-primary/5 shadow-lg'
                 : 'border-border',
@@ -140,10 +140,10 @@ export default function PricingPage() {
             <Link
               href="/register"
               className={cn(
-                'mt-6 block rounded-xl py-2.5 text-center text-sm font-semibold',
+                'mt-6 block rounded-md py-2.5 text-center text-sm font-semibold',
                 plan.name === 'Free' || plan.name === 'Unlimited'
-                  ? 'public-button-secondary'
-                  : 'public-button-primary',
+                  ? 'inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs'
+                  : 'inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm',
               )}
             >
               {plan.action}
@@ -170,7 +170,7 @@ export default function PricingPage() {
       <section className="mt-20">
         <h2 className="text-center font-ubuntu text-3xl font-bold tracking-tight">Compare plans</h2>
         <p className="mt-2 text-center text-muted-foreground">A quick look at what is included.</p>
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card">
+        <div className="mt-8 overflow-x-auto rounded-lg border border-border bg-card">
           <table className="w-full min-w-3xl text-sm">
             <thead className="bg-secondary text-xs uppercase tracking-wider text-muted-foreground">
               <tr>
@@ -233,7 +233,7 @@ export default function PricingPage() {
               'Payments are handled by a PCI-compliant payment provider. MoneyBag never stores your full card details.',
             ],
           ].map(([question, answer]) => (
-            <details className="group rounded-2xl border border-border bg-card p-5" key={question}>
+            <details className="group rounded-lg border border-border bg-card p-5" key={question}>
               <summary className="cursor-pointer font-medium marker:hidden">{question}</summary>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{answer}</p>
             </details>

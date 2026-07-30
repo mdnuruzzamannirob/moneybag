@@ -18,7 +18,7 @@ export default function BlogPage() {
         icon={<BookOpen className="size-3.5" />}
         title={
           <>
-            Ideas for a <span className="public-text-gradient">calmer money life.</span>
+            Ideas for a <span className="text-primary">calmer money life.</span>
           </>
         }
         description="Practical, judgment-free guides for building better money habits—alone or together."
@@ -26,9 +26,9 @@ export default function BlogPage() {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <Link
           href={`/blog/${featured.slug}`}
-          className="group grid overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl lg:grid-cols-2"
+          className="group grid overflow-hidden rounded-lg border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl lg:grid-cols-2"
         >
-          <div className={`public-dots relative min-h-72 bg-linear-to-br ${featured.color}`}>
+          <div className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] relative min-h-72 bg-linear-to-br ${featured.color}`}>
             <div className="absolute inset-0 bg-black/5" />
             <div className="absolute bottom-6 left-6 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800">
               Featured article
@@ -54,9 +54,9 @@ export default function BlogPage() {
         </Link>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {posts.map((post) => (
-            <article className="public-card overflow-hidden" key={post.slug}>
+            <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md overflow-hidden" key={post.slug}>
               <Link href={`/blog/${post.slug}`}>
-                <div className={`public-dots h-44 bg-linear-to-br ${post.color}`} />
+                <div className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] h-44 bg-linear-to-br ${post.color}`} />
                 <div className="p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                     {post.category}

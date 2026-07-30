@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 export function Eyebrow({ children, icon }: { children: ReactNode; icon?: ReactNode }) {
   return (
-    <span className="public-eyebrow">
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[11px] font-semibold tracking-[0.01em] text-primary">
       {icon}
       {children}
     </span>
@@ -26,8 +26,8 @@ export function PageHero({
   compact?: boolean;
 }) {
   return (
-    <section className={cn('public-page-hero', compact && 'pb-10')}>
-      <div className="public-dots absolute inset-0 opacity-45" />
+    <section className={cn('relative overflow-hidden pb-14 pt-16', compact && 'pb-10')}>
+      <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-45" />
       <div className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
         <Eyebrow icon={icon}>{eyebrow}</Eyebrow>
         <h1 className="mt-4 font-ubuntu text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
@@ -72,8 +72,8 @@ export function TrialCta({
 }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="public-cta relative overflow-hidden rounded-3xl px-6 py-12 text-center sm:px-12 sm:py-14">
-        <div className="public-dots absolute inset-0 opacity-20" />
+      <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-[#6366f1] via-[#8b5cf6] to-[#ec4899] px-6 py-12 text-center sm:px-12 sm:py-14">
+        <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-20" />
         <div className="relative">
           <h2 className="font-ubuntu text-3xl font-bold tracking-tight text-white sm:text-4xl">
             {title}
@@ -81,7 +81,7 @@ export function TrialCta({
           <p className="mx-auto mt-3 max-w-xl text-white/85">{description}</p>
           <Link
             href="/register"
-            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-primary shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            className="mt-7 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-primary shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
           >
             Get started <ArrowRight className="size-4" />
           </Link>
@@ -120,7 +120,7 @@ export function FeatureIcon({
     violet: 'bg-violet-100 text-violet-600 dark:bg-violet-950 dark:text-violet-300',
   };
   return (
-    <span className={cn('grid size-11 place-items-center rounded-xl', tones[tone])}>
+    <span className={cn('grid size-11 place-items-center rounded-md', tones[tone])}>
       {children}
     </span>
   );

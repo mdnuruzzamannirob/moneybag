@@ -37,7 +37,7 @@ export default function AboutPage() {
         icon={<Sparkles className="size-3.5" />}
         title={
           <>
-            Calmer money starts with <span className="public-text-gradient">clearer tools.</span>
+            Calmer money starts with <span className="text-primary">clearer tools.</span>
           </>
         }
         description="MoneyBag exists to make everyday finances understandable—for one person, a couple, or a whole household."
@@ -56,8 +56,8 @@ export default function AboutPage() {
               makes sense.
             </p>
           </div>
-          <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-indigo-500 via-violet-500 to-pink-500 p-8 text-white shadow-xl sm:p-10">
-            <div className="public-dots absolute inset-0 opacity-20" />
+          <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-indigo-500 via-violet-500 to-pink-500 p-8 text-white shadow-xl sm:p-10">
+            <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-20" />
             <div className="relative">
               <p className="text-sm font-medium text-white/75">Our north star</p>
               <blockquote className="mt-5 font-ubuntu text-3xl font-bold leading-tight sm:text-4xl">
@@ -74,7 +74,7 @@ export default function AboutPage() {
           {values.map(([Icon, title, text], index) => {
             const I = Icon as typeof Heart;
             return (
-              <article className="public-card p-6" key={title as string}>
+              <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md p-6" key={title as string}>
                 <FeatureIcon
                   tone={
                     ['primary', 'accent', 'success', 'violet'][index] as

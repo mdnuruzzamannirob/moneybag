@@ -76,12 +76,12 @@ export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="public-dots absolute inset-0 opacity-50" />
+        <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-50" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-24 pt-16 sm:px-6 lg:grid-cols-12 lg:px-8 lg:pb-28 lg:pt-24">
           <div className="lg:col-span-7">
             <Eyebrow icon={<Sparkles className="size-3.5" />}>New · Family sharing on Pro</Eyebrow>
             <h1 className="mt-5 max-w-3xl font-ubuntu text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Take control of your money. <span className="public-text-gradient">Together.</span>
+              Take control of your money. <span className="text-primary">Together.</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
               MoneyBag is a personal and family finance platform. Track wallets, transactions,
@@ -89,13 +89,13 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                className="public-button-primary inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
+                className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
                 href="/register"
               >
                 Start your 14-day trial <ArrowRight className="size-4" />
               </Link>
               <Link
-                className="public-button-secondary inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
+                className="inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
                 href="/pricing"
               >
                 <PlayCircle className="size-4" /> See pricing
@@ -138,7 +138,7 @@ export default function HomePage() {
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ icon: Icon, tone, title, text }) => (
-            <article className="public-card p-6" key={title}>
+            <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md p-6" key={title}>
               <FeatureIcon tone={tone}>
                 <Icon className="size-5" />
               </FeatureIcon>
@@ -184,7 +184,7 @@ export default function HomePage() {
               ],
             ].map(([step, title, text]) => (
               <div className="relative" key={step}>
-                <span className="grid size-14 place-items-center rounded-2xl bg-primary text-lg font-bold text-white shadow-md">
+                <span className="grid size-14 place-items-center rounded-lg bg-primary text-lg font-bold text-white shadow-md">
                   {step}
                 </span>
                 <h3 className="mt-5 font-ubuntu text-lg font-semibold">{title}</h3>
@@ -266,7 +266,7 @@ export default function HomePage() {
             ].map(([Icon, title, text]) => {
               const I = Icon as typeof Lock;
               return (
-                <article className="rounded-2xl border border-border p-5" key={title as string}>
+                <article className="rounded-lg border border-border p-5" key={title as string}>
                   <I className="size-5 text-primary" />
                   <h3 className="mt-3 font-semibold">{title as string}</h3>
                   <p className="mt-1 text-sm leading-6 text-muted-foreground">{text as string}</p>
@@ -284,7 +284,7 @@ export default function HomePage() {
 function DashboardPreview() {
   return (
     <div className="relative">
-      <div className="relative rounded-2xl border border-border bg-card p-5 shadow-xl sm:p-6">
+      <div className="relative rounded-lg border border-border bg-card p-5 shadow-xl sm:p-6">
         <div className="flex items-start justify-between">
           <div>
             <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -318,21 +318,21 @@ function DashboardPreview() {
           />
         </svg>
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-xl bg-secondary p-3">
+          <div className="rounded-md bg-secondary p-3">
             <p className="text-xs text-muted-foreground">Income</p>
             <p className="mt-0.5 font-semibold text-success">+$4,200</p>
           </div>
-          <div className="rounded-xl bg-secondary p-3">
+          <div className="rounded-md bg-secondary p-3">
             <p className="text-xs text-muted-foreground">Expense</p>
             <p className="mt-0.5 font-semibold text-danger">−$2,180</p>
           </div>
         </div>
       </div>
-      <div className="absolute -left-4 -top-7 -rotate-3 rounded-xl border border-border bg-card p-3 shadow-lg sm:-left-7">
+      <div className="absolute -left-4 -top-7 -rotate-3 rounded-md border border-border bg-card p-3 shadow-lg sm:-left-7">
         <p className="text-[11px] text-muted-foreground">Main wallet</p>
         <p className="text-sm font-semibold">$8,420.10</p>
       </div>
-      <div className="absolute -bottom-7 -right-2 rotate-2 rounded-xl border border-border bg-card p-3 shadow-lg">
+      <div className="absolute -bottom-7 -right-2 rotate-2 rounded-md border border-border bg-card p-3 shadow-lg">
         <p className="text-[11px] text-muted-foreground">Groceries budget</p>
         <p className="text-sm font-semibold">$320 / $500</p>
         <div className="mt-2 h-1.5 w-44 overflow-hidden rounded-full bg-secondary">
@@ -345,7 +345,7 @@ function DashboardPreview() {
 
 function FamilyCard() {
   return (
-    <div className="rounded-3xl border border-border bg-card p-6 shadow-md">
+    <div className="rounded-lg border border-border bg-card p-6 shadow-md">
       <div className="flex justify-between">
         <p className="text-sm font-semibold">Family balances</p>
         <span className="text-xs text-muted-foreground">This month</span>
@@ -370,12 +370,12 @@ function FamilyCard() {
           </li>
         ))}
       </ul>
-      <div className="mt-5 flex items-center justify-between rounded-xl bg-secondary p-3">
+      <div className="mt-5 flex items-center justify-between rounded-md bg-secondary p-3">
         <div>
           <p className="text-xs text-muted-foreground">Settle up</p>
           <p className="text-sm font-semibold">Jordan → Amelia</p>
         </div>
-        <span className="public-button-primary px-3 py-2 text-xs font-semibold">Settle $48.50</span>
+        <span className="inline-flex items-center justify-center rounded-md bg-linear-to-b from-[#6366f1] to-[#4f46e5] text-white shadow-[0_4px_10px_-6px_rgb(99_102_241_/_45%),inset_0_1px_0_rgb(255_255_255_/_14%)] transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm px-3 py-2 text-xs font-semibold">Settle $48.50</span>
       </div>
     </div>
   );
