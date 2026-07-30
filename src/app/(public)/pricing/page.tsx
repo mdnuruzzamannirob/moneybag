@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Check, CreditCard, Mail, RefreshCw, ShieldCheck, Tag, X } from 'lucide-react';
 import { PageHero } from '@/components/public/public-ui';
+import { AppButton } from '@/components/app-ui';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -102,7 +103,7 @@ export default function PricingPage() {
         {plans.map((plan) => (
           <article
             className={cn(
-              'relative flex flex-col rounded-lg border bg-card p-6 transition hover:-translate-y-1 hover:shadow-xl',
+              'relative flex flex-col rounded-lg border bg-card p-6',
               plan.featured
                 ? 'border-2 border-primary/35 bg-linear-to-b from-card to-primary/5 shadow-lg'
                 : 'border-border',
@@ -137,16 +138,13 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/register"
-              className={cn(
-                'mt-6 block rounded-md py-2.5 text-center text-sm font-semibold',
-                plan.name === 'Free' || plan.name === 'Unlimited'
-                  ? 'inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs'
-                  : 'ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm',
-              )}
-            >
-              {plan.action}
+            <Link className="block" href="/register">
+              <AppButton
+                className="mt-6 w-full"
+                tone={plan.name === 'Free' || plan.name === 'Unlimited' ? 'secondary' : 'primary'}
+              >
+                {plan.action}
+              </AppButton>
             </Link>
           </article>
         ))}

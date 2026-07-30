@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: PageProps<'/blog/[slug]'>
           <h2 className="font-ubuntu text-2xl font-bold">Keep reading</h2>
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
             {related.map((item) => (
-              <Link className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md p-6" href={`/blog/${item.slug}`} key={item.slug}>
+              <Link className="rounded-lg border border-border bg-card p-6" href={`/blog/${item.slug}`} key={item.slug}>
                 <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                   {item.category}
                 </p>

@@ -4,12 +4,11 @@ import { Camera, CheckCircle2, Eye, EyeOff, KeyRound, ShieldCheck } from 'lucide
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { AppButton } from '@/components/app-ui';
 import { SettingsPanel } from '@/components/user/settings-panel';
 
 const inputClass =
   'h-10 w-full rounded-md border border-input bg-card px-3 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/20';
-const primaryButtonClass =
-  'h-9 rounded-md border-0 bg-primary px-3 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90';
 const outlineButtonClass =
   'h-9 rounded-md border-border bg-transparent px-3 text-sm font-medium text-muted-foreground shadow-none hover:bg-muted hover:text-foreground';
 
@@ -88,7 +87,7 @@ function Profile() {
         </label>
       </div>
       <div className="mt-7 flex justify-end border-t border-border pt-5 max-sm:[&_button]:w-full">
-        <Button className={primaryButtonClass}>Save changes</Button>
+        <AppButton size="sm">Save changes</AppButton>
       </div>
     </Card>
   );
@@ -222,7 +221,7 @@ function Security() {
           </label>
         </div>
         <div className="mt-5 flex justify-end max-sm:[&_button]:w-full">
-          <Button className={primaryButtonClass}>Update password</Button>
+          <AppButton size="sm">Update password</AppButton>
         </div>
       </Card>
       <Card title="Recovery">

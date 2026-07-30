@@ -26,7 +26,7 @@ export default function BlogPage() {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <Link
           href={`/blog/${featured.slug}`}
-          className="group grid overflow-hidden rounded-lg border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl lg:grid-cols-2"
+          className="group grid overflow-hidden rounded-lg border border-border bg-card shadow-sm lg:grid-cols-2"
         >
           <div className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] relative min-h-72 bg-linear-to-br ${featured.color}`}>
             <div className="absolute inset-0 bg-black/5" />
@@ -54,7 +54,7 @@ export default function BlogPage() {
         </Link>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {posts.map((post) => (
-            <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md overflow-hidden" key={post.slug}>
+            <article className="rounded-lg border border-border bg-card overflow-hidden" key={post.slug}>
               <Link href={`/blog/${post.slug}`}>
                 <div className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] h-44 bg-linear-to-br ${post.color}`} />
                 <div className="p-6">

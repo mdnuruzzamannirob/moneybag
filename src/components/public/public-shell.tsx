@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { AppButton } from '@/components/app-ui';
 import { ArrowRight, Mail, Menu, Wallet, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -86,17 +87,13 @@ function SiteHeader({
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link
-            className="inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs hidden px-3.5 py-2 text-sm font-medium sm:inline-flex"
-            href="/login"
-          >
-            Sign in
+          <Link className="hidden sm:inline-flex" href="/login">
+            <AppButton size="sm" tone="secondary">Sign in</AppButton>
           </Link>
-          <Link
-            className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm gap-1.5 px-3.5 py-2 text-sm font-semibold"
-            href="/register"
-          >
-            Get started <ArrowRight className="size-4" />
+          <Link href="/register">
+            <AppButton size="sm">
+              Get started <ArrowRight className="size-4" />
+            </AppButton>
           </Link>
           <button
             type="button"

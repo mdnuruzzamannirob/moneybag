@@ -144,7 +144,7 @@ export default function FeaturesPage() {
               {group.items.map(([Icon, title, text], index) => {
                 const I = Icon as typeof LockKeyhole;
                 return (
-                  <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md p-6" key={title as string}>
+                  <article className="rounded-lg border border-border bg-card p-6" key={title as string}>
                     <FeatureIcon
                       tone={
                         ['primary', 'accent', 'success', 'info'][index] as

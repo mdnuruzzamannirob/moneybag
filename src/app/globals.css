@@ -99,6 +99,8 @@
   --shadow-danger-control: 0 4px 10px -6px rgb(239 68 68 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
   --shadow-info-control: 0 4px 10px -6px rgb(59 130 246 / 45%), inset 0 1px 0 rgb(255 255 255 / 14%);
   --shadow-slider-thumb: 0 2px 6px rgb(99 102 241 / 45%), inset 0 1px 0 rgb(255 255 255 / 25%);
+  --shadow-light-control: 0 4px 10px -6px rgb(15 23 42 / 35%);
+  --shadow-cta-card: 0 18px 36px -18px rgb(99 102 241 / 55%), inset 0 1px 0 rgb(255 255 255 / 20%);
 
   --background: var(--color-bg);
   --foreground: var(--color-text);
@@ -219,6 +221,8 @@
   --shadow-danger-control: 0 4px 10px -6px rgb(239 68 68 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
   --shadow-info-control: 0 4px 10px -6px rgb(59 130 246 / 55%), inset 0 1px 0 rgb(255 255 255 / 18%);
   --shadow-slider-thumb: 0 2px 6px rgb(99 102 241 / 55%), inset 0 1px 0 rgb(255 255 255 / 30%);
+  --shadow-light-control: 0 4px 10px -6px rgb(0 0 0 / 55%);
+  --shadow-cta-card: 0 18px 36px -18px rgb(99 102 241 / 65%), inset 0 1px 0 rgb(255 255 255 / 24%);
 
   --background: var(--color-bg);
   --foreground: var(--color-text);
@@ -322,6 +326,22 @@
     background: linear-gradient(to bottom, var(--color-info), var(--color-info-hover));
     color: white;
     box-shadow: var(--shadow-info-control);
+  }
+
+  .ui-light-control {
+    background: white;
+    color: var(--color-primary);
+    box-shadow: var(--shadow-light-control);
+  }
+
+  .ui-light-control:hover {
+    background: white !important;
+    color: var(--color-primary) !important;
+  }
+
+  .ui-gradient-cta-card {
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-hover));
+    box-shadow: var(--shadow-cta-card);
   }
 
   .ui-gradient-warning {

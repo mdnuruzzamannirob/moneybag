@@ -2,6 +2,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { AppButton } from '@/components/app-ui';
 
 export function Eyebrow({ children, icon }: { children: ReactNode; icon?: ReactNode }) {
   return (
@@ -72,18 +73,17 @@ export function TrialCta({
 }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-[#6366f1] via-[#8b5cf6] to-[#ec4899] px-6 py-12 text-center sm:px-12 sm:py-14">
-        <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-20" />
+      <div className="ui-gradient-cta-card relative overflow-hidden rounded-lg px-6 py-12 text-center sm:px-12 sm:py-14">
+        <div className="pointer-events-none bg-[radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] bg-size-[22px_22px] absolute inset-0 opacity-20" />
         <div className="relative">
           <h2 className="font-ubuntu text-3xl font-bold tracking-tight text-white sm:text-4xl">
             {title}
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-white/85">{description}</p>
-          <Link
-            href="/register"
-            className="mt-7 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-primary shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-          >
-            Get started <ArrowRight className="size-4" />
+          <Link href="/register">
+            <AppButton className="ui-light-control mt-7 border-0! hover:brightness-95" tone="secondary">
+              Get started <ArrowRight className="size-4" />
+            </AppButton>
           </Link>
         </div>
       </div>

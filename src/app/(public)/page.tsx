@@ -1,5 +1,11 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
+import { AppButton } from '@/components/app-ui';
+import {
+  Eyebrow,
+  FeatureIcon,
+  SectionHeading,
+  TrialCta,
+  TrustPoints,
+} from '@/components/public/public-ui';
 import {
   ArrowRight,
   BarChart3,
@@ -19,13 +25,8 @@ import {
   Wallet,
   Zap,
 } from 'lucide-react';
-import {
-  Eyebrow,
-  FeatureIcon,
-  SectionHeading,
-  TrialCta,
-  TrustPoints,
-} from '@/components/public/public-ui';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Take control of your money. Together.',
@@ -88,17 +89,15 @@ export default function HomePage() {
               budgets, and savings—then share with up to 5 family members on Pro.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
-                href="/register"
-              >
-                Start your 14-day trial <ArrowRight className="size-4" />
+              <Link href="/register">
+                <AppButton size="lg">
+                  Start your 14-day trial <ArrowRight className="size-4" />
+                </AppButton>
               </Link>
-              <Link
-                className="inline-flex items-center justify-center rounded-md border border-border bg-card text-foreground transition-[transform,box-shadow,background-color] hover:-translate-y-px hover:bg-secondary hover:shadow-xs inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold"
-                href="/pricing"
-              >
-                <PlayCircle className="size-4" /> See pricing
+              <Link href="/pricing">
+                <AppButton size="lg" tone="secondary">
+                  <PlayCircle className="size-4" /> See pricing
+                </AppButton>
               </Link>
             </div>
             <div className="mt-6">
@@ -138,7 +137,7 @@ export default function HomePage() {
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ icon: Icon, tone, title, text }) => (
-            <article className="rounded-lg border border-border bg-card transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md p-6" key={title}>
+            <article className="rounded-lg border border-border bg-card p-6" key={title}>
               <FeatureIcon tone={tone}>
                 <Icon className="size-5" />
               </FeatureIcon>
@@ -375,7 +374,9 @@ function FamilyCard() {
           <p className="text-xs text-muted-foreground">Settle up</p>
           <p className="text-sm font-semibold">Jordan → Amelia</p>
         </div>
-        <span className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm px-3 py-2 text-xs font-semibold">Settle $48.50</span>
+        <span className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm px-3 py-2 text-xs font-semibold">
+          Settle $48.50
+        </span>
       </div>
     </div>
   );
