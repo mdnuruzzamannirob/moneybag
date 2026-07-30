@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MoneyBag — Personal & Family Finance</title>
+<meta name="description" content="Take control of your finances. Track income, expenses, budgets, and savings. Share with family. 14-day free Pro trial." />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: { DEFAULT: '#6366f1', hover: '#4f46e5', soft: '#eef2ff' },
+          accent: { DEFAULT: '#ec4899', soft: '#fce7f3' },
+          bg: '#fafafb',
+          surface: { DEFAULT: '#ffffff', 2: '#f4f4f7' },
+          text: { DEFAULT: '#0f172a', muted: '#64748b' },
+          border: '#e2e8f0',
+          success: { DEFAULT: '#10b981', soft: '#d1fae5' },
+          warning: { DEFAULT: '#f59e0b', soft: '#fef3c7' },
+          danger:  { DEFAULT: '#ef4444', soft: '#fee2e2' },
+          info:    { DEFAULT: '#3b82f6', soft: '#dbeafe' }
+        },
+        fontFamily: {
+          sans: ['"Ubuntu Sans"', '"Ubuntu"', 'system-ui', 'sans-serif'],
+          display: ['"Ubuntu"', 'system-ui', 'sans-serif'],
+          mono: ['"Ubuntu Mono"', 'ui-monospace', 'monospace']
+        },
+        boxShadow: {
+          'soft': '0 1px 2px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.06)',
+          'card': '0 1px 2px rgba(15,23,42,0.05), 0 2px 8px rgba(15,23,42,0.04)',
+          'lift': '0 8px 24px rgba(15,23,42,0.08), 0 20px 48px rgba(15,23,42,0.10)',
+          'glow': '0 0 0 1px rgba(99,102,241,0.15), 0 8px 24px -8px rgba(99,102,241,0.35)',
+          'glow-accent': '0 0 0 1px rgba(236,72,153,0.15), 0 8px 24px -8px rgba(236,72,153,0.35)'
+        }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Sans:wght@400;500;600;700&family=Ubuntu+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #6366f1;
+    --color-primary-hover: #4f46e5;
+    --color-primary-soft: #eef2ff;
+    --color-accent: #ec4899;
+    --color-accent-soft: #fce7f3;
+    --color-bg: #fafafb;
+    --color-surface: #ffffff;
+    --color-surface-2: #f4f4f7;
+    --color-text: #0f172a;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+  }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+  body { font-family: 'Ubuntu Sans', 'Ubuntu', system-ui, sans-serif; background: var(--color-bg); color: var(--color-text); font-feature-settings: 'cv11', 'ss01'; }
+  h1, h2, h3, h4, h5, h6, .font-display { font-family: 'Ubuntu', system-ui, sans-serif; letter-spacing: -0.015em; }
+  .num { font-family: 'Ubuntu Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .grid-bg { background-image: linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px); background-size: 40px 40px; }
+  .dot-bg { background-image: radial-gradient(circle, rgba(99,102,241,0.18) 1px, transparent 1px); background-size: 24px 24px; }
+  .dot-bg-faint { background-image: radial-gradient(circle, rgba(15,23,42,0.08) 1px, transparent 1px); background-size: 16px 16px; }
+  .transition-base { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  .ring-focus { box-shadow: 0 0 0 4px rgba(99,102,241,0.18); }
+  /* Page transitions */
+  .page-section { animation: pageIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* Active nav link */
+  .nav-link { position: relative; }
+  .nav-link.active { color: var(--color-primary); }
+  .nav-link.active::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -22px;
+    height: 2px; background: var(--color-primary); border-radius: 2px 2px 0 0;
+  }
+  /* Prose for legal */
+  .prose h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; scroll-margin-top: 100px; font-family: 'Ubuntu', system-ui, sans-serif; letter-spacing: -0.01em; color: var(--color-text); }
+  .prose h3 { font-size: 1.0625rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; font-family: 'Ubuntu', system-ui, sans-serif; color: var(--color-text); }
+  .prose p { color: #475569; line-height: 1.75; margin-bottom: 1rem; }
+  .prose ul { color: #475569; line-height: 1.75; margin-bottom: 1rem; padding-left: 1.5rem; list-style: disc; }
+  .prose ul li { margin-bottom: 0.5rem; }
+  .prose a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
+  .prose strong { color: var(--color-text); font-weight: 600; }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #fafafb; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  /* Custom checkbox */
+  .check-input { appearance: none; width: 1.125rem; height: 1.125rem; border: 1.5px solid var(--color-border); border-radius: 4px; background: white; cursor: pointer; transition: all 0.15s; position: relative; flex-shrink: 0; }
+  .check-input:hover { border-color: var(--color-primary); }
+  .check-input:checked { background: var(--color-primary); border-color: var(--color-primary); }
+  .check-input:checked::after { content: ''; position: absolute; top: 2px; left: 5px; width: 4px; height: 8px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  /* Bar chart */
+  .bar-track { background: var(--color-surface-2); border-radius: 999px; height: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  /* Mobile menu */
+  .mobile-menu { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .mobile-menu.open { transform: translateX(0); }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ========== TOP NAV (always visible) ========== -->
+<header id="app-header" class="sticky top-0 z-40 bg-white/85 backdrop-blur-lg border-b border-border transition-base">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href="#/" class="flex items-center gap-2.5 group">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-soft group-hover:shadow-glow transition-base">
+        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/>
+        </svg>
+      </div>
+      <span class="font-display font-bold text-[15px] tracking-tight">MoneyBag</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-text-muted">
+      <a href="#/" data-nav="home" class="nav-link hover:text-text transition-base">Home</a>
+      <a href="#pricing" data-nav="pricing" class="nav-link hover:text-text transition-base">Pricing</a>
+      <a href="#terms" data-nav="terms" class="nav-link hover:text-text transition-base">Terms</a>
+      <a href="#privacy" data-nav="privacy" class="nav-link hover:text-text transition-base">Privacy</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="#" class="hidden sm:inline-flex items-center px-3.5 py-2 rounded-lg text-sm font-semibold text-text hover:bg-surface-2 transition-base">Log in</a>
+      <a href="#" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-hover shadow-sm hover:shadow-md transition-base focus:outline-none focus:ring-4 focus:ring-primary/20">
+        Get Started Free
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <button id="mobile-toggle" class="md:hidden p-2 rounded-lg hover:bg-surface-2" aria-label="Menu">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-72 bg-white shadow-lift z-50 p-6 md:hidden">
+    <button id="mobile-close" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-surface-2"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="mt-12 space-y-2 text-base font-semibold">
+      <a href="#/" data-nav="home" class="block px-3 py-2.5 rounded-lg hover:bg-surface-2">Home</a>
+      <a href="#pricing" data-nav="pricing" class="block px-3 py-2.5 rounded-lg hover:bg-surface-2">Pricing</a>
+      <a href="#terms" data-nav="terms" class="block px-3 py-2.5 rounded-lg hover:bg-surface-2">Terms</a>
+      <a href="#privacy" data-nav="privacy" class="block px-3 py-2.5 rounded-lg hover:bg-surface-2">Privacy</a>
+      <div class="pt-4 border-t border-border space-y-2">
+        <a href="#" class="block px-3 py-2.5 rounded-lg text-center border border-border">Log in</a>
+        <a href="#" class="block px-3 py-2.5 rounded-lg text-center bg-primary text-white">Get Started Free</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== ROUTER OUTLET ========== -->
+<main id="app-main">
+
+<!-- ================== HOME / LANDING ================== -->
+<section id="page-home" class="page-section">
+  <!-- HERO -->
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-50"></div>
+    <div class="absolute -top-20 -left-20 w-[520px] h-[520px] bg-primary/15 rounded-full blur-3xl"></div>
+    <div class="absolute top-40 right-0 w-[420px] h-[420px] bg-accent/15 rounded-full blur-3xl"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8 pt-20 lg:pt-24 pb-16 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Left -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border text-xs font-bold text-text shadow-soft mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+          </span>
+          Your money, your control
+        </div>
+        <h1 class="font-display text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
+          Take control of your finances — <span class="bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">together.</span>
+        </h1>
+        <p class="text-lg text-text-muted leading-relaxed mb-8 max-w-xl">Track income, expenses, budgets, and savings. Share with family. Built for simplicity, designed for the long term.</p>
+        <div class="flex flex-wrap gap-3 mb-7">
+          <a href="#" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-hover shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-base focus:outline-none focus:ring-4 focus:ring-primary/20">
+            Start 14-day Free Trial
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#pricing" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-border bg-white font-semibold hover:bg-surface-2 hover:border-primary/40 transition-base">See how it works</a>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-text-muted">
+          <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>No credit card</div>
+          <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>GDPR compliant</div>
+          <div class="flex items-center gap-1.5"><svg class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>Cancel anytime</div>
+        </div>
+      </div>
+
+      <!-- Right: Mock dashboard -->
+      <div class="relative">
+        <div class="bg-white rounded-2xl border border-border p-5 shadow-lift">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <div class="text-xs text-text-muted font-semibold">Total balance</div>
+              <div class="num text-3xl font-bold tracking-tight">$ 12,450.00</div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-text-muted font-semibold">This month</div>
+              <div class="text-sm font-bold text-success flex items-center gap-1 justify-end">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                + $ 1,340.00
+              </div>
+            </div>
+          </div>
+          <div class="h-24 mb-4 flex items-end gap-1.5">
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:40%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:55%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:35%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:70%"></div>
+            <div class="flex-1 bg-primary rounded-t-md" style="height:85%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:60%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:75%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:50%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:65%"></div>
+            <div class="flex-1 bg-primary-soft rounded-t-md" style="height:80%"></div>
+            <div class="flex-1 bg-accent-soft rounded-t-md" style="height:90%"></div>
+            <div class="flex-1 bg-accent rounded-t-md" style="height:100%"></div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-2 hover:bg-primary-soft/40 transition-base">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-info-soft flex items-center justify-center">
+                  <svg class="w-4 h-4 text-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+                </div>
+                <div><div class="text-sm font-bold">Main Bank</div><div class="text-xs text-text-muted num">•• 4521</div></div>
+              </div>
+              <div class="num text-sm font-bold">$ 8,420.00</div>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-2 hover:bg-primary-soft/40 transition-base">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
+                  <svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                </div>
+                <div><div class="text-sm font-bold">Credit Card</div><div class="text-xs text-text-muted num">•• 8830</div></div>
+              </div>
+              <div class="num text-sm font-bold text-danger">− $ 320.00</div>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-2 hover:bg-primary-soft/40 transition-base">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-success-soft flex items-center justify-center">
+                  <svg class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div><div class="text-sm font-bold">Cash</div><div class="text-xs text-text-muted">Wallet</div></div>
+              </div>
+              <div class="num text-sm font-bold">$ 240.00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating chip -->
+        <div class="absolute -bottom-4 -left-4 bg-white rounded-xl border border-border p-3 shadow-lift flex items-center gap-3 max-w-[230px]">
+          <div class="w-9 h-9 rounded-lg bg-success-soft flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="min-w-0">
+            <div class="text-[10px] text-text-muted uppercase tracking-wider font-bold">Budget alert</div>
+            <div class="text-xs font-bold truncate">Groceries · 82% used</div>
+          </div>
+        </div>
+
+        <!-- Floating chip 2 -->
+        <div class="hidden md:flex absolute -top-4 -right-2 bg-white rounded-xl border border-border px-3 py-2 shadow-lift items-center gap-2">
+          <div class="w-6 h-6 rounded-md bg-accent-soft flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="text-xs font-bold">3 family members</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 -mt-4 mb-20">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl border border-border overflow-hidden shadow-soft">
+      <div class="bg-white p-6"><div class="num text-3xl font-extrabold text-primary tracking-tight">10k+</div><div class="text-sm text-text-muted mt-1">Active users</div></div>
+      <div class="bg-white p-6"><div class="num text-3xl font-extrabold text-primary tracking-tight">$ 2M+</div><div class="text-sm text-text-muted mt-1">Tracked monthly</div></div>
+      <div class="bg-white p-6"><div class="num text-3xl font-extrabold text-primary tracking-tight">4.8 ★</div><div class="text-sm text-text-muted mt-1">Average rating</div></div>
+      <div class="bg-white p-6"><div class="num text-3xl font-extrabold text-primary tracking-tight">99.9%</div><div class="text-sm text-text-muted mt-1">Uptime</div></div>
+    </div>
+  </section>
+
+  <!-- Features grid -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 pb-20">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-bold mb-3">FEATURES</div>
+      <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight mb-3">Everything you need to manage money</h2>
+      <p class="text-text-muted text-lg">From daily tracking to family budgets — all in one place.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="group bg-white rounded-2xl border border-border p-6 hover:border-primary hover:shadow-lift transition-base">
+        <div class="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white group-hover:shadow-glow transition-base">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-1.5">Multi-wallet tracking</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Bank, cash, mobile banking, credit cards, investments — all in one view.</p>
+      </div>
+      <div class="group bg-white rounded-2xl border border-border p-6 hover:border-accent hover:shadow-lift transition-base">
+        <div class="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center text-accent mb-4 group-hover:bg-accent group-hover:text-white group-hover:shadow-glow-accent transition-base">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 9l7-7 7 7"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-1.5">Smart budgets</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Monthly or yearly budgets that roll over. Get alerts before you overspend.</p>
+      </div>
+      <div class="group bg-white rounded-2xl border border-border p-6 hover:border-info hover:shadow-lift transition-base">
+        <div class="w-12 h-12 rounded-xl bg-info-soft flex items-center justify-center text-info mb-4 group-hover:bg-info group-hover:text-white transition-base">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-1.5">Family collaboration</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Share wallets with up to 5 members. Split expenses and track who owes whom.</p>
+      </div>
+      <div class="group bg-white rounded-2xl border border-border p-6 hover:border-success hover:shadow-lift transition-base">
+        <div class="w-12 h-12 rounded-xl bg-success-soft flex items-center justify-center text-success mb-4 group-hover:bg-success group-hover:text-white transition-base">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-1.5">Beautiful reports</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Monthly summary, category breakdown, daily trend — export to PDF or CSV.</p>
+      </div>
+      <div class="group bg-white rounded-2xl border border-border p-6 hover:border-warning hover:shadow-lift transition-base">
+        <div class="w-12 h-12 rounded-xl bg-warning-soft flex items-center justify-center text-warning mb-4 group-hover:bg-warning group-hover:text-white transition-base">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-1.5">Recurring transactions</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Rent, salary, subscriptions — auto-generated on schedule.</p>
+      </div>
+      <div class="group bg-white rounded-2xl border border-border p-6 hover:border-primary hover:shadow-lift transition-base">
+        <div class="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white group-hover:shadow-glow transition-base">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-1.5">CSV import</h3>
+        <p class="text-text-muted text-sm leading-relaxed">Bulk-import from any bank statement. Pro feature, atomic and safe.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="bg-white border-y border-border py-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-bold mb-3">HOW IT WORKS</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight mb-3">Three steps. Five minutes.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 relative">
+        <div class="hidden md:block absolute top-7 left-[16%] right-[16%] h-0.5 border-t-2 border-dashed border-border"></div>
+        <div class="relative text-center bg-white">
+          <div class="relative inline-block mb-5">
+            <div class="w-14 h-14 rounded-2xl bg-primary text-white text-xl font-display font-bold flex items-center justify-center mx-auto shadow-glow">1</div>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-1.5">Sign up free</h3>
+          <p class="text-text-muted text-sm max-w-xs mx-auto">Get a 14-day Pro trial instantly. No credit card needed.</p>
+        </div>
+        <div class="relative text-center bg-white">
+          <div class="relative inline-block mb-5">
+            <div class="w-14 h-14 rounded-2xl bg-primary text-white text-xl font-display font-bold flex items-center justify-center mx-auto shadow-glow">2</div>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-1.5">Add your wallets</h3>
+          <p class="text-text-muted text-sm max-w-xs mx-auto">Bank, cash, cards — set them up in seconds.</p>
+        </div>
+        <div class="relative text-center bg-white">
+          <div class="relative inline-block mb-5">
+            <div class="w-14 h-14 rounded-2xl bg-accent text-white text-xl font-display font-bold flex items-center justify-center mx-auto shadow-glow-accent">3</div>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-1.5">Track and grow</h3>
+          <p class="text-text-muted text-sm max-w-xs mx-auto">See insights, hit goals, and share with family.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Family highlight -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div class="order-2 lg:order-1">
+      <div class="bg-white rounded-2xl border border-border p-6 shadow-lift">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <div class="text-xs text-text-muted font-semibold">Family — The Khans</div>
+            <div class="num text-3xl font-extrabold tracking-tight">$ 24,180.00</div>
+          </div>
+          <div class="flex -space-x-2">
+            <div class="w-9 h-9 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center border-2 border-white">SK</div>
+            <div class="w-9 h-9 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center border-2 border-white">AK</div>
+            <div class="w-9 h-9 rounded-full bg-info text-white text-xs font-bold flex items-center justify-center border-2 border-white">RK</div>
+          </div>
+        </div>
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between p-3 rounded-xl bg-surface-2">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-warning-soft flex items-center justify-center">
+                <svg class="w-4 h-4 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              </div>
+              <div><div class="text-sm font-bold">Groceries</div><div class="text-xs text-text-muted">Paid by Sarah · Split 3 ways</div></div>
+            </div>
+            <div class="num text-sm font-bold text-danger">− $ 86.00</div>
+          </div>
+          <div class="flex items-center justify-between p-3 rounded-xl bg-surface-2">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-info-soft flex items-center justify-center">
+                <svg class="w-4 h-4 text-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div><div class="text-sm font-bold">Utilities</div><div class="text-xs text-text-muted">Paid by Arif · Equal split</div></div>
+            </div>
+            <div class="num text-sm font-bold text-danger">− $ 124.00</div>
+          </div>
+          <div class="p-3 rounded-xl bg-primary-soft border border-primary/20">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="text-sm font-bold text-primary">Settle up</span>
+              </div>
+              <div class="num text-sm font-bold text-primary">Sarah → Arif · $ 12.50</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="order-1 lg:order-2">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft text-accent text-xs font-bold mb-3">FOR FAMILIES</div>
+      <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight mb-4">Manage money together,<br/><span class="text-primary">without the drama.</span></h2>
+      <ul class="space-y-3 mb-7">
+        <li class="flex items-start gap-3"><div class="w-5 h-5 rounded-full bg-success-soft text-success flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="text-text-muted">Share with up to 5 family members</span></li>
+        <li class="flex items-start gap-3"><div class="w-5 h-5 rounded-full bg-success-soft text-success flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="text-text-muted">Track shared expenses &amp; split bills</span></li>
+        <li class="flex items-start gap-3"><div class="w-5 h-5 rounded-full bg-success-soft text-success flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="text-text-muted">See who owes whom in real time</span></li>
+        <li class="flex items-start gap-3"><div class="w-5 h-5 rounded-full bg-success-soft text-success flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span class="text-text-muted">Pooled family budgets with email alerts</span></li>
+      </ul>
+      <a href="#pricing" class="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-base">Explore family features
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="bg-white border-y border-border py-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning-soft text-warning text-xs font-bold mb-3">LOVED BY USERS</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight">Real people, real money</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bg-bg rounded-2xl p-6 border border-border hover:border-primary hover:shadow-card transition-base">
+          <div class="flex gap-0.5 text-warning mb-3">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          </div>
+          <p class="text-text mb-5 leading-relaxed">"I finally understand where my money goes. The budgets are a game-changer for me as a freelancer."</p>
+          <div class="flex items-center gap-3 pt-4 border-t border-border">
+            <div class="w-10 h-10 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">SM</div>
+            <div><div class="font-bold text-sm">Sarah Mitchell</div><div class="text-xs text-text-muted">Freelancer · Berlin</div></div>
+          </div>
+        </div>
+        <div class="bg-bg rounded-2xl p-6 border border-border hover:border-primary hover:shadow-card transition-base">
+          <div class="flex gap-0.5 text-warning mb-3">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          </div>
+          <p class="text-text mb-5 leading-relaxed">"Splitting groceries and rent with my partner used to be a nightmare. Now it's painless."</p>
+          <div class="flex items-center gap-3 pt-4 border-t border-border">
+            <div class="w-10 h-10 rounded-full bg-accent text-white text-sm font-bold flex items-center justify-center">JR</div>
+            <div><div class="font-bold text-sm">James Rivera</div><div class="text-xs text-text-muted">Couple · Austin, TX</div></div>
+          </div>
+        </div>
+        <div class="bg-bg rounded-2xl p-6 border border-border hover:border-primary hover:shadow-card transition-base">
+          <div class="flex gap-0.5 text-warning mb-3">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          </div>
+          <p class="text-text mb-5 leading-relaxed">"The CSV import saved me hours. Set up the whole year in 5 minutes. Worth every penny."</p>
+          <div class="flex items-center gap-3 pt-4 border-t border-border">
+            <div class="w-10 h-10 rounded-full bg-info text-white text-sm font-bold flex items-center justify-center">FK</div>
+            <div><div class="font-bold text-sm">Fatima Khan</div><div class="text-xs text-text-muted">Small business · Dubai</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing teaser -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20 text-center">
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-bold mb-3">PRICING</div>
+    <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight mb-3">Simple, transparent pricing</h2>
+    <p class="text-text-muted text-lg mb-8">Start free. Upgrade when you need more power.</p>
+    <a href="#pricing" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-hover shadow-lg shadow-primary/25 transition-base focus:outline-none focus:ring-4 focus:ring-primary/20">
+      See full pricing
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-white border-y border-border py-20">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="font-display text-3xl lg:text-4xl font-bold tracking-tight">Frequently asked</h2>
+      </div>
+      <div class="space-y-3">
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>Is my data secure?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Yes. All traffic is HTTPS, passwords are bcrypt-hashed, and we follow GDPR. Stripe handles payment security (PCI-DSS).</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>Can I cancel anytime?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Yes, one click from the billing page. You keep access until the period ends.</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>What's included in the free trial?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Full Pro Monthly features for 14 days. No credit card required to start.</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>How does family sharing work?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Pro users can create a family group, invite up to 5 members by email, and share wallets, budgets, and split expenses.</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>Do you support my currency?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">We support 30+ currencies. Multi-currency with real-time rates is on the roadmap.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-accent p-12 lg:p-16 text-center text-white shadow-lift">
+      <div class="absolute inset-0 dot-bg opacity-20"></div>
+      <div class="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+      <div class="relative">
+        <h2 class="font-display text-4xl lg:text-5xl font-bold tracking-tight mb-4">Ready to take control of your money?</h2>
+        <p class="text-white/85 text-lg mb-8 max-w-xl mx-auto">Join 10,000+ users. Start your free 14-day Pro trial today.</p>
+        <a href="#" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white text-primary font-bold hover:bg-white/90 shadow-lg transition-base">
+          Get Started Free
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ================== PRICING ================== -->
+<section id="page-pricing" class="page-section hidden">
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-border">
+    <div class="absolute inset-0 dot-bg opacity-30"></div>
+    <div class="relative max-w-3xl mx-auto px-6 lg:px-8 pt-16 pb-10 text-center">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-bold mb-3">PRICING</div>
+      <h1 class="font-display text-5xl lg:text-6xl font-bold tracking-tight mb-4">Plans that <span class="text-primary">grow with you</span></h1>
+      <p class="text-text-muted text-lg mb-8">Start free. Upgrade when you need more power.</p>
+
+      <div class="inline-flex items-center gap-1 p-1 rounded-xl bg-white border border-border shadow-soft">
+        <button class="px-5 py-2 rounded-lg text-sm font-semibold text-text-muted hover:text-text transition-base">Monthly</button>
+        <button class="px-5 py-2 rounded-lg text-sm font-bold bg-primary text-white flex items-center gap-2 shadow-sm">
+          Yearly
+          <span class="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-white/20">SAVE 16%</span>
+        </button>
+        <button class="px-5 py-2 rounded-lg text-sm font-semibold text-text-muted hover:text-text transition-base">Lifetime</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan cards -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 pt-14 pb-14">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="bg-white rounded-2xl border border-border p-6 flex flex-col hover:shadow-card transition-base">
+        <div class="mb-5">
+          <div class="w-10 h-10 rounded-xl bg-surface-2 flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg">Free</h3>
+          <p class="text-sm text-text-muted">For individuals just starting out</p>
+        </div>
+        <div class="mb-5">
+          <div class="flex items-baseline gap-1">
+            <span class="num text-4xl font-extrabold tracking-tight">$ 0</span>
+            <span class="text-text-muted text-sm font-semibold">/month</span>
+          </div>
+          <div class="text-xs text-text-muted mt-1">Forever free</div>
+        </div>
+        <a href="#" class="block text-center px-4 py-2.5 rounded-xl border border-border font-semibold hover:bg-surface-2 hover:border-primary/40 transition-base mb-5">Get started</a>
+        <ul class="space-y-2.5 text-sm flex-1">
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 wallet</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>50 transactions / month</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>2 budgets</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 savings goal</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Basic reports</li>
+          <li class="flex items-start gap-2 text-text-muted"><svg class="w-4 h-4 text-border flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>CSV import</li>
+          <li class="flex items-start gap-2 text-text-muted"><svg class="w-4 h-4 text-border flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Family sharing</li>
+        </ul>
+        <p class="text-xs text-text-muted text-center mt-5 pt-5 border-t border-border">No credit card required</p>
+      </div>
+
+      <div class="relative bg-white rounded-2xl border-2 border-primary p-6 flex flex-col shadow-glow lg:-mt-4">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="px-3 py-1 rounded-full bg-primary text-white text-[11px] font-extrabold tracking-wide shadow-sm">MOST POPULAR</span>
+        </div>
+        <div class="mb-5">
+          <div class="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg">Pro Monthly</h3>
+          <p class="text-sm text-text-muted">Best for individuals</p>
+        </div>
+        <div class="mb-5">
+          <div class="flex items-baseline gap-1">
+            <span class="num text-4xl font-extrabold tracking-tight">$ 4.99</span>
+            <span class="text-text-muted text-sm font-semibold">/month</span>
+          </div>
+          <div class="text-xs text-success font-bold mt-1">14-day free trial</div>
+        </div>
+        <a href="#" class="block text-center px-4 py-2.5 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover shadow-md hover:shadow-lg transition-base mb-5">Start free trial</a>
+        <ul class="space-y-2.5 text-sm flex-1">
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="font-bold">Everything in Free</span></li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited wallets</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited transactions</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited budgets &amp; goals</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Advanced reports</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CSV import</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Family (up to 5)</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
+        </ul>
+      </div>
+
+      <div class="relative bg-white rounded-2xl border border-border p-6 flex flex-col hover:shadow-card transition-base">
+        <div class="absolute -top-3 left-6">
+          <span class="px-2 py-0.5 rounded-full bg-accent-soft text-accent text-[10px] font-extrabold tracking-wide">BEST VALUE</span>
+        </div>
+        <div class="mb-5">
+          <div class="w-10 h-10 rounded-xl bg-accent-soft flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 9l7-7 7 7"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg">Pro Yearly</h3>
+          <p class="text-sm text-text-muted">Save 16% vs monthly</p>
+        </div>
+        <div class="mb-5">
+          <div class="flex items-baseline gap-1">
+            <span class="num text-4xl font-extrabold tracking-tight">$ 49.99</span>
+            <span class="text-text-muted text-sm font-semibold">/year</span>
+          </div>
+          <div class="text-xs text-success font-bold mt-1">Just $ 4.17 / mo · Save $ 9.89</div>
+        </div>
+        <a href="#" class="block text-center px-4 py-2.5 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover shadow-sm transition-base mb-5">Start free trial</a>
+        <ul class="space-y-2.5 text-sm flex-1">
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro Monthly</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="font-bold">Billed annually</span></li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>No monthly billing</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-success flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All Pro features</li>
+        </ul>
+      </div>
+
+      <div class="relative bg-gradient-to-br from-text via-slate-800 to-slate-900 text-white rounded-2xl p-6 flex flex-col overflow-hidden hover:shadow-lift transition-base">
+        <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-accent/25 blur-2xl"></div>
+        <div class="absolute top-4 right-4">
+          <span class="px-2 py-0.5 rounded-full bg-accent text-white text-[10px] font-extrabold tracking-wide">LIFETIME</span>
+        </div>
+        <div class="relative mb-5">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-3">
+            <svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg">Unlimited</h3>
+          <p class="text-sm text-white/60">Pay once, use forever</p>
+        </div>
+        <div class="relative mb-5">
+          <div class="flex items-baseline gap-1">
+            <span class="num text-4xl font-extrabold tracking-tight">$ 99.99</span>
+          </div>
+          <div class="text-xs text-accent font-bold mt-1">One-time payment</div>
+        </div>
+        <a href="#" class="relative block text-center px-4 py-2.5 rounded-xl bg-accent text-white font-bold hover:opacity-90 shadow-md transition-base mb-5">Buy lifetime access</a>
+        <ul class="relative space-y-2.5 text-sm flex-1">
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All Pro features, forever</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All future Pro upgrades</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>No recurring billing</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support forever</li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Best for long-term planners</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison table -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 pb-14">
+    <h2 class="font-display text-2xl font-bold text-center mb-2">Compare features</h2>
+    <p class="text-text-muted text-center mb-8">Everything that's included in each plan.</p>
+    <div class="bg-white rounded-2xl border border-border overflow-hidden shadow-soft">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border bg-surface-2">
+              <th class="text-left p-4 font-semibold w-1/3">Feature</th>
+              <th class="p-4 font-semibold text-center">Free</th>
+              <th class="p-4 font-bold text-center bg-primary-soft text-primary">Pro Monthly</th>
+              <th class="p-4 font-semibold text-center">Pro Yearly</th>
+              <th class="p-4 font-semibold text-center">Unlimited</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border">
+            <tr><td class="p-4 font-semibold">Wallets</td><td class="p-4 text-center text-text-muted">1</td><td class="p-4 text-center bg-primary-soft font-bold text-primary">Unlimited</td><td class="p-4 text-center">Unlimited</td><td class="p-4 text-center">Unlimited</td></tr>
+            <tr><td class="p-4 font-semibold">Transactions / month</td><td class="p-4 text-center text-text-muted">50</td><td class="p-4 text-center bg-primary-soft font-bold text-primary">Unlimited</td><td class="p-4 text-center">Unlimited</td><td class="p-4 text-center">Unlimited</td></tr>
+            <tr><td class="p-4 font-semibold">Budgets</td><td class="p-4 text-center text-text-muted">2</td><td class="p-4 text-center bg-primary-soft font-bold text-primary">Unlimited</td><td class="p-4 text-center">Unlimited</td><td class="p-4 text-center">Unlimited</td></tr>
+            <tr><td class="p-4 font-semibold">Savings goals</td><td class="p-4 text-center text-text-muted">1</td><td class="p-4 text-center bg-primary-soft font-bold text-primary">Unlimited</td><td class="p-4 text-center">Unlimited</td><td class="p-4 text-center">Unlimited</td></tr>
+            <tr><td class="p-4 font-semibold">CSV import</td><td class="p-4 text-center"><svg class="w-5 h-5 text-text-muted mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></td><td class="p-4 text-center bg-primary-soft"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+            <tr><td class="p-4 font-semibold">Family groups (up to 5)</td><td class="p-4 text-center"><svg class="w-5 h-5 text-text-muted mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></td><td class="p-4 text-center bg-primary-soft"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+            <tr><td class="p-4 font-semibold">Pooled family budgets</td><td class="p-4 text-center"><svg class="w-5 h-5 text-text-muted mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></td><td class="p-4 text-center bg-primary-soft"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+            <tr><td class="p-4 font-semibold">Transaction splitting</td><td class="p-4 text-center"><svg class="w-5 h-5 text-text-muted mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></td><td class="p-4 text-center bg-primary-soft"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+            <tr><td class="p-4 font-semibold">Budget rollover</td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center bg-primary-soft"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+            <tr><td class="p-4 font-semibold">Priority support</td><td class="p-4 text-center"><svg class="w-5 h-5 text-text-muted mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></td><td class="p-4 text-center bg-primary-soft"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td><td class="p-4 text-center"><svg class="w-5 h-5 text-success mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+            <tr><td class="p-4 font-semibold">Future Pro features</td><td class="p-4 text-center text-text-muted">—</td><td class="p-4 text-center bg-primary-soft text-text-muted text-xs">As released</td><td class="p-4 text-center text-text-muted text-xs">As released</td><td class="p-4 text-center text-accent font-bold text-xs">Included forever</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coupon banner -->
+  <section class="max-w-3xl mx-auto px-6 lg:px-8 pb-16">
+    <div class="bg-gradient-to-r from-primary-soft to-accent-soft border border-primary/20 rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h3 class="font-display font-bold mb-1">Have a coupon code?</h3>
+        <p class="text-sm text-text-muted">Apply it at checkout to get a discount.</p>
+      </div>
+      <div class="flex items-center gap-2 bg-white rounded-lg p-1 border border-border shadow-soft">
+        <input class="px-3 py-2 text-sm outline-none w-44 font-mono" placeholder="WELCOME20" />
+        <button class="px-4 py-2 rounded-md bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-base">Apply</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing FAQ -->
+  <section class="bg-white border-y border-border py-16">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-display text-2xl font-bold text-center mb-8">Pricing questions</h2>
+      <div class="space-y-3">
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>Can I switch plans anytime?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Yes. Upgrade or downgrade anytime from the billing page. Upgrades are prorated, downgrades take effect at period end.</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>What happens to my data if I downgrade?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Your existing data is preserved. New creations are blocked until your usage fits the new plan limits. Family groups become inactive until you upgrade or delete them.</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>Do you offer refunds?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Yes. If you cancel within 14 days of a paid subscription, you get a full refund. Lifetime purchases are refundable within 30 days.</div>
+        </details>
+        <details class="group bg-bg rounded-xl border border-border open:bg-white open:border-primary/30 open:shadow-soft transition-base">
+          <summary class="flex items-center justify-between cursor-pointer font-semibold p-5 list-none">
+            <span>Is there a student or family discount?</span>
+            <svg class="w-5 h-5 text-text-muted group-open:rotate-180 group-open:text-primary transition-base" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-text-muted text-sm leading-relaxed">Not yet, but we're working on student discounts. Family groups are already a great deal — one Pro plan covers up to 5 members.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ================== LEGAL (Terms & Privacy) ================== -->
+<section id="page-legal" class="page-section hidden">
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-border">
+    <div class="absolute inset-0 dot-bg opacity-30"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-12 text-center">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-bold mb-3">LEGAL</div>
+      <h1 class="font-display text-4xl font-bold tracking-tight mb-2">Terms &amp; Privacy</h1>
+      <p class="text-text-muted">Last updated: <span class="num">July 29, 2026</span></p>
+    </div>
+  </section>
+
+  <!-- Tab switcher -->
+  <div class="sticky top-16 z-20 bg-bg/85 backdrop-blur-lg border-b border-border">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center gap-1">
+        <button id="tab-terms-btn" onclick="switchLegalTab('terms')" class="px-5 py-3.5 text-sm font-bold border-b-2 border-primary text-primary">Terms of Service</button>
+        <button id="tab-privacy-btn" onclick="switchLegalTab('privacy')" class="px-5 py-3.5 text-sm font-semibold text-text-muted border-b-2 border-transparent hover:text-text transition-base">Privacy Policy</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 grid lg:grid-cols-[260px_1fr] gap-10">
+    <aside class="hidden lg:block">
+      <div class="sticky top-32">
+        <div class="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">On this page</div>
+        <nav id="toc-terms" class="space-y-1 text-sm">
+          <a href="#t-1" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">1. Acceptance</a>
+          <a href="#t-2" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">2. Service description</a>
+          <a href="#t-3" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">3. Accounts</a>
+          <a href="#t-4" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">4. Subscriptions &amp; billing</a>
+          <a href="#t-5" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">5. Acceptable use</a>
+          <a href="#t-6" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">6. Intellectual property</a>
+          <a href="#t-7" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">7. Termination</a>
+          <a href="#t-8" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">8. Disclaimers</a>
+          <a href="#t-9" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">9. Liability</a>
+          <a href="#t-10" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">10. Governing law</a>
+          <a href="#t-11" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">11. Changes</a>
+          <a href="#t-12" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">12. Contact</a>
+        </nav>
+        <nav id="toc-privacy" class="space-y-1 text-sm hidden">
+          <a href="#p-1" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">1. Data we collect</a>
+          <a href="#p-2" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">2. How we use it</a>
+          <a href="#p-3" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">3. Cookies</a>
+          <a href="#p-4" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">4. Third-party services</a>
+          <a href="#p-5" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">5. Data retention</a>
+          <a href="#p-6" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">6. Your rights (GDPR)</a>
+          <a href="#p-7" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">7. Security</a>
+          <a href="#p-8" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">8. International transfers</a>
+          <a href="#p-9" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">9. Children's privacy</a>
+          <a href="#p-10" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">10. Changes</a>
+          <a href="#p-11" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">11. Contact</a>
+        </nav>
+      </div>
+    </aside>
+
+    <article class="prose max-w-none">
+      <!-- TERMS -->
+      <div id="content-terms">
+        <div class="bg-white border border-border rounded-2xl p-6 mb-6 shadow-soft">
+          <p class="!mb-0 text-sm">Welcome to MoneyBag. By creating an account or using our services, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+        </div>
+
+        <h2 id="t-1">1. Acceptance of terms</h2>
+        <p>By accessing or using MoneyBag ("the Service"), you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not use the Service.</p>
+
+        <h2 id="t-2">2. Service description</h2>
+        <p>MoneyBag is a subscription-based personal and family finance management platform. It allows users to track income, expenses, budgets, and savings across multiple wallets, and to share financial data with up to 5 family members on Pro plans.</p>
+        <h3>Free vs paid features</h3>
+        <ul>
+          <li><strong>Free plan</strong>: 1 wallet, 50 transactions/month, 2 budgets, 1 savings goal, basic reports.</li>
+          <li><strong>Pro plans</strong>: Unlimited wallets/transactions/budgets/goals, CSV import, family groups, priority support.</li>
+          <li><strong>Unlimited Lifetime</strong>: All Pro features forever, including future Pro upgrades.</li>
+        </ul>
+
+        <h2 id="t-3">3. Accounts</h2>
+        <p>When you create an account, you must provide accurate, current, and complete information. You are responsible for safeguarding your password and for all activity under your account.</p>
+        <ul>
+          <li>You must be at least 16 years old to use the Service.</li>
+          <li>You are responsible for maintaining the security of your account.</li>
+          <li>You must notify us immediately upon any unauthorized use of your account.</li>
+          <li>Each person may maintain only one personal account.</li>
+        </ul>
+
+        <h2 id="t-4">4. Subscriptions &amp; billing</h2>
+        <h3>Plans and pricing</h3>
+        <p>Subscription plans and pricing are listed on our <a href="#pricing">Pricing page</a>. Prices may change with 30 days' notice.</p>
+        <h3>Billing</h3>
+        <ul>
+          <li>Subscriptions are billed in advance (monthly or yearly) through Stripe.</li>
+          <li>The 14-day free trial requires no payment information and converts to a paid subscription only if you choose one.</li>
+          <li>Lifetime purchases are one-time, non-recurring.</li>
+        </ul>
+        <h3>Refunds</h3>
+        <p>If you cancel within 14 days of a paid subscription, you receive a full refund. Lifetime purchases are refundable within 30 days of purchase.</p>
+        <h3>Downgrades</h3>
+        <p>When you downgrade, your existing data is preserved. New creations are blocked until your usage fits the new plan limits. Family groups become inactive until you upgrade or delete them.</p>
+
+        <h2 id="t-5">5. Acceptable use</h2>
+        <p>You agree not to:</p>
+        <ul>
+          <li>Use the Service for any illegal purpose or to violate any laws.</li>
+          <li>Upload viruses, malware, or any malicious code.</li>
+          <li>Attempt to gain unauthorized access to other users' accounts or data.</li>
+          <li>Abuse the family-sharing feature to invite members outside your household.</li>
+          <li>Reverse-engineer, decompile, or attempt to extract the source code.</li>
+          <li>Use the Service to harass, defame, or harm others.</li>
+        </ul>
+
+        <h2 id="t-6">6. Intellectual property</h2>
+        <p>The Service, its design, features, and content are owned by MoneyBag and protected by copyright, trademark, and other laws. You retain ownership of the data you upload (your transactions, budgets, etc.).</p>
+        <p>You grant us a limited license to use your data solely to provide the Service to you.</p>
+
+        <h2 id="t-7">7. Termination</h2>
+        <p>We may suspend or terminate your account at any time if you breach these Terms. You may close your account at any time from your Settings → Data page. Termination forfeits any unused portion of prepaid subscriptions except as required by law.</p>
+
+        <h2 id="t-8">8. Disclaimers</h2>
+        <p>The Service is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted, error-free, or secure. MoneyBag is a tracking tool, not financial advice.</p>
+
+        <h2 id="t-9">9. Limitation of liability</h2>
+        <p>To the maximum extent permitted by law, MoneyBag shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill. Our total liability shall not exceed the amount you paid us in the past 12 months.</p>
+
+        <h2 id="t-10">10. Governing law</h2>
+        <p>These Terms shall be governed by the laws of the State of Delaware, United States, without regard to its conflict of law provisions.</p>
+
+        <h2 id="t-11">11. Changes to terms</h2>
+        <p>We may update these Terms from time to time. We will notify you by email at least 30 days before material changes take effect. Continued use after changes constitutes acceptance.</p>
+
+        <h2 id="t-12">12. Contact</h2>
+        <p>Questions about these Terms? Email us at <a href="mailto:legal@moneybag.app">legal@moneybag.app</a> or use the contact form on our site.</p>
+      </div>
+
+      <!-- PRIVACY -->
+      <div id="content-privacy" class="hidden">
+        <div class="bg-white border border-border rounded-2xl p-6 mb-6 shadow-soft">
+          <p class="!mb-0 text-sm">Your privacy matters. This policy explains what data we collect, why, and how you can control it. We comply with GDPR and applicable data protection laws.</p>
+        </div>
+
+        <h2 id="p-1">1. Data we collect</h2>
+        <h3>Account data</h3>
+        <p>Name, email address, password (hashed with bcrypt, 12 rounds), avatar URL, preferred currency, and theme preference.</p>
+        <h3>Financial data</h3>
+        <p>Wallets, categories, transactions, budgets, savings goals, and family groups — the data you actively create in the Service.</p>
+        <h3>Usage data</h3>
+        <p>IP address, browser type, device, pages visited, and timestamps. We use this to maintain security and improve the Service.</p>
+        <h3>Payment data</h3>
+        <p>Payment information is collected and processed by Stripe. We never see or store your full card number.</p>
+
+        <h2 id="p-2">2. How we use it</h2>
+        <ul>
+          <li>To provide and operate the Service.</li>
+          <li>To authenticate you and protect your account.</li>
+          <li>To send transactional emails (password reset, budget alerts, receipts).</li>
+          <li>To send marketing emails — <strong>only if you opt in</strong>.</li>
+          <li>To improve the Service through aggregated, anonymized analytics.</li>
+          <li>To comply with legal obligations.</li>
+        </ul>
+
+        <h2 id="p-3">3. Cookies</h2>
+        <p>We use cookies for authentication (HttpOnly session cookies) and CSRF protection. We also use a small number of functional cookies to remember your theme and sidebar preferences. We do not use advertising cookies.</p>
+
+        <h2 id="p-4">4. Third-party services</h2>
+        <p>We share data with these service providers, under strict data-processing agreements:</p>
+        <ul>
+          <li><strong>Stripe</strong> — payment processing (PCI-DSS compliant).</li>
+          <li><strong>PostgreSQL hosting</strong> (Supabase / AWS RDS) — database storage.</li>
+          <li><strong>Redis hosting</strong> (Upstash / AWS ElastiCache) — caching &amp; rate limiting.</li>
+          <li><strong>SMTP provider</strong> (configurable) — transactional email delivery.</li>
+          <li><strong>Google</strong> — OAuth 2.0 sign-in (only if you choose to use it).</li>
+          <li><strong>Cloudinary or AWS S3</strong> — optional receipt image storage.</li>
+        </ul>
+
+        <h2 id="p-5">5. Data retention</h2>
+        <p>We retain your data for as long as your account is active. If you delete your account, all personal data is permanently removed within 30 days (with the exception of records we must keep for legal/tax reasons, e.g., invoice copies for 7 years).</p>
+
+        <h2 id="p-6">6. Your rights (GDPR)</h2>
+        <p>You have the right to:</p>
+        <ul>
+          <li><strong>Access</strong> — request a copy of your data (available in-app: Settings → Data → Export).</li>
+          <li><strong>Rectification</strong> — correct inaccurate data.</li>
+          <li><strong>Erasure</strong> — delete your account and all data.</li>
+          <li><strong>Restriction</strong> — limit how we process your data.</li>
+          <li><strong>Portability</strong> — receive your data in a machine-readable format (JSON export).</li>
+          <li><strong>Object</strong> — object to certain processing (e.g., marketing).</li>
+          <li><strong>Withdraw consent</strong> at any time.</li>
+        </ul>
+        <p>To exercise these rights, contact <a href="mailto:privacy@moneybag.app">privacy@moneybag.app</a>.</p>
+
+        <h2 id="p-7">7. Security</h2>
+        <p>We protect your data with industry-standard measures:</p>
+        <ul>
+          <li>HTTPS everywhere; HSTS enforced.</li>
+          <li>Passwords hashed with bcrypt (12 rounds).</li>
+          <li>JWT-based sessions with short access tokens and rotating refresh tokens.</li>
+          <li>CSRF protection on all state-changing requests.</li>
+          <li>Rate limiting (200 req/15 min general, 20 req/15 min auth).</li>
+          <li>Helmet security headers.</li>
+          <li>Regular backups and disaster recovery procedures.</li>
+        </ul>
+
+        <h2 id="p-8">8. International transfers</h2>
+        <p>Some of our processors (e.g., Stripe, Google) may transfer data outside the EU/EEA. When this happens, we rely on Standard Contractual Clauses or the processor's equivalent safeguards.</p>
+
+        <h2 id="p-9">9. Children's privacy</h2>
+        <p>The Service is not intended for children under 16. We do not knowingly collect data from children. If you believe a child has provided us data, contact us and we will delete it.</p>
+
+        <h2 id="p-10">10. Changes to this policy</h2>
+        <p>We will notify you by email at least 30 days before material changes take effect. The "Last updated" date at the top reflects the latest revision.</p>
+
+        <h2 id="p-11">11. Contact</h2>
+        <p>For privacy questions or to exercise your rights, email <a href="mailto:privacy@moneybag.app">privacy@moneybag.app</a>. You can also reach our Data Protection Officer at the same address.</p>
+      </div>
+
+      <div class="mt-12 bg-gradient-to-br from-primary-soft to-accent-soft border border-primary/20 rounded-2xl p-6 not-prose">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-soft">
+            <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-display font-bold text-lg mb-1">Still have questions?</h3>
+            <p class="text-sm text-text-muted mb-3">Our team is happy to clarify anything in these policies.</p>
+            <a href="mailto:legal@moneybag.app" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-base">Contact legal team</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+</section>
+
+</main>
+
+<!-- ========== FOOTER (always visible) ========== -->
+<footer class="bg-white border-t border-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+    <div class="col-span-2 md:col-span-2">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
+        </div>
+        <span class="font-display font-bold tracking-tight">MoneyBag</span>
+      </div>
+      <p class="text-sm text-text-muted mb-4 max-w-xs leading-relaxed">Your money, your control. Personal &amp; family finance, beautifully simple.</p>
+      <div class="flex gap-2">
+        <a href="#" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-surface-2 hover:bg-primary hover:text-white text-text-muted flex items-center justify-center transition-base">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="GitHub" class="w-8 h-8 rounded-lg bg-surface-2 hover:bg-primary hover:text-white text-text-muted flex items-center justify-center transition-base">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-surface-2 hover:bg-primary hover:text-white text-text-muted flex items-center justify-center transition-base">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8.339 18.337V9.667H5.667v8.67zM7.003 8.5a1.547 1.547 0 1 0 0-3.094 1.547 1.547 0 0 0 0 3.094zM18.337 18.337v-4.752c0-2.495-1.34-3.658-3.13-3.658-1.443 0-2.092.794-2.452 1.354V9.667h-2.737c.036.776 0 8.67 0 8.67h2.737v-4.844c0-.247.018-.493.09-.668.198-.493.65-1.005 1.41-1.005.996 0 1.394.762 1.394 1.879v4.638z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-display font-bold text-sm mb-3">Product</h4>
+      <ul class="space-y-2 text-sm text-text-muted">
+        <li><a href="#/" class="hover:text-text transition-base">Features</a></li>
+        <li><a href="#pricing" class="hover:text-text transition-base">Pricing</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Family</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Mobile app</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display font-bold text-sm mb-3">Company</h4>
+      <ul class="space-y-2 text-sm text-text-muted">
+        <li><a href="#/" class="hover:text-text transition-base">About</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Blog</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Careers</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-display font-bold text-sm mb-3">Legal</h4>
+      <ul class="space-y-2 text-sm text-text-muted">
+        <li><a href="#terms" data-nav="terms" class="hover:text-text transition-base">Terms</a></li>
+        <li><a href="#privacy" data-nav="privacy" class="hover:text-text transition-base">Privacy</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Help center</a></li>
+        <li><a href="#/" class="hover:text-text transition-base">Status</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 text-xs text-text-muted flex flex-wrap items-center justify-between gap-2">
+      <span>© 2026 MoneyBag. All rights reserved.</span>
+      <div class="flex items-center gap-3"><span>Language: <button class="hover:text-text font-semibold">English</button></span><span>•</span><span>Currency: <button class="hover:text-text font-semibold num">USD</button></span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============ ROUTER ============
+  const pages = ['home', 'pricing', 'legal'];
+
+  function navigate() {
+    const hash = (location.hash || '#/').toLowerCase();
+    let target = 'home';
+    if (hash === '#pricing') target = 'pricing';
+    else if (hash === '#terms') target = 'terms-tab';
+    else if (hash === '#privacy') target = 'privacy-tab';
+
+    // Show/hide pages
+    document.getElementById('page-home').classList.toggle('hidden', target === 'pricing' || target === 'terms-tab' || target === 'privacy-tab');
+    document.getElementById('page-pricing').classList.toggle('hidden', target !== 'pricing');
+    document.getElementById('page-legal').classList.toggle('hidden', target !== 'terms-tab' && target !== 'privacy-tab');
+
+    // Handle legal tabs
+    if (target === 'terms-tab') switchLegalTab('terms');
+    if (target === 'privacy-tab') switchLegalTab('privacy');
+
+    // Active nav state
+    document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+    const navKey = (target === 'home') ? 'home' : (target === 'pricing') ? 'pricing' : (target === 'terms-tab' || target === 'privacy-tab') ? hash.slice(1) : null;
+    if (navKey) {
+      const activeLink = document.querySelector(`.nav-link[data-nav="${navKey}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    closeMobile();
+  }
+
+  function switchLegalTab(tab) {
+    const terms = document.getElementById('content-terms');
+    const privacy = document.getElementById('content-privacy');
+    const tocT = document.getElementById('toc-terms');
+    const tocP = document.getElementById('toc-privacy');
+    const tabT = document.getElementById('tab-terms-btn');
+    const tabP = document.getElementById('tab-privacy-btn');
+
+    if (tab === 'terms') {
+      terms.classList.remove('hidden');
+      privacy.classList.add('hidden');
+      tocT.classList.remove('hidden');
+      tocP.classList.add('hidden');
+      tabT.classList.add('text-primary', 'border-primary');
+      tabT.classList.remove('text-text-muted', 'border-transparent');
+      tabP.classList.remove('text-primary', 'border-primary');
+      tabP.classList.add('text-text-muted', 'border-transparent');
+    } else {
+      terms.classList.add('hidden');
+      privacy.classList.remove('hidden');
+      tocT.classList.add('hidden');
+      tocP.classList.remove('hidden');
+      tabP.classList.add('text-primary', 'border-primary');
+      tabP.classList.remove('text-text-muted', 'border-transparent');
+      tabT.classList.remove('text-primary', 'border-primary');
+      tabT.classList.add('text-text-muted', 'border-transparent');
+    }
+  }
+
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobile-menu');
+  function openMobile() { mobileMenu.classList.add('open'); }
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+  document.getElementById('mobile-toggle').addEventListener('click', openMobile);
+  document.getElementById('mobile-close').addEventListener('click', closeMobile);
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
+
+  // Initial route
+  window.addEventListener('hashchange', navigate);
+  navigate();
+</script>
+
+</body>
+</html>

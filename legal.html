@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Legal — MoneyBag</title>
+<meta name="description" content="MoneyBag Terms of Service and Privacy Policy. GDPR compliant." />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: {
+      primary: { DEFAULT: '#6366f1', hover: '#4f46e5', soft: '#eef2ff' },
+      accent: { DEFAULT: '#ec4899', soft: '#fce7f3' },
+      bg: '#fafafb', surface: { DEFAULT: '#ffffff', 2: '#f4f4f7' },
+      text: { DEFAULT: '#0f172a', muted: '#64748b' }, border: '#e2e8f0',
+      success: { DEFAULT: '#10b981', soft: '#d1fae5' },
+      warning: { DEFAULT: '#f59e0b', soft: '#fef3c7' },
+      danger: { DEFAULT: '#ef4444', soft: '#fee2e2' },
+      info: { DEFAULT: '#3b82f6', soft: '#dbeafe' }
+    },
+    fontFamily: {
+      sans: ['"Ubuntu Sans"','"Ubuntu"','system-ui','sans-serif'],
+      display: ['"Ubuntu"','system-ui','sans-serif'],
+      mono: ['"Ubuntu Mono"','ui-monospace','monospace']
+    },
+    boxShadow: {
+      'soft':'0 1px 2px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.06)',
+      'card':'0 1px 2px rgba(15,23,42,0.05), 0 2px 8px rgba(15,23,42,0.04)',
+      'lift':'0 8px 24px rgba(15,23,42,0.08), 0 20px 48px rgba(15,23,42,0.10)',
+      'glow':'0 0 0 1px rgba(99,102,241,0.15), 0 8px 24px -8px rgba(99,102,241,0.35)'
+    }
+  }}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Ubuntu+Sans:wght@400;500;600;700&family=Ubuntu+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --color-primary:#6366f1; --color-primary-hover:#4f46e5; --color-primary-soft:#eef2ff; --color-accent:#ec4899; --color-accent-soft:#fce7f3; --color-bg:#fafafb; --color-surface:#ffffff; --color-surface-2:#f4f4f7; --color-text:#0f172a; --color-text-muted:#64748b; --color-border:#e2e8f0; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+  body { font-family: 'Ubuntu Sans','Ubuntu',system-ui,sans-serif; background: var(--color-bg); color: var(--color-text); font-feature-settings: 'cv11','ss01'; }
+  h1,h2,h3,h4,h5,h6,.font-display { font-family: 'Ubuntu',system-ui,sans-serif; letter-spacing: -0.015em; }
+  .num { font-family: 'Ubuntu Mono',ui-monospace,monospace; font-variant-numeric: tabular-nums; }
+  .dot-bg { background-image: radial-gradient(circle,rgba(99,102,241,0.18) 1px,transparent 1px); background-size: 24px 24px; }
+  .transition-base { transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+  .prose h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; scroll-margin-top: 100px; font-family: 'Ubuntu',system-ui,sans-serif; letter-spacing: -0.01em; color: var(--color-text); }
+  .prose h3 { font-size: 1.0625rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; font-family: 'Ubuntu',system-ui,sans-serif; color: var(--color-text); }
+  .prose p { color: #475569; line-height: 1.75; margin-bottom: 1rem; }
+  .prose ul { color: #475569; line-height: 1.75; margin-bottom: 1rem; padding-left: 1.5rem; list-style: disc; }
+  .prose ul li { margin-bottom: 0.5rem; }
+  .prose a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
+  .prose strong { color: var(--color-text); font-weight: 600; }
+  ::-webkit-scrollbar { width:10px; height:10px; } ::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:5px; border:2px solid #fafafb; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur-lg border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href="landing.html" class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-soft">
+        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
+      </div>
+      <span class="font-display font-bold text-[15px] tracking-tight">MoneyBag</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-text-muted">
+      <a href="landing.html" class="hover:text-text transition-base">Home</a>
+      <a href="pricing.html" class="hover:text-text transition-base">Pricing</a>
+      <a href="legal.html" class="text-primary">Terms</a>
+      <a href="legal.html#privacy" class="hover:text-text transition-base">Privacy</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="#" class="hidden sm:inline-flex items-center px-3.5 py-2 rounded-lg text-sm font-semibold text-text hover:bg-surface-2 transition-base">Log in</a>
+      <a href="#" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-hover shadow-sm hover:shadow-md transition-base focus:outline-none focus:ring-4 focus:ring-primary/20">Get Started Free
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="relative overflow-hidden border-b border-border">
+  <div class="absolute inset-0 dot-bg opacity-30"></div>
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-12 text-center">
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-soft text-primary text-xs font-bold mb-3">LEGAL</div>
+    <h1 class="font-display text-4xl font-bold tracking-tight mb-2">Terms &amp; Privacy</h1>
+    <p class="text-text-muted">Last updated: <span class="num">July 29, 2026</span></p>
+  </div>
+</section>
+
+<div class="sticky top-16 z-20 bg-bg/85 backdrop-blur-lg border-b border-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center gap-1">
+      <button onclick="showTab('terms')" id="tab-terms" class="px-5 py-3.5 text-sm font-bold border-b-2 border-primary text-primary">Terms of Service</button>
+      <button onclick="showTab('privacy')" id="tab-privacy" class="px-5 py-3.5 text-sm font-semibold text-text-muted border-b-2 border-transparent hover:text-text transition-base">Privacy Policy</button>
+    </div>
+  </div>
+</div>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-8 py-12 grid lg:grid-cols-[260px_1fr] gap-10">
+  <aside class="hidden lg:block">
+    <div class="sticky top-32">
+      <div class="text-xs font-bold text-text-muted uppercase tracking-wider mb-3">On this page</div>
+      <nav id="toc-terms" class="space-y-1 text-sm">
+        <a href="#t-1" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">1. Acceptance</a>
+        <a href="#t-2" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">2. Service description</a>
+        <a href="#t-3" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">3. Accounts</a>
+        <a href="#t-4" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">4. Subscriptions &amp; billing</a>
+        <a href="#t-5" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">5. Acceptable use</a>
+        <a href="#t-6" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">6. Intellectual property</a>
+        <a href="#t-7" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">7. Termination</a>
+        <a href="#t-8" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">8. Disclaimers</a>
+        <a href="#t-9" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">9. Liability</a>
+        <a href="#t-10" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">10. Governing law</a>
+        <a href="#t-11" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">11. Changes</a>
+        <a href="#t-12" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">12. Contact</a>
+      </nav>
+      <nav id="toc-privacy" class="space-y-1 text-sm hidden">
+        <a href="#p-1" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">1. Data we collect</a>
+        <a href="#p-2" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">2. How we use it</a>
+        <a href="#p-3" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">3. Cookies</a>
+        <a href="#p-4" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">4. Third-party services</a>
+        <a href="#p-5" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">5. Data retention</a>
+        <a href="#p-6" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">6. Your rights (GDPR)</a>
+        <a href="#p-7" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">7. Security</a>
+        <a href="#p-8" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">8. International transfers</a>
+        <a href="#p-9" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">9. Children's privacy</a>
+        <a href="#p-10" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">10. Changes</a>
+        <a href="#p-11" class="block px-3 py-1.5 rounded-lg text-text-muted hover:text-text hover:bg-surface-2 transition-base">11. Contact</a>
+      </nav>
+    </div>
+  </aside>
+
+  <article class="prose max-w-none">
+    <div id="content-terms">
+      <div class="bg-white border border-border rounded-2xl p-6 mb-6 shadow-soft">
+        <p class="!mb-0 text-sm">Welcome to MoneyBag. By creating an account or using our services, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+      </div>
+
+      <h2 id="t-1">1. Acceptance of terms</h2>
+      <p>By accessing or using MoneyBag ("the Service"), you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not use the Service.</p>
+
+      <h2 id="t-2">2. Service description</h2>
+      <p>MoneyBag is a subscription-based personal and family finance management platform. It allows users to track income, expenses, budgets, and savings across multiple wallets, and to share financial data with up to 5 family members on Pro plans.</p>
+      <h3>Free vs paid features</h3>
+      <ul>
+        <li><strong>Free plan</strong>: 1 wallet, 50 transactions/month, 2 budgets, 1 savings goal, basic reports.</li>
+        <li><strong>Pro plans</strong>: Unlimited wallets/transactions/budgets/goals, CSV import, family groups, priority support.</li>
+        <li><strong>Unlimited Lifetime</strong>: All Pro features forever, including future Pro upgrades.</li>
+      </ul>
+
+      <h2 id="t-3">3. Accounts</h2>
+      <p>When you create an account, you must provide accurate, current, and complete information. You are responsible for safeguarding your password and for all activity under your account.</p>
+      <ul>
+        <li>You must be at least 16 years old to use the Service.</li>
+        <li>You are responsible for maintaining the security of your account.</li>
+        <li>You must notify us immediately upon any unauthorized use of your account.</li>
+        <li>Each person may maintain only one personal account.</li>
+      </ul>
+
+      <h2 id="t-4">4. Subscriptions &amp; billing</h2>
+      <h3>Plans and pricing</h3>
+      <p>Subscription plans and pricing are listed on our <a href="pricing.html">Pricing page</a>. Prices may change with 30 days' notice.</p>
+      <h3>Billing</h3>
+      <ul>
+        <li>Subscriptions are billed in advance (monthly or yearly) through Stripe.</li>
+        <li>The 14-day free trial requires no payment information and converts to a paid subscription only if you choose one.</li>
+        <li>Lifetime purchases are one-time, non-recurring.</li>
+      </ul>
+      <h3>Refunds</h3>
+      <p>If you cancel within 14 days of a paid subscription, you receive a full refund. Lifetime purchases are refundable within 30 days of purchase.</p>
+      <h3>Downgrades</h3>
+      <p>When you downgrade, your existing data is preserved. New creations are blocked until your usage fits the new plan limits. Family groups become inactive until you upgrade or delete them.</p>
+
+      <h2 id="t-5">5. Acceptable use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Use the Service for any illegal purpose or to violate any laws.</li>
+        <li>Upload viruses, malware, or any malicious code.</li>
+        <li>Attempt to gain unauthorized access to other users' accounts or data.</li>
+        <li>Abuse the family-sharing feature to invite members outside your household.</li>
+        <li>Reverse-engineer, decompile, or attempt to extract the source code.</li>
+        <li>Use the Service to harass, defame, or harm others.</li>
+      </ul>
+
+      <h2 id="t-6">6. Intellectual property</h2>
+      <p>The Service, its design, features, and content are owned by MoneyBag and protected by copyright, trademark, and other laws. You retain ownership of the data you upload (your transactions, budgets, etc.).</p>
+      <p>You grant us a limited license to use your data solely to provide the Service to you.</p>
+
+      <h2 id="t-7">7. Termination</h2>
+      <p>We may suspend or terminate your account at any time if you breach these Terms. You may close your account at any time from your Settings → Data page. Termination forfeits any unused portion of prepaid subscriptions except as required by law.</p>
+
+      <h2 id="t-8">8. Disclaimers</h2>
+      <p>The Service is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted, error-free, or secure. MoneyBag is a tracking tool, not financial advice.</p>
+
+      <h2 id="t-9">9. Limitation of liability</h2>
+      <p>To the maximum extent permitted by law, MoneyBag shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill. Our total liability shall not exceed the amount you paid us in the past 12 months.</p>
+
+      <h2 id="t-10">10. Governing law</h2>
+      <p>These Terms shall be governed by the laws of the State of Delaware, United States, without regard to its conflict of law provisions.</p>
+
+      <h2 id="t-11">11. Changes to terms</h2>
+      <p>We may update these Terms from time to time. We will notify you by email at least 30 days before material changes take effect. Continued use after changes constitutes acceptance.</p>
+
+      <h2 id="t-12">12. Contact</h2>
+      <p>Questions about these Terms? Email us at <a href="mailto:legal@moneybag.app">legal@moneybag.app</a> or use the contact form on our site.</p>
+    </div>
+
+    <div id="content-privacy" class="hidden">
+      <div class="bg-white border border-border rounded-2xl p-6 mb-6 shadow-soft">
+        <p class="!mb-0 text-sm">Your privacy matters. This policy explains what data we collect, why, and how you can control it. We comply with GDPR and applicable data protection laws.</p>
+      </div>
+
+      <h2 id="p-1">1. Data we collect</h2>
+      <h3>Account data</h3>
+      <p>Name, email address, password (hashed with bcrypt, 12 rounds), avatar URL, preferred currency, and theme preference.</p>
+      <h3>Financial data</h3>
+      <p>Wallets, categories, transactions, budgets, savings goals, and family groups — the data you actively create in the Service.</p>
+      <h3>Usage data</h3>
+      <p>IP address, browser type, device, pages visited, and timestamps. We use this to maintain security and improve the Service.</p>
+      <h3>Payment data</h3>
+      <p>Payment information is collected and processed by Stripe. We never see or store your full card number.</p>
+
+      <h2 id="p-2">2. How we use it</h2>
+      <ul>
+        <li>To provide and operate the Service.</li>
+        <li>To authenticate you and protect your account.</li>
+        <li>To send transactional emails (password reset, budget alerts, receipts).</li>
+        <li>To send marketing emails — <strong>only if you opt in</strong>.</li>
+        <li>To improve the Service through aggregated, anonymized analytics.</li>
+        <li>To comply with legal obligations.</li>
+      </ul>
+
+      <h2 id="p-3">3. Cookies</h2>
+      <p>We use cookies for authentication (HttpOnly session cookies) and CSRF protection. We also use a small number of functional cookies to remember your theme and sidebar preferences. We do not use advertising cookies.</p>
+
+      <h2 id="p-4">4. Third-party services</h2>
+      <p>We share data with these service providers, under strict data-processing agreements:</p>
+      <ul>
+        <li><strong>Stripe</strong> — payment processing (PCI-DSS compliant).</li>
+        <li><strong>PostgreSQL hosting</strong> (Supabase / AWS RDS) — database storage.</li>
+        <li><strong>Redis hosting</strong> (Upstash / AWS ElastiCache) — caching &amp; rate limiting.</li>
+        <li><strong>SMTP provider</strong> (configurable) — transactional email delivery.</li>
+        <li><strong>Google</strong> — OAuth 2.0 sign-in (only if you choose to use it).</li>
+        <li><strong>Cloudinary or AWS S3</strong> — optional receipt image storage.</li>
+      </ul>
+
+      <h2 id="p-5">5. Data retention</h2>
+      <p>We retain your data for as long as your account is active. If you delete your account, all personal data is permanently removed within 30 days (with the exception of records we must keep for legal/tax reasons, e.g., invoice copies for 7 years).</p>
+
+      <h2 id="p-6">6. Your rights (GDPR)</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> — request a copy of your data (available in-app: Settings → Data → Export).</li>
+        <li><strong>Rectification</strong> — correct inaccurate data.</li>
+        <li><strong>Erasure</strong> — delete your account and all data.</li>
+        <li><strong>Restriction</strong> — limit how we process your data.</li>
+        <li><strong>Portability</strong> — receive your data in a machine-readable format (JSON export).</li>
+        <li><strong>Object</strong> — object to certain processing (e.g., marketing).</li>
+        <li><strong>Withdraw consent</strong> at any time.</li>
+      </ul>
+      <p>To exercise these rights, contact <a href="mailto:privacy@moneybag.app">privacy@moneybag.app</a>.</p>
+
+      <h2 id="p-7">7. Security</h2>
+      <p>We protect your data with industry-standard measures:</p>
+      <ul>
+        <li>HTTPS everywhere; HSTS enforced.</li>
+        <li>Passwords hashed with bcrypt (12 rounds).</li>
+        <li>JWT-based sessions with short access tokens and rotating refresh tokens.</li>
+        <li>CSRF protection on all state-changing requests.</li>
+        <li>Rate limiting (200 req/15 min general, 20 req/15 min auth).</li>
+        <li>Helmet security headers.</li>
+        <li>Regular backups and disaster recovery procedures.</li>
+      </ul>
+
+      <h2 id="p-8">8. International transfers</h2>
+      <p>Some of our processors (e.g., Stripe, Google) may transfer data outside the EU/EEA. When this happens, we rely on Standard Contractual Clauses or the processor's equivalent safeguards.</p>
+
+      <h2 id="p-9">9. Children's privacy</h2>
+      <p>The Service is not intended for children under 16. We do not knowingly collect data from children. If you believe a child has provided us data, contact us and we will delete it.</p>
+
+      <h2 id="p-10">10. Changes to this policy</h2>
+      <p>We will notify you by email at least 30 days before material changes take effect. The "Last updated" date at the top reflects the latest revision.</p>
+
+      <h2 id="p-11">11. Contact</h2>
+      <p>For privacy questions or to exercise your rights, email <a href="mailto:privacy@moneybag.app">privacy@moneybag.app</a>. You can also reach our Data Protection Officer at the same address.</p>
+    </div>
+
+    <div class="mt-12 bg-gradient-to-br from-primary-soft to-accent-soft border border-primary/20 rounded-2xl p-6 not-prose">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-soft">
+          <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg mb-1">Still have questions?</h3>
+          <p class="text-sm text-text-muted mb-3">Our team is happy to clarify anything in these policies.</p>
+          <a href="mailto:legal@moneybag.app" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-hover transition-base">Contact legal team</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer class="bg-white border-t border-border">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+    <div class="col-span-2 md:col-span-2">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center"><svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg></div>
+        <span class="font-display font-bold tracking-tight">MoneyBag</span>
+      </div>
+      <p class="text-sm text-text-muted mb-4 max-w-xs leading-relaxed">Your money, your control. Personal &amp; family finance, beautifully simple.</p>
+    </div>
+    <div><h4 class="font-display font-bold text-sm mb-3">Product</h4><ul class="space-y-2 text-sm text-text-muted"><li><a href="landing.html" class="hover:text-text transition-base">Features</a></li><li><a href="pricing.html" class="hover:text-text transition-base">Pricing</a></li><li><a href="landing.html" class="hover:text-text transition-base">Family</a></li><li><a href="landing.html" class="hover:text-text transition-base">Mobile app</a></li></ul></div>
+    <div><h4 class="font-display font-bold text-sm mb-3">Company</h4><ul class="space-y-2 text-sm text-text-muted"><li><a href="#" class="hover:text-text transition-base">About</a></li><li><a href="#" class="hover:text-text transition-base">Blog</a></li><li><a href="#" class="hover:text-text transition-base">Careers</a></li><li><a href="#" class="hover:text-text transition-base">Contact</a></li></ul></div>
+    <div><h4 class="font-display font-bold text-sm mb-3">Legal</h4><ul class="space-y-2 text-sm text-text-muted"><li><a href="legal.html" class="hover:text-text transition-base">Terms</a></li><li><a href="legal.html#privacy" class="hover:text-text transition-base">Privacy</a></li><li><a href="#" class="hover:text-text transition-base">Help center</a></li><li><a href="#" class="hover:text-text transition-base">Status</a></li></ul></div>
+  </div>
+  <div class="border-t border-border">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 text-xs text-text-muted flex flex-wrap items-center justify-between gap-2">
+      <span>© 2026 MoneyBag. All rights reserved.</span>
+      <a href="index.html" class="hover:text-text font-semibold">← Design index</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Handle direct #privacy hash
+  function showTab(tab) {
+    const terms = document.getElementById('content-terms');
+    const privacy = document.getElementById('content-privacy');
+    const tocT = document.getElementById('toc-terms');
+    const tocP = document.getElementById('toc-privacy');
+    const tabT = document.getElementById('tab-terms');
+    const tabP = document.getElementById('tab-privacy');
+
+    if (tab === 'terms') {
+      terms.classList.remove('hidden');
+      privacy.classList.add('hidden');
+      tocT.classList.remove('hidden');
+      tocP.classList.add('hidden');
+      tabT.classList.add('text-primary', 'border-primary');
+      tabT.classList.remove('text-text-muted', 'border-transparent');
+      tabP.classList.remove('text-primary', 'border-primary');
+      tabP.classList.add('text-text-muted', 'border-transparent');
+    } else {
+      terms.classList.add('hidden');
+      privacy.classList.remove('hidden');
+      tocT.classList.add('hidden');
+      tocP.classList.remove('hidden');
+      tabP.classList.add('text-primary', 'border-primary');
+      tabP.classList.remove('text-text-muted', 'border-transparent');
+      tabT.classList.remove('text-primary', 'border-primary');
+      tabT.classList.add('text-text-muted', 'border-transparent');
+    }
+  }
+  if (location.hash === '#privacy') showTab('privacy');
+</script>
+
+</body>
+</html>

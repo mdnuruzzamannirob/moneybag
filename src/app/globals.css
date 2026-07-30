@@ -256,3 +256,171 @@
     font-family: var(--font-ubuntu), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }
 }
+
+@layer components {
+  .public-site {
+    background: var(--background);
+  }
+
+  .public-glass {
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    backdrop-filter: blur(14px);
+  }
+
+  .public-dots {
+    pointer-events: none;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--foreground) 10%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+
+  .public-text-gradient {
+    background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+    background-clip: text;
+    color: transparent;
+  }
+
+  .public-nav-link {
+    position: relative;
+    color: var(--muted-foreground);
+    transition: color 200ms ease;
+  }
+  .public-nav-link:hover {
+    color: var(--foreground);
+  }
+  .public-nav-link.is-active {
+    color: var(--color-primary);
+  }
+  .public-nav-link.is-active::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -7px;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  }
+
+  .public-button-primary,
+  .public-button-secondary {
+    border-radius: 0.75rem;
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease,
+      filter 200ms ease;
+  }
+  .public-button-primary {
+    color: white;
+    background: linear-gradient(180deg, #6366f1, #4f46e5);
+    box-shadow:
+      0 8px 18px -8px rgb(99 102 241 / 60%),
+      inset 0 1px 0 rgb(255 255 255 / 18%);
+  }
+  .public-button-secondary {
+    color: var(--foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  .public-button-primary:hover,
+  .public-button-secondary:hover {
+    transform: translateY(-1px);
+  }
+  .public-button-secondary:hover {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .public-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid color-mix(in srgb, var(--color-primary) 18%, transparent);
+    border-radius: 999px;
+    padding: 0.25rem 0.625rem;
+    color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 9%, var(--card));
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .public-card {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--card);
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease;
+  }
+  .public-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-primary) 35%, var(--border));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .public-page-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: 4rem 3.5rem;
+  }
+
+  .public-cta {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6 52%, #ec4899);
+  }
+  .public-social {
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--muted-foreground);
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+  .public-social:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  .public-legal h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    scroll-margin-top: 6rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .public-legal h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .public-legal p {
+    margin-bottom: 1rem;
+    color: var(--muted-foreground);
+    line-height: 1.8;
+  }
+  .public-legal ul {
+    margin-bottom: 1rem;
+    list-style: disc;
+    padding-left: 1.5rem;
+    color: var(--muted-foreground);
+  }
+  .public-legal li {
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+  .public-legal a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
