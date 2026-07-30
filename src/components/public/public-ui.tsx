@@ -28,7 +28,7 @@ export function PageHero({
 }) {
   return (
     <section className={cn('relative overflow-hidden pb-14 pt-16', compact && 'pb-10')}>
-      <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-45" />
+      <div className="pointer-events-none bg-[radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] bg-size-[22px_22px] absolute inset-0 opacity-45" />
       <div className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
         <Eyebrow icon={icon}>{eyebrow}</Eyebrow>
         <h1 className="mt-4 font-ubuntu text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
