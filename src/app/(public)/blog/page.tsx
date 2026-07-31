@@ -14,21 +14,23 @@ export default function BlogPage() {
     <>
       <PageHero
         compact
-        eyebrow="MoneyBag journal"
+        eyebrow="BLOG"
         icon={<BookOpen className="size-3.5" />}
         title={
           <>
-            Ideas for a <span className="text-primary">calmer money life.</span>
+            Money talks, <span className="text-primary">we listen.</span>
           </>
         }
-        description="Practical, judgment-free guides for building better money habits—alone or together."
+        description="Tips, guides, and stories about personal finance."
       />
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <Link
           href={`/blog/${featured.slug}`}
           className="group grid overflow-hidden rounded-lg border border-border bg-card shadow-sm lg:grid-cols-2"
         >
-          <div className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] relative min-h-72 bg-linear-to-br ${featured.color}`}>
+          <div
+            className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] relative min-h-72 bg-linear-to-br ${featured.color}`}
+          >
             <div className="absolute inset-0 bg-black/5" />
             <div className="absolute bottom-6 left-6 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800">
               Featured article
@@ -54,9 +56,14 @@ export default function BlogPage() {
         </Link>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {posts.map((post) => (
-            <article className="rounded-lg border border-border bg-card overflow-hidden" key={post.slug}>
+            <article
+              className="rounded-lg border border-border bg-card overflow-hidden"
+              key={post.slug}
+            >
               <Link href={`/blog/${post.slug}`}>
-                <div className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] h-44 bg-linear-to-br ${post.color}`} />
+                <div
+                  className={`pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] h-44 bg-linear-to-br ${post.color}`}
+                />
                 <div className="p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                     {post.category}

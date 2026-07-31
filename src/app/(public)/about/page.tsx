@@ -33,14 +33,14 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="Our story"
+        eyebrow="ABOUT"
         icon={<Sparkles className="size-3.5" />}
         title={
           <>
-            Calmer money starts with <span className="text-primary">clearer tools.</span>
+            We believe money <span className="text-primary">shouldn&apos;t be complicated.</span>
           </>
         }
-        description="MoneyBag exists to make everyday finances understandable—for one person, a couple, or a whole household."
+        description="MoneyBag was born from one simple frustration: personal finance tools were either too complex, too ugly, or too expensive."
       />
       <section className="border-y border-border bg-card">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-24">
@@ -74,11 +74,14 @@ export default function AboutPage() {
           {values.map(([Icon, title, text], index) => {
             const I = Icon as typeof Heart;
             return (
-              <article className="rounded-lg border border-border bg-card p-6" key={title as string}>
+              <article
+                className="rounded-lg border border-border bg-card p-6"
+                key={title as string}
+              >
                 <FeatureIcon
                   tone={
-                    ['primary', 'accent', 'success', 'violet'][index] as
-                      'primary' | 'accent' | 'success' | 'violet'
+                    ['primary', 'accent', 'success', 'info'][index] as
+                      'primary' | 'accent' | 'success' | 'info'
                   }
                 >
                   <I className="size-5" />

@@ -1,8 +1,13 @@
-import { AppButton } from '@/components/app-ui';
 import {
+  ButtonLink,
+  DotPattern,
   Eyebrow,
+  FaqList,
   FeatureIcon,
+  MarketingCard,
   SectionHeading,
+  Stars,
+  TextLink,
   TrialCta,
   TrustPoints,
 } from '@/components/public/public-ui';
@@ -26,7 +31,6 @@ import {
   Zap,
 } from 'lucide-react';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Take control of your money. Together.',
@@ -67,17 +71,64 @@ const features = [
   },
   {
     icon: Users,
-    tone: 'violet' as const,
+    tone: 'accent' as const,
     title: 'Family on Pro',
     text: 'Share a wallet, split expenses, settle balances, and pool budgets with up to 5 members.',
   },
 ];
 
+const testimonials = [
+  {
+    initials: 'SM',
+    name: 'Sarah Mitchell',
+    role: 'Designer · Berlin',
+    quote:
+      'MoneyBag finally gave our family one calm place to talk about money. We saved $4,200 in our first year.',
+  },
+  {
+    initials: 'FK',
+    name: 'Fatima Khan',
+    role: 'Freelancer · Dubai',
+    quote:
+      'The CSV importer saved me hours, and the reports finally show where every invoice goes.',
+  },
+  {
+    initials: 'AT',
+    name: 'Ahmed Tariq',
+    role: 'Developer · Karachi',
+    quote:
+      'Clean budgets, no ads, and family sharing that makes sense. It paid for itself immediately.',
+  },
+] as const;
+
+const homeFaq = [
+  {
+    question: 'Is MoneyBag free to use?',
+    answer:
+      'Yes. The Free plan includes one wallet, 50 monthly transactions, two budgets, one savings goal, and basic reports.',
+  },
+  {
+    question: 'Can I use MoneyBag with my family?',
+    answer:
+      'Yes. Pro plans include a family group for up to five members, shared wallets, pooled budgets, expense splits, and settle-up balances.',
+  },
+  {
+    question: 'Do I need a credit card for the trial?',
+    answer:
+      'No. Start the full 14-day Pro trial without a credit card and choose a plan only if MoneyBag works for you.',
+  },
+  {
+    question: 'Can I import transactions from my bank?',
+    answer:
+      'Yes. Upload a CSV from any bank and MoneyBag will help map the date, description, and amount columns.',
+  },
+] as const;
+
 export default function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-50" />
+      <section className="relative isolate overflow-hidden border-b border-border">
+        <DotPattern className="opacity-65" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-24 pt-16 sm:px-6 lg:grid-cols-12 lg:px-8 lg:pb-28 lg:pt-24">
           <div className="lg:col-span-7">
             <Eyebrow icon={<Sparkles className="size-3.5" />}>New · Family sharing on Pro</Eyebrow>
@@ -89,16 +140,12 @@ export default function HomePage() {
               budgets, and savings—then share with up to 5 family members on Pro.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/register">
-                <AppButton size="lg">
-                  Start your 14-day trial <ArrowRight className="size-4" />
-                </AppButton>
-              </Link>
-              <Link href="/pricing">
-                <AppButton size="lg" tone="secondary">
-                  <PlayCircle className="size-4" /> See pricing
-                </AppButton>
-              </Link>
+              <ButtonLink href="/register">
+                Start your 14-day trial <ArrowRight className="size-4" />
+              </ButtonLink>
+              <ButtonLink href="/pricing" tone="secondary">
+                <PlayCircle className="size-4" /> See how it works
+              </ButtonLink>
             </div>
             <div className="mt-6">
               <TrustPoints items={['14-day Pro trial', 'No credit card', 'Cancel anytime']} />
@@ -115,8 +162,8 @@ export default function HomePage() {
       <section className="border-y border-border bg-card/60">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-10 text-center sm:grid-cols-4 sm:px-6 lg:px-8">
           {[
-            ['50k+', 'Active users'],
-            ['2M+', 'Transactions tracked'],
+            ['10k+', 'Active users'],
+            ['$2M+', 'Tracked monthly'],
             ['4.8★', 'User rating'],
             ['99.9%', 'Uptime'],
           ].map(([value, label]) => (
@@ -137,22 +184,20 @@ export default function HomePage() {
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ icon: Icon, tone, title, text }) => (
-            <article className="rounded-lg border border-border bg-card p-6" key={title}>
+            <MarketingCard
+              className="hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
+              key={title}
+            >
               <FeatureIcon tone={tone}>
                 <Icon className="size-5" />
               </FeatureIcon>
               <h3 className="mt-4 font-ubuntu text-lg font-semibold">{title}</h3>
               <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{text}</p>
-            </article>
+            </MarketingCard>
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
-            href="/features"
-          >
-            Explore all features <ArrowRight className="size-4" />
-          </Link>
+          <TextLink href="/features">Explore all features</TextLink>
         </div>
       </section>
 
@@ -220,12 +265,93 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-          <Link
-            className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary"
-            href="/pricing"
-          >
-            See Pro pricing <ArrowRight className="size-4" />
-          </Link>
+          <TextLink className="mt-7" href="/pricing">
+            Explore family features
+          </TextLink>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-card/60">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <SectionHeading
+            centered
+            eyebrow="LOVED BY USERS"
+            title="Real people, real money"
+            tone="warning"
+          />
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <MarketingCard key={testimonial.name}>
+                <Stars />
+                <blockquote className="mt-4 text-sm leading-7">“{testimonial.quote}”</blockquote>
+                <div className="mt-5 flex items-center gap-3 border-t border-border pt-4">
+                  <span className="grid size-10 place-items-center rounded-full bg-primary text-xs font-bold text-white">
+                    {testimonial.initials}
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold">{testimonial.name}</p>
+                    <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                  </div>
+                </div>
+              </MarketingCard>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <TextLink href="/customers">Read customer stories</TextLink>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <SectionHeading
+          centered
+          description="Start free, upgrade when you need unlimited tracking and family sharing."
+          eyebrow="SIMPLE PRICING"
+          title="Plans that grow with you"
+        />
+        <div className="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-3">
+          <MarketingCard>
+            <p className="text-sm font-bold text-muted-foreground">Free</p>
+            <p className="mt-2 font-ubuntu text-4xl font-bold">$0</p>
+            <p className="mt-1 text-sm text-muted-foreground">Forever</p>
+            <p className="mt-5 text-sm leading-6 text-muted-foreground">
+              One wallet, 50 monthly transactions, two budgets, and one savings goal.
+            </p>
+          </MarketingCard>
+          <MarketingCard className="border-2 border-primary shadow-lg">
+            <Eyebrow>BEST FOR MOST</Eyebrow>
+            <p className="mt-4 text-sm font-bold text-primary">Pro Monthly</p>
+            <p className="mt-2 font-ubuntu text-4xl font-bold">$4.99</p>
+            <p className="mt-1 text-sm text-muted-foreground">per month</p>
+            <p className="mt-5 text-sm leading-6 text-muted-foreground">
+              Unlimited tracking, advanced reports, CSV import, and family sharing.
+            </p>
+          </MarketingCard>
+          <MarketingCard className="bg-foreground text-background">
+            <p className="text-sm font-bold text-brand-accent">Unlimited</p>
+            <p className="mt-2 font-ubuntu text-4xl font-bold">$99.99</p>
+            <p className="mt-1 text-sm text-background/65">One-time payment</p>
+            <p className="mt-5 text-sm leading-6 text-background/75">
+              Every Pro feature now and every future Pro upgrade, with no recurring bill.
+            </p>
+          </MarketingCard>
+        </div>
+        <div className="mt-8 text-center">
+          <ButtonLink href="/pricing">
+            See full pricing <ArrowRight className="size-4" />
+          </ButtonLink>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-card">
+        <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+          <SectionHeading centered eyebrow="FAQ" title="Frequently asked" />
+          <div className="mt-8">
+            <FaqList items={homeFaq} />
+          </div>
+          <div className="mt-7 text-center">
+            <TextLink href="/faq">See every question</TextLink>
+          </div>
         </div>
       </section>
 

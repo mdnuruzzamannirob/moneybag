@@ -1,107 +1,88 @@
-import type { Metadata } from 'next';
+import { ContactForm } from '@/components/public/contact-form';
+import { FeatureIcon, MarketingCard, PageHero } from '@/components/public/public-ui';
 import { Clock3, LifeBuoy, Mail, MapPin, MessageSquare } from 'lucide-react';
-import { FeatureIcon, PageHero } from '@/components/public/public-ui';
-import { AppButton } from '@/components/app-ui';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Get in touch with the MoneyBag team.',
+  description: 'Send a message to the MoneyBag team or find the right support channel.',
 };
-const inputClass =
-  'mt-2 w-full rounded-md border border-border bg-background px-3.5 py-3 text-sm outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10';
+
+const contactOptions = [
+  { icon: Mail, label: 'Email', text: 'hello@moneybag.app', tone: 'primary' as const },
+  {
+    icon: LifeBuoy,
+    label: 'Live chat',
+    text: 'Priority support for Pro members',
+    tone: 'accent' as const,
+  },
+  {
+    icon: Clock3,
+    label: 'Response time',
+    text: 'Usually within 2–4 hours on weekdays',
+    tone: 'success' as const,
+  },
+  {
+    icon: MapPin,
+    label: 'Headquarters',
+    text: 'Remote team · Berlin, Germany',
+    tone: 'warning' as const,
+  },
+];
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
         compact
-        eyebrow="Contact"
+        description="Questions, feedback, partnership ideas, or support requests—send us a note and the right person will reply."
+        eyebrow="CONTACT"
         icon={<MessageSquare className="size-3.5" />}
-        title={
-          <>
-            Let’s talk about <span className="text-primary">your money goals.</span>
-          </>
-        }
-        description="Whether you need product help or want to share an idea, the right person on our team will get back to you."
+        title="We'd love to hear from you"
       />
-      <section className="mx-auto grid max-w-6xl gap-8 px-4 pb-20 sm:px-6 lg:grid-cols-5 lg:px-8">
-        <div className="space-y-4 lg:col-span-2">
-          {[
-            [Mail, 'General questions', 'hello@moneybag.app'],
-            [LifeBuoy, 'Product support', 'support@moneybag.app'],
-            [Clock3, 'Typical response', 'Within one business day'],
-            [MapPin, 'Working style', 'Remote team · Worldwide'],
-          ].map(([Icon, title, text], index) => {
-            const I = Icon as typeof Mail;
-            return (
-              <div
-                className="flex gap-4 rounded-lg border border-border bg-card p-5"
-                key={title as string}
-              >
-                <FeatureIcon
-                  tone={
-                    ['primary', 'accent', 'success', 'info'][index] as
-                      'primary' | 'accent' | 'success' | 'info'
-                  }
-                >
-                  <I className="size-5" />
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-5 lg:px-8 lg:py-16">
+        <MarketingCard className="lg:col-span-3" padding="lg">
+          <h2 className="font-ubuntu text-2xl font-bold">Send a message</h2>
+          <p className="mb-7 mt-2 text-sm leading-6 text-muted-foreground">
+            Fill out the form and we will route your message to the right team.
+          </p>
+          <ContactForm />
+        </MarketingCard>
+
+        <div className="lg:col-span-2">
+          <h2 className="mb-6 font-ubuntu text-2xl font-bold">Other ways to reach us</h2>
+          <div className="space-y-4">
+            {contactOptions.map(({ icon: Icon, label, text, tone }) => (
+              <MarketingCard className="flex items-start gap-4" key={label} padding="md">
+                <FeatureIcon tone={tone}>
+                  <Icon className="size-5" />
                 </FeatureIcon>
                 <div>
-                  <p className="font-semibold">{title as string}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{text as string}</p>
+                  <h3 className="font-bold">{label}</h3>
+                  {label === 'Email' ? (
+                    <a
+                      className="mt-1 block text-sm text-primary hover:underline"
+                      href="mailto:hello@moneybag.app"
+                    >
+                      {text}
+                    </a>
+                  ) : (
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{text}</p>
+                  )}
+                  {label === 'Live chat' ? (
+                    <Link
+                      className="mt-1 block text-xs font-semibold text-primary hover:underline"
+                      href="/pricing"
+                    >
+                      Upgrade to Pro →
+                    </Link>
+                  ) : null}
                 </div>
-              </div>
-            );
-          })}
-        </div>
-        <form className="rounded-lg border border-border bg-card p-6 shadow-sm sm:p-8 lg:col-span-3">
-          <div className="grid gap-5 sm:grid-cols-2">
-            <label className="text-sm font-medium">
-              First name
-              <input className={inputClass} name="firstName" placeholder="Alex" />
-            </label>
-            <label className="text-sm font-medium">
-              Last name
-              <input className={inputClass} name="lastName" placeholder="Morgan" />
-            </label>
+              </MarketingCard>
+            ))}
           </div>
-          <label className="mt-5 block text-sm font-medium">
-            Email address
-            <input
-              className={inputClass}
-              name="email"
-              type="email"
-              placeholder="alex@example.com"
-            />
-          </label>
-          <label className="mt-5 block text-sm font-medium">
-            What can we help with?
-            <select className={inputClass} name="topic" defaultValue="">
-              <option value="" disabled>
-                Select a topic
-              </option>
-              <option>Product question</option>
-              <option>Account support</option>
-              <option>Billing</option>
-              <option>Partnership</option>
-              <option>Something else</option>
-            </select>
-          </label>
-          <label className="mt-5 block text-sm font-medium">
-            Message
-            <textarea
-              className={`${inputClass} min-h-36 resize-y`}
-              name="message"
-              placeholder="Tell us a little about what you need…"
-            />
-          </label>
-          <AppButton className="mt-6" size="lg" type="submit">
-            Send message
-          </AppButton>
-          <p className="mt-4 text-xs leading-5 text-muted-foreground">
-            By submitting, you agree that we may use your details to respond to this request.
-          </p>
-        </form>
+        </div>
       </section>
     </>
   );

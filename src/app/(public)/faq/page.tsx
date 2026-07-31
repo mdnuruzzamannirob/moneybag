@@ -85,8 +85,8 @@ export default function FaqPage() {
           <div className="rounded-lg border border-border bg-card p-6 sm:p-7" key={title}>
             <FeatureIcon
               tone={
-                ['primary', 'accent', 'violet', 'success'][index] as
-                  'primary' | 'accent' | 'violet' | 'success'
+                ['primary', 'accent', 'info', 'success'][index] as
+                  'primary' | 'accent' | 'info' | 'success'
               }
             >
               <Icon className="size-5" />

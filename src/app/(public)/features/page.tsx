@@ -105,15 +105,14 @@ export default function FeaturesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Built for real life"
+        eyebrow="FEATURES"
         icon={<Sparkles className="size-3.5" />}
         title={
           <>
-            Everything your money needs.{' '}
-            <span className="text-primary">Nothing it doesn’t.</span>
+            Every feature you&apos;ll <span className="text-primary">ever need.</span>
           </>
         }
-        description="A focused set of tools for tracking, planning, saving, and sharing—designed to stay clear as your financial life grows."
+        description="Built for individuals, couples, and families who want a complete view of their money—without the bloat."
       />
       <section className="border-y border-border bg-card/60">
         <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-x-10 gap-y-4 px-4 py-6 text-sm text-muted-foreground sm:px-6 lg:px-8">
@@ -144,7 +143,10 @@ export default function FeaturesPage() {
               {group.items.map(([Icon, title, text], index) => {
                 const I = Icon as typeof LockKeyhole;
                 return (
-                  <article className="rounded-lg border border-border bg-card p-6" key={title as string}>
+                  <article
+                    className="rounded-lg border border-border bg-card p-6"
+                    key={title as string}
+                  >
                     <FeatureIcon
                       tone={
                         ['primary', 'accent', 'success', 'info'][index] as
