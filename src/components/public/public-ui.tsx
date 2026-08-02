@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 export type PublicTone = 'primary' | 'accent' | 'success' | 'warning' | 'info' | 'danger';
 
 const toneClasses: Record<PublicTone, string> = {
-  primary: 'border-primary/20 bg-primary/10 text-primary',
+  primary: 'border-primary/20 bg-primary/15 text-primary',
   accent: 'border-brand-accent/20 bg-brand-accent-soft text-brand-accent',
   success: 'border-success/20 bg-success-soft text-success',
   warning: 'border-warning/20 bg-warning-soft text-warning',
@@ -39,7 +39,7 @@ export function Eyebrow({
   return (
     <AppBadge
       className={cn(
-        'gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-[0.08em]',
+        'gap-1 rounded-md px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wide',
         toneClasses[tone],
         className,
       )}
@@ -110,6 +110,7 @@ export function SectionHeading({
   centered,
   description,
   eyebrow,
+  eyebrowClassName,
   icon,
   title,
   tone = 'primary',
@@ -117,6 +118,7 @@ export function SectionHeading({
   centered?: boolean;
   description?: ReactNode;
   eyebrow?: string;
+  eyebrowClassName?: string;
   icon?: ReactNode;
   title: ReactNode;
   tone?: PublicTone;
@@ -124,7 +126,7 @@ export function SectionHeading({
   return (
     <div className={cn('max-w-2xl', centered && 'mx-auto text-center')}>
       {eyebrow ? (
-        <Eyebrow icon={icon} tone={tone}>
+        <Eyebrow className={eyebrowClassName} icon={icon} tone={tone}>
           {eyebrow}
         </Eyebrow>
       ) : null}

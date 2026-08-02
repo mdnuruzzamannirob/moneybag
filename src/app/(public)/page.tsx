@@ -15,20 +15,12 @@ import {
   ArrowRight,
   BarChart3,
   Check,
-  CreditCard,
-  FileLock2,
-  Gauge,
-  ListChecks,
-  Lock,
   PiggyBank,
-  PlayCircle,
   Repeat2,
-  Sparkles,
   Target,
   TrendingUp,
   Users,
   Wallet,
-  Zap,
 } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -127,46 +119,61 @@ const homeFaq = [
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate overflow-hidden border-b border-border">
-        <DotPattern className="opacity-65" />
-        <div className="relative mx-auto grid min-h-120 max-w-7xl items-center gap-14 px-4 py-12 sm:min-h-150 sm:px-6 sm:py-16 lg:grid-cols-12 lg:px-8">
-          <div className="lg:col-span-7">
-            <Eyebrow icon={<Sparkles className="size-3.5" />}>New · Family sharing on Pro</Eyebrow>
-            <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Take control of your money. <span className="text-primary">Together.</span>
+      <section className="home-hero relative isolate overflow-hidden">
+        <DotPattern className="home-hero-dots opacity-55" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-56 bg-linear-to-b from-transparent via-background/75 to-background"
+        />
+
+        <div className="relative z-2 mx-auto grid min-h-full max-w-7xl items-center gap-14 px-4 pb-24 pt-16 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+          <div>
+            {/* <Eyebrow
+              className="bg-card px-4! py-1! text-xs! normal-case tracking-normal shadow-sm"
+              icon={<span className="size-2.5 rounded-full bg-primary" />}
+            >
+              Your money, your control
+            </Eyebrow> */}
+            <h1 className="mt-6 max-w-3xl text-5xl font-bold leading-[1.04] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
+              Take control of your finances —{' '}
+              <span className="text-primary">
+                together.
+              </span>
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-              MoneyBag is a personal and family finance platform. Track wallets, transactions,
-              budgets, and savings—then share with up to 5 family members on Pro.
+            <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
+              Track income, expenses, budgets, and savings. Share with family. Built for simplicity,
+              designed for the long term.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/register">
-                Start your 14-day trial <ArrowRight className="size-4" />
+                Start 14-day free trial <ArrowRight className="size-4" />
               </ButtonLink>
-              <ButtonLink href="/pricing" tone="secondary">
-                <PlayCircle className="size-4" /> See how it works
+              <ButtonLink href="/features" tone="secondary">
+                See how it works
               </ButtonLink>
             </div>
             <div className="mt-6">
-              <TrustPoints items={['14-day Pro trial', 'No credit card', 'Cancel anytime']} />
+              <TrustPoints items={['No credit card', 'GDPR compliant', 'Cancel anytime']} />
             </div>
           </div>
-          <div className="relative lg:col-span-5">
+          <div className="relative">
             <DashboardPreview />
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-card/60">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-10 text-center sm:grid-cols-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 mx-auto -mt-20 -translate-y-32 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 divide-x divide-y divide-border overflow-hidden rounded-lg border border-border bg-card shadow-sm sm:grid-cols-4 sm:divide-y-0">
           {[
             ['10k+', 'Active users'],
             ['$2M+', 'Tracked monthly'],
-            ['4.8★', 'User rating'],
+            ['4.8 ★', 'Average rating'],
             ['99.9%', 'Uptime'],
           ].map(([value, label]) => (
-            <div key={label}>
-              <p className="text-2xl font-bold sm:text-3xl">{value}</p>
+            <div className="p-6 text-center sm:text-left" key={label}>
+              <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">
+                {value}
+              </p>
               <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{label}</p>
             </div>
           ))}
@@ -175,10 +182,10 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
-          eyebrow="Everything you need"
-          icon={<Zap className="size-3.5" />}
-          title="A finance app that grows with you."
-          description="From your first budget to sharing a family wallet—MoneyBag handles it all in one calm, focused interface."
+          centered
+          eyebrow="FEATURES"
+          title="Everything you need to manage money"
+          description="From daily tracking to family budgets—all in one calm, focused place."
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ icon: Icon, tone, title, text }) => (
@@ -197,72 +204,38 @@ export default function HomePage() {
       </section>
 
       <section className="border-y border-border bg-card">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-          <SectionHeading
-            eyebrow="How it works"
-            icon={<ListChecks className="size-3.5" />}
-            title="Three steps to clarity."
-          />
-          <div className="relative mt-12 grid gap-8 md:grid-cols-3">
-            <div className="absolute left-[16%] right-[16%] top-7 hidden h-px bg-linear-to-r from-transparent via-indigo-200 to-transparent md:block" />
-            {[
-              [
-                '1',
-                'Add your wallets',
-                'Create a wallet for each account—bank, cash, or card—and choose a default.',
-              ],
-              [
-                '2',
-                'Log every transaction',
-                'Add income, expenses, or transfers. Tag, categorize, and add a useful note.',
-              ],
-              [
-                '3',
-                'Budget, save, share',
-                'Plan flexible budgets, track savings goals, and invite your family when ready.',
-              ],
-            ].map(([step, title, text]) => (
-              <div className="relative" key={step}>
-                <span className="grid size-14 place-items-center rounded-lg bg-primary text-lg font-bold text-white shadow-md">
-                  {step}
-                </span>
-                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{text}</p>
-              </div>
-            ))}
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+          <div>
+            <FamilyCard />
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-24">
-        <div className="lg:col-span-5">
-          <FamilyCard />
-        </div>
-        <div className="lg:col-span-7">
-          <Eyebrow icon={<Users className="size-3.5" />}>Pro feature</Eyebrow>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            Money is easier together.
-          </h2>
-          <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            Create a family group, share wallets, split bills, and see who owes whom at a glance.
-            Everyone gets the right level of access.
-          </p>
-          <ul className="mt-6 space-y-3 text-sm">
-            {[
-              'Shared wallets everyone can see',
-              'Equal, percentage, or exact expense splits',
-              'Pooled budgets with helpful alerts',
-              'One-tap settlements with full history',
-            ].map((item) => (
-              <li className="flex items-start gap-3" key={item}>
-                <Check className="mt-0.5 size-5 text-success" />
-                {item}
-              </li>
-            ))}
-          </ul>
-          <TextLink className="mt-7" href="/pricing">
-            Explore family features
-          </TextLink>
+          <div>
+            <Eyebrow tone="accent">
+              FOR FAMILIES
+            </Eyebrow>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              Manage money together, <span className="text-primary">without the drama.</span>
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-muted-foreground">
+              Create a family group, share wallets, split bills, and see who owes whom at a glance.
+              Everyone gets the right level of access.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm">
+              {[
+                'Shared wallets everyone can see',
+                'Equal, percentage, or exact expense splits',
+                'Pooled budgets with helpful alerts',
+                'One-tap settlements with full history',
+              ].map((item) => (
+                <li className="flex items-start gap-3" key={item}>
+                  <Check className="mt-0.5 size-5 text-success" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <TextLink className="mt-7" href="/features">
+              Explore family features
+            </TextLink>
+          </div>
         </div>
       </section>
 
@@ -297,50 +270,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <SectionHeading
-          centered
-          description="Start free, upgrade when you need unlimited tracking and family sharing."
-          eyebrow="SIMPLE PRICING"
-          title="Plans that grow with you"
-        />
-        <div className="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-3">
-          <MarketingCard>
-            <p className="text-sm font-bold text-muted-foreground">Free</p>
-            <p className="mt-2 text-4xl font-bold">$0</p>
-            <p className="mt-1 text-sm text-muted-foreground">Forever</p>
-            <p className="mt-5 text-sm leading-6 text-muted-foreground">
-              One wallet, 50 monthly transactions, two budgets, and one savings goal.
-            </p>
-          </MarketingCard>
-          <MarketingCard className="border-2 border-primary shadow-lg">
-            <Eyebrow>BEST FOR MOST</Eyebrow>
-            <p className="mt-4 text-sm font-bold text-primary">Pro Monthly</p>
-            <p className="mt-2 text-4xl font-bold">$4.99</p>
-            <p className="mt-1 text-sm text-muted-foreground">per month</p>
-            <p className="mt-5 text-sm leading-6 text-muted-foreground">
-              Unlimited tracking, advanced reports, CSV import, and family sharing.
-            </p>
-          </MarketingCard>
-          <MarketingCard className="bg-foreground text-background">
-            <p className="text-sm font-bold text-brand-accent">Unlimited</p>
-            <p className="mt-2 text-4xl font-bold">$99.99</p>
-            <p className="mt-1 text-sm text-background/65">One-time payment</p>
-            <p className="mt-5 text-sm leading-6 text-background/75">
-              Every Pro feature now and every future Pro upgrade, with no recurring bill.
-            </p>
-          </MarketingCard>
-        </div>
-        <div className="mt-8 text-center">
-          <ButtonLink href="/pricing">
-            See full pricing <ArrowRight className="size-4" />
-          </ButtonLink>
-        </div>
-      </section>
-
       <section className="border-y border-border bg-card">
         <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-          <SectionHeading centered eyebrow="FAQ" title="Frequently asked" />
+          <SectionHeading centered title="Frequently asked" />
           <div className="mt-8">
             <FaqList items={homeFaq} />
           </div>
@@ -350,50 +282,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="security" className="scroll-mt-24 border-y border-border bg-card">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-8 lg:py-24">
-          <div>
-            <Eyebrow>Security & privacy</Eyebrow>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight">Built to protect your data.</h2>
-            <p className="mt-3 text-muted-foreground">
-              Your financial data is sensitive. We treat it that way.
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 md:col-span-2">
-            {[
-              [
-                Lock,
-                'Encrypted sessions',
-                'Strong authentication with short-lived sessions and secure refresh.',
-              ],
-              [
-                CreditCard,
-                'Safe payments',
-                'Payment details stay with our PCI-compliant payment provider.',
-              ],
-              [
-                Gauge,
-                'Abuse protection',
-                'Rate limits and monitoring protect sensitive account actions.',
-              ],
-              [
-                FileLock2,
-                'Privacy controls',
-                'Export your data or permanently delete your account at any time.',
-              ],
-            ].map(([Icon, title, text]) => {
-              const I = Icon as typeof Lock;
-              return (
-                <article className="rounded-lg border border-border p-5" key={title as string}>
-                  <I className="size-5 text-primary" />
-                  <h3 className="mt-3 font-semibold">{title as string}</h3>
-                  <p className="mt-1 text-sm leading-6 text-muted-foreground">{text as string}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
       <TrialCta />
     </>
   );
@@ -493,7 +381,7 @@ function FamilyCard() {
           <p className="text-xs text-muted-foreground">Settle up</p>
           <p className="text-sm font-semibold">Jordan → Amelia</p>
         </div>
-        <span className="ui-gradient-primary inline-flex items-center justify-center rounded-md transition-[transform,box-shadow,filter] hover:-translate-y-px hover:brightness-[.98] hover:shadow-sm px-3 py-2 text-xs font-semibold">
+        <span className="ui-gradient-primary inline-flex items-center justify-center rounded-md px-3 py-2 text-xs font-semibold">
           Settle $48.50
         </span>
       </div>

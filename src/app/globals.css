@@ -304,6 +304,23 @@
 }
 
 @layer utilities {
+  .home-hero {
+    min-height: calc(100dvh - 4rem);
+    max-height: none;
+  }
+
+  @media (min-width: 1024px) {
+    .home-hero {
+      max-height: 1000px;
+    }
+  }
+
+  .home-hero-dots {
+    background-size: 24px 24px;
+    mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+  }
+
   .ui-gradient-primary {
     background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-hover));
     color: var(--primary-foreground);
