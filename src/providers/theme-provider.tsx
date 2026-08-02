@@ -14,20 +14,25 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-function getStoredTheme(): Theme {
-  if (typeof window === 'undefined') return 'system';
-
-  const storedTheme = window.localStorage.getItem('moneybag-theme');
-  if (storedTheme === 'dark' || storedTheme === 'light' || storedTheme === 'system') return storedTheme;
-
-  return 'system';
-}
-
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getStoredTheme);
+  // Keep the first client render identical to the server render. The saved
+  // preference is loaded after hydration to avoid changing button attributes
+  // while React is attaching to the server HTML.
+  const [theme, setTheme] = useState<Theme>('system');
+  const [initialized, setInitialized] = useState(false);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light');
 
   useEffect(() => {
+    const storedTheme = window.localStorage.getItem('moneybag-theme');
+    if (storedTheme === 'dark' || storedTheme === 'light' || storedTheme === 'system') {
+      setTheme(storedTheme);
+    }
+    setInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (!initialized) return;
+
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const applyTheme = (resolved: ResolvedTheme) => {
       const root = document.documentElement;
@@ -48,7 +53,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const handleChange = () => applyTheme(resolveTheme());
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [theme]);
+  }, [initialized, theme]);
 
   const value = useMemo(
     () => ({
