@@ -112,7 +112,7 @@ function ThemeSelector({ onChange, theme }: { onChange: (theme: Theme) => void; 
   return (
     <div
       aria-label="Theme preference"
-      className="flex items-center rounded border border-border bg-secondary p-0.5"
+      className="flex w-fit self-start items-center rounded border border-border bg-secondary p-0.5 sm:self-auto"
       role="group"
     >
       {themeOptions.map(({ icon: Icon, value }) => (

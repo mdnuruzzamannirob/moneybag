@@ -4,7 +4,6 @@ import { AppButton, AppSheet } from '@/components/app-ui';
 import { cn } from '@/lib/utils';
 import {
   ArrowRight,
-  CheckCircle2,
   ChevronDown,
   ContactRound,
   Menu,
@@ -127,8 +126,12 @@ export default function SiteHeader({
           >
             Log in
           </AppButton>
-          <AppButton nativeButton={false} render={<Link href="/register" />}>
-            Get started <ArrowRight className="size-4" />
+          <AppButton
+            className="h-8! px-2.5! text-xs sm:h-9! sm:px-3! sm:text-sm"
+            nativeButton={false}
+            render={<Link href="/register" />}
+          >
+            Get started <ArrowRight className="size-3.5 sm:size-4" />
           </AppButton>
           <AppButton
             aria-label="Open navigation"
@@ -143,7 +146,7 @@ export default function SiteHeader({
       </div>
 
       <AppSheet
-        description="Explore MoneyBag product pages and resources."
+        bodyClassName="overscroll-contain p-4"
         footer={
           <div className="grid w-full grid-cols-2 gap-2">
             <AppButton nativeButton={false} render={<Link href="/login" />} tone="secondary">
@@ -154,6 +157,8 @@ export default function SiteHeader({
             </AppButton>
           </div>
         }
+        footerClassName="p-4"
+        headerClassName="p-4"
         onOpenChange={setMenuOpen}
         open={menuOpen}
         title={<Logo className="font-sans" href="/" />}
@@ -205,7 +210,7 @@ function MobileNavGroup({
         {items.map((item) => (
           <Link
             className={cn(
-              'flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground',
+              'flex items-center rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground',
               isActive(pathname, item.href) && 'bg-primary/10 text-primary',
             )}
             href={item.href}
@@ -213,7 +218,6 @@ function MobileNavGroup({
             onClick={onNavigate}
           >
             {item.label}
-            {isActive(pathname, item.href) ? <CheckCircle2 className="size-4" /> : null}
           </Link>
         ))}
       </nav>
