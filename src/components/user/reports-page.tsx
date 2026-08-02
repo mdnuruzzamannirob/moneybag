@@ -183,7 +183,7 @@ export function ReportsPage() {
         title="Reports"
       />
 
-      <div className="flex flex-col gap-4 border-b border-border pb-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="min-w-0 lg:w-auto">
           <AppSegmentedControl
             className="w-full **:data-[slot=toggle-group-item]:px-1.5 **:data-[slot=toggle-group-item]:text-xs sm:**:data-[slot=toggle-group-item]:px-3 sm:**:data-[slot=toggle-group-item]:text-sm lg:w-145"
