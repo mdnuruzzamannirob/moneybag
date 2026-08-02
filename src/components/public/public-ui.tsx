@@ -65,6 +65,7 @@ export function DotPattern({ className }: { className?: string }) {
 
 export function PageHero({
   children,
+  compact = false,
   description,
   eyebrow,
   icon,
@@ -80,7 +81,12 @@ export function PageHero({
   tone?: PublicTone;
 }) {
   return (
-    <section className="relative isolate flex min-h-70 items-center overflow-hidden border-b border-border px-0 py-12 sm:min-h-80">
+    <section
+      className={cn(
+        'relative isolate flex items-center overflow-hidden border-b border-border px-0 text-center',
+        compact ? 'min-h-52 py-10 sm:min-h-60 sm:py-12' : 'min-h-70 py-12 sm:min-h-80',
+      )}
+    >
       <DotPattern className="opacity-65" />
       <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
@@ -122,12 +128,7 @@ export function SectionHeading({
           {eyebrow}
         </Eyebrow>
       ) : null}
-      <h2
-        className={cn(
-          'text-3xl font-bold tracking-tight sm:text-4xl',
-          eyebrow && 'mt-4',
-        )}
-      >
+      <h2 className={cn('text-3xl font-bold tracking-tight sm:text-4xl', eyebrow && 'mt-4')}>
         {title}
       </h2>
       {description ? (
@@ -309,9 +310,7 @@ export function TrialCta({
       <div className="ui-gradient-cta-card relative isolate overflow-hidden rounded-lg px-6 py-12 text-center sm:px-12 sm:py-14">
         <DotPattern className="opacity-20" />
         <div className="relative">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            {title}
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h2>
           <p className="mx-auto mt-3 max-w-xl text-white/85">{description}</p>
           <ButtonLink
             className="ui-light-control mt-7 border-0! hover:brightness-95"

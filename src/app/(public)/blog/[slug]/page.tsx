@@ -45,9 +45,15 @@ export default async function BlogPostPage({ params }: PageProps<'/blog/[slug]'>
           </div>
         </PageHero>
         <div
-          className={`pointer-events-none mx-auto mt-14 h-72 max-w-5xl rounded-lg border border-border bg-linear-to-br shadow-lg ${post.color} sm:h-96`}
-        />
-        <div className="[&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-[-0.01em] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold [&_p]:mb-4 [&_p]:leading-[1.8] [&_p]:text-muted-foreground [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-muted-foreground [&_li]:mb-1.5 [&_li]:leading-[1.7] [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-[3px] mx-auto max-w-3xl px-4 py-14 sm:px-6">
+          className={`relative mx-4 mt-12 h-64 overflow-hidden rounded-lg border border-border bg-linear-to-br shadow-lg sm:mx-auto sm:mt-14 sm:h-96 sm:max-w-5xl ${post.color}`}
+        >
+          <img
+            alt="Illustration for this MoneyBag article"
+            className="size-full object-cover opacity-90 mix-blend-multiply"
+            src="/images/blog/finance-cover.png"
+          />
+        </div>
+        <div className="[&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-[-0.01em] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold [&_p]:mb-4 [&_p]:leading-[1.8] [&_p]:text-muted-foreground [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-muted-foreground [&_li]:mb-1.5 [&_li]:leading-[1.7] [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-[3px] mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
           {post.sections.map((section, index) => (
             <section key={section.heading ?? index}>
               {section.heading && <h2>{section.heading}</h2>}
@@ -73,7 +79,7 @@ export default async function BlogPostPage({ params }: PageProps<'/blog/[slug]'>
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
             {related.map((item) => (
               <Link
-                className="rounded-lg border border-border bg-card p-6"
+                className="rounded-lg border border-border bg-card p-6 transition-shadow hover:shadow-md"
                 href={`/blog/${item.slug}`}
                 key={item.slug}
               >

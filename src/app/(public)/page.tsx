@@ -129,7 +129,7 @@ export default function HomePage() {
     <>
       <section className="relative isolate overflow-hidden border-b border-border">
         <DotPattern className="opacity-65" />
-        <div className="relative mx-auto grid min-h-[400px] max-w-7xl items-center gap-14 px-4 py-12 sm:min-h-[440px] sm:px-6 sm:py-16 lg:grid-cols-12 lg:px-8">
+        <div className="relative mx-auto grid min-h-120 max-w-7xl items-center gap-14 px-4 py-12 sm:min-h-150 sm:px-6 sm:py-16 lg:grid-cols-12 lg:px-8">
           <div className="lg:col-span-7">
             <Eyebrow icon={<Sparkles className="size-3.5" />}>New · Family sharing on Pro</Eyebrow>
             <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
@@ -354,9 +354,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-8 lg:py-24">
           <div>
             <Eyebrow>Security & privacy</Eyebrow>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight">
-              Built to protect your data.
-            </h2>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight">Built to protect your data.</h2>
             <p className="mt-3 text-muted-foreground">
               Your financial data is sensitive. We treat it that way.
             </p>
