@@ -1,5 +1,12 @@
-﻿const Dashboard = () => {
-  return <div>Dashboard</div>;
+import { FamilyDashboard } from '@/components/family/family-dashboard';
+import { familyDashboardDemoData } from '@/lib/dashboard-data';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Family dashboard',
+  description: 'Track shared balances, budgets, contributions, and family activity.',
 };
 
-export default Dashboard;
+export default function Page() {
+  return <FamilyDashboard data={familyDashboardDemoData} />;
+}

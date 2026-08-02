@@ -28,7 +28,7 @@ export function AppTable<T>({
   rows: readonly T[];
 }) {
   return (
-    <div className={cn('overflow-hidden bg-card', className)}>
+    <div className={cn('overflow-hidden bg-card text-card-foreground', className)}>
       <div className="overflow-x-auto">
         <Table className="min-w-180">
           <TableHeader className="border-b border-border/70 bg-muted/40">

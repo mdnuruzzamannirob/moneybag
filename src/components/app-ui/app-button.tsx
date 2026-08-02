@@ -40,7 +40,8 @@ export function AppButton({
         'rounded-md bg-clip-border font-medium transition-[transform,background-color,border-color,box-shadow,filter] active:scale-[.98]',
         tone === 'primary' &&
           'border-0! bg-clip-border ui-gradient-primary focus-visible:border-0! focus-visible:ring-0 hover:text-primary-foreground! hover:brightness-[.98] hover:shadow-sm',
-        tone === 'secondary' && 'border-border! bg-card hover:border-border! hover:bg-secondary',
+        tone === 'secondary' &&
+          'border-border! bg-card! text-muted-foreground hover:border-border! hover:bg-secondary! hover:text-foreground',
         tone === 'ghost' && 'border-transparent! bg-transparent hover:bg-muted',
         tone === 'success' &&
           'border-0! ui-gradient-success hover:text-primary-foreground! hover:brightness-[.98] hover:shadow-sm',

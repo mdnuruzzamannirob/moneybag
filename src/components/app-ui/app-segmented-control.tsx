@@ -30,7 +30,7 @@ export function AppSegmentedControl({
     >
       {options.map((option) => (
         <ToggleGroupItem
-          className="ui-active-gradient h-8! min-w-0 rounded-sm! px-3 text-sm"
+          className="ui-active-gradient h-8! min-w-0 rounded-sm! px-3 text-sm text-muted-foreground hover:text-foreground"
           key={option.value}
           value={option.value}
         >

@@ -91,3 +91,32 @@ export type AdminDashboardData = {
   recentPayments: AdminActivityItem[];
   services: ServiceHealth[];
 };
+
+export type FamilyBalanceSummary = {
+  amount: number;
+  id: number;
+  initials: string;
+  name: string;
+  type: 'owes_you' | 'you_owe';
+};
+
+export type FamilyActivityItem = {
+  action: string;
+  amount: number;
+  id: number;
+  initials: string;
+  member: string;
+  meta: string;
+  timestamp: string;
+  type: 'income' | 'expense' | 'settlement';
+};
+
+export type FamilyDashboardData = {
+  family: { name: string; memberCount: number; period: string };
+  metrics: DashboardMetric[];
+  cashFlowByYear: Record<string, IncomeExpensePoint[]>;
+  categories: DistributionItem[];
+  budgets: BudgetSummary[];
+  balances: FamilyBalanceSummary[];
+  activities: FamilyActivityItem[];
+};
