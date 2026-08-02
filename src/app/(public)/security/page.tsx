@@ -101,7 +101,7 @@ export default function SecurityPage() {
               <FeatureIcon tone={tone}>
                 <Icon />
               </FeatureIcon>
-              <h2 className="mt-4 font-ubuntu text-lg font-bold">{title}</h2>
+              <h2 className="mt-4 text-lg font-bold">{title}</h2>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
             </MarketingCard>
           ))}
@@ -109,7 +109,7 @@ export default function SecurityPage() {
 
         <MarketingCard className="mt-14" padding="lg">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="font-ubuntu text-2xl font-bold">Compliance & certifications</h2>
+            <h2 className="text-2xl font-bold">Compliance & certifications</h2>
             <AppBadge status="success">PRIVACY FIRST</AppBadge>
           </div>
           <CheckList

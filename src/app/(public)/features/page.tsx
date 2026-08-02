@@ -155,7 +155,7 @@ export default function FeaturesPage() {
                     >
                       <I className="size-5" />
                     </FeatureIcon>
-                    <h3 className="mt-4 font-ubuntu text-lg font-semibold">{title as string}</h3>
+                    <h3 className="mt-4 text-lg font-semibold">{title as string}</h3>
                     <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
                       {text as string}
                     </p>

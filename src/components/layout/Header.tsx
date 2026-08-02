@@ -1,6 +1,6 @@
 'use client';
 
-import { AppButton, AppDropdownMenu, AppSheet } from '@/components/app-ui';
+import { AppButton, AppSheet } from '@/components/app-ui';
 import { cn } from '@/lib/utils';
 import {
   ArrowRight,
@@ -15,7 +15,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import Logo from '../shared/Logo';
 
@@ -29,12 +28,32 @@ const primaryNavigation = [
 ] as const;
 
 const moreNavigation = [
-  { href: '/security', icon: ShieldCheck, label: 'Security' },
-  { href: '/integrations', icon: PlugZap, label: 'Integrations' },
-  { href: '/changelog', icon: Sparkles, label: 'Changelog' },
-  { href: '/press', icon: Newspaper, label: 'Press kit' },
-  { href: '/about', icon: ContactRound, label: 'About' },
-  { href: '/careers', icon: BriefcaseBusiness, label: 'Careers' },
+  {
+    href: '/security',
+    icon: ShieldCheck,
+    iconClassName: 'text-[#10b981] dark:text-[#4ade80]',
+    label: 'Security',
+  },
+  {
+    href: '/integrations',
+    icon: PlugZap,
+    iconClassName: 'text-[#3b82f6] dark:text-[#60a5fa]',
+    label: 'Integrations',
+  },
+  {
+    href: '/changelog',
+    icon: Sparkles,
+    iconClassName: 'text-[#ec4899] dark:text-[#f472b6]',
+    label: 'Changelog',
+  },
+  {
+    href: '/press',
+    icon: Newspaper,
+    iconClassName: 'text-[#f59e0b] dark:text-[#fbbf24]',
+    label: 'Press kit',
+  },
+  { href: '/about', icon: ContactRound, iconClassName: 'text-primary', label: 'About' },
+  { href: '/careers', icon: BriefcaseBusiness, iconClassName: 'text-primary', label: 'Careers' },
 ] as const;
 
 const resourceNavigation = [
@@ -56,13 +75,12 @@ export default function SiteHeader({
   pathname: string;
   setMenuOpen: (open: boolean) => void;
 }) {
-  const router = useRouter();
   const moreIsActive = moreNavigation.some((item) => isActive(pathname, item.href));
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Logo href="/" />
+        <Logo className="font-sans" href="/" />
         <nav
           className="hidden items-center gap-6 text-sm font-semibold lg:flex"
           aria-label="Main navigation"
@@ -70,9 +88,9 @@ export default function SiteHeader({
           {primaryNavigation.map((item) => (
             <Link
               className={cn(
-                'relative py-5 text-muted-foreground transition-colors hover:text-foreground',
+                'relative text-muted-foreground transition-colors hover:text-foreground',
                 isActive(pathname, item.href) &&
-                  'text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-t-full after:bg-primary',
+                  'text-primary after:absolute after:inset-x-0 after:-bottom-5.5 after:h-0.5 after:rounded-t-full after:bg-primary',
               )}
               href={item.href}
               key={item.href}
@@ -80,22 +98,40 @@ export default function SiteHeader({
               {item.label}
             </Link>
           ))}
-          <AppDropdownMenu
-            items={moreNavigation.map((item) => ({
-              icon: <item.icon className="size-4 text-primary" />,
-              label: item.label,
-              onSelect: () => router.push(item.href),
-            }))}
-            trigger={
-              <AppButton
-                className={cn('px-2!', moreIsActive && 'text-primary')}
-                size="sm"
-                tone="ghost"
-              >
-                More <ChevronDown className="size-3.5" />
-              </AppButton>
-            }
-          />
+          <div className="group relative">
+            <AppButton
+              aria-haspopup="menu"
+              className={cn(
+                'text-sm font-semibold',
+                moreIsActive &&
+                  'text-primary after:absolute after:inset-x-0 after:-bottom-4 after:h-0.5 after:rounded-t-full after:bg-primary',
+              )}
+              size="sm"
+              tone="ghost"
+              type="button"
+            >
+              More
+              <ChevronDown className="size-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
+            </AppButton>
+            <div
+              className="invisible absolute right-0 top-full z-50 w-56 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+              role="menu"
+            >
+              <div className="rounded-lg border border-border bg-card p-2 shadow-[0_8px_24px_rgba(15,23,42,0.08),0_20px_48px_rgba(15,23,42,0.10)]">
+                {moreNavigation.map((item) => (
+                  <Link
+                    className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors hover:bg-secondary"
+                    href={item.href}
+                    key={item.href}
+                    role="menuitem"
+                  >
+                    <item.icon className={cn('size-4', item.iconClassName)} />
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -136,7 +172,7 @@ export default function SiteHeader({
         }
         onOpenChange={setMenuOpen}
         open={menuOpen}
-        title={<Logo href="/" />}
+        title={<Logo className="font-sans" href="/" />}
       >
         <MobileNavGroup
           items={primaryNavigation}

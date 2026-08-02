@@ -38,7 +38,7 @@ export default function BlogPage() {
           </div>
           <div className="flex flex-col justify-center p-7 sm:p-10">
             <p className="text-sm font-semibold text-primary">{featured.category}</p>
-            <h2 className="mt-3 font-ubuntu text-3xl font-bold leading-tight tracking-tight group-hover:text-primary">
+            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight group-hover:text-primary">
               {featured.title}
             </h2>
             <p className="mt-4 leading-7 text-muted-foreground">{featured.excerpt}</p>
@@ -68,7 +68,7 @@ export default function BlogPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                     {post.category}
                   </p>
-                  <h2 className="mt-2 font-ubuntu text-xl font-bold leading-snug">{post.title}</h2>
+                  <h2 className="mt-2 text-xl font-bold leading-snug">{post.title}</h2>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">{post.excerpt}</p>
                   <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground">
                     <span>{post.date}</span>

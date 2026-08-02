@@ -39,7 +39,7 @@ export function Eyebrow({
   return (
     <AppBadge
       className={cn(
-        'gap-1.5 rounded-full border px-3 py-1 text-[11px] font-bold tracking-[0.08em]',
+        'gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-bold tracking-[0.08em]',
         toneClasses[tone],
         className,
       )}
@@ -65,7 +65,6 @@ export function DotPattern({ className }: { className?: string }) {
 
 export function PageHero({
   children,
-  compact,
   description,
   eyebrow,
   icon,
@@ -81,30 +80,14 @@ export function PageHero({
   tone?: PublicTone;
 }) {
   return (
-    <section
-      className={cn(
-        'relative isolate overflow-hidden border-b border-border',
-        compact ? 'py-12 sm:py-14' : 'py-16 sm:py-20',
-      )}
-    >
+    <section className="relative isolate flex min-h-70 items-center overflow-hidden border-b border-border px-0 py-12 sm:min-h-80">
       <DotPattern className="opacity-65" />
-      <div
-        className={cn(
-          'pointer-events-none absolute -right-32 -top-48 size-128 rounded-full blur-3xl opacity-70',
-          iconToneClasses[tone].split(' ')[0],
-        )}
-      />
       <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <Eyebrow icon={icon} tone={tone}>
             {eyebrow}
           </Eyebrow>
-          <h1
-            className={cn(
-              'mt-4 font-ubuntu font-bold leading-[1.08] tracking-tight',
-              compact ? 'text-4xl sm:text-5xl' : 'text-4xl sm:text-5xl lg:text-6xl',
-            )}
-          >
+          <h1 className="mt-4 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
             {title}
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
@@ -141,7 +124,7 @@ export function SectionHeading({
       ) : null}
       <h2
         className={cn(
-          'font-ubuntu text-3xl font-bold tracking-tight sm:text-4xl',
+          'text-3xl font-bold tracking-tight sm:text-4xl',
           eyebrow && 'mt-4',
         )}
       >
@@ -182,13 +165,7 @@ export function MarketingCard({
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }) {
   return (
-    <AppCard
-      className={cn(
-        'rounded-2xl transition-[transform,border-color,box-shadow] duration-200',
-        className,
-      )}
-      padding={padding}
-    >
+    <AppCard className={cn('rounded-lg', className)} padding={padding}>
       {children}
     </AppCard>
   );
@@ -206,7 +183,7 @@ export function FeatureIcon({
   return (
     <span
       className={cn(
-        'grid size-11 shrink-0 place-items-center rounded-xl [&>svg]:size-5',
+        'grid size-11 shrink-0 place-items-center rounded-lg [&>svg]:size-5',
         iconToneClasses[tone],
         className,
       )}
@@ -306,7 +283,7 @@ export function FaqList({ items }: { items: readonly FaqItem[] }) {
     <div className="space-y-3">
       {items.map((item) => (
         <details
-          className="group rounded-xl border border-border bg-background transition-[background-color,border-color,box-shadow] open:border-primary/30 open:bg-card open:shadow-sm"
+          className="group rounded-lg border border-border bg-background transition-[background-color,border-color,box-shadow] open:border-primary/30 open:bg-card open:shadow-sm"
           key={item.question}
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold">
@@ -329,10 +306,10 @@ export function TrialCta({
 }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-      <div className="ui-gradient-cta-card relative isolate overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-12 sm:py-14">
+      <div className="ui-gradient-cta-card relative isolate overflow-hidden rounded-lg px-6 py-12 text-center sm:px-12 sm:py-14">
         <DotPattern className="opacity-20" />
         <div className="relative">
-          <h2 className="font-ubuntu text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             {title}
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-white/85">{description}</p>

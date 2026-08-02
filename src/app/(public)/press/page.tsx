@@ -78,7 +78,7 @@ export default function PressPage() {
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {facts.map(([value, label]) => (
             <MarketingCard className="text-center" key={label} padding="md">
-              <p className="font-ubuntu text-3xl font-bold tracking-tight text-info">{value}</p>
+              <p className="text-3xl font-bold tracking-tight text-info">{value}</p>
               <p className="mt-1 text-sm text-muted-foreground">{label}</p>
             </MarketingCard>
           ))}
@@ -124,7 +124,7 @@ export default function PressPage() {
               <FeatureIcon tone="info">
                 <ImageIcon />
               </FeatureIcon>
-              <h3 className="mt-5 font-ubuntu text-xl font-bold">
+              <h3 className="mt-5 text-xl font-bold">
                 Need screenshots or interviews?
               </h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -157,7 +157,7 @@ export default function PressPage() {
               <FeatureIcon tone="accent">
                 <Icon />
               </FeatureIcon>
-              <h3 className="mt-5 font-ubuntu text-lg font-bold">{title}</h3>
+              <h3 className="mt-5 text-lg font-bold">{title}</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
             </MarketingCard>
           ))}

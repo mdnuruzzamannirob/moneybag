@@ -2,9 +2,11 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'system';
+type ResolvedTheme = Exclude<Theme, 'system'>;
 
 type ThemeContextValue = {
+  resolvedTheme: ResolvedTheme;
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
@@ -13,32 +15,52 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function getStoredTheme(): Theme {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'system';
 
   const storedTheme = window.localStorage.getItem('moneybag-theme');
-  if (storedTheme === 'dark' || storedTheme === 'light') return storedTheme;
+  if (storedTheme === 'dark' || storedTheme === 'light' || storedTheme === 'system') return storedTheme;
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'system';
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(getStoredTheme);
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('light');
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle('dark', theme === 'dark');
-    root.style.colorScheme = theme;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const applyTheme = (resolved: ResolvedTheme) => {
+      const root = document.documentElement;
+      root.classList.toggle('dark', resolved === 'dark');
+      root.style.colorScheme = resolved;
+      setResolvedTheme(resolved);
+      window.dispatchEvent(new CustomEvent('moneybag-theme-change', { detail: resolved }));
+    };
+
+    const resolveTheme = (): ResolvedTheme =>
+      theme === 'system' ? (mediaQuery.matches ? 'dark' : 'light') : theme;
+
+    applyTheme(resolveTheme());
     window.localStorage.setItem('moneybag-theme', theme);
-    window.dispatchEvent(new CustomEvent('moneybag-theme-change', { detail: theme }));
+
+    if (theme !== 'system') return;
+
+    const handleChange = () => applyTheme(resolveTheme());
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
   const value = useMemo(
     () => ({
+      resolvedTheme,
       theme,
       setTheme,
-      toggleTheme: () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')),
+      toggleTheme: () =>
+        setTheme((current) =>
+          current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light',
+        ),
     }),
-    [theme],
+    [resolvedTheme, theme],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

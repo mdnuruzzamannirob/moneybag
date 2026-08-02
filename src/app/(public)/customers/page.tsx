@@ -107,7 +107,7 @@ export default function CustomersPage() {
             ['42', 'Countries'],
           ].map(([value, label]) => (
             <MarketingCard className="text-center" key={label} padding="md">
-              <p className="font-ubuntu text-3xl font-bold text-primary">{value}</p>
+              <p className="text-3xl font-bold text-primary">{value}</p>
               <p className="mt-1 text-xs text-muted-foreground">{label}</p>
             </MarketingCard>
           ))}
@@ -115,9 +115,9 @@ export default function CustomersPage() {
 
         <div className="mt-12 grid gap-5 lg:grid-cols-2">
           {featuredStories.map((story) => (
-            <MarketingCard className="hover:border-primary/50 hover:shadow-lg" key={story.name}>
+            <MarketingCard key={story.name}>
               <Stars />
-              <h2 className="mt-4 font-ubuntu text-xl font-bold">{story.title}</h2>
+              <h2 className="mt-4 text-xl font-bold">{story.title}</h2>
               <blockquote className="mt-3 text-sm leading-7 text-muted-foreground">
                 “{story.quote}”
               </blockquote>
@@ -134,7 +134,7 @@ export default function CustomersPage() {
           ))}
         </div>
 
-        <h2 className="mb-6 mt-14 font-ubuntu text-2xl font-bold">More love from our users</h2>
+        <h2 className="mb-6 mt-14 text-2xl font-bold">More love from our users</h2>
         <div className="grid gap-5 md:grid-cols-3">
           {testimonials.map(([initials, name, role, quote]) => (
             <MarketingCard key={name}>
@@ -153,14 +153,14 @@ export default function CustomersPage() {
           ))}
         </div>
 
-        <h2 className="mb-6 mt-14 font-ubuntu text-2xl font-bold">Who uses MoneyBag?</h2>
+        <h2 className="mb-6 mt-14 text-2xl font-bold">Who uses MoneyBag?</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {useCases.map(({ icon: Icon, label, share, text, tone }) => (
             <MarketingCard className="text-center" key={label} padding="md">
               <FeatureIcon className="mx-auto" tone={tone}>
                 <Icon />
               </FeatureIcon>
-              <p className="mt-3 font-ubuntu text-2xl font-bold text-primary">{share}</p>
+              <p className="mt-3 text-2xl font-bold text-primary">{share}</p>
               <h3 className="mt-1 text-sm font-bold">{label}</h3>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">{text}</p>
             </MarketingCard>

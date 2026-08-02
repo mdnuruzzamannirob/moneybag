@@ -129,13 +129,13 @@ export default function HomePage() {
     <>
       <section className="relative isolate overflow-hidden border-b border-border">
         <DotPattern className="opacity-65" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-24 pt-16 sm:px-6 lg:grid-cols-12 lg:px-8 lg:pb-28 lg:pt-24">
+        <div className="relative mx-auto grid min-h-[400px] max-w-7xl items-center gap-14 px-4 py-12 sm:min-h-[440px] sm:px-6 sm:py-16 lg:grid-cols-12 lg:px-8">
           <div className="lg:col-span-7">
             <Eyebrow icon={<Sparkles className="size-3.5" />}>New · Family sharing on Pro</Eyebrow>
-            <h1 className="mt-5 max-w-3xl font-ubuntu text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
               Take control of your money. <span className="text-primary">Together.</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
               MoneyBag is a personal and family finance platform. Track wallets, transactions,
               budgets, and savings—then share with up to 5 family members on Pro.
             </p>
@@ -152,8 +152,6 @@ export default function HomePage() {
             </div>
           </div>
           <div className="relative lg:col-span-5">
-            <div className="absolute -right-10 -top-12 size-56 rounded-full bg-brand-accent/20 blur-3xl" />
-            <div className="absolute -bottom-12 -left-10 size-56 rounded-full bg-primary/20 blur-3xl" />
             <DashboardPreview />
           </div>
         </div>
@@ -168,7 +166,7 @@ export default function HomePage() {
             ['99.9%', 'Uptime'],
           ].map(([value, label]) => (
             <div key={label}>
-              <p className="font-ubuntu text-2xl font-bold sm:text-3xl">{value}</p>
+              <p className="text-2xl font-bold sm:text-3xl">{value}</p>
               <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{label}</p>
             </div>
           ))}
@@ -184,14 +182,11 @@ export default function HomePage() {
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ icon: Icon, tone, title, text }) => (
-            <MarketingCard
-              className="hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
-              key={title}
-            >
+            <MarketingCard key={title}>
               <FeatureIcon tone={tone}>
                 <Icon className="size-5" />
               </FeatureIcon>
-              <h3 className="mt-4 font-ubuntu text-lg font-semibold">{title}</h3>
+              <h3 className="mt-4 text-lg font-semibold">{title}</h3>
               <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{text}</p>
             </MarketingCard>
           ))}
@@ -231,7 +226,7 @@ export default function HomePage() {
                 <span className="grid size-14 place-items-center rounded-lg bg-primary text-lg font-bold text-white shadow-md">
                   {step}
                 </span>
-                <h3 className="mt-5 font-ubuntu text-lg font-semibold">{title}</h3>
+                <h3 className="mt-5 text-lg font-semibold">{title}</h3>
                 <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{text}</p>
               </div>
             ))}
@@ -245,7 +240,7 @@ export default function HomePage() {
         </div>
         <div className="lg:col-span-7">
           <Eyebrow icon={<Users className="size-3.5" />}>Pro feature</Eyebrow>
-          <h2 className="mt-4 font-ubuntu text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
             Money is easier together.
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
@@ -312,7 +307,7 @@ export default function HomePage() {
         <div className="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-3">
           <MarketingCard>
             <p className="text-sm font-bold text-muted-foreground">Free</p>
-            <p className="mt-2 font-ubuntu text-4xl font-bold">$0</p>
+            <p className="mt-2 text-4xl font-bold">$0</p>
             <p className="mt-1 text-sm text-muted-foreground">Forever</p>
             <p className="mt-5 text-sm leading-6 text-muted-foreground">
               One wallet, 50 monthly transactions, two budgets, and one savings goal.
@@ -321,7 +316,7 @@ export default function HomePage() {
           <MarketingCard className="border-2 border-primary shadow-lg">
             <Eyebrow>BEST FOR MOST</Eyebrow>
             <p className="mt-4 text-sm font-bold text-primary">Pro Monthly</p>
-            <p className="mt-2 font-ubuntu text-4xl font-bold">$4.99</p>
+            <p className="mt-2 text-4xl font-bold">$4.99</p>
             <p className="mt-1 text-sm text-muted-foreground">per month</p>
             <p className="mt-5 text-sm leading-6 text-muted-foreground">
               Unlimited tracking, advanced reports, CSV import, and family sharing.
@@ -329,7 +324,7 @@ export default function HomePage() {
           </MarketingCard>
           <MarketingCard className="bg-foreground text-background">
             <p className="text-sm font-bold text-brand-accent">Unlimited</p>
-            <p className="mt-2 font-ubuntu text-4xl font-bold">$99.99</p>
+            <p className="mt-2 text-4xl font-bold">$99.99</p>
             <p className="mt-1 text-sm text-background/65">One-time payment</p>
             <p className="mt-5 text-sm leading-6 text-background/75">
               Every Pro feature now and every future Pro upgrade, with no recurring bill.
@@ -359,7 +354,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-8 lg:py-24">
           <div>
             <Eyebrow>Security & privacy</Eyebrow>
-            <h2 className="mt-4 font-ubuntu text-3xl font-bold tracking-tight">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight">
               Built to protect your data.
             </h2>
             <p className="mt-3 text-muted-foreground">
@@ -415,7 +410,7 @@ function DashboardPreview() {
             <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Total balance
             </p>
-            <p className="mt-1 font-ubuntu text-3xl font-bold">
+            <p className="mt-1 text-3xl font-bold">
               $12,840.<span className="text-muted-foreground">25</span>
             </p>
           </div>

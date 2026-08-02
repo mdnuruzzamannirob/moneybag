@@ -22,7 +22,7 @@ const Logo = ({
   return (
     <Link
       className={cn(
-        'flex min-w-0 items-end gap-1 truncate font-ubuntu',
+        'flex min-w-0 items-end gap-1 truncate',
         compact ? 'text-lg' : 'text-2xl',
         inverse ? 'text-white' : 'text-primary',
         className,

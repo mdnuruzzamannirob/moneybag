@@ -151,7 +151,7 @@ export default function PricingPage() {
                 {plan.name}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">{plan.blurb}</p>
-              <p className="mt-5 font-ubuntu text-4xl font-bold">{plan.price}</p>
+              <p className="mt-5 text-4xl font-bold">{plan.price}</p>
               <p className="mt-1 text-xs text-muted-foreground">{plan.cadence}</p>
               <ul className="mt-6 flex-1 space-y-2.5 text-sm">
                 {plan.features.map((item) => (
@@ -188,7 +188,7 @@ export default function PricingPage() {
           })}
         </div>
         <section className="mt-20">
-          <h2 className="text-center font-ubuntu text-3xl font-bold tracking-tight">
+          <h2 className="text-center text-3xl font-bold tracking-tight">
             Compare plans
           </h2>
           <p className="mt-2 text-center text-muted-foreground">
@@ -234,9 +234,9 @@ export default function PricingPage() {
             </table>
           </div>
         </section>
-        <section className="mx-auto mt-16 flex max-w-4xl flex-col items-start justify-between gap-5 rounded-2xl border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-6 sm:flex-row sm:items-center">
+        <section className="mx-auto mt-16 flex max-w-4xl flex-col items-start justify-between gap-5 rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-6 sm:flex-row sm:items-center">
           <div>
-            <h2 className="font-ubuntu text-lg font-bold">Have a coupon code?</h2>
+            <h2 className="text-lg font-bold">Have a coupon code?</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Apply it before checkout to preview your discount.
             </p>
@@ -244,7 +244,7 @@ export default function PricingPage() {
           <CouponForm />
         </section>
         <section className="mx-auto mt-20 max-w-3xl">
-          <h2 className="text-center font-ubuntu text-3xl font-bold tracking-tight">
+          <h2 className="text-center text-3xl font-bold tracking-tight">
             Frequently asked
           </h2>
           <div className="mt-8">

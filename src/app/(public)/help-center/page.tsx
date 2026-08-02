@@ -89,14 +89,14 @@ export default function HelpPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map(({ icon: Icon, title, text, tone, count }) => (
             <MarketingCard
-              className="text-center hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
+              className="text-center"
               key={title}
               padding="md"
             >
               <FeatureIcon className="mx-auto" tone={tone}>
                 <Icon />
               </FeatureIcon>
-              <h2 className="mt-4 font-ubuntu font-bold">{title}</h2>
+              <h2 className="mt-4 font-bold">{title}</h2>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">{text}</p>
               <AppBadge className="mt-4" size="sm">
                 {count}
@@ -107,12 +107,12 @@ export default function HelpPage() {
 
         <div className="mt-14">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="font-ubuntu text-2xl font-bold">Popular articles</h2>
+            <h2 className="text-2xl font-bold">Popular articles</h2>
             <AppBadge status="info">MOST READ</AppBadge>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {articles.map(([title, text]) => (
-              <MarketingCard className="hover:border-primary/50" key={title} padding="md">
+              <MarketingCard key={title} padding="md">
                 <div className="flex items-start gap-3">
                   <FeatureIcon className="size-9 rounded-lg" tone="primary">
                     <FileText className="size-4" />
@@ -127,8 +127,8 @@ export default function HelpPage() {
           </div>
         </div>
 
-        <div className="mt-14 rounded-2xl border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center">
-          <h2 className="font-ubuntu text-2xl font-bold">Still need help?</h2>
+        <div className="mt-14 rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center">
+          <h2 className="text-2xl font-bold">Still need help?</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Our support team is here Monday to Friday, 9am–6pm CET.
           </p>

@@ -109,11 +109,11 @@ export function ChangelogFeed() {
           return (
             <article key={release.version}>
               <div className="mb-4 flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-xl bg-primary font-ubuntu text-sm font-bold text-white">
+                <span className="grid size-11 place-items-center rounded-lg bg-primary text-sm font-bold text-white">
                   {release.version}
                 </span>
                 <div>
-                  <h2 className="font-ubuntu font-bold">{release.name}</h2>
+                  <h2 className="font-bold">{release.name}</h2>
                   <p className="text-xs text-muted-foreground">{release.date}</p>
                 </div>
               </div>

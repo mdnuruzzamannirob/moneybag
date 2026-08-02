@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: PageProps<'/blog/[slug]'>
           </div>
         </PageHero>
         <div
-          className={`pointer-events-none mx-auto mt-14 h-72 max-w-5xl rounded-2xl border border-border bg-linear-to-br shadow-lg ${post.color} sm:h-96`}
+          className={`pointer-events-none mx-auto mt-14 h-72 max-w-5xl rounded-lg border border-border bg-linear-to-br shadow-lg ${post.color} sm:h-96`}
         />
         <div className="[&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:scroll-mt-24 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-[-0.01em] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold [&_p]:mb-4 [&_p]:leading-[1.8] [&_p]:text-muted-foreground [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-muted-foreground [&_li]:mb-1.5 [&_li]:leading-[1.7] [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-[3px] mx-auto max-w-3xl px-4 py-14 sm:px-6">
           {post.sections.map((section, index) => (
@@ -69,7 +69,7 @@ export default async function BlogPostPage({ params }: PageProps<'/blog/[slug]'>
       </article>
       <section className="border-y border-border bg-card">
         <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-          <h2 className="font-ubuntu text-2xl font-bold">Keep reading</h2>
+          <h2 className="text-2xl font-bold">Keep reading</h2>
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
             {related.map((item) => (
               <Link

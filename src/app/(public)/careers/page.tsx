@@ -78,7 +78,7 @@ export default function CareersPage() {
               <FeatureIcon className="mx-auto" tone={tone}>
                 <Icon />
               </FeatureIcon>
-              <h2 className="mt-4 font-ubuntu font-bold">{title}</h2>
+              <h2 className="mt-4 font-bold">{title}</h2>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
             </MarketingCard>
           ))}
@@ -88,17 +88,17 @@ export default function CareersPage() {
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
               <AppBadge status="info">3 OPEN ROLES</AppBadge>
-              <h2 className="mt-3 font-ubuntu text-2xl font-bold">Open positions</h2>
+              <h2 className="mt-3 text-2xl font-bold">Open positions</h2>
             </div>
             <p className="text-sm text-muted-foreground">All positions are remote and full-time.</p>
           </div>
           <div className="space-y-4">
             {roles.map((role) => (
-              <MarketingCard className="hover:border-primary/50 hover:shadow-lg" key={role.title}>
+              <MarketingCard key={role.title}>
                 <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-ubuntu text-lg font-bold">{role.title}</h3>
+                      <h3 className="text-lg font-bold">{role.title}</h3>
                       <AppBadge>{role.department}</AppBadge>
                     </div>
                     <div className="mt-2 flex flex-wrap gap-4 text-sm text-muted-foreground">
@@ -123,8 +123,8 @@ export default function CareersPage() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-5xl rounded-2xl border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center">
-          <h2 className="font-ubuntu text-2xl font-bold">Don&apos;t see your role?</h2>
+        <div className="mx-auto mt-12 max-w-5xl rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center">
+          <h2 className="text-2xl font-bold">Don&apos;t see your role?</h2>
           <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
             Send an open application with the problem you want to help us solve.
           </p>

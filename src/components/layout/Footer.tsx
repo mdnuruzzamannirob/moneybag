@@ -1,5 +1,9 @@
+'use client';
+
 import { AppButton } from '@/components/app-ui';
-import { Code2, Mail, Network } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useTheme, type Theme } from '@/providers/theme-provider';
+import { Code2, Laptop, Mail, Moon, Network, Sun } from 'lucide-react';
 import Link from 'next/link';
 
 import Logo from '../shared/Logo';
@@ -44,11 +48,13 @@ const columns = [
 ] as const;
 
 export function Footer() {
+  const { setTheme, theme } = useTheme();
+
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-6 lg:px-8">
         <div className="sm:col-span-2">
-          <Logo href="/" />
+          <Logo className="font-sans" href="/" />
           <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
             Your money, your control. Personal and family finance, beautifully simple.
           </p>
@@ -89,16 +95,43 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>© 2026 MoneyBag. All rights reserved.</p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span>Language: English</span>
-            <span>Currency: USD</span>
-            <span>
-              Made with <span className="text-brand-accent">♥</span> for calmer money.
-            </span>
-          </div>
+          <ThemeSelector onChange={setTheme} theme={theme} />
         </div>
       </div>
     </footer>
+  );
+}
+
+const themeOptions = [
+  { icon: Sun, label: 'Light', value: 'light' },
+  { icon: Moon, label: 'Dark', value: 'dark' },
+  { icon: Laptop, label: 'System', value: 'system' },
+] as const satisfies readonly { icon: typeof Sun; label: string; value: Theme }[];
+
+function ThemeSelector({ onChange, theme }: { onChange: (theme: Theme) => void; theme: Theme }) {
+  return (
+    <div
+      aria-label="Theme preference"
+      className="flex items-center rounded border border-border bg-secondary p-0.5"
+      role="group"
+    >
+      {themeOptions.map(({ icon: Icon, value }) => (
+        <AppButton
+          aria-pressed={theme === value}
+          className={cn(
+            'h-6! gap-1 px-1.5! text-[11px] rounded-sm',
+            theme === value &&
+              'bg-primary! text-primary-foreground! shadow-xs hover:bg-primary-hover! hover:text-primary-foreground!',
+          )}
+          key={value}
+          onClick={() => onChange(value)}
+          size="xs"
+          tone="ghost"
+        >
+          <Icon className="size-3" />
+        </AppButton>
+      ))}
+    </div>
   );
 }
 
@@ -111,7 +144,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h2 className="font-ubuntu text-sm font-bold">{title}</h2>
+      <h2 className="text-sm font-bold">{title}</h2>
       <ul className="mt-4 space-y-2.5 text-sm">
         {links.map(([label, href]) => (
           <li key={href}>

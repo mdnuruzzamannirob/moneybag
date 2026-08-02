@@ -91,7 +91,7 @@ export default function FaqPage() {
             >
               <Icon className="size-5" />
             </FeatureIcon>
-            <h2 className="mt-4 font-ubuntu text-xl font-bold">{title}</h2>
+            <h2 className="mt-4 text-xl font-bold">{title}</h2>
             <div className="mt-5 space-y-3">
               {items.map(([question, answer]) => (
                 <details
@@ -111,7 +111,7 @@ export default function FaqPage() {
       </section>
       <section className="border-t border-border bg-card/60">
         <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
-          <h2 className="font-ubuntu text-3xl font-bold">Still have a question?</h2>
+          <h2 className="text-3xl font-bold">Still have a question?</h2>
           <p className="mt-3 text-muted-foreground">We are happy to help you find the answer.</p>
           <Link
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"

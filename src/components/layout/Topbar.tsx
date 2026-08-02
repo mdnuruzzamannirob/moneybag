@@ -23,7 +23,7 @@ export default function Topbar({
   showAddButton: boolean;
   sections: NavSection[];
 }) {
-  const { theme, toggleTheme } = useTheme();
+  const { resolvedTheme, toggleTheme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -219,7 +219,7 @@ export default function Topbar({
         </AppPopover>
 
         <AppButton aria-label="Theme" onClick={toggleTheme} size="icon-sm" tone="secondary">
-          {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          {resolvedTheme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
         </AppButton>
         <AppButton
           aria-label="Log out"

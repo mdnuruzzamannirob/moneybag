@@ -83,7 +83,7 @@ export default function IntegrationsPage() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <AppBadge status="info">PRO</AppBadge>
-            <h2 className="mt-3 font-ubuntu text-2xl font-bold">Bank connections</h2>
+            <h2 className="mt-3 text-2xl font-bold">Bank connections</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Read-only connections can automatically import new transactions.
             </p>
@@ -94,7 +94,7 @@ export default function IntegrationsPage() {
         </div>
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {banks.map(([initials, name]) => (
-            <MarketingCard className="text-center hover:border-primary/50" key={name} padding="sm">
+            <MarketingCard className="text-center" key={name} padding="sm">
               <span className="mx-auto grid size-10 place-items-center rounded-lg bg-secondary text-xs font-bold text-muted-foreground">
                 {initials}
               </span>
@@ -106,7 +106,7 @@ export default function IntegrationsPage() {
         <div className="mt-14 flex flex-wrap items-end justify-between gap-4">
           <div>
             <AppBadge status="success">ALL PLANS</AppBadge>
-            <h2 className="mt-3 font-ubuntu text-2xl font-bold">CSV import</h2>
+            <h2 className="mt-3 text-2xl font-bold">CSV import</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Works with exports from any bank. MoneyBag helps detect the right columns.
             </p>
@@ -120,7 +120,7 @@ export default function IntegrationsPage() {
             <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Your CSV · any format
             </p>
-            <pre className="overflow-x-auto rounded-xl bg-secondary p-4 font-mono text-xs leading-7 text-muted-foreground">{`date,desc,amount
+            <pre className="overflow-x-auto rounded-lg bg-secondary p-4 font-mono text-xs leading-7 text-muted-foreground">{`date,desc,amount
 2026-07-29,Starbucks,-5.20
 2026-07-28,Salary,4200.00
 2026-07-27,Amazon,-42.99`}</pre>
@@ -147,7 +147,7 @@ export default function IntegrationsPage() {
           </div>
         </MarketingCard>
 
-        <h2 className="mb-6 mt-14 font-ubuntu text-2xl font-bold">And connects to your stack</h2>
+        <h2 className="mb-6 mt-14 text-2xl font-bold">And connects to your stack</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stack.map(({ icon: Icon, name, text, status, badge, tone }) => (
             <MarketingCard key={name} padding="md">

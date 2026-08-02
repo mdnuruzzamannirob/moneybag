@@ -43,7 +43,7 @@ export default function ContactPage() {
       />
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-5 lg:px-8 lg:py-16">
         <MarketingCard className="lg:col-span-3" padding="lg">
-          <h2 className="font-ubuntu text-2xl font-bold">Send a message</h2>
+          <h2 className="text-2xl font-bold">Send a message</h2>
           <p className="mb-7 mt-2 text-sm leading-6 text-muted-foreground">
             Fill out the form and we will route your message to the right team.
           </p>
@@ -51,7 +51,7 @@ export default function ContactPage() {
         </MarketingCard>
 
         <div className="lg:col-span-2">
-          <h2 className="mb-6 font-ubuntu text-2xl font-bold">Other ways to reach us</h2>
+          <h2 className="mb-6 text-2xl font-bold">Other ways to reach us</h2>
           <div className="space-y-4">
             {contactOptions.map(({ icon: Icon, label, text, tone }) => (
               <MarketingCard className="flex items-start gap-4" key={label} padding="md">

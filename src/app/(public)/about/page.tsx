@@ -60,7 +60,7 @@ export default function AboutPage() {
             <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-20" />
             <div className="relative">
               <p className="text-sm font-medium text-white/75">Our north star</p>
-              <blockquote className="mt-5 font-ubuntu text-3xl font-bold leading-tight sm:text-4xl">
+              <blockquote className="mt-5 text-3xl font-bold leading-tight sm:text-4xl">
                 “Help people talk about money with more context and less stress.”
               </blockquote>
               <p className="mt-8 text-sm text-white/80">The MoneyBag team</p>
@@ -102,7 +102,7 @@ export default function AboutPage() {
             ['4.8/5', 'average user rating'],
           ].map(([value, label]) => (
             <div key={label}>
-              <p className="font-ubuntu text-3xl font-bold">{value}</p>
+              <p className="text-3xl font-bold">{value}</p>
               <p className="mt-1 text-sm text-muted-foreground">{label}</p>
             </div>
           ))}
