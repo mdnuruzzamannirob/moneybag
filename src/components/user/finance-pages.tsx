@@ -1,6 +1,5 @@
 'use client';
 
-import type { ComponentType, ReactNode } from 'react';
 import {
   CalendarDays,
   Download,
@@ -10,14 +9,15 @@ import {
   Plus,
   ReceiptText,
   Search,
-  SlidersHorizontal,
   Target,
   TrendingDown,
   TrendingUp,
   Upload,
   WalletCards,
+  X,
 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import type { ComponentType, ReactNode } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   AppBadge,
@@ -27,12 +27,10 @@ import {
   AppInput,
   AppPageHeader,
   AppPagination,
-  AppPopover,
   AppProgress,
   AppSegmentedControl,
   AppSelect,
   AppStatCard,
-  AppSwitch,
   AppTable,
   type AppTableColumn,
 } from '@/components/app-ui';
@@ -257,10 +255,15 @@ export function TransactionsPage() {
   const [items] = useState(txSeed);
   const [type, setType] = useState<'all' | 'income' | 'expense'>('all');
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [category, setCategory] = useState('all');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [dialog, setDialog] = useState<FinanceDialogKind | null>(null);
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setDebouncedQuery(query), 300);
+    return () => window.clearTimeout(timeout);
+  }, [query]);
   const categoryOptions = [
     { label: 'All categories', value: 'all' },
     ...Array.from(new Set(items.map((item) => item.category))).map((item) => ({
@@ -276,9 +279,9 @@ export function TransactionsPage() {
           (category === 'all' || item.category === category) &&
           `${item.title} ${item.category} ${item.wallet}`
             .toLowerCase()
-            .includes(query.toLowerCase()),
+            .includes(debouncedQuery.toLowerCase()),
       ),
-    [items, type, category, query],
+    [items, type, category, debouncedQuery],
   );
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const safePage = Math.min(page, pageCount);
@@ -361,13 +364,30 @@ export function TransactionsPage() {
           />
           <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center lg:justify-end">
             <AppInput
-              containerClassName="w-full sm:w-64"
+              containerClassName="w-full sm:w-80"
+              className="pr-8!"
               leading={<Search />}
               onChange={(event) => {
                 setQuery(event.target.value);
                 setPage(1);
               }}
               placeholder="Search transactions"
+              trailing={
+                query ? (
+                  <AppButton
+                    aria-label="Clear search"
+                    className="size-5! rounded-sm! p-0!"
+                    onClick={() => {
+                      setQuery('');
+                      setPage(1);
+                    }}
+                    size="icon-xs"
+                    tone="ghost"
+                  >
+                    <X />
+                  </AppButton>
+                ) : null
+              }
               value={query}
             />
             <AppSelect
@@ -380,28 +400,6 @@ export function TransactionsPage() {
               triggerClassName="w-full sm:w-48"
               value={category}
             />
-            <AppPopover
-              description="Refine the transaction list without leaving this page."
-              title="More filters"
-              trigger={
-                <AppButton aria-label="More filters" size="icon" tone="secondary">
-                  <SlidersHorizontal />
-                </AppButton>
-              }
-            >
-              <div className="mt-4 space-y-3">
-                <AppSwitch
-                  description="Show transactions with receipt attachments."
-                  label="Has receipt"
-                  size="sm"
-                />
-                <AppSwitch
-                  description="Include recurring transaction entries."
-                  label="Recurring only"
-                  size="sm"
-                />
-              </div>
-            </AppPopover>
           </div>
         </div>
         <div className="hidden md:block">
@@ -432,7 +430,11 @@ export function TransactionsPage() {
                 setPageSize(Number(value ?? 5));
                 setPage(1);
               }}
-              options={[5, 10, 20].map((value) => ({ label: `${value}`, value: `${value}` }))}
+              options={[5, 10, 20, 30, 50].map((value) => ({
+                label: `${value}`,
+                value: `${value}`,
+              }))}
+              size="sm"
               triggerClassName="w-20"
               value={`${pageSize}`}
             />
@@ -502,10 +504,16 @@ export function BudgetsPage() {
         <AppSelect
           defaultValue="july"
           options={[
+            { label: 'August 2026', value: 'august' },
+            { label: 'September 2026', value: 'september' },
+            { label: 'October 2026', value: 'october' },
+            { label: 'November 2026', value: 'november' },
+            { label: 'December 2026', value: 'december' },
             { label: 'July 2026', value: 'july' },
             { label: 'June 2026', value: 'june' },
           ]}
-          triggerClassName="w-40"
+          size="sm"
+          triggerClassName="w-36"
         />
         <AppButton onClick={() => setDialog('budget')} size="sm">
           <Plus />
