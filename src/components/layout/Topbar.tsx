@@ -137,7 +137,7 @@ export default function Topbar({
         />
         <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
           <DialogContent className="top-20 max-w-xl translate-y-0 gap-4 sm:top-24">
-            <DialogHeader>
+            <DialogHeader className="pr-12">
               <DialogTitle>Search MoneyBag</DialogTitle>
               <DialogDescription>Find a page or finance section quickly.</DialogDescription>
             </DialogHeader>

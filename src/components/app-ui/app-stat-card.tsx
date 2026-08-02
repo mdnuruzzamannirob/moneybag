@@ -22,7 +22,7 @@ export function AppStatCard({
         {
           default: 'bg-card p-4',
           compact: 'bg-card p-3',
-          featured: 'border-primary ui-gradient-primary p-5',
+          featured: 'border-primary ui-gradient-primary p-4',
         }[variant],
       )}
     >

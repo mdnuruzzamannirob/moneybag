@@ -7,14 +7,7 @@ import {
   AppTable,
   type AppTableColumn,
 } from '@/components/app-ui';
-import {
-  ArrowLeftRight,
-  ArrowUpRight,
-  CalendarDays,
-  ReceiptText,
-  TrendingDown,
-  TrendingUp,
-} from 'lucide-react';
+import { ArrowUpRight, CalendarDays, ReceiptText, TrendingDown, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -48,30 +41,7 @@ export default async function Page({ params }: { params: Promise<{ walletId: str
   return (
     <main className="space-y-6">
       <AppPageHeader
-        actions={
-          <>
-            <AppButton
-              nativeButton={false}
-              render={<Link href={`/wallets?transfer=${wallet.id}`} />}
-              size="sm"
-              tone="secondary"
-            >
-              <ArrowLeftRight /> Transfer
-            </AppButton>
-            <AppButton
-              nativeButton={false}
-              render={<Link href={`/transactions?wallet=${wallet.id}`} />}
-              size="sm"
-            >
-              <ReceiptText /> View transactions
-            </AppButton>{' '}
-            <WalletDetailActions
-              isDefault={wallet.isDefault}
-              walletId={wallet.id}
-              walletName={wallet.name}
-            />
-          </>
-        }
+        actions={<WalletDetailActions walletId={wallet.id} />}
         description={`${wallet.type} · ${wallet.currency} · ${wallet.updated}`}
         title={
           <span className="flex items-center gap-2">

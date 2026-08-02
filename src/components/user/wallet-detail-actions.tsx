@@ -1,38 +1,48 @@
 'use client';
 
 import { AppButton, AppConfirmDialog, AppDropdownMenu } from '@/components/app-ui';
-import { Edit3, MoreHorizontal, Star, Trash2 } from 'lucide-react';
+import { ArrowLeftRight, Edit3, MoreHorizontal, ReceiptText, Star, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export function WalletDetailActions({
-  isDefault,
-  walletId,
-  walletName,
-}: {
-  isDefault: boolean;
-  walletId: string;
-  walletName: string;
-}) {
+import { wallets } from '@/components/user/wallet-data';
+import { WalletFormDialog, type WalletDialogKind } from '@/components/user/wallet-modal';
+
+export function WalletDetailActions({ walletId }: { walletId: string }) {
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [dialog, setDialog] = useState<WalletDialogKind>(null);
+  const wallet = wallets.find((item) => item.id === walletId);
+
+  if (!wallet) return null;
 
   return (
     <>
+      <AppButton onClick={() => setDialog('transfer')} size="sm" tone="secondary">
+        <ArrowLeftRight /> Transfer
+      </AppButton>
+      <AppButton
+        nativeButton={false}
+        render={<Link href={`/transactions?wallet=${wallet.id}`} />}
+        size="sm"
+      >
+        <ReceiptText /> View transactions
+      </AppButton>
       <AppDropdownMenu
         items={[
           {
             icon: <Edit3 />,
             label: 'Edit wallet',
-            onSelect: () => router.push(`/wallets?edit=${walletId}`),
+            onSelect: () => setDialog('edit'),
           },
           {
-            disabled: isDefault,
+            disabled: wallet.isDefault,
             icon: <Star />,
-            label: isDefault ? 'Default wallet' : 'Set as default',
+            label: wallet.isDefault ? 'Default wallet' : 'Set as default',
           },
           {
-            disabled: isDefault,
+            disabled: wallet.isDefault,
             icon: <Trash2 />,
             label: 'Delete wallet',
             onSelect: () => setDeleteOpen(true),
@@ -41,11 +51,13 @@ export function WalletDetailActions({
           },
         ]}
         trigger={
-          <AppButton aria-label={`${walletName} actions`} size="icon-sm" tone="secondary">
+          <AppButton aria-label={`${wallet.name} actions`} size="icon-sm" tone="secondary">
             <MoreHorizontal />
           </AppButton>
         }
       />
+
+      <WalletFormDialog editing={wallet} kind={dialog} onClose={() => setDialog(null)} />
 
       <AppConfirmDialog
         confirmLabel="Delete wallet"
@@ -56,7 +68,7 @@ export function WalletDetailActions({
         }}
         onOpenChange={setDeleteOpen}
         open={deleteOpen}
-        title={`Delete ${walletName}?`}
+        title={`Delete ${wallet.name}?`}
       />
     </>
   );
