@@ -551,7 +551,7 @@ function BudgetCard({ budget }: { budget: Budget }) {
   const left = Math.max(0, budget.limit - budget.spent);
   const warning = percentage >= budget.alert;
   return (
-    <AppCard>
+    <AppCard className="h-full">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span
@@ -614,7 +614,7 @@ export function GoalsPage() {
         />
         <Stat icon={TrendingUp} label="Completed" tone="warning" value={`${completed} goals`} />
       </section>
-      <section className="grid gap-4 lg:grid-cols-2">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {goalSeed.map((goal) => (
           <GoalCard goal={goal} key={goal.id} onContribute={() => setDialog('contribution')} />
         ))}
@@ -628,17 +628,17 @@ function GoalCard({ goal, onContribute }: { goal: SavingsGoal; onContribute: () 
   const progress = Math.round((goal.saved / goal.target) * 100);
   const completed = progress >= 100;
   return (
-    <AppCard>
-      <div className="flex items-start justify-between gap-4">
+    <AppCard className="h-full">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <span
-            className="grid size-11 place-items-center rounded-lg text-sm font-semibold"
+            className="grid size-10 place-items-center rounded-lg text-sm font-semibold"
             style={{ backgroundColor: `${goal.color}1c`, color: goal.color }}
           >
             {goal.icon}
           </span>
           <div className="min-w-0">
-            <h2 className="truncate font-semibold">{goal.title}</h2>
+            <h2 className="truncate text-sm font-semibold">{goal.title}</h2>
             <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
               <CalendarDays className="size-3" />
               Target {goal.deadline}
@@ -652,15 +652,15 @@ function GoalCard({ goal, onContribute }: { goal: SavingsGoal; onContribute: () 
           <RowMenu kind="goal" />
         </div>
       </div>
-      <div className="mt-7 flex items-end justify-between gap-4">
-        <p className="text-2xl font-semibold tracking-tight">{money(goal.saved)}</p>
+      <div className="mt-6 flex items-end justify-between gap-3">
+        <p className="text-xl font-semibold tracking-tight">{money(goal.saved)}</p>
         <p className="pb-1 text-xs text-muted-foreground">of {money(goal.target)}</p>
       </div>
       <AppProgress className="mt-3" tone={completed ? 'success' : 'primary'} value={progress} />
       <p className={cn('mt-3 text-xs', completed ? 'text-success' : 'text-muted-foreground')}>
         {goal.note}
       </p>
-      <div className="mt-5 border-t border-border pt-4">
+      <div className="mt-5 flex min-h-10 items-center justify-end border-t border-border pt-4">
         <AppButton
           disabled={completed}
           onClick={onContribute}
