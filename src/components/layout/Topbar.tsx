@@ -44,9 +44,10 @@ export default function Topbar({
     const handler = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       const typing = target?.matches('input,textarea,[contenteditable="true"]');
+      const isHelpCenter = pathname === '/help';
       if (
         ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') ||
-        (event.key === '/' && !typing)
+        (event.key === '/' && !typing && !isHelpCenter)
       ) {
         event.preventDefault();
         setSearchOpen(true);
@@ -54,7 +55,7 @@ export default function Topbar({
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, []);
+  }, [pathname]);
   useEffect(() => {
     if (searchOpen) window.setTimeout(() => inputRef.current?.focus(), 0);
   }, [searchOpen]);
