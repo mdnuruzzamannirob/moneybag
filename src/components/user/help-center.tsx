@@ -10,14 +10,18 @@ import {
   CreditCard,
   FileText,
   MessageCircleMore,
+  Paperclip,
   Search,
   Send,
   ShieldCheck,
   Sparkles,
   Target,
-  Upload,
+  ThumbsDown,
+  ThumbsUp,
+  Ticket,
   Users,
   WalletCards,
+  X,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -28,6 +32,7 @@ import {
   AppCard,
   AppEmptyState,
   AppField,
+  AppFileUpload,
   AppInput,
   AppModal,
   AppPageHeader,
@@ -54,6 +59,16 @@ type HelpArticle = {
   route: string;
   actionLabel: string;
   popular?: boolean;
+};
+
+type SupportStatus = 'open' | 'waiting' | 'resolved';
+
+type SupportRequest = {
+  id: string;
+  subject: string;
+  topic: string;
+  status: SupportStatus;
+  updatedAt: string;
 };
 
 const categories = [
@@ -277,28 +292,94 @@ const articles: readonly HelpArticle[] = [
   },
 ];
 
-const frequentlyAsked = [
+const frequentlyAsked: readonly {
+  category: CategoryId;
+  question: string;
+  answer: string;
+}[] = [
   {
+    category: 'wallets-transactions',
     question: 'Do I need to connect my bank account?',
     answer:
       'No. You can add transactions manually or import a CSV statement, so your bank login details never need to be shared.',
   },
   {
+    category: 'getting-started',
     question: 'Can I change my currency later?',
     answer:
       'Yes. Open Settings, then Preferences, to change the display currency used across your MoneyBag account.',
   },
   {
+    category: 'family',
     question: 'How many people can join a family group?',
     answer:
       'A Pro family group supports up to five members, with owner, editor and viewer access levels.',
   },
   {
+    category: 'account-security',
     question: 'Can I download or delete my data?',
     answer:
       'Yes. Both data export and permanent account deletion are available from the Privacy & data section in Settings.',
   },
+  {
+    category: 'getting-started',
+    question: 'What should I set up first?',
+    answer:
+      'Start with your preferred currency and primary wallet, then add recent transactions so the dashboard can show a useful overview.',
+  },
+  {
+    category: 'wallets-transactions',
+    question: 'Can I import the same CSV more than once?',
+    answer:
+      'Review the import preview before confirming. If a statement overlaps with existing records, skip repeated rows to avoid duplicates.',
+  },
+  {
+    category: 'budgets-goals',
+    question: 'When does budget progress update?',
+    answer:
+      'Budget progress updates as categorized expense transactions are added, edited or removed during the active budget period.',
+  },
+  {
+    category: 'budgets-goals',
+    question: 'Can I contribute to a savings goal gradually?',
+    answer:
+      'Yes. Record contributions whenever you save money and MoneyBag will track the remaining amount and overall progress.',
+  },
+  {
+    category: 'family',
+    question: 'Can every family member edit shared data?',
+    answer:
+      'Not necessarily. The owner can assign editor or viewer access so each member has the right level of control.',
+  },
+  {
+    category: 'account-security',
+    question: 'What if I lose access to my authenticator app?',
+    answer:
+      'Use one of the backup codes saved during two-factor authentication setup, then update your security settings after signing in.',
+  },
+  {
+    category: 'plans-billing',
+    question: 'What is included in the Free plan?',
+    answer:
+      'The Free plan includes one wallet, up to 50 monthly transactions, two budgets, one savings goal and basic reports.',
+  },
+  {
+    category: 'plans-billing',
+    question: 'What happens when I cancel a paid plan?',
+    answer:
+      'Your paid access continues until the end of the active billing period. After that, the account returns to the available Free plan limits.',
+  },
 ] as const;
+
+const faqFilters: readonly { label: string; value: CategoryId | 'all' }[] = [
+  { label: 'All', value: 'all' },
+  { label: 'Getting started', value: 'getting-started' },
+  { label: 'Transactions', value: 'wallets-transactions' },
+  { label: 'Planning', value: 'budgets-goals' },
+  { label: 'Family', value: 'family' },
+  { label: 'Security', value: 'account-security' },
+  { label: 'Billing', value: 'plans-billing' },
+];
 
 const supportTopics = [
   { label: 'Wallets & transactions', value: 'wallets-transactions' },
@@ -308,6 +389,23 @@ const supportTopics = [
   { label: 'Plans & billing', value: 'plans-billing' },
   { label: 'Something else', value: 'other' },
 ] as const;
+
+const initialSupportRequests: readonly SupportRequest[] = [
+  {
+    id: 'MB-4792',
+    subject: 'Imported transactions are missing categories',
+    topic: 'Wallets & transactions',
+    status: 'waiting',
+    updatedAt: '2 hours ago',
+  },
+  {
+    id: 'MB-4651',
+    subject: 'Question about my Pro renewal date',
+    topic: 'Plans & billing',
+    status: 'resolved',
+    updatedAt: '18 Jul, 2026',
+  },
+];
 
 const toneClasses = {
   primary: 'bg-primary/10 text-primary',
@@ -324,8 +422,23 @@ export function HelpCenter() {
   const [selectedArticle, setSelectedArticle] = useState<HelpArticle | null>(null);
   const [supportOpen, setSupportOpen] = useState(false);
   const [supportSubmitted, setSupportSubmitted] = useState(false);
+  const [supportTopic, setSupportTopic] = useState('wallets-transactions');
+  const [supportSubject, setSupportSubject] = useState('');
+  const [attachments, setAttachments] = useState<string[]>([]);
+  const [supportRequests, setSupportRequests] = useState<SupportRequest[]>([
+    ...initialSupportRequests,
+  ]);
+  const [latestRequestId, setLatestRequestId] = useState('MB-4821');
+  const [faqCategory, setFaqCategory] = useState<CategoryId | 'all'>('all');
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [articleFeedback, setArticleFeedback] = useState<Record<string, 'helpful' | 'not-helpful'>>(
+    {},
+  );
+  const [feedbackNote, setFeedbackNote] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState<Record<string, boolean>>({});
   const supportTriggerRef = useRef<HTMLButtonElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const nextRequestNumberRef = useRef(4821);
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
@@ -365,6 +478,12 @@ export function HelpCenter() {
       ? `${categoryTitle} guides`
       : 'All guides';
   const displayedArticles = visibleArticles;
+  const visibleFaqs =
+    faqCategory === 'all'
+      ? frequentlyAsked
+      : frequentlyAsked.filter((item) => item.category === faqCategory);
+  const faqColumnSize = Math.ceil(visibleFaqs.length / 2);
+  const faqColumns = [visibleFaqs.slice(0, faqColumnSize), visibleFaqs.slice(faqColumnSize)];
 
   const resetFilters = () => {
     setQuery('');
@@ -373,14 +492,42 @@ export function HelpCenter() {
 
   const openSupport = () => {
     setSupportSubmitted(false);
+    setSupportTopic('wallets-transactions');
+    setSupportSubject('');
+    setAttachments([]);
     setSupportOpen(true);
+  };
+
+  const closeSupport = () => {
+    setSupportOpen(false);
+    setSupportSubmitted(false);
+    window.setTimeout(() => supportTriggerRef.current?.focus(), 0);
+  };
+
+  const submitSupportRequest = () => {
+    const requestId = `MB-${nextRequestNumberRef.current}`;
+    nextRequestNumberRef.current += 1;
+    const topic = supportTopics.find((item) => item.value === supportTopic)?.label ?? 'Other';
+
+    setLatestRequestId(requestId);
+    setSupportRequests((current) => [
+      {
+        id: requestId,
+        subject: supportSubject,
+        topic,
+        status: 'open',
+        updatedAt: 'Just now',
+      },
+      ...current,
+    ]);
+    setSupportSubmitted(true);
   };
 
   return (
     <div className="space-y-6">
       <AppPageHeader
         actions={
-          <AppButton ref={supportTriggerRef} onClick={openSupport} size="sm" tone="secondary">
+          <AppButton ref={supportTriggerRef} onClick={openSupport} size="sm" >
             <MessageCircleMore />
             Contact support
           </AppButton>
@@ -523,7 +670,10 @@ export function HelpCenter() {
                     <button
                       className="group flex w-full items-center gap-3 px-4 py-4 text-left transition-colors hover:bg-muted/55 sm:gap-4 sm:px-5"
                       key={article.id}
-                      onClick={() => setSelectedArticle(article)}
+                      onClick={() => {
+                        setSelectedArticle(article);
+                        setFeedbackNote('');
+                      }}
                       type="button"
                     >
                       <span className="grid size-9 shrink-0 place-items-center rounded-md bg-primary/10 text-primary">
@@ -588,22 +738,97 @@ export function HelpCenter() {
               </p>
             </div>
           </div>
-          <div className="divide-y divide-border">
-            {frequentlyAsked.map(({ answer, question }) => (
-              <details className="group py-4 last:pb-0" key={question}>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium marker:hidden">
-                  {question}
-                  <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-90" />
-                </summary>
-                <p className="mt-2 max-w-3xl pr-7 text-sm leading-6 text-muted-foreground">
-                  {answer}
-                </p>
-              </details>
+          <div className="-mx-1 mt-5 flex gap-2 overflow-x-auto px-1 pb-1">
+            {faqFilters.map((filter) => (
+              <AppButton
+                aria-pressed={faqCategory === filter.value}
+                key={filter.value}
+                onClick={() => {
+                  setFaqCategory(filter.value);
+                  setOpenFaq(null);
+                }}
+                size="xs"
+                tone={faqCategory === filter.value ? 'primary' : 'secondary'}
+              >
+                {filter.label}
+              </AppButton>
+            ))}
+          </div>
+          <div className="mt-2 grid gap-x-7 lg:grid-cols-2">
+            {faqColumns.map((column, columnIndex) => (
+              <div className="self-start" key={columnIndex}>
+                {column.map(({ answer, question }) => (
+                  <details
+                    className="group border-b border-border py-4"
+                    key={question}
+                    onToggle={(event) => {
+                      if (event.currentTarget.open) setOpenFaq(question);
+                      else if (openFaq === question) setOpenFaq(null);
+                    }}
+                    open={openFaq === question}
+                  >
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium marker:hidden">
+                      {question}
+                      <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-90" />
+                    </summary>
+                    <p className="mt-2 max-w-3xl pr-7 text-sm leading-6 text-muted-foreground">
+                      {answer}
+                    </p>
+                  </details>
+                ))}
+              </div>
             ))}
           </div>
         </AppCard>
 
         <div className="space-y-6">
+          <AppCard aria-live="polite">
+            <div className="flex items-center gap-3">
+              <span className="grid size-9 place-items-center rounded-lg bg-info-soft text-info">
+                <Ticket className="size-4" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h2 className="text-sm font-semibold">My support requests</h2>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {supportRequests.length} recent requests
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 divide-y divide-border">
+              {supportRequests.slice(0, 3).map((request) => (
+                <div className="py-3 first:pt-0 last:pb-0" key={request.id}>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[11px] font-medium text-muted-foreground">
+                      #{request.id}
+                    </span>
+                    <AppBadge
+                      size="sm"
+                      status={
+                        request.status === 'resolved'
+                          ? 'success'
+                          : request.status === 'waiting'
+                            ? 'warning'
+                            : 'info'
+                      }
+                    >
+                      {request.status === 'resolved'
+                        ? 'RESOLVED'
+                        : request.status === 'waiting'
+                          ? 'WAITING'
+                          : 'OPEN'}
+                    </AppBadge>
+                  </div>
+                  <p className="mt-1.5 line-clamp-2 text-sm font-medium leading-5">
+                    {request.subject}
+                  </p>
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    {request.topic} · {request.updatedAt}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </AppCard>
+
           <AppCard className="ui-gradient-cta-card relative overflow-hidden border-0 text-white">
             <div
               aria-hidden="true"
@@ -625,34 +850,6 @@ export function HelpCenter() {
               Contact support <ArrowRight />
             </AppButton>
           </AppCard>
-
-          <AppCard>
-            <div className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-lg bg-muted text-muted-foreground">
-                <Upload className="size-4" />
-              </span>
-              <div>
-                <h2 className="text-sm font-semibold">Useful shortcuts</h2>
-                <p className="mt-0.5 text-xs text-muted-foreground">Common account tasks.</p>
-              </div>
-            </div>
-            <nav aria-label="Help shortcuts" className="mt-4 divide-y divide-border">
-              {[
-                ['Import transactions', '/transactions'],
-                ['Security settings', '/settings/security'],
-                ['Plan and billing', '/settings/billing'],
-              ].map(([label, href]) => (
-                <Link
-                  className="group flex items-center justify-between gap-3 py-3 text-sm font-medium first:pt-0 last:pb-0 hover:text-primary"
-                  href={href}
-                  key={href}
-                >
-                  {label}
-                  <ChevronRight className="size-4 text-muted-foreground group-hover:text-primary" />
-                </Link>
-              ))}
-            </nav>
-          </AppCard>
         </div>
       </section>
 
@@ -664,10 +861,10 @@ export function HelpCenter() {
         }
         footer={
           supportSubmitted ? (
-            <AppButton onClick={() => setSupportOpen(false)}>Done</AppButton>
+            <AppButton onClick={closeSupport}>Done</AppButton>
           ) : (
             <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-              <AppButton onClick={() => setSupportOpen(false)} tone="secondary" type="button">
+              <AppButton onClick={closeSupport} tone="secondary" type="button">
                 Cancel
               </AppButton>
               <AppButton form="support-request-form" type="submit">
@@ -677,11 +874,8 @@ export function HelpCenter() {
           )
         }
         onOpenChange={(open) => {
-          setSupportOpen(open);
-          if (!open) {
-            setSupportSubmitted(false);
-            window.setTimeout(() => supportTriggerRef.current?.focus(), 0);
-          }
+          if (open) setSupportOpen(true);
+          else closeSupport();
         }}
         open={supportOpen}
         title={supportSubmitted ? 'Request received' : 'Contact support'}
@@ -697,7 +891,7 @@ export function HelpCenter() {
               within 2–4 hours on weekdays.
             </p>
             <AppBadge className="mt-4" status="success">
-              Request #MB-4821
+              Request #{latestRequestId}
             </AppBadge>
           </div>
         ) : (
@@ -707,7 +901,7 @@ export function HelpCenter() {
             onSubmit={(event) => {
               event.preventDefault();
               event.currentTarget.reset();
-              setSupportSubmitted(true);
+              submitSupportRequest();
             }}
           >
             <div className="rounded-lg border border-info/20 bg-info-soft p-3.5">
@@ -724,17 +918,22 @@ export function HelpCenter() {
             <AppField label="What do you need help with?" required>
               <AppSelect
                 ariaLabel="Support topic"
-                defaultValue="wallets-transactions"
                 name="topic"
+                onValueChange={(value) => {
+                  if (value) setSupportTopic(value);
+                }}
                 options={supportTopics}
+                value={supportTopic}
               />
             </AppField>
             <AppField label="Subject" required>
               <AppInput
                 autoFocus
                 name="subject"
+                onChange={(event) => setSupportSubject(event.target.value)}
                 placeholder="Briefly describe the issue"
                 required
+                value={supportSubject}
               />
             </AppField>
             <AppField
@@ -749,6 +948,49 @@ export function HelpCenter() {
                 required
               />
             </AppField>
+            <AppField description="PNG, JPG, PDF or CSV · up to 5 MB each." label="Attachment">
+              <AppFileUpload
+                accept=".png,.jpg,.jpeg,.pdf,.csv"
+                description="Screenshot, receipt, statement or other supporting file"
+                label="Attach a file"
+                multiple
+                onFiles={(files) => {
+                  if (!files) return;
+                  setAttachments(
+                    Array.from(files)
+                      .filter((file) => file.size <= 5 * 1024 * 1024)
+                      .map((file) => file.name),
+                  );
+                }}
+              />
+              {attachments.length ? (
+                <div className="mt-2 space-y-2">
+                  {attachments.map((file) => (
+                    <div
+                      className="flex items-center gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-xs"
+                      key={file}
+                    >
+                      <Paperclip className="size-3.5 shrink-0 text-muted-foreground" />
+                      <span className="min-w-0 flex-1 truncate">{file}</span>
+                      <button
+                        aria-label={`Remove ${file}`}
+                        className="text-muted-foreground hover:text-foreground"
+                        onClick={() =>
+                          setAttachments((current) => current.filter((item) => item !== file))
+                        }
+                        type="button"
+                      >
+                        <X className="size-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </AppField>
+            <div className="rounded-md bg-muted/55 px-3 py-2.5 text-xs leading-5 text-muted-foreground">
+              We’ll automatically include your current page, account plan and app version so you
+              don’t have to repeat that context.
+            </div>
           </form>
         )}
       </AppModal>
@@ -793,6 +1035,103 @@ export function HelpCenter() {
                 </li>
               ))}
             </ol>
+            <div className="mt-6 border-t border-border pt-5">
+              <h3 className="text-sm font-semibold">Related guides</h3>
+              <div className="mt-3 space-y-2">
+                {articles
+                  .filter(
+                    (article) =>
+                      article.category === selectedArticle.category &&
+                      article.id !== selectedArticle.id,
+                  )
+                  .slice(0, 2)
+                  .map((article) => (
+                    <button
+                      className="group flex w-full items-center gap-3 rounded-md border border-border p-3 text-left hover:border-primary/30 hover:bg-muted/45"
+                      key={article.id}
+                      onClick={() => {
+                        setSelectedArticle(article);
+                        setFeedbackNote('');
+                      }}
+                      type="button"
+                    >
+                      <FileText className="size-4 shrink-0 text-primary" />
+                      <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                        {article.title}
+                      </span>
+                      <ChevronRight className="size-4 shrink-0 text-muted-foreground group-hover:text-primary" />
+                    </button>
+                  ))}
+              </div>
+            </div>
+            <div className="mt-6 border-t border-border pt-5">
+              <h3 className="text-sm font-semibold">Was this guide helpful?</h3>
+              <div className="mt-3 flex gap-2">
+                <AppButton
+                  onClick={() => {
+                    setArticleFeedback((current) => ({
+                      ...current,
+                      [selectedArticle.id]: 'helpful',
+                    }));
+                    setFeedbackSubmitted((current) => ({
+                      ...current,
+                      [selectedArticle.id]: true,
+                    }));
+                  }}
+                  size="sm"
+                  tone={articleFeedback[selectedArticle.id] === 'helpful' ? 'primary' : 'secondary'}
+                >
+                  <ThumbsUp /> Yes
+                </AppButton>
+                <AppButton
+                  onClick={() => {
+                    setArticleFeedback((current) => ({
+                      ...current,
+                      [selectedArticle.id]: 'not-helpful',
+                    }));
+                    setFeedbackSubmitted((current) => ({
+                      ...current,
+                      [selectedArticle.id]: false,
+                    }));
+                  }}
+                  size="sm"
+                  tone={
+                    articleFeedback[selectedArticle.id] === 'not-helpful' ? 'primary' : 'secondary'
+                  }
+                >
+                  <ThumbsDown /> Not really
+                </AppButton>
+              </div>
+              {articleFeedback[selectedArticle.id] === 'not-helpful' &&
+              !feedbackSubmitted[selectedArticle.id] ? (
+                <form
+                  className="mt-4"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    setFeedbackSubmitted((current) => ({
+                      ...current,
+                      [selectedArticle.id]: true,
+                    }));
+                  }}
+                >
+                  <AppTextarea
+                    className="min-h-20 resize-none"
+                    onChange={(event) => setFeedbackNote(event.target.value)}
+                    placeholder="What was missing or unclear?"
+                    value={feedbackNote}
+                  />
+                  <AppButton className="mt-2" size="sm" type="submit">
+                    Send feedback
+                  </AppButton>
+                </form>
+              ) : null}
+              {feedbackSubmitted[selectedArticle.id] ? (
+                <p className="mt-3 flex items-center gap-2 text-xs font-medium text-success">
+                  <CheckCircle2 className="size-4" /> Thanks—your feedback helps us improve this
+                  guide.
+                </p>
+              ) : null}
+            </div>
           </div>
         ) : null}
       </AppModal>
