@@ -1,5 +1,5 @@
-import { useTheme } from '@/providers/theme-provider';
-import { Bell, Link, LogOut, Menu, Moon, Search, Sun } from 'lucide-react';
+import { useTheme, type Theme } from '@/providers/theme-provider';
+import { Bell, Check, Laptop, Link, LogOut, Menu, Moon, Search, Sun } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -14,6 +14,17 @@ import {
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { NavSection } from './DashboardShell';
 import { wallets } from '@/components/user/wallet-data';
+import { cn } from '@/lib/utils';
+
+const themeOptions = [
+  { icon: Sun, label: 'Light', value: 'light' },
+  { icon: Moon, label: 'Dark', value: 'dark' },
+  { icon: Laptop, label: 'System', value: 'system' },
+] as const satisfies readonly {
+  icon: typeof Sun;
+  label: string;
+  value: Theme;
+}[];
 
 export default function Topbar({
   onMenuClick,
@@ -24,12 +35,13 @@ export default function Topbar({
   showAddButton: boolean;
   sections: NavSection[];
 }) {
-  const { resolvedTheme, toggleTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const items = sections.flatMap((section) =>
     section.items.map((item) => ({ ...item, section: section.label })),
@@ -73,6 +85,8 @@ export default function Topbar({
     ? [base, { href: '/wallets', label: 'Wallets' }, { label: wallet.name }]
     : [base, { label: active?.label || 'Dashboard' }];
   const currentLabel = wallet?.name ?? active?.label ?? 'Dashboard';
+  const selectedTheme = themeOptions.find((option) => option.value === theme) ?? themeOptions[2];
+  const ThemeIcon = selectedTheme.icon;
   const notifications = [
     {
       title: 'Budget reminder',
@@ -230,9 +244,43 @@ export default function Topbar({
           </div>
         </AppPopover>
 
-        <AppButton aria-label="Theme" onClick={toggleTheme} size="icon-sm" tone="secondary">
-          {resolvedTheme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
-        </AppButton>
+        <AppPopover
+          align="end"
+          contentClassName="w-40 gap-0 p-1"
+          onOpenChange={setThemeMenuOpen}
+          open={themeMenuOpen}
+
+          trigger={
+            <AppButton aria-label={`Theme: ${selectedTheme.label}`} size="icon-sm" tone="secondary">
+              <ThemeIcon className="size-4" />
+            </AppButton>
+          }
+        >
+          <div className="mt-0.5 space-y-0.5">
+            {themeOptions.map(({ icon: Icon, label, value }) => {
+              const selected = theme === value;
+              return (
+                <button
+                  aria-pressed={selected}
+                  className={cn(
+                    'flex h-8 w-full items-center gap-2 rounded-md px-2 text-left text-xs font-medium transition-colors hover:bg-muted',
+                    selected && 'bg-primary/10 text-primary hover:bg-primary/10',
+                  )}
+                  key={value}
+                  onClick={() => {
+                    setTheme(value);
+                    setThemeMenuOpen(false);
+                  }}
+                  type="button"
+                >
+                  <Icon className="size-4 shrink-0" />
+                  <span className="min-w-0 flex-1 truncate">{label}</span>
+                  {selected ? <Check className="size-4 shrink-0" /> : null}
+                </button>
+              );
+            })}
+          </div>
+        </AppPopover>
         <AppButton
           aria-label="Log out"
           onClick={() => setLogoutOpen(true)}
