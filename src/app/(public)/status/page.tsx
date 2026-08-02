@@ -1,4 +1,5 @@
 import { AppBadge, AppProgress } from '@/components/app-ui';
+import { notFound } from 'next/navigation';
 import { MarketingCard, PageHero } from '@/components/public/public-ui';
 import { CheckCircle2 } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -18,6 +19,9 @@ const services = [
 ] as const;
 
 export default function StatusPage() {
+  // Disabled until metrics come from a verified public status service.
+  notFound();
+
   return (
     <>
       <PageHero

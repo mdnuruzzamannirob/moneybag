@@ -13,8 +13,8 @@ const columns = [
     links: [
       ['Features', '/features'],
       ['Pricing', '/pricing'],
-      ['Integrations', '/integrations'],
-      ['Changelog', '/changelog'],
+      // ['Integrations', '/integrations'], // Post-MVP
+      // ['Changelog', '/changelog'], // Enable with real release data
     ],
     title: 'Product',
   },
@@ -23,7 +23,7 @@ const columns = [
       ['About', '/about'],
       ['Customers', '/customers'],
       ['Blog', '/blog'],
-      ['Careers', '/careers'],
+      // ['Careers', '/careers'], // Enable when hiring begins
     ],
     title: 'Company',
   },
@@ -32,7 +32,7 @@ const columns = [
       ['Help center', '/help-center'],
       ['FAQ', '/faq'],
       ['Security', '/security'],
-      ['System status', '/status'],
+      // ['System status', '/status'], // Enable with a verified status service
     ],
     title: 'Resources',
   },
@@ -40,7 +40,7 @@ const columns = [
     links: [
       ['Terms', '/terms'],
       ['Privacy', '/privacy'],
-      ['Press kit', '/press'],
+      // ['Press kit', '/press'], // Enable when approved press assets are available
       ['Contact', '/contact'],
     ],
     title: 'Legal',

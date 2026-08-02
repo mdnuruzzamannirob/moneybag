@@ -8,6 +8,7 @@ import {
 } from '@/components/public/public-ui';
 import { CalendarDays, CheckCircle2, FileSpreadsheet, PlugZap, Webhook } from 'lucide-react';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Integrations',
@@ -65,6 +66,9 @@ const stack = [
 ] as const;
 
 export default function IntegrationsPage() {
+  // Disabled until post-MVP integrations such as bank sync are available.
+  notFound();
+
   return (
     <>
       <PageHero

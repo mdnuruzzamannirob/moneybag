@@ -27,7 +27,7 @@ export function LegalPage({
         title="Terms & Privacy"
         description={`Clear terms, plain-language privacy details, and no surprises. Last updated ${updated}.`}
       />
-      <nav className="border-b border-border bg-card" aria-label="Legal documents">
+      <nav className=" bg-card" aria-label="Legal documents">
         <div className="mx-auto flex max-w-7xl justify-center px-4 sm:px-6 lg:px-8">
           <Link
             className={cn(

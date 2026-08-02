@@ -4,15 +4,11 @@ import { AppButton, AppSheet } from '@/components/app-ui';
 import { cn } from '@/lib/utils';
 import {
   ArrowRight,
-  BriefcaseBusiness,
   CheckCircle2,
   ChevronDown,
   ContactRound,
   Menu,
-  Newspaper,
-  PlugZap,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -34,31 +30,18 @@ const moreNavigation = [
     iconClassName: 'text-[#10b981] dark:text-[#4ade80]',
     label: 'Security',
   },
-  {
-    href: '/integrations',
-    icon: PlugZap,
-    iconClassName: 'text-[#3b82f6] dark:text-[#60a5fa]',
-    label: 'Integrations',
-  },
-  {
-    href: '/changelog',
-    icon: Sparkles,
-    iconClassName: 'text-[#ec4899] dark:text-[#f472b6]',
-    label: 'Changelog',
-  },
-  {
-    href: '/press',
-    icon: Newspaper,
-    iconClassName: 'text-[#f59e0b] dark:text-[#fbbf24]',
-    label: 'Press kit',
-  },
+  // Post-MVP public pages. Restore these links when the corresponding product areas launch.
+  // { href: '/integrations', icon: PlugZap, iconClassName: 'text-info', label: 'Integrations' },
+  // { href: '/changelog', icon: Sparkles, iconClassName: 'text-brand-accent', label: 'Changelog' },
+  // { href: '/press', icon: Newspaper, iconClassName: 'text-warning', label: 'Press kit' },
   { href: '/about', icon: ContactRound, iconClassName: 'text-primary', label: 'About' },
-  { href: '/careers', icon: BriefcaseBusiness, iconClassName: 'text-primary', label: 'Careers' },
+  // { href: '/careers', icon: BriefcaseBusiness, iconClassName: 'text-primary', label: 'Careers' },
 ] as const;
 
 const resourceNavigation = [
   { href: '/help-center', label: 'Help center' },
-  { href: '/status', label: 'System status' },
+  // Enable after a verified public status service is available.
+  // { href: '/status', label: 'System status' },
   { href: '/faq', label: 'FAQ' },
 ] as const;
 

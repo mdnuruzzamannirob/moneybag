@@ -1,4 +1,5 @@
 import { AppBadge } from '@/components/app-ui';
+import { notFound } from 'next/navigation';
 import { ButtonLink, FeatureIcon, MarketingCard, PageHero } from '@/components/public/public-ui';
 import {
   ArrowRight,
@@ -41,6 +42,9 @@ const roles = [
 ] as const;
 
 export default function CareersPage() {
+  // Disabled until MoneyBag has active, verified job openings.
+  notFound();
+
   return (
     <>
       <PageHero

@@ -8,6 +8,7 @@ import {
   Users,
 } from 'lucide-react';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { AppBadge, AppButton } from '@/components/app-ui';
 import Logo from '@/components/shared/Logo';
@@ -53,6 +54,9 @@ const storyAngles = [
 ] as const;
 
 export default function PressPage() {
+  // Disabled until approved press assets and company facts are available.
+  notFound();
+
   return (
     <>
       <PageHero

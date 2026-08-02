@@ -1,5 +1,6 @@
 import { Sparkles } from 'lucide-react';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { ChangelogFeed } from '@/components/public/changelog-feed';
 import { PageHero, PublicSection, TextLink } from '@/components/public/public-ui';
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default function ChangelogPage() {
+  // Disabled until this feed is backed by real MoneyBag release data.
+  notFound();
+
   return (
     <>
       <PageHero
