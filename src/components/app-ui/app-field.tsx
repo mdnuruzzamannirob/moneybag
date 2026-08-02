@@ -13,7 +13,7 @@ export function AppField({ children, description, error, label, required }: AppF
     <Field className="gap-2" data-invalid={Boolean(error)}>
       <FieldLabel>
         {label}
-        {required ? <span className="text-destructive"> *</span> : null}
+        {required ? <span className="text-destructive">*</span> : null}
       </FieldLabel>
       {children}
       {description ? <FieldDescription>{description}</FieldDescription> : null}

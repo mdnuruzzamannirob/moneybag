@@ -38,12 +38,14 @@ export function AppSelect({
   placeholder = 'Select an option',
   size = 'default',
   triggerClassName,
+  defaultValue,
+  value,
   ...props
 }: AppSelectProps) {
   const [internalValue, setInternalValue] = useState<string | null>(
-    typeof props.defaultValue === 'string' ? props.defaultValue : null,
+    typeof defaultValue === 'string' ? defaultValue : null,
   );
-  const currentValue = typeof props.value === 'string' ? props.value : internalValue;
+  const currentValue = typeof value === 'string' ? value : internalValue;
   const selectedOption = currentValue
     ? options.find((option) => option.value === currentValue)
     : undefined;
@@ -54,6 +56,7 @@ export function AppSelect({
   return (
     <Select
       {...props}
+      value={currentValue}
       onValueChange={(value) => selectOption(typeof value === 'string' ? value : null)}
     >
       <SelectTrigger

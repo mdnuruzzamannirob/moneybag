@@ -47,6 +47,7 @@ type Transaction = {
   wallet: string;
   date: string;
   amount: number;
+  note: string;
   type: 'income' | 'expense';
   icon: string;
   color: string;
@@ -80,6 +81,7 @@ const txSeed: Transaction[] = [
     wallet: 'BRAC Bank',
     date: '28 Jul, 2026',
     amount: 85000,
+    note: 'Monthly salary deposit',
     type: 'income',
     icon: 'S',
     color: '#10b981',
@@ -91,6 +93,7 @@ const txSeed: Transaction[] = [
     wallet: 'Cash',
     date: '26 Jul, 2026',
     amount: 2450,
+    note: 'Weekly grocery run',
     type: 'expense',
     icon: 'F',
     color: '#f59e0b',
@@ -102,6 +105,7 @@ const txSeed: Transaction[] = [
     wallet: 'bKash',
     date: '25 Jul, 2026',
     amount: 320,
+    note: 'Ride to client meeting',
     type: 'expense',
     icon: 'T',
     color: '#3b82f6',
@@ -113,6 +117,7 @@ const txSeed: Transaction[] = [
     wallet: 'BRAC Bank',
     date: '24 Jul, 2026',
     amount: 18200,
+    note: 'July freelance invoice',
     type: 'income',
     icon: 'F',
     color: '#8b5cf6',
@@ -124,6 +129,7 @@ const txSeed: Transaction[] = [
     wallet: 'City Bank Card',
     date: '24 Jul, 2026',
     amount: 650,
+    note: 'Monthly entertainment plan',
     type: 'expense',
     icon: 'E',
     color: '#ec4899',
@@ -135,6 +141,7 @@ const txSeed: Transaction[] = [
     wallet: 'bKash',
     date: '22 Jul, 2026',
     amount: 1840,
+    note: 'July utility payment',
     type: 'expense',
     icon: 'B',
     color: '#ef4444',
@@ -296,8 +303,17 @@ export function TransactionsPage() {
       key: 'category',
       header: 'Category',
       render: (item) => (
-        <AppBadge className="rounded-md" status={item.type === 'income' ? 'success' : 'neutral'}>
+        <AppBadge className="rounded-md" status="neutral">
           {item.category}
+        </AppBadge>
+      ),
+    },
+    {
+      key: 'type',
+      header: 'Type',
+      render: (item) => (
+        <AppBadge className="rounded-md" status={item.type === 'income' ? 'success' : 'danger'}>
+          {item.type === 'income' ? 'Income' : 'Expense'}
         </AppBadge>
       ),
     },
@@ -317,7 +333,7 @@ export function TransactionsPage() {
       header: 'Amount',
       render: (item) => <TransactionAmount item={item} />,
     },
-    { align: 'right', key: 'actions', header: '', render: () => <RowMenu kind="transaction" /> },
+    { align: 'right', key: 'actions', header: '', render: () => <RowMenu inline kind="transaction" /> },
   ];
 
   return (
@@ -404,7 +420,7 @@ export function TransactionsPage() {
         </div>
         <div className="hidden md:block">
           <AppTable
-            className="rounded-none border-x-0 border-b-0"
+            className="rounded-none border-x-0 border-b-0 border-t border-border"
             columns={columns}
             empty="No transactions match your filters."
             getRowKey={(row) => row.id}
@@ -452,19 +468,9 @@ export function TransactionsPage() {
 
 function TransactionIdentity({ item }: { item: Transaction }) {
   return (
-    <div className="flex items-center gap-3">
-      <span
-        className="grid size-9 shrink-0 place-items-center rounded-lg text-xs font-semibold"
-        style={{ backgroundColor: `${item.color}1c`, color: item.color }}
-      >
-        {item.icon}
-      </span>
-      <span className="min-w-0">
-        <span className="block truncate font-medium">{item.title}</span>
-        <span className="mt-0.5 block text-xs text-muted-foreground">
-          {item.type === 'income' ? 'Income received' : 'Expense recorded'}
-        </span>
-      </span>
+    <div className="min-w-0">
+      <div className="truncate font-medium">{item.title}</div>
+      <div className="mt-1 truncate text-xs leading-4 text-muted-foreground">{item.note}</div>
     </div>
   );
 }
@@ -485,7 +491,7 @@ function TransactionMobile({ item }: { item: Transaction }) {
       <span className="ml-auto shrink-0">
         <TransactionAmount item={item} />
       </span>
-      <RowMenu kind="transaction" />
+      <RowMenu inline kind="transaction" />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+import { Edit3, Ellipsis, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 import {
@@ -328,17 +328,26 @@ export function ConfirmDialog({
   );
 }
 
-export function RowMenu({ kind }: { kind: 'transaction' | 'budget' | 'goal' }) {
+export function RowMenu({
+  inline = false,
+  kind,
+}: {
+  inline?: boolean;
+  kind: 'transaction' | 'budget' | 'goal';
+}) {
   const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null);
   return (
     <>
-      <AppDropdownMenu
+      {inline ? <div className="flex justify-end gap-1">
+        <AppButton aria-label={`Edit ${kind}`} onClick={() => setDialog('edit')} size="icon-sm" tone="info">
+          <Edit3 />
+        </AppButton>
+        <AppButton aria-label={`Delete ${kind}`} onClick={() => setDialog('delete')} size="icon-sm" tone="danger">
+          <Trash2 />
+        </AppButton>
+      </div> : <AppDropdownMenu
         items={[
-          {
-            icon: <Pencil />,
-            label: 'Edit',
-            onSelect: () => setDialog('edit'),
-          },
+          { icon: <Edit3 />, label: 'Edit', onSelect: () => setDialog('edit') },
           {
             icon: <Trash2 />,
             label: 'Delete',
@@ -347,12 +356,8 @@ export function RowMenu({ kind }: { kind: 'transaction' | 'budget' | 'goal' }) {
             variant: 'destructive',
           },
         ]}
-        trigger={
-          <AppButton aria-label="More actions" size="icon-xs" tone="secondary">
-            <Ellipsis />
-          </AppButton>
-        }
-      />
+        trigger={<AppButton aria-label="More actions" size="icon-xs" tone="secondary"><Ellipsis /></AppButton>}
+      />}
       {dialog === 'edit' ? (
         <FinanceDialog editing kind={kind} onClose={() => setDialog(null)} />
       ) : null}
