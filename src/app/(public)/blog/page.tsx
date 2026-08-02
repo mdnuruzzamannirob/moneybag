@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Clock3 } from 'lucide-react';
+import { ArrowRight, Clock3 } from 'lucide-react';
 import { PageHero } from '@/components/public/public-ui';
 import { blogPosts } from '@/lib/public-content';
 
@@ -22,7 +22,6 @@ export default function BlogPage() {
       <PageHero
         compact
         eyebrow="BLOG"
-        icon={<BookOpen className="size-3.5" />}
         title={
           <>
             Money talks, <span className="text-primary">we listen.</span>
@@ -31,6 +30,16 @@ export default function BlogPage() {
         description="Tips, guides, and stories about personal finance."
       />
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mb-8 max-w-2xl">
+          <p className="text-xs font-bold uppercase tracking-wider text-primary">Featured story</p>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+            Practical ideas for a calmer financial life
+          </h2>
+          <p className="mt-3 leading-7 text-muted-foreground">
+            Start with our latest guide, then explore straightforward advice for budgeting,
+            saving, and managing money together.
+          </p>
+        </div>
         <Link
           href={`/blog/${featured.slug}`}
           className="group grid overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-shadow hover:shadow-lg lg:grid-cols-2"
@@ -55,9 +64,9 @@ export default function BlogPage() {
               </span>
               <span className="text-muted-foreground">{featured.date}</span>
             </div>
-            <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight group-hover:text-primary">
+            <h3 className="mt-3 text-3xl font-bold leading-tight tracking-tight group-hover:text-primary">
               {featured.title}
-            </h2>
+            </h3>
             <p className="mt-4 leading-7 text-muted-foreground">{featured.excerpt}</p>
             <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
@@ -70,7 +79,13 @@ export default function BlogPage() {
             </span>
           </div>
         </Link>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mb-7 mt-16">
+          <h2 className="text-2xl font-bold tracking-tight">Latest articles</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            More guides and stories from the MoneyBag team.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
           {posts.map((post) => (
             <article
               className="group overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-md"
@@ -92,7 +107,7 @@ export default function BlogPage() {
                   >
                     {post.category}
                   </p>
-                  <h2 className="mt-2 text-xl font-bold leading-snug">{post.title}</h2>
+                  <h3 className="mt-2 text-xl font-bold leading-snug">{post.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">{post.excerpt}</p>
                   <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground">
                     <span>{post.date}</span>
