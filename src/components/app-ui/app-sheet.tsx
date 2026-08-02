@@ -39,15 +39,11 @@ export function AppSheet({
           <SheetTitle>{title}</SheetTitle>
           {description ? <SheetDescription>{description}</SheetDescription> : null}
         </SheetHeader>
-        <div
-          className={cn('min-h-0 flex-1 overflow-y-auto px-6 py-5', bodyClassName)}
-        >
+        <div className={cn('min-h-0 flex-1 overflow-y-auto px-6 py-5', bodyClassName)}>
           {children}
         </div>
         {footer ? (
-          <SheetFooter
-            className={cn('border-t border-border bg-secondary', footerClassName)}
-          >
+          <SheetFooter className={cn('border-t border-border bg-secondary', footerClassName)}>
             {footer}
           </SheetFooter>
         ) : null}

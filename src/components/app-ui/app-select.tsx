@@ -106,7 +106,11 @@ export function AppSelect({
               <span
                 className={cn(
                   'shrink-0 text-muted-foreground',
-                  size === 'sm' ? '[&>svg]:size-3' : size === 'lg' ? '[&>svg]:size-5' : '[&>svg]:size-4',
+                  size === 'sm'
+                    ? '[&>svg]:size-3'
+                    : size === 'lg'
+                      ? '[&>svg]:size-5'
+                      : '[&>svg]:size-4',
                 )}
               >
                 {option.icon}

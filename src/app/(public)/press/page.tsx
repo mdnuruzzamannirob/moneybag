@@ -122,9 +122,7 @@ export default function PressPage() {
               <FeatureIcon tone="info">
                 <ImageIcon />
               </FeatureIcon>
-              <h3 className="mt-5 text-xl font-bold">
-                Need screenshots or interviews?
-              </h3>
+              <h3 className="mt-5 text-xl font-bold">Need screenshots or interviews?</h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
                 Tell us about your publication, deadline, and the angle you&apos;re exploring.
                 We&apos;ll send the most relevant material.

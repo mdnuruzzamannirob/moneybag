@@ -2,9 +2,27 @@
 
 import type { ReactElement, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
-export function AppPopover({ children, description, title, trigger, contentClassName, align = 'center', side = 'bottom', sideOffset = 4, open, onOpenChange }: {
+export function AppPopover({
+  children,
+  description,
+  title,
+  trigger,
+  contentClassName,
+  align = 'center',
+  side = 'bottom',
+  sideOffset = 4,
+  open,
+  onOpenChange,
+}: {
   children: ReactNode;
   description?: ReactNode;
   title?: ReactNode;
@@ -16,11 +34,23 @@ export function AppPopover({ children, description, title, trigger, contentClass
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
-  return <Popover open={open} onOpenChange={onOpenChange}>
-    <PopoverTrigger render={trigger} />
-    <PopoverContent align={align} side={side} sideOffset={sideOffset} className={cn('w-80 rounded-lg border-border p-4 shadow-xl', contentClassName)}>
-      {title || description ? <PopoverHeader>{title ? <PopoverTitle>{title}</PopoverTitle> : null}{description ? <PopoverDescription>{description}</PopoverDescription> : null}</PopoverHeader> : null}
-      {children}
-    </PopoverContent>
-  </Popover>;
+  return (
+    <Popover open={open} onOpenChange={onOpenChange}>
+      <PopoverTrigger render={trigger} />
+      <PopoverContent
+        align={align}
+        side={side}
+        sideOffset={sideOffset}
+        className={cn('w-80 rounded-lg border-border p-4 shadow-xl', contentClassName)}
+      >
+        {title || description ? (
+          <PopoverHeader>
+            {title ? <PopoverTitle>{title}</PopoverTitle> : null}
+            {description ? <PopoverDescription>{description}</PopoverDescription> : null}
+          </PopoverHeader>
+        ) : null}
+        {children}
+      </PopoverContent>
+    </Popover>
+  );
 }

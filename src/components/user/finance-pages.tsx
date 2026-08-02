@@ -333,7 +333,12 @@ export function TransactionsPage() {
       header: 'Amount',
       render: (item) => <TransactionAmount item={item} />,
     },
-    { align: 'right', key: 'actions', header: '', render: () => <RowMenu inline kind="transaction" /> },
+    {
+      align: 'right',
+      key: 'actions',
+      header: '',
+      render: () => <RowMenu inline kind="transaction" />,
+    },
   ];
 
   return (

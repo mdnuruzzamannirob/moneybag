@@ -43,8 +43,7 @@ const pricingFaq = [
   },
   {
     question: 'Do I need a credit card for the trial?',
-    answer:
-      'No. You can use Pro features free for 14 days without adding a credit card.',
+    answer: 'No. You can use Pro features free for 14 days without adding a credit card.',
   },
   {
     question: 'Do Monthly and Yearly include the same features?',
@@ -100,9 +99,7 @@ export default function PricingPage() {
           })}
         </div>
         <section className="mt-24 lg:mt-28">
-          <h2 className="text-center text-3xl font-bold tracking-tight">
-            Compare plans
-          </h2>
+          <h2 className="text-center text-3xl font-bold tracking-tight">Compare plans</h2>
           <p className="mt-2 text-center text-muted-foreground">
             A quick look at what is included.
           </p>
@@ -147,9 +144,7 @@ export default function PricingPage() {
           </div>
         </section>
         <section className="mx-auto mt-24 max-w-3xl lg:mt-28">
-          <h2 className="text-center text-3xl font-bold tracking-tight">
-            Frequently asked
-          </h2>
+          <h2 className="text-center text-3xl font-bold tracking-tight">Frequently asked</h2>
           <div className="mt-8">
             <FaqList items={pricingFaq} />
           </div>

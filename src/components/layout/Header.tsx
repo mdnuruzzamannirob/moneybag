@@ -2,13 +2,7 @@
 
 import { AppButton, AppSheet } from '@/components/app-ui';
 import { cn } from '@/lib/utils';
-import {
-  ArrowRight,
-  ChevronDown,
-  ContactRound,
-  Menu,
-  ShieldCheck,
-} from 'lucide-react';
+import { ArrowRight, ChevronDown, ContactRound, Menu, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
 import Logo from '../shared/Logo';

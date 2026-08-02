@@ -135,10 +135,7 @@ export default function HomePage() {
               Your money, your control
             </Eyebrow> */}
             <h1 className="mt-6 max-w-3xl text-5xl font-bold leading-[1.04] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
-              Take control of your finances —{' '}
-              <span className="text-primary">
-                together.
-              </span>
+              Take control of your finances — <span className="text-primary">together.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
               Track income, expenses, budgets, and savings. Share with family. Built for simplicity,
@@ -209,9 +206,7 @@ export default function HomePage() {
             <FamilyCard />
           </div>
           <div>
-            <Eyebrow tone="accent">
-              FOR FAMILIES
-            </Eyebrow>
+            <Eyebrow tone="accent">FOR FAMILIES</Eyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
               Manage money together, <span className="text-primary">without the drama.</span>
             </h2>

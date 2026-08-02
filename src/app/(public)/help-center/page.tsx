@@ -88,11 +88,7 @@ export default function HelpPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map(({ icon: Icon, title, text, tone, count }) => (
-            <MarketingCard
-              className="text-center"
-              key={title}
-              padding="md"
-            >
+            <MarketingCard className="text-center" key={title} padding="md">
               <FeatureIcon className="mx-auto" tone={tone}>
                 <Icon />
               </FeatureIcon>

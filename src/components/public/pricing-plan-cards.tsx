@@ -13,7 +13,13 @@ const freePlan = {
   price: '$0',
   cadence: 'Free forever',
   action: 'Start free',
-  features: ['1 personal wallet', '50 transactions per month', '2 budgets', '1 savings goal', 'Basic reports'],
+  features: [
+    '1 personal wallet',
+    '50 transactions per month',
+    '2 budgets',
+    '1 savings goal',
+    'Basic reports',
+  ],
 };
 
 const proFeatures = [
@@ -123,11 +129,34 @@ export function PricingPlanCards() {
 
 type PaidPlan = (typeof paidPlans)[keyof typeof paidPlans]['pro' | 'family'];
 
-function PlanCard({ accent, featured, plan }: { accent?: boolean; featured?: boolean; plan: typeof freePlan | PaidPlan }) {
+function PlanCard({
+  accent,
+  featured,
+  plan,
+}: {
+  accent?: boolean;
+  featured?: boolean;
+  plan: typeof freePlan | PaidPlan;
+}) {
   return (
-    <MarketingCard className={cn('relative flex flex-col p-6', featured && 'border-2 border-primary/45 bg-linear-to-b from-card to-primary/5 shadow-lg lg:-mt-3', accent && 'border-brand-accent/35 bg-linear-to-br from-brand-accent-soft via-card to-card')}>
-      {featured && <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[11px] font-bold tracking-wide text-white shadow-sm">{'label' in plan ? plan.label : ''}</span>}
-      {accent && <span className="absolute right-5 top-5 rounded-full bg-brand-accent px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-white">{`label` in plan ? plan.label : 'FAMILY'}</span>}
+    <MarketingCard
+      className={cn(
+        'relative flex flex-col p-6',
+        featured &&
+          'border-2 border-primary/45 bg-linear-to-b from-card to-primary/5 shadow-lg lg:-mt-3',
+        accent && 'border-brand-accent/35 bg-linear-to-br from-brand-accent-soft via-card to-card',
+      )}
+    >
+      {featured && (
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[11px] font-bold tracking-wide text-white shadow-sm">
+          {'label' in plan ? plan.label : ''}
+        </span>
+      )}
+      {accent && (
+        <span className="absolute right-5 top-5 rounded-full bg-brand-accent px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-white">
+          {`label` in plan ? plan.label : 'FAMILY'}
+        </span>
+      )}
       <h2 className="text-lg font-bold">{plan.name}</h2>
       <p className="mt-1 min-h-10 text-sm text-muted-foreground">{plan.blurb}</p>
       <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -138,12 +167,39 @@ function PlanCard({ accent, featured, plan }: { accent?: boolean; featured?: boo
           </span>
         )}
       </div>
-      <p className={cn('mt-1 text-xs', featured ? 'font-semibold text-success' : 'text-muted-foreground')}>{plan.cadence}</p>
-      <ButtonLink className="mt-6 w-full" href="/register" tone={featured ? 'primary' : 'secondary'}>{plan.action}</ButtonLink>
+      <p
+        className={cn(
+          'mt-1 text-xs',
+          featured ? 'font-semibold text-success' : 'text-muted-foreground',
+        )}
+      >
+        {plan.cadence}
+      </p>
+      <ButtonLink
+        className="mt-6 w-full"
+        href="/register"
+        tone={featured ? 'primary' : 'secondary'}
+      >
+        {plan.action}
+      </ButtonLink>
       <ul className="mt-6 flex-1 space-y-2.5 text-sm">
-        {plan.features.map((feature) => <li className="flex items-start gap-2" key={feature}><Check className={cn('mt-0.5 size-4 shrink-0', accent ? 'text-brand-accent' : 'text-success')} />{feature}</li>)}
+        {plan.features.map((feature) => (
+          <li className="flex items-start gap-2" key={feature}>
+            <Check
+              className={cn(
+                'mt-0.5 size-4 shrink-0',
+                accent ? 'text-brand-accent' : 'text-success',
+              )}
+            />
+            {feature}
+          </li>
+        ))}
       </ul>
-      {plan.name === 'Free' && <p className="mt-5 border-t border-border pt-5 text-center text-xs text-muted-foreground">No credit card required</p>}
+      {plan.name === 'Free' && (
+        <p className="mt-5 border-t border-border pt-5 text-center text-xs text-muted-foreground">
+          No credit card required
+        </p>
+      )}
     </MarketingCard>
   );
 }

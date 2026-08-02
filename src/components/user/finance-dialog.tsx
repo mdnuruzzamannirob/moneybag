@@ -338,26 +338,44 @@ export function RowMenu({
   const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null);
   return (
     <>
-      {inline ? <div className="flex justify-end gap-1">
-        <AppButton aria-label={`Edit ${kind}`} onClick={() => setDialog('edit')} size="icon-sm" tone="info">
-          <Edit3 />
-        </AppButton>
-        <AppButton aria-label={`Delete ${kind}`} onClick={() => setDialog('delete')} size="icon-sm" tone="danger">
-          <Trash2 />
-        </AppButton>
-      </div> : <AppDropdownMenu
-        items={[
-          { icon: <Edit3 />, label: 'Edit', onSelect: () => setDialog('edit') },
-          {
-            icon: <Trash2 />,
-            label: 'Delete',
-            onSelect: () => setDialog('delete'),
-            separatorBefore: true,
-            variant: 'destructive',
-          },
-        ]}
-        trigger={<AppButton aria-label="More actions" size="icon-xs" tone="secondary"><Ellipsis /></AppButton>}
-      />}
+      {inline ? (
+        <div className="flex justify-end gap-1">
+          <AppButton
+            aria-label={`Edit ${kind}`}
+            onClick={() => setDialog('edit')}
+            size="icon-sm"
+            tone="info"
+          >
+            <Edit3 />
+          </AppButton>
+          <AppButton
+            aria-label={`Delete ${kind}`}
+            onClick={() => setDialog('delete')}
+            size="icon-sm"
+            tone="danger"
+          >
+            <Trash2 />
+          </AppButton>
+        </div>
+      ) : (
+        <AppDropdownMenu
+          items={[
+            { icon: <Edit3 />, label: 'Edit', onSelect: () => setDialog('edit') },
+            {
+              icon: <Trash2 />,
+              label: 'Delete',
+              onSelect: () => setDialog('delete'),
+              separatorBefore: true,
+              variant: 'destructive',
+            },
+          ]}
+          trigger={
+            <AppButton aria-label="More actions" size="icon-xs" tone="secondary">
+              <Ellipsis />
+            </AppButton>
+          }
+        />
+      )}
       {dialog === 'edit' ? (
         <FinanceDialog editing kind={kind} onClose={() => setDialog(null)} />
       ) : null}

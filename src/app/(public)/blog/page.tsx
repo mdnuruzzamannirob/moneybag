@@ -36,8 +36,8 @@ export default function BlogPage() {
             Practical ideas for a calmer financial life
           </h2>
           <p className="mt-3 leading-7 text-muted-foreground">
-            Start with our latest guide, then explore straightforward advice for budgeting,
-            saving, and managing money together.
+            Start with our latest guide, then explore straightforward advice for budgeting, saving,
+            and managing money together.
           </p>
         </div>
         <Link

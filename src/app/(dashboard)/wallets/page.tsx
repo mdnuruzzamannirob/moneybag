@@ -271,11 +271,11 @@ function WalletCard({
   const router = useRouter();
   return (
     <AppCard className="relative h-full overflow-hidden">
-      <div className={cn('absolute inset-x-0 top-0 h-1 bg-gradient-to-r', wallet.color)} />
+      <div className={cn('absolute inset-x-0 top-0 h-1 bg-linear-to-r', wallet.color)} />
       <div className="flex items-start justify-between gap-3">
         <span
           className={cn(
-            'grid size-10 place-items-center rounded-lg bg-gradient-to-br text-white',
+            'grid size-10 place-items-center rounded-lg bg-linear-to-br text-white',
             wallet.color,
           )}
         >

@@ -1,6 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, ChevronDown, CircleHelp, CreditCard, Lock, Settings2, Users } from 'lucide-react';
+import {
+  ArrowRight,
+  ChevronDown,
+  CircleHelp,
+  CreditCard,
+  Lock,
+  Settings2,
+  Users,
+} from 'lucide-react';
 import { FeatureIcon, PageHero } from '@/components/public/public-ui';
 
 export const metadata: Metadata = {

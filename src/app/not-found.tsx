@@ -9,9 +9,7 @@ export default function NotFound() {
       <section className="relative isolate grid min-h-[70vh] place-items-center overflow-hidden border-b border-border px-4 py-24 text-center">
         <DotPattern className="opacity-65" />
         <div className="relative z-10 mx-auto max-w-2xl">
-          <p className="text-8xl font-bold tracking-tighter text-primary/15 sm:text-9xl">
-            404
-          </p>
+          <p className="text-8xl font-bold tracking-tighter text-primary/15 sm:text-9xl">404</p>
           <p className="mt-2 text-xs font-bold tracking-[0.22em] text-primary">PAGE NOT FOUND</p>
           <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl">
             This page slipped out of the budget
