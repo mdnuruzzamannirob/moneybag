@@ -114,7 +114,7 @@ export default function FeaturesPage() {
         }
         description="Built for individuals, couples, and families who want a complete view of their money—without the bloat."
       />
-      <section className="border-y border-border bg-card/60">
+      <section className="border-b border-border bg-card/60">
         <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-x-10 gap-y-4 px-4 py-6 text-sm text-muted-foreground sm:px-6 lg:px-8">
           {['Unlimited on Pro', 'Fast CSV import', 'Family sharing', 'Export anytime'].map(
             (item) => (

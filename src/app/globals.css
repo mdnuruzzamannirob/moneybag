@@ -321,6 +321,11 @@
     -webkit-mask-image: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
   }
 
+  .page-hero-dots {
+    mask-image: linear-gradient(to bottom, black 0%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 95%, transparent 100%);
+  }
+
   .ui-gradient-primary {
     background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-hover));
     color: var(--primary-foreground);

@@ -83,17 +83,21 @@ export function PageHero({
   return (
     <section
       className={cn(
-        'relative isolate flex items-center overflow-hidden border-b border-border px-0 text-center',
+        'relative isolate flex items-center overflow-hidden px-0 text-center',
         compact ? 'min-h-52 py-10 sm:min-h-60 sm:py-12' : 'min-h-70 py-12 sm:min-h-80',
       )}
     >
-      <DotPattern className="opacity-65" />
-      <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+      <DotPattern className="page-hero-dots opacity-65" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-20 bg-linear-to-b from-transparent to-background"
+      />
+      <div className="relative z-2 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <Eyebrow icon={icon} tone={tone}>
+          <Eyebrow tone={tone}>
             {eyebrow}
           </Eyebrow>
-          <h1 className="mt-4 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
             {title}
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">

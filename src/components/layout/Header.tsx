@@ -88,9 +88,10 @@ export default function SiteHeader({
           {primaryNavigation.map((item) => (
             <Link
               className={cn(
-                'relative text-muted-foreground transition-colors hover:text-foreground',
-                isActive(pathname, item.href) &&
-                  'text-primary after:absolute after:inset-x-0 after:-bottom-5.5 after:h-0.5 after:rounded-t-full after:bg-primary',
+                'relative transition-colors',
+                isActive(pathname, item.href)
+                  ? 'text-primary hover:text-primary after:absolute after:inset-x-0 after:-bottom-5.5 after:h-0.5 after:rounded-t-full after:bg-primary'
+                  : 'text-muted-foreground hover:text-foreground',
               )}
               href={item.href}
               key={item.href}
