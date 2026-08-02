@@ -13,6 +13,7 @@ import {
 } from '../app-ui';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { NavSection } from './DashboardShell';
+import { wallets } from '@/components/user/wallet-data';
 
 export default function Topbar({
   onMenuClick,
@@ -65,6 +66,11 @@ export default function Topbar({
     : pathname.startsWith('/family')
       ? { href: '/family/dashboard', label: 'Family' }
       : { href: '/dashboard', label: 'Personal' };
+  const walletId = pathname.startsWith('/wallets/') ? pathname.split('/')[2] : null;
+  const wallet = walletId ? wallets.find((item) => item.id === walletId) : null;
+  const breadcrumbItems = wallet
+    ? [base, { href: '/wallets', label: 'Wallets' }, { label: wallet.name }]
+    : [base, { label: active?.label || 'Dashboard' }];
   const notifications = [
     {
       title: 'Budget reminder',
@@ -87,7 +93,7 @@ export default function Topbar({
         >
           <Menu className="size-4" />
         </button>
-        <AppBreadcrumb items={[base, { label: active?.label || 'Dashboard' }]} />
+        <AppBreadcrumb items={breadcrumbItems} />
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <AppButton
