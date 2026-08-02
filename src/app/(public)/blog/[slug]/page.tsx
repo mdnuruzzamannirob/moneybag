@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, BookOpen, Clock3 } from 'lucide-react';
 import { notFound } from 'next/navigation';
@@ -47,9 +48,11 @@ export default async function BlogPostPage({ params }: PageProps<'/blog/[slug]'>
         <div
           className={`relative mx-4 mt-12 h-64 overflow-hidden rounded-lg border border-border bg-linear-to-br shadow-lg sm:mx-auto sm:mt-14 sm:h-96 sm:max-w-5xl ${post.color}`}
         >
-          <img
+          <Image
             alt="Illustration for this MoneyBag article"
             className="size-full object-cover opacity-90 mix-blend-multiply"
+            fill
+            sizes="(min-width: 1024px) 1024px, 100vw"
             src="/images/blog/finance-cover.png"
           />
         </div>

@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import {
   formatWalletMoney,
@@ -43,23 +43,24 @@ import { WalletFormDialog, type WalletDialogKind } from '@/components/user/walle
 import { cn } from '@/lib/utils';
 
 export default function Page() {
-  const [dialog, setDialog] = useState<WalletDialogKind>(null);
+  const sourceWalletId =
+    typeof window === 'undefined'
+      ? null
+      : new URLSearchParams(window.location.search).get('transfer');
+  const editWalletId =
+    typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get('edit');
+  const requestedWallet = wallets.find(
+    (wallet) => wallet.id === sourceWalletId || wallet.id === editWalletId,
+  );
+  const [dialog, setDialog] = useState<WalletDialogKind>(() =>
+    requestedWallet ? (sourceWalletId ? 'transfer' : 'edit') : null,
+  );
   const [deleting, setDeleting] = useState<Wallet | null>(null);
-  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
+  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(
+    () => requestedWallet ?? null,
+  );
   const [query, setQuery] = useState('');
   const [kind, setKind] = useState<'all' | WalletKind>('all');
-
-  useEffect(() => {
-    const sourceWalletId = new URLSearchParams(window.location.search).get('transfer');
-    const editWalletId = new URLSearchParams(window.location.search).get('edit');
-    const requestedWallet = wallets.find(
-      (wallet) => wallet.id === sourceWalletId || wallet.id === editWalletId,
-    );
-    if (!requestedWallet) return;
-
-    setSelectedWallet(requestedWallet);
-    setDialog(sourceWalletId ? 'transfer' : 'edit');
-  }, []);
 
   const assetBalance = wallets
     .filter((wallet) => wallet.kind === 'asset')
@@ -68,14 +69,10 @@ export default function Page() {
     .filter((wallet) => wallet.kind === 'credit')
     .reduce((total, wallet) => total + wallet.balance, 0);
   const netPosition = assetBalance - creditDue;
-  const filteredWallets = useMemo(
-    () =>
-      wallets.filter(
-        (wallet) =>
-          (kind === 'all' || wallet.kind === kind) &&
-          `${wallet.name} ${wallet.type}`.toLowerCase().includes(query.trim().toLowerCase()),
-      ),
-    [kind, query],
+  const filteredWallets = wallets.filter(
+    (wallet) =>
+      (kind === 'all' || wallet.kind === kind) &&
+      `${wallet.name} ${wallet.type}`.toLowerCase().includes(query.trim().toLowerCase()),
   );
 
   const openEdit = (wallet: Wallet) => {
@@ -233,6 +230,7 @@ export default function Page() {
 
       <WalletFormDialog
         editing={selectedWallet}
+        key={`${dialog}-${selectedWallet?.id ?? 'new'}`}
         kind={dialog}
         onClose={() => {
           setDialog(null);

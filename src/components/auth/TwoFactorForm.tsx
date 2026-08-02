@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
 import { AppButton, AppField } from '@/components/app-ui';
@@ -16,7 +16,9 @@ export function TwoFactorForm() {
     defaultValues: { code: '' },
   });
 
-  function onSubmit(_values: TwoFactorValues) {
+  const code = useWatch({ control: form.control, name: 'code' });
+
+  function onSubmit() {
     router.push('/dashboard');
   }
 
@@ -40,7 +42,7 @@ export function TwoFactorForm() {
             onValueChange={(value) =>
               form.setValue('code', value, { shouldTouch: true, shouldValidate: true })
             }
-            value={form.watch('code')}
+            value={code}
           />
         </AppField>
         <AppButton className="w-full" size="lg" type="submit">

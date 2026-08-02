@@ -179,7 +179,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="lg:pl-65">
-        <Topbar onMenuClick={() => setOpen(true)} showAddButton={!isAdmin} sections={sections} />
+        <Topbar onMenuClick={() => setOpen(true)} sections={sections} />
         <main className="w-full px-4 py-4 sm:px-6 lg:px-8 lg:py-6">{children}</main>
       </div>
     </div>

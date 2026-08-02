@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { QrCode } from 'lucide-react';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -19,7 +19,9 @@ export function TwoFactorSetupForm() {
     defaultValues: { code: '' },
   });
 
-  function onSubmit(_values: TwoFactorValues) {
+  const code = useWatch({ control: form.control, name: 'code' });
+
+  function onSubmit() {
     router.push('/settings/security');
   }
 
@@ -59,7 +61,7 @@ export function TwoFactorSetupForm() {
               onValueChange={(value) =>
                 form.setValue('code', value, { shouldTouch: true, shouldValidate: true })
               }
-              value={form.watch('code')}
+              value={code}
             />
           </AppField>
           <AppButton className="w-full" size="lg" type="submit">

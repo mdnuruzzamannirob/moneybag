@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
 import { AuthPasswordField } from '@/components/auth/AuthFormFields';
@@ -16,7 +16,9 @@ export function ResetPasswordForm() {
     defaultValues: { password: '', confirmPassword: '' },
   });
 
-  function onSubmit(_values: ResetPasswordValues) {
+  const password = useWatch({ control: form.control, name: 'password' });
+
+  function onSubmit() {
     router.push('/login');
   }
 
@@ -39,7 +41,7 @@ export function ResetPasswordForm() {
           placeholder="At least 8 characters"
           registration={form.register('password')}
           showStrength
-          watchValue={form.watch('password')}
+          watchValue={password}
         />
         <AuthPasswordField
           autoComplete="new-password"

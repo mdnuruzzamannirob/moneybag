@@ -1,7 +1,7 @@
 'use client';
 
 import { Check } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { AppButton, AppField, AppInput, AppModal, AppSelect } from '@/components/app-ui';
 import { wallets, type Wallet } from '@/components/user/wallet-data';
@@ -21,12 +21,6 @@ export function WalletFormDialog({
   const [walletType, setWalletType] = useState(editing?.type ?? '');
   const [customType, setCustomType] = useState('');
   const [walletName, setWalletName] = useState(editing?.name ?? '');
-
-  useEffect(() => {
-    setWalletType(editing?.type ?? '');
-    setCustomType('');
-    setWalletName(editing?.name ?? '');
-  }, [editing, kind]);
 
   const walletOptions = wallets.map((wallet) => ({ label: wallet.name, value: wallet.id }));
   const typeOptions = [

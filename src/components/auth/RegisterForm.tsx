@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
 import {
@@ -27,7 +27,9 @@ export function RegisterForm() {
     },
   });
 
-  function onSubmit(_values: RegisterValues) {
+  const password = useWatch({ control: form.control, name: 'password' });
+
+  function onSubmit() {
     router.push('/verify-email');
   }
 
@@ -69,7 +71,7 @@ export function RegisterForm() {
           placeholder="At least 8 characters"
           registration={form.register('password')}
           showStrength
-          watchValue={form.watch('password')}
+          watchValue={password}
         />
         <AuthCheckboxField
           error={form.formState.errors.terms}

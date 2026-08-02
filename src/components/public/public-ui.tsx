@@ -94,7 +94,9 @@ export function PageHero({
       />
       <div className="relative z-2 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
+          <Eyebrow icon={icon} tone={tone}>
+            {eyebrow}
+          </Eyebrow>
           <h1 className="mt-4 text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
             {title}
           </h1>

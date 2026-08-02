@@ -28,11 +28,9 @@ const themeOptions = [
 
 export default function Topbar({
   onMenuClick,
-  showAddButton,
   sections,
 }: {
   onMenuClick: () => void;
-  showAddButton: boolean;
   sections: NavSection[];
 }) {
   const { setTheme, theme } = useTheme();
@@ -71,9 +69,6 @@ export default function Topbar({
   useEffect(() => {
     if (searchOpen) window.setTimeout(() => inputRef.current?.focus(), 0);
   }, [searchOpen]);
-  useEffect(() => {
-    setSearchOpen(false);
-  }, [pathname]);
   const base = pathname.startsWith('/admin')
     ? { href: '/admin/dashboard', label: 'Administrator' }
     : pathname.startsWith('/family')

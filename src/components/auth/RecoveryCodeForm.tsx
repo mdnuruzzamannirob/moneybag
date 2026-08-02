@@ -17,7 +17,7 @@ export function RecoveryCodeForm() {
     defaultValues: { recoveryCode: '' },
   });
 
-  function onSubmit(_values: RecoveryCodeValues) {
+  function onSubmit() {
     router.push('/dashboard');
   }
 

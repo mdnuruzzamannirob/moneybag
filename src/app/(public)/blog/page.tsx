@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Clock3 } from 'lucide-react';
 import { PageHero } from '@/components/public/public-ui';
@@ -45,9 +46,11 @@ export default function BlogPage() {
           className="group grid overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-shadow hover:shadow-lg lg:grid-cols-2"
         >
           <div className="relative min-h-64 overflow-hidden bg-card sm:min-h-72">
-            <img
+            <Image
               alt="Illustration of a calm personal finance plan"
               className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
               src="/images/blog/finance-cover.png"
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
@@ -95,9 +98,11 @@ export default function BlogPage() {
                 <div
                   className={`relative h-40 overflow-hidden bg-linear-to-br sm:h-44 ${post.color}`}
                 >
-                  <img
+                  <Image
                     alt=""
                     className="size-full object-cover opacity-90 mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     src="/images/blog/finance-cover.png"
                   />
                 </div>

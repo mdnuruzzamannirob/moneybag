@@ -1,5 +1,5 @@
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Logo from '../shared/Logo';
 
 import {
@@ -99,13 +99,14 @@ function DashboardSwitcher({
   onNavigate: () => void;
 }) {
   const router = useRouter();
-  const [hasFamily, setHasFamily] = useState(isFamily);
+  const [hasFamily, setHasFamily] = useState(
+    () =>
+      isFamily ||
+      (typeof window !== 'undefined' &&
+        window.localStorage.getItem('moneybag-family-created') === 'true'),
+  );
   const [createOpen, setCreateOpen] = useState(false);
   const [familyName, setFamilyName] = useState('');
-  useEffect(() => {
-    if (isFamily || window.localStorage.getItem('moneybag-family-created') === 'true')
-      setHasFamily(true);
-  }, [isFamily]);
   if (isAdmin)
     return (
       <div className="mt-auto flex items-center gap-3 border-t border-border px-4 py-3">

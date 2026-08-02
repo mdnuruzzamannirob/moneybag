@@ -26,7 +26,7 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(_values: LoginValues) {
+  function onSubmit() {
     router.push('/dashboard');
   }
 

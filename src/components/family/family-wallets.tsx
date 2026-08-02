@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   AppAvatar,
@@ -332,6 +332,7 @@ export function FamilyWallets({ data }: { data: FamilyWalletsData }) {
 
       <SharedWalletDialog
         editing={selectedWallet}
+        key={`${dialog}-${selectedWallet?.id ?? 'new'}`}
         kind={dialog}
         onClose={() => {
           setDialog(null);
@@ -462,13 +463,6 @@ function SharedWalletDialog({
     label: walletMeta[type].label,
     value: type,
   }));
-
-  useEffect(() => {
-    setWalletName(editing?.name ?? '');
-    setOpeningBalance(editing ? String(editing.balance) : '');
-    setTransferAmount('');
-    setTransferNote('');
-  }, [editing, kind]);
 
   return (
     <AppModal

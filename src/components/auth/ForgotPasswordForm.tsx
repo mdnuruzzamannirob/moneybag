@@ -17,7 +17,7 @@ export function ForgotPasswordForm() {
     defaultValues: { email: '' },
   });
 
-  function onSubmit(_values: ForgotPasswordValues) {
+  function onSubmit() {
     router.push('/reset-password');
   }
 
