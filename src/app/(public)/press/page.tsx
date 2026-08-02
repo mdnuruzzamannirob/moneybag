@@ -67,15 +67,9 @@ export default function PressPage() {
         tone="info"
       />
 
-      <PublicSection>
-        <SectionHeading
-          centered
-          description="MoneyBag is a personal and collaborative finance platform built to make everyday money decisions easier to understand."
-          eyebrow="AT A GLANCE"
-          title="A simpler way to talk about money"
-          tone="info"
-        />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <PublicSection className="bg-card/30">
+        <h2 className="sr-only">MoneyBag at a glance</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {facts.map(([value, label]) => (
             <MarketingCard className="text-center" key={label} padding="md">
               <p className="text-3xl font-bold tracking-tight text-info">{value}</p>
