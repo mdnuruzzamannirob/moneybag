@@ -76,7 +76,7 @@ export default function SecurityPage() {
         tone="success"
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
             [LockKeyhole, 'AES-256', 'Encryption'],
@@ -95,7 +95,7 @@ export default function SecurityPage() {
           })}
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2">
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:mt-20">
           {principles.map(({ icon: Icon, title, text, tone }) => (
             <MarketingCard key={title}>
               <FeatureIcon tone={tone}>
@@ -107,7 +107,7 @@ export default function SecurityPage() {
           ))}
         </div>
 
-        <MarketingCard className="mt-14" padding="lg">
+        <MarketingCard className="mt-16 lg:mt-20" padding="lg">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-2xl font-bold">Compliance & certifications</h2>
             <AppBadge status="success">PRIVACY FIRST</AppBadge>

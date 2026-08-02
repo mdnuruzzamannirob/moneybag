@@ -99,7 +99,7 @@ export default function PricingPage() {
             );
           })}
         </div>
-        <section className="mt-32 lg:mt-40">
+        <section className="mt-24 lg:mt-28">
           <h2 className="text-center text-3xl font-bold tracking-tight">
             Compare plans
           </h2>
@@ -146,7 +146,7 @@ export default function PricingPage() {
             </table>
           </div>
         </section>
-        <section className="mx-auto mt-32 max-w-3xl lg:mt-40">
+        <section className="mx-auto mt-24 max-w-3xl lg:mt-28">
           <h2 className="text-center text-3xl font-bold tracking-tight">
             Frequently asked
           </h2>

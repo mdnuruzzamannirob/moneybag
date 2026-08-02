@@ -85,7 +85,7 @@ export default function HelpPage() {
         </div>
       </PageHero>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map(({ icon: Icon, title, text, tone, count }) => (
             <MarketingCard
@@ -105,7 +105,7 @@ export default function HelpPage() {
           ))}
         </div>
 
-        <div className="mt-14">
+        <div className="mt-16 lg:mt-20">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-2xl font-bold">Popular articles</h2>
             <AppBadge status="info">MOST READ</AppBadge>
@@ -127,7 +127,7 @@ export default function HelpPage() {
           </div>
         </div>
 
-        <div className="mt-14 rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center">
+        <div className="mt-16 rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center lg:mt-20">
           <h2 className="text-2xl font-bold">Still need help?</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Our support team is here Monday to Friday, 9am–6pm CET.

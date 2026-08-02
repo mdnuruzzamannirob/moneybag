@@ -52,7 +52,7 @@ export default function CareersPage() {
         tone="accent"
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-5 sm:grid-cols-3">
           {[
             {
@@ -84,7 +84,7 @@ export default function CareersPage() {
           ))}
         </div>
 
-        <div className="mx-auto mt-14 max-w-5xl">
+        <div className="mx-auto mt-16 max-w-5xl lg:mt-20">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
               <AppBadge status="info">3 OPEN ROLES</AppBadge>
@@ -123,7 +123,7 @@ export default function CareersPage() {
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-5xl rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center">
+        <div className="mx-auto mt-16 max-w-5xl rounded-lg border border-primary/20 bg-linear-to-r from-primary/10 to-brand-accent-soft p-8 text-center lg:mt-20">
           <h2 className="text-2xl font-bold">Don&apos;t see your role?</h2>
           <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
             Send an open application with the problem you want to help us solve.

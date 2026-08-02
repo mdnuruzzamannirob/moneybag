@@ -41,7 +41,7 @@ export default function ContactPage() {
         icon={<MessageSquare className="size-3.5" />}
         title="We'd love to hear from you"
       />
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-5 lg:px-8 lg:py-16">
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-5 lg:px-8 lg:py-20">
         <MarketingCard className="lg:col-span-3" padding="lg">
           <h2 className="text-2xl font-bold">Send a message</h2>
           <p className="mb-7 mt-2 text-sm leading-6 text-muted-foreground">

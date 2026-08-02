@@ -34,7 +34,7 @@ export default function StatusPage() {
         tone="success"
       />
 
-      <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-4 sm:grid-cols-3">
           {[
             { label: 'Overall uptime', note: 'Last 90 days', value: '99.98%', progress: 99.98 },
@@ -73,7 +73,7 @@ export default function StatusPage() {
           ))}
         </div>
 
-        <h2 className="mb-4 mt-10 text-xl font-bold">Incident history</h2>
+        <h2 className="mb-4 mt-16 text-xl font-bold lg:mt-20">Incident history</h2>
         <MarketingCard className="text-center">
           <span className="mx-auto grid size-12 place-items-center rounded-full bg-success-soft text-success">
             <CheckCircle2 className="size-6" />

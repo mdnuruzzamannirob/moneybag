@@ -80,7 +80,7 @@ export default function FaqPage() {
         title="Questions, answered."
         description="Everything you need to know before making MoneyBag part of your money routine."
       />
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-20 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
         {sections.map(({ icon: Icon, title, items }, index) => (
           <div className="rounded-lg border border-border bg-card p-6 sm:p-7" key={title}>
             <FeatureIcon
@@ -110,7 +110,7 @@ export default function FaqPage() {
         ))}
       </section>
       <section className="border-t border-border bg-card/60">
-        <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:py-20">
           <h2 className="text-3xl font-bold">Still have a question?</h2>
           <p className="mt-3 text-muted-foreground">We are happy to help you find the answer.</p>
           <Link

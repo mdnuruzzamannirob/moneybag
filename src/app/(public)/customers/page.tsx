@@ -98,7 +98,7 @@ export default function CustomersPage() {
         }
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
             ['10,247', 'Active users'],
@@ -134,7 +134,7 @@ export default function CustomersPage() {
           ))}
         </div>
 
-        <h2 className="mb-6 mt-14 text-2xl font-bold">More love from our users</h2>
+        <h2 className="mb-6 mt-16 text-2xl font-bold lg:mt-20">More love from our users</h2>
         <div className="grid gap-5 md:grid-cols-3">
           {testimonials.map(([initials, name, role, quote]) => (
             <MarketingCard key={name}>
@@ -153,7 +153,7 @@ export default function CustomersPage() {
           ))}
         </div>
 
-        <h2 className="mb-6 mt-14 text-2xl font-bold">Who uses MoneyBag?</h2>
+        <h2 className="mb-6 mt-16 text-2xl font-bold lg:mt-20">Who uses MoneyBag?</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {useCases.map(({ icon: Icon, label, share, text, tone }) => (
             <MarketingCard className="text-center" key={label} padding="md">

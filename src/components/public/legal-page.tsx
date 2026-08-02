@@ -53,7 +53,7 @@ export function LegalPage({
           </Link>
         </div>
       </nav>
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-16">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-20">
         <aside className="lg:col-span-3">
           <div className="rounded-lg border border-border bg-card p-5 shadow-xs lg:sticky lg:top-24">
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">

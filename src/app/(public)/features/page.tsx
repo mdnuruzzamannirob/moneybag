@@ -61,8 +61,8 @@ export default function FeaturesPage() {
         description="Built for individuals, couples, and families who want a complete view of their money—without the bloat."
       />
 
-      <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="space-y-28 lg:space-y-40">
+      <main className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="space-y-24 lg:space-y-28">
           {highlights.map((feature, index) => (
             <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16" key={feature.eyebrow}>
               <FeatureCopy feature={feature} className={index === 1 ? 'lg:order-2' : ''} />
@@ -71,7 +71,7 @@ export default function FeaturesPage() {
           ))}
         </div>
 
-        <section className="mt-28 lg:mt-40">
+        <section className="mt-24 lg:mt-28">
           <h2 className="text-center text-3xl font-bold tracking-tight">And much more</h2>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {moreFeatures.map(([Icon, tone, title, text]) => (

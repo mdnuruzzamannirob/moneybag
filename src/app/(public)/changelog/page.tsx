@@ -32,7 +32,7 @@ export default function ChangelogPage() {
           title="Built in public, shipped with care"
           tone="accent"
         />
-        <div className="mx-auto mt-10 max-w-4xl">
+        <div className="mx-auto mt-16 max-w-4xl lg:mt-20">
           <ChangelogFeed />
           <div className="mt-12 text-center">
             <TextLink href="/blog">Read the stories behind the product</TextLink>

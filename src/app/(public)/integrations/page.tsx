@@ -79,7 +79,7 @@ export default function IntegrationsPage() {
         tone="info"
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <AppBadge status="info">PRO</AppBadge>
@@ -103,7 +103,7 @@ export default function IntegrationsPage() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-wrap items-end justify-between gap-4">
+        <div className="mt-16 flex flex-wrap items-end justify-between gap-4 lg:mt-20">
           <div>
             <AppBadge status="success">ALL PLANS</AppBadge>
             <h2 className="mt-3 text-2xl font-bold">CSV import</h2>
@@ -147,7 +147,7 @@ export default function IntegrationsPage() {
           </div>
         </MarketingCard>
 
-        <h2 className="mb-6 mt-14 text-2xl font-bold">And connects to your stack</h2>
+        <h2 className="mb-6 mt-16 text-2xl font-bold lg:mt-20">And connects to your stack</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stack.map(({ icon: Icon, name, text, status, badge, tone }) => (
             <MarketingCard key={name} padding="md">

@@ -240,7 +240,7 @@ export default function HomePage() {
       </section>
 
       <section className="border-y border-border bg-card/60">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
           <SectionHeading
             centered
             eyebrow="LOVED BY USERS"
@@ -271,7 +271,7 @@ export default function HomePage() {
       </section>
 
       <section className="border-y border-border bg-card">
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
           <SectionHeading centered title="Frequently asked" />
           <div className="mt-8">
             <FaqList items={homeFaq} />

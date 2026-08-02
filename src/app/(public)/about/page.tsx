@@ -57,7 +57,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-indigo-500 via-violet-500 to-pink-500 p-8 text-white shadow-xl sm:p-10">
-            <div className="pointer-events-none [background-image:radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] [background-size:22px_22px] absolute inset-0 opacity-20" />
+            <div className="pointer-events-none bg-[radial-gradient(color-mix(in_srgb,var(--foreground)_10%,transparent)_1px,transparent_1px)] bg-size-[22px_22px] absolute inset-0 opacity-20" />
             <div className="relative">
               <p className="text-sm font-medium text-white/75">Our north star</p>
               <blockquote className="mt-5 text-3xl font-bold leading-tight sm:text-4xl">

@@ -157,7 +157,7 @@ export function PublicSection({
 }) {
   return (
     <section className={cn(muted && 'border-y border-border bg-card/60', className)}>
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">{children}</div>
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">{children}</div>
     </section>
   );
 }
@@ -312,7 +312,7 @@ export function TrialCta({
   title?: string;
 }) {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
       <div className="ui-gradient-cta-card relative isolate overflow-hidden rounded-lg px-6 py-12 text-center sm:px-12 sm:py-14">
         <DotPattern className="opacity-20" />
         <div className="relative">
