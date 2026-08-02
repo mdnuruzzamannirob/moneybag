@@ -47,7 +47,7 @@ export function AppSheet({
         {footer ? (
           <SheetFooter
             className={cn(
-              'border-t border-border bg-secondary sm:[&_[data-slot=button]]:min-h-10 sm:[&_[data-slot=button]]:px-4',
+              'border-t border-border bg-secondary sm:**:data-[slot=button]:min-h-10 sm:**:data-[slot=button]:px-4',
               footerClassName,
             )}
           >

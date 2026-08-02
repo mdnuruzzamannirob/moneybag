@@ -43,7 +43,7 @@ export function AppModal({
         {footer ? (
           <DialogFooter
             className={cn(
-              'm-0 rounded-b-lg border-t border-border bg-secondary px-4 py-3 sm:px-5 sm:[&_[data-slot=button]]:min-h-10 sm:[&_[data-slot=button]]:px-4 max-sm:rounded-b-none',
+              'm-0 rounded-b-lg border-t border-border bg-secondary px-4 py-3 sm:px-5 sm:**:data-[slot=button]:min-h-10 sm:**:data-[slot=button]:px-4 max-sm:rounded-b-none',
               footerClassName,
             )}
           >
