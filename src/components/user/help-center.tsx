@@ -859,7 +859,7 @@ export function HelpCenter() {
         }
         footer={
           supportSubmitted ? (
-            <AppButton onClick={closeSupport}>Done</AppButton>
+            <AppButton onClick={closeSupport}>Back to Help Center</AppButton>
           ) : (
             <div className="flex w-full flex-col-reverse gap-2 [&>button]:w-full sm:flex-row sm:justify-end sm:[&>button]:w-auto">
               <AppButton onClick={closeSupport} tone="secondary" type="button">
@@ -984,7 +984,7 @@ export function HelpCenter() {
           selectedArticle ? (
             <div className="flex w-full flex-col-reverse gap-2 [&>button]:w-full sm:flex-row sm:justify-end sm:[&>button]:w-auto">
               <AppButton onClick={() => setSelectedArticle(null)} tone="secondary">
-                Close
+                Close guide
               </AppButton>
               <AppButton nativeButton={false} render={<Link href={selectedArticle.route} />}>
                 {selectedArticle.actionLabel} <ArrowRight />

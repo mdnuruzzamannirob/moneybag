@@ -256,6 +256,7 @@ export default function UiComponentsPage() {
         </div>
       </AppSheet>
       <AppConfirmDialog
+        confirmLabel="Delete transaction"
         description="This transaction will be permanently removed."
         onConfirm={() => setConfirm(false)}
         onOpenChange={setConfirm}

@@ -37,9 +37,7 @@ export function AppConfirmDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="-mx-6 -mb-6 mt-6 border-t border-border bg-secondary px-6 py-4">
-          <AlertDialogCancel className="bg-card hover:bg-card/80" size="lg">
-            {cancelLabel}
-          </AlertDialogCancel>
+          <AlertDialogCancel className="bg-card hover:bg-card/80">{cancelLabel}</AlertDialogCancel>
           <AlertDialogAction
             className={
               variant === 'danger'
@@ -47,7 +45,6 @@ export function AppConfirmDialog({
                 : 'ui-gradient-primary border-0! hover:brightness-[.98] hover:shadow-sm'
             }
             onClick={onConfirm}
-            size="lg"
             variant="default"
           >
             {confirmLabel}

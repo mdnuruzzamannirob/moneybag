@@ -45,12 +45,7 @@ export function AppSheet({
           {children}
         </div>
         {footer ? (
-          <SheetFooter
-            className={cn(
-              'border-t border-border bg-secondary sm:**:data-[slot=button]:min-h-10 sm:**:data-[slot=button]:px-4',
-              footerClassName,
-            )}
-          >
+          <SheetFooter className={cn('border-t border-border bg-secondary', footerClassName)}>
             {footer}
           </SheetFooter>
         ) : null}

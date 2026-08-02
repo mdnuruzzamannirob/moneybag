@@ -49,7 +49,7 @@ export function FinanceDialog({
   onClose: () => void;
 }) {
   const [saved, setSaved] = useState(false);
-  const title = editing ? `Edit ${kind}` : dialogTitles[kind];
+  const title = editing ? getEditTitle(kind) : dialogTitles[kind];
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
     setSaved(true);
@@ -61,7 +61,7 @@ export function FinanceDialog({
       footer={
         saved ? (
           <AppButton onClick={onClose} size="sm">
-            Done
+            {getSuccessActionLabel(kind)}
           </AppButton>
         ) : (
           <>
@@ -297,26 +297,47 @@ function getSubmitLabel(kind: FinanceDialogKind, editing: boolean) {
   if (kind === 'export') return 'Export CSV';
   if (kind === 'import') return 'Import file';
   if (kind === 'contribution') return 'Add contribution';
-  return editing ? 'Save changes' : 'Save';
+  if (kind === 'transaction') return editing ? 'Save transaction' : 'Add transaction';
+  if (kind === 'budget') return editing ? 'Save budget' : 'Create budget';
+  return editing ? 'Save goal' : 'Create savings goal';
+}
+
+function getEditTitle(kind: FinanceDialogKind) {
+  if (kind === 'transaction') return 'Edit transaction';
+  if (kind === 'budget') return 'Edit budget';
+  if (kind === 'goal') return 'Edit savings goal';
+  return dialogTitles[kind];
 }
 
 function getSuccessMessage(kind: FinanceDialogKind) {
   if (kind === 'import') return 'The file is ready for validation.';
   if (kind === 'export') return 'Your export has been prepared.';
-  return 'Your changes have been saved.';
+  if (kind === 'transaction') return 'The transaction has been saved.';
+  if (kind === 'budget') return 'The budget has been saved.';
+  if (kind === 'goal') return 'The savings goal has been saved.';
+  return 'The contribution has been added to your savings goal.';
+}
+
+function getSuccessActionLabel(kind: FinanceDialogKind) {
+  if (kind === 'budget') return 'Back to budgets';
+  if (kind === 'goal' || kind === 'contribution') return 'Back to savings goals';
+  return 'Back to transactions';
 }
 
 export function ConfirmDialog({
+  confirmLabel,
   description,
   onClose,
   title,
 }: {
+  confirmLabel: string;
   description: string;
   onClose: () => void;
   title: string;
 }) {
   return (
     <AppConfirmDialog
+      confirmLabel={confirmLabel}
       description={description}
       onConfirm={onClose}
       onOpenChange={(open) => {
@@ -336,6 +357,7 @@ export function RowMenu({
   kind: 'transaction' | 'budget' | 'goal';
 }) {
   const [dialog, setDialog] = useState<'edit' | 'delete' | null>(null);
+  const itemLabel = kind === 'goal' ? 'savings goal' : kind;
   return (
     <>
       {inline ? (
@@ -381,9 +403,10 @@ export function RowMenu({
       ) : null}
       {dialog === 'delete' ? (
         <ConfirmDialog
+          confirmLabel={`Delete ${itemLabel}`}
           description="This action cannot be undone. Related information will remain available where required."
           onClose={() => setDialog(null)}
-          title={`Delete ${kind}`}
+          title={`Delete ${itemLabel}?`}
         />
       ) : null}
     </>
