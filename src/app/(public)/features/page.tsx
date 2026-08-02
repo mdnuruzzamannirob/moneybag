@@ -1,22 +1,14 @@
 import type { Metadata } from 'next';
 import {
-  BarChart3,
   BellRing,
-  FileDown,
   FileUp,
   Goal,
-  Layers3,
-  LockKeyhole,
-  Repeat2,
-  ShieldCheck,
-  Sparkles,
+  MessageSquareText,
   Split,
-  Tags,
   Users,
-  WalletCards,
-  Zap,
 } from 'lucide-react';
-import { FeatureIcon, PageHero, SectionHeading, TrialCta } from '@/components/public/public-ui';
+import { Check } from 'lucide-react';
+import { Eyebrow, FeatureIcon, PageHero, TrialCta } from '@/components/public/public-ui';
 
 export const metadata: Metadata = {
   title: 'Features',
@@ -24,152 +16,121 @@ export const metadata: Metadata = {
     'Explore MoneyBag wallets, budgets, savings goals, reports, automation, and family finance features.',
 };
 
-const featureGroups = [
+const highlights = [
   {
-    title: 'See every dollar clearly',
-    text: 'A flexible foundation for accounts and everyday money movement.',
-    items: [
-      [
-        WalletCards,
-        'Wallets that match real life',
-        'Keep bank accounts, cash, cards, and investments separate while seeing one total balance.',
-      ],
-      [
-        Tags,
-        'Fast categorization',
-        'Use clean categories, notes, and tags so every transaction keeps its context.',
-      ],
-      [
-        Repeat2,
-        'Recurring automation',
-        'Schedule salary, rent, bills, or subscriptions and let MoneyBag create them for you.',
-      ],
-      [
-        FileUp,
-        'CSV import',
-        'Bring in an existing transaction history without rebuilding it line by line.',
-      ],
-    ],
+    eyebrow: 'TRACKING',
+    title: 'Multi-wallet, multi-currency',
+    text: 'Track every account in one place—checking, savings, credit cards, cash, investments, or your favourite mobile banking app.',
+    points: ['Unlimited wallets on Pro plans', '30+ currencies supported', 'Custom icons and colours per wallet'],
+    tone: 'primary' as const,
+    preview: 'wallets',
   },
   {
-    title: 'Turn tracking into progress',
-    text: 'Plan ahead, notice patterns, and make your next decision with confidence.',
-    items: [
-      [
-        Layers3,
-        'Flexible budgets',
-        'Create category limits that reset or roll unused money into the next month.',
-      ],
-      [
-        Goal,
-        'Visual savings goals',
-        'Set a target and date, add contributions, and see exactly how far you have come.',
-      ],
-      [
-        BarChart3,
-        'Reports that explain',
-        'Compare income and spending across months, categories, and daily trends.',
-      ],
-      [
-        FileDown,
-        'Useful exports',
-        'Download CSV or polished reports whenever you need a deeper look.',
-      ],
-    ],
+    eyebrow: 'BUDGETS',
+    title: 'Smart budgets that work',
+    text: 'Set monthly limits per category. Track spending in real time, get alerts before you overspend, and roll unused amounts into next month.',
+    points: ['Per-category limits', 'Alerts at 80% and 100%', 'Budget rollover'],
+    tone: 'accent' as const,
+    preview: 'budgets',
   },
   {
-    title: 'Make money a team sport',
-    text: 'Share the right information without giving up ownership or control.',
-    items: [
-      [Users, 'Family groups', 'Invite up to five people with clear Viewer and Editor roles.'],
-      [
-        Split,
-        'Fair expense splits',
-        'Split equally, by percentage, or with exact amounts—and keep the history.',
-      ],
-      [
-        BellRing,
-        'Helpful alerts',
-        'Stay ahead of pooled budgets and important account activity without constant checking.',
-      ],
-      [
-        ShieldCheck,
-        'Privacy by design',
-        'Secure sessions, protected requests, and account-level data controls come standard.',
-      ],
-    ],
+    eyebrow: 'REPORTS',
+    title: 'Know where every taka goes',
+    text: 'Beautiful charts, monthly breakdowns, category insights, and trends over time help you spot your spending patterns at a glance.',
+    points: ['Pie, bar, and line charts', 'Month-over-month comparison', 'Category deep-dives'],
+    tone: 'info' as const,
+    preview: 'reports',
   },
-];
+] as const;
+
+const moreFeatures = [
+  [Goal, 'success', 'Savings goals', 'Visualize and track progress toward what matters.'],
+  [FileUp, 'warning', 'CSV import', 'Bring in transactions from any bank statement.'],
+  [Users, 'accent', 'Family groups', 'Share with up to five members and split expenses.'],
+  [Split, 'info', 'Transaction splitting', 'Split a purchase across categories or members.'],
+  [MessageSquareText, 'primary', 'Notes & attachments', 'Keep receipts and context with every transaction.'],
+  [BellRing, 'danger', 'Helpful alerts', 'Stay ahead of important account activity.'],
+] as const;
 
 export default function FeaturesPage() {
   return (
     <>
       <PageHero
         eyebrow="FEATURES"
-        icon={<Sparkles className="size-3.5" />}
-        title={
-          <>
-            Every feature you&apos;ll <span className="text-primary">ever need.</span>
-          </>
-        }
+        title={<>Every feature you&apos;ll <span className="text-primary">ever need.</span></>}
         description="Built for individuals, couples, and families who want a complete view of their money—without the bloat."
       />
-      <section className="border-b border-border bg-card/60">
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-x-10 gap-y-4 px-4 py-6 text-sm text-muted-foreground sm:px-6 lg:px-8">
-          {['Unlimited on Pro', 'Fast CSV import', 'Family sharing', 'Export anytime'].map(
-            (item) => (
-              <span className="inline-flex items-center gap-2" key={item}>
-                <Zap className="size-4 text-primary" />
-                {item}
-              </span>
-            ),
-          )}
+
+      <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+        <div className="space-y-28 lg:space-y-40">
+          {highlights.map((feature, index) => (
+            <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16" key={feature.eyebrow}>
+              <FeatureCopy feature={feature} className={index === 1 ? 'lg:order-2' : ''} />
+              <FeaturePreview type={feature.preview} className={index === 1 ? 'lg:order-1' : ''} />
+            </section>
+          ))}
         </div>
-      </section>
-      {featureGroups.map((group, groupIndex) => (
-        <section
-          className={groupIndex % 2 ? 'border-y border-border bg-card' : ''}
-          key={group.title}
-        >
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-24">
-            <div className="lg:col-span-4">
-              <SectionHeading
-                eyebrow={`0${groupIndex + 1}`}
-                title={group.title}
-                description={group.text}
-              />
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:col-span-8">
-              {group.items.map(([Icon, title, text], index) => {
-                const I = Icon as typeof LockKeyhole;
-                return (
-                  <article
-                    className="rounded-lg border border-border bg-card p-6"
-                    key={title as string}
-                  >
-                    <FeatureIcon
-                      tone={
-                        ['primary', 'accent', 'success', 'info'][index] as
-                          'primary' | 'accent' | 'success' | 'info'
-                      }
-                    >
-                      <I className="size-5" />
-                    </FeatureIcon>
-                    <h3 className="mt-4 text-lg font-semibold">{title as string}</h3>
-                    <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
-                      {text as string}
-                    </p>
-                  </article>
-                );
-              })}
-            </div>
+
+        <section className="mt-28 lg:mt-40">
+          <h2 className="text-center text-3xl font-bold tracking-tight">And much more</h2>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {moreFeatures.map(([Icon, tone, title, text]) => (
+              <article className="rounded-lg border border-border bg-card p-5" key={title}>
+                <FeatureIcon tone={tone}>
+                  <Icon className="size-4" />
+                </FeatureIcon>
+                <h3 className="mt-3 text-sm font-bold">{title}</h3>
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">{text}</p>
+              </article>
+            ))}
           </div>
         </section>
-      ))}
-      <TrialCta
-        title="Ready for a calmer money system?"
-        description="Start with every Pro feature free for 14 days. No card and no complicated setup."
-      />
+      </main>
+
+      <TrialCta title="Ready for a calmer money system?" description="Start with every Pro feature free for 14 days. No card and no complicated setup." />
     </>
   );
+}
+
+function FeatureCopy({ feature, className }: { feature: (typeof highlights)[number]; className?: string }) {
+  return (
+    <div className={className}>
+      <Eyebrow tone={feature.tone}>{feature.eyebrow}</Eyebrow>
+      <h2 className="mt-3 text-3xl font-bold tracking-tight lg:text-4xl">{feature.title}</h2>
+      <p className="mt-4 leading-7 text-muted-foreground">{feature.text}</p>
+      <ul className="mt-5 space-y-2.5 text-sm">
+        {feature.points.map((point) => (
+          <li className="flex items-start gap-2" key={point}>
+            <Check className="mt-0.5 size-4 shrink-0 text-success" />
+            {point}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function FeaturePreview({ type, className }: { type: 'wallets' | 'budgets' | 'reports'; className?: string }) {
+  if (type === 'wallets') return <WalletPreview className={className} />;
+  if (type === 'budgets') return <BudgetPreview className={className} />;
+  return <ReportPreview className={className} />;
+}
+
+function PreviewShell({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <div className={`rounded-lg border border-border bg-card p-5 shadow-sm sm:p-6 ${className ?? ''}`}>{children}</div>;
+}
+
+function WalletPreview({ className }: { className?: string }) {
+  const wallets = [['Bank', '$8,420', 'primary'], ['Credit', '−$320', 'accent'], ['Cash', '$240', 'success'], ['Savings', '$4,110', 'warning']] as const;
+  return <PreviewShell className={className}><div className="grid grid-cols-2 gap-3">{wallets.map(([name, amount, tone]) => <div className={`rounded-lg border p-3 text-center ${tone === 'primary' ? 'border-primary/20 bg-primary/10 text-primary' : tone === 'accent' ? 'border-brand-accent/20 bg-brand-accent-soft text-brand-accent' : tone === 'success' ? 'border-success/20 bg-success-soft text-success' : 'border-warning/20 bg-warning-soft text-warning'}`} key={name}><p className="text-xs font-bold uppercase tracking-wide">{name}</p><p className="mt-1 text-lg font-extrabold">{amount}</p></div>)}</div></PreviewShell>;
+}
+
+function BudgetPreview({ className }: { className?: string }) {
+  const budgets = [['Groceries', '$348 / $425', 'w-[82%]', 'bg-warning'], ['Dining out', '$124 / $200', 'w-[62%]', 'bg-success'], ['Transport', '$90 / $150', 'w-[60%]', 'bg-success'], ['Entertainment', '$195 / $100', 'w-full', 'bg-danger']] as const;
+  return <PreviewShell className={className}><div className="space-y-4">{budgets.map(([name, value, width, color]) => <div key={name}><div className="mb-1.5 flex justify-between text-sm"><span className="font-semibold">{name}</span><span className="text-muted-foreground">{value}</span></div><div className="h-2 overflow-hidden rounded-full bg-secondary"><div className={`h-full rounded-full ${width} ${color}`} /></div>{name === 'Entertainment' && <p className="mt-1 text-xs font-bold text-danger">Over budget by $95</p>}</div>)}</div></PreviewShell>;
+}
+
+function ReportPreview({ className }: { className?: string }) {
+  const rows = [['Rent', '$1,100', 'w-full', 'bg-primary'], ['Groceries', '$348', 'w-[32%]', 'bg-brand-accent'], ['Utilities', '$215', 'w-[20%]', 'bg-success'], ['Dining', '$124', 'w-[11%]', 'bg-warning'], ['Transport', '$90', 'w-[8%]', 'bg-info']] as const;
+  return <PreviewShell className={className}><p className="mb-4 text-xs font-semibold text-muted-foreground">Spending by category · July</p><div className="space-y-3">{rows.map(([name, amount, width, color]) => <div key={name}><div className="mb-1 flex justify-between text-xs"><span className="font-semibold">{name}</span><span>{amount}</span></div><div className="h-3 overflow-hidden rounded bg-secondary"><div className={`h-full rounded ${width} ${color}`} /></div></div>)}</div></PreviewShell>;
 }
