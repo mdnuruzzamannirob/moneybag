@@ -455,6 +455,8 @@ function SharedWalletDialog({
   const transfer = kind === 'transfer';
   const [walletName, setWalletName] = useState('');
   const [openingBalance, setOpeningBalance] = useState('');
+  const [transferAmount, setTransferAmount] = useState('');
+  const [transferNote, setTransferNote] = useState('');
   const walletOptions = wallets.map((wallet) => ({ label: wallet.name, value: wallet.id }));
   const walletTypeOptions = (Object.keys(walletMeta) as SharedWalletType[]).map((type) => ({
     label: walletMeta[type].label,
@@ -464,6 +466,8 @@ function SharedWalletDialog({
   useEffect(() => {
     setWalletName(editing?.name ?? '');
     setOpeningBalance(editing ? String(editing.balance) : '');
+    setTransferAmount('');
+    setTransferNote('');
   }, [editing, kind]);
 
   return (
@@ -492,8 +496,8 @@ function SharedWalletDialog({
         transfer ? 'Transfer shared funds' : editing ? 'Edit shared wallet' : 'Add shared wallet'
       }
     >
-      {transfer ? (
-        <div className="space-y-4">
+      {!kind ? null : transfer ? (
+        <div className="space-y-4" key="transfer-wallet-form">
           <div className="grid gap-4 sm:grid-cols-2">
             <AppField label="From wallet" required>
               <AppSelect
@@ -507,14 +511,23 @@ function SharedWalletDialog({
             </AppField>
           </div>
           <AppField label="Amount" required>
-            <AppInput inputMode="decimal" placeholder="৳0.00" />
+            <AppInput
+              inputMode="decimal"
+              onChange={(event) => setTransferAmount(event.target.value)}
+              placeholder="৳0.00"
+              value={transferAmount}
+            />
           </AppField>
           <AppField label="Note">
-            <AppInput placeholder="Optional transfer note" />
+            <AppInput
+              onChange={(event) => setTransferNote(event.target.value)}
+              placeholder="Optional transfer note"
+              value={transferNote}
+            />
           </AppField>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4" key="shared-wallet-form">
           <AppField label="Wallet name" required>
             <AppInput
               onChange={(event) => setWalletName(event.target.value)}
