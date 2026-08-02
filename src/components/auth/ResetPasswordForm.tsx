@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
@@ -9,12 +10,15 @@ import { AuthPasswordField } from '@/components/auth/AuthFormFields';
 import { resetPasswordSchema, type ResetPasswordValues } from '@/schemas/auth.schema';
 
 export function ResetPasswordForm() {
+  const router = useRouter();
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: { password: '', confirmPassword: '' },
   });
 
-  function onSubmit(_values: ResetPasswordValues) {}
+  function onSubmit(_values: ResetPasswordValues) {
+    router.push('/login');
+  }
 
   return (
     <>

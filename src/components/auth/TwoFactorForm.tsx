@@ -3,18 +3,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 import { AppButton, AppField } from '@/components/app-ui';
 import { AuthOtpInput } from '@/components/auth/AuthOtpInput';
 import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema';
 
 export function TwoFactorForm() {
+  const router = useRouter();
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(twoFactorSchema),
     defaultValues: { code: '' },
   });
 
-  function onSubmit(_values: TwoFactorValues) {}
+  function onSubmit(_values: TwoFactorValues) {
+    router.push('/dashboard');
+  }
 
   return (
     <>

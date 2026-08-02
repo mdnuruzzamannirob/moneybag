@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
@@ -10,12 +11,15 @@ import { AuthTextField } from '@/components/auth/AuthFormFields';
 import { recoveryCodeSchema, type RecoveryCodeValues } from '@/schemas/auth.schema';
 
 export function RecoveryCodeForm() {
+  const router = useRouter();
   const form = useForm<RecoveryCodeValues>({
     resolver: zodResolver(recoveryCodeSchema),
     defaultValues: { recoveryCode: '' },
   });
 
-  function onSubmit(_values: RecoveryCodeValues) {}
+  function onSubmit(_values: RecoveryCodeValues) {
+    router.push('/dashboard');
+  }
 
   return (
     <>

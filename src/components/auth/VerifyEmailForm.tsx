@@ -2,14 +2,18 @@
 
 import Link from 'next/link';
 import { MailCheck } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
 
 export function VerifyEmailForm() {
+  const router = useRouter();
   const form = useForm({ defaultValues: {} });
 
-  function onSubmit() {}
+  function onSubmit() {
+    router.push('/login');
+  }
 
   return (
     <>

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { QrCode } from 'lucide-react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { AppButton, AppField } from '@/components/app-ui';
@@ -11,13 +12,16 @@ import { AuthOtpInput } from '@/components/auth/AuthOtpInput';
 import { twoFactorSchema, type TwoFactorValues } from '@/schemas/auth.schema';
 
 export function TwoFactorSetupForm() {
+  const router = useRouter();
   const [showCodeInput, setShowCodeInput] = useState(false);
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(twoFactorSchema),
     defaultValues: { code: '' },
   });
 
-  function onSubmit(_values: TwoFactorValues) {}
+  function onSubmit(_values: TwoFactorValues) {
+    router.push('/settings/security');
+  }
 
   return (
     <>

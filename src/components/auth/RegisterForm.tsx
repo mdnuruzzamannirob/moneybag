@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
@@ -15,6 +16,7 @@ import {
 import { registerSchema, type RegisterValues } from '@/schemas/auth.schema';
 
 export function RegisterForm() {
+  const router = useRouter();
   const form = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -25,7 +27,9 @@ export function RegisterForm() {
     },
   });
 
-  function onSubmit(_values: RegisterValues) {}
+  function onSubmit(_values: RegisterValues) {
+    router.push('/verify-email');
+  }
 
   return (
     <>
@@ -88,11 +92,21 @@ export function RegisterForm() {
         OR
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <AppButton className="w-full" tone="secondary" type="button">
+        <AppButton
+          className="w-full"
+          onClick={() => router.push('/callback')}
+          tone="secondary"
+          type="button"
+        >
           <GoogleIcon />
           Google
         </AppButton>
-        <AppButton className="w-full" tone="secondary" type="button">
+        <AppButton
+          className="w-full"
+          onClick={() => router.push('/callback')}
+          tone="secondary"
+          type="button"
+        >
           <GitHubIcon />
           GitHub
         </AppButton>

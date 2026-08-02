@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Info, Mail } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
@@ -15,6 +16,7 @@ import {
 import { loginSchema, type LoginValues } from '@/schemas/auth.schema';
 
 export function LoginForm() {
+  const router = useRouter();
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -24,7 +26,9 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(_values: LoginValues) {}
+  function onSubmit(_values: LoginValues) {
+    router.push('/dashboard');
+  }
 
   return (
     <>
@@ -72,11 +76,21 @@ export function LoginForm() {
         OR
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <AppButton className="w-full" tone="secondary" type="button">
+        <AppButton
+          className="w-full"
+          onClick={() => router.push('/callback')}
+          tone="secondary"
+          type="button"
+        >
           <GoogleIcon />
           Google
         </AppButton>
-        <AppButton className="w-full" tone="secondary" type="button">
+        <AppButton
+          className="w-full"
+          onClick={() => router.push('/callback')}
+          tone="secondary"
+          type="button"
+        >
           <GitHubIcon />
           GitHub
         </AppButton>

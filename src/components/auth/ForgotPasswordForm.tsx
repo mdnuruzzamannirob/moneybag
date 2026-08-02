@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { AppButton } from '@/components/app-ui';
@@ -10,12 +11,15 @@ import { AuthTextField } from '@/components/auth/AuthFormFields';
 import { forgotPasswordSchema, type ForgotPasswordValues } from '@/schemas/auth.schema';
 
 export function ForgotPasswordForm() {
+  const router = useRouter();
   const form = useForm<ForgotPasswordValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email: '' },
   });
 
-  function onSubmit(_values: ForgotPasswordValues) {}
+  function onSubmit(_values: ForgotPasswordValues) {
+    router.push('/reset-password');
+  }
 
   return (
     <>
