@@ -150,6 +150,96 @@ export function IncomeExpenseChartModule({ data }: { data: IncomeExpensePoint[] 
   return <EChartCanvas ariaLabel="Income and expense grouped bar chart" option={option} />;
 }
 
+export function FinanceTrendChartModule({ data }: { data: IncomeExpensePoint[] }) {
+  const theme = useChartTheme();
+  const option = useMemo(
+    () => ({
+      animationDuration: 600,
+      color: [theme.success, theme.danger],
+      grid: { left: 8, right: 12, top: 24, bottom: 36, containLabel: true },
+      legend: {
+        bottom: 0,
+        left: 'center',
+        itemWidth: 9,
+        itemHeight: 9,
+        textStyle: getAxisLabel(theme),
+      },
+      tooltip: {
+        ...getTooltip(theme),
+        valueFormatter: (value: number | null | undefined) =>
+          value == null ? 'No data' : `৳${value.toLocaleString('en-US')}`,
+      },
+      xAxis: {
+        type: 'category' as const,
+        boundaryGap: false,
+        data: data.map((point) => point.label),
+        axisLabel: { ...getAxisLabel(theme), hideOverlap: true },
+        axisLine: { lineStyle: { color: theme.border } },
+        axisTick: { show: false },
+      },
+      yAxis: {
+        type: 'value' as const,
+        axisLabel: {
+          ...getAxisLabel(theme),
+          formatter: (value: number) => (value >= 1000 ? `${value / 1000}k` : value),
+        },
+        splitLine: getSplitLine(theme),
+      },
+      series: [
+        {
+          name: 'Income',
+          type: 'line' as const,
+          smooth: 0.35,
+          symbol: 'circle',
+          symbolSize: 6,
+          lineStyle: { width: 2.5 },
+          itemStyle: { borderWidth: 2, borderColor: theme.card },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: withAlpha(theme.success, 0.24) },
+                { offset: 1, color: withAlpha(theme.success, 0.01) },
+              ],
+            },
+          },
+          data: data.map((point) => point.income),
+        },
+        {
+          name: 'Expense',
+          type: 'line' as const,
+          smooth: 0.35,
+          symbol: 'circle',
+          symbolSize: 6,
+          lineStyle: { width: 2.5 },
+          itemStyle: { borderWidth: 2, borderColor: theme.card },
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: withAlpha(theme.danger, 0.18) },
+                { offset: 1, color: withAlpha(theme.danger, 0.01) },
+              ],
+            },
+          },
+          data: data.map((point) => point.expense),
+        },
+      ],
+    }),
+    [data, theme],
+  );
+
+  return <EChartCanvas ariaLabel="Income and expense daily trend chart" option={option} />;
+}
+
 export function DistributionChartModule({
   data,
   centerLabel,
