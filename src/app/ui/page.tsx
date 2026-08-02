@@ -126,6 +126,16 @@ const options = [
     value: 'bills',
   },
 ];
+const accountOptions = [
+  { icon: <WalletCards />, label: 'Cash wallet', value: 'cash' },
+  { icon: <CreditCard />, label: 'Bank account', value: 'bank' },
+  { icon: <CreditCard />, label: 'Credit card', value: 'card' },
+];
+const statusOptions = [
+  { label: 'All transactions', value: 'all' },
+  { label: 'Income only', value: 'income' },
+  { label: 'Expenses only', value: 'expense' },
+];
 const rows = [
   {
     amount: '-৳2,450',
@@ -374,13 +384,13 @@ function ComponentDemo({
               <AppSelect options={options} placeholder="Choose a category" />
             </AppField>
             <AppField label="Selected">
-              <AppSelect options={options} value="food" />
+              <AppSelect options={accountOptions} value="bank" />
             </AppField>
             <AppField label="With leading icon">
-              <AppSelect leading={<ShoppingBasket />} options={options} value="transport" />
+              <AppSelect leading={<SlidersHorizontal />} options={statusOptions} value="expense" />
             </AppField>
             <AppField label="Disabled">
-              <AppSelect disabled options={options} value="bills" />
+              <AppSelect disabled options={accountOptions} value="card" />
             </AppField>
           </div>
         </Panel>

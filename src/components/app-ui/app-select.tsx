@@ -59,8 +59,8 @@ export function AppSelect({
       <SelectTrigger
         aria-label={ariaLabel}
         className={cn(
-          'h-10 min-h-10 w-full gap-2 rounded-md !border-border bg-card px-3 text-foreground shadow-none hover:!border-border focus:!border-primary focus:ring-3 focus:ring-primary/15 focus-visible:!border-primary focus-visible:ring-3 focus-visible:ring-primary/15 data-[size=default]:h-10 data-[size=sm]:h-8 data-popup-open:!border-primary data-popup-open:ring-3 data-popup-open:ring-primary/15',
-          { sm: 'text-xs !h-8 min-h-8', default: 'text-sm', lg: 'text-base !h-11 min-h-11' }[size],
+          'h-10 min-h-10 w-full gap-2 rounded-md border-border! bg-card px-3 text-foreground shadow-none hover:border-border! focus:border-primary! focus:ring-3 focus:ring-primary/15 focus-visible:border-primary! focus-visible:ring-3 focus-visible:ring-primary/15 data-[size=default]:h-10 data-[size=sm]:h-8 data-popup-open:border-primary! data-popup-open:ring-3 data-popup-open:ring-primary/15',
+          { sm: 'text-xs h-8! min-h-8', default: 'text-sm', lg: 'text-base h-11! min-h-11' }[size],
           triggerClassName,
         )}
         size={size === 'lg' ? 'default' : size}
@@ -78,7 +78,9 @@ export function AppSelect({
         align="start"
         alignItemWithTrigger={false}
         className={cn(
-          'w-max min-w-(--anchor-width) max-w-[calc(100vw-2rem)] rounded-lg border border-border bg-popover p-1 shadow-lg ring-0 [&_[data-slot=select-item]]:w-full',
+          'w-max min-w-(--anchor-width) max-w-[calc(100vw-2rem)] rounded-lg border border-border bg-popover p-1 shadow-lg ring-0 **:data-[slot=select-item]:w-full',
+          size === 'sm' && 'p-0.5',
+          size === 'lg' && 'p-1.5',
           contentClassName,
         )}
         sideOffset={6}
@@ -88,9 +90,9 @@ export function AppSelect({
             className={cn(
               'w-full max-w-none whitespace-normal rounded-md pr-9 focus:bg-primary/10 focus:text-primary **:whitespace-normal',
               {
-                sm: 'min-h-8 px-2 py-1.5 text-xs',
-                default: 'min-h-10 px-2.5 py-2 text-sm',
-                lg: 'min-h-11 px-3 py-2.5 text-sm',
+                sm: 'min-h-6 px-1.5 py-0.5 text-xs pr-7 **:data-[slot=select-item-indicator]:right-1 **:data-[slot=select-item-indicator]:size-3',
+                default: 'min-h-8 px-2.5 py-1 text-sm',
+                lg: 'min-h-10 px-3 py-1.5 text-sm',
               }[size],
             )}
             disabled={option.disabled}
@@ -98,12 +100,24 @@ export function AppSelect({
             value={option.value}
           >
             {option.icon ? (
-              <span className="shrink-0 text-muted-foreground [&>svg]:size-4">{option.icon}</span>
+              <span
+                className={cn(
+                  'shrink-0 text-muted-foreground',
+                  size === 'sm' ? '[&>svg]:size-3' : size === 'lg' ? '[&>svg]:size-5' : '[&>svg]:size-4',
+                )}
+              >
+                {option.icon}
+              </span>
             ) : null}
             <span className="min-w-0 flex-1">
-              <span className="block break-words font-medium">{option.label}</span>
+              <span className="block wrap-break-word font-medium">{option.label}</span>
               {option.description ? (
-                <span className="mt-0.5 block break-words text-xs font-normal text-muted-foreground">
+                <span
+                  className={cn(
+                    'mt-0.5 block wrap-break-word font-normal text-muted-foreground',
+                    size === 'sm' ? 'text-[10px]' : size === 'lg' ? 'text-sm' : 'text-xs',
+                  )}
+                >
                   {option.description}
                 </span>
               ) : null}

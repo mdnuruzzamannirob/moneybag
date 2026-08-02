@@ -104,13 +104,14 @@ function YearChartFrame({
   onYearChange: (year: string) => void;
 }) {
   return (
-    <div className="relative -mt-[3.75rem] pt-[3.75rem]">
+    <div className="relative -mt-15 pt-15">
       <div className="absolute right-0 top-0 flex justify-end">
         <AppSelect
           ariaLabel="Select chart year"
           onValueChange={(value) => value && onYearChange(value)}
           options={years.map((option) => ({ label: option, value: option }))}
-          triggerClassName="h-8 min-h-8 w-24 px-2.5 text-xs font-medium"
+          size="sm"
+          triggerClassName="!h-8 !min-h-8 w-24 px-2.5 text-xs font-medium"
           value={year}
         />
       </div>
