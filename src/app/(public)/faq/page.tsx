@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, CircleHelp, CreditCard, Lock, Settings2, Users } from 'lucide-react';
+import { ArrowRight, ChevronDown, CircleHelp, CreditCard, Lock, Settings2, Users } from 'lucide-react';
 import { FeatureIcon, PageHero } from '@/components/public/public-ui';
 
 export const metadata: Metadata = {
@@ -100,7 +100,7 @@ export default function FaqPage() {
                 >
                   <summary className="flex cursor-pointer items-center justify-between gap-4 font-medium marker:hidden">
                     {question}
-                    <span className="text-primary">+</span>
+                    <ChevronDown className="size-4 shrink-0 text-primary transition-transform duration-200 group-open:rotate-180" />
                   </summary>
                   <p className="mt-2 pr-6 text-sm leading-6 text-muted-foreground">{answer}</p>
                 </details>

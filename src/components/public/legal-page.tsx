@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { FileText } from 'lucide-react';
 import { PageHero } from '@/components/public/public-ui';
+import { LegalSideNav } from '@/components/public/legal-side-nav';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -55,23 +56,7 @@ export function LegalPage({
       </nav>
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-20">
         <aside className="lg:col-span-3">
-          <div className="rounded-lg border border-border bg-card p-5 shadow-xs lg:sticky lg:top-24">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              On this page
-            </p>
-            <ul className="mt-3 space-y-1.5 text-sm">
-              {sections.map((section, index) => (
-                <li key={section.id}>
-                  <a
-                    className="text-muted-foreground transition hover:text-primary"
-                    href={`#${section.id}`}
-                  >
-                    {index + 1}. {section.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <LegalSideNav sections={sections.map(({ id, title: sectionTitle }) => ({ id, title: sectionTitle }))} />
         </aside>
         <article className="rounded-lg border border-border bg-card p-6 shadow-xs [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:scroll-mt-24 [&_h2]:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-[-0.01em] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold [&_p]:mb-4 [&_p]:leading-[1.8] [&_p]:text-muted-foreground [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-muted-foreground [&_li]:mb-1.5 [&_li]:leading-[1.7] [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-[3px] sm:p-8 lg:col-span-9 lg:p-10">
           <h1 className="text-3xl font-bold">{title}</h1>
