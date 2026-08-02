@@ -15,7 +15,10 @@ export function AppSegmentedControl({
 }) {
   return (
     <ToggleGroup
-      className={cn('grid h-10 w-full grid-flow-col rounded-md bg-muted p-1', className)}
+      className={cn(
+        'grid h-10 w-full grid-flow-col rounded-md border border-border bg-card p-1',
+        className,
+      )}
       multiple={false}
       onValueChange={(next) => onValueChange?.(next[0] ?? null)}
       spacing={0}
@@ -27,7 +30,7 @@ export function AppSegmentedControl({
     >
       {options.map((option) => (
         <ToggleGroupItem
-          className="ui-active-gradient h-8! min-w-0 rounded-sm px-3 text-sm"
+          className="ui-active-gradient h-8! min-w-0 rounded-sm! px-3 text-sm"
           key={option.value}
           value={option.value}
         >

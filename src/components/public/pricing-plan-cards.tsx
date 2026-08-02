@@ -3,6 +3,7 @@
 import { Check } from 'lucide-react';
 import { useState } from 'react';
 
+import { AppSegmentedControl } from '@/components/app-ui';
 import { ButtonLink, MarketingCard } from '@/components/public/public-ui';
 import { cn } from '@/lib/utils';
 
@@ -89,25 +90,27 @@ export function PricingPlanCards() {
 
   return (
     <>
-      <div className="mx-auto mt-8 flex w-fit items-center rounded-lg border border-border bg-card p-1 text-sm font-semibold">
-        <button
-          className={cn('rounded-md px-4 py-2 transition-colors', billing === 'monthly' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground')}
-          onClick={() => setBilling('monthly')}
-          type="button"
-        >
-          Monthly
-        </button>
-        <button
-          className={cn('rounded-md px-4 py-2 transition-colors', billing === 'yearly' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground')}
-          onClick={() => setBilling('yearly')}
-          type="button"
-        >
-          Yearly
-          <span className="ml-1 rounded bg-white/20 px-1.5 py-0.5 text-[10px] font-extrabold">
-            SAVE 17%
-          </span>
-        </button>
-      </div>
+      <AppSegmentedControl
+        className="mx-auto mt-8 h-11! w-fit! text-sm font-semibold"
+        onValueChange={(value) => {
+          if (value === 'monthly' || value === 'yearly') setBilling(value);
+        }}
+        options={[
+          { label: 'Monthly', value: 'monthly' },
+          {
+            label: (
+              <>
+                Yearly
+                <span className="rounded bg-white/20 px-1.5 py-0.5 text-[10px] font-extrabold">
+                  SAVE 17%
+                </span>
+              </>
+            ),
+            value: 'yearly',
+          },
+        ]}
+        value={billing}
+      />
 
       <section className="mt-12 grid gap-5 md:grid-cols-3">
         <PlanCard plan={freePlan} />

@@ -374,10 +374,15 @@
 
   .ui-checked-gradient[data-checked],
   .ui-active-gradient[data-state='on'],
-  .ui-active-gradient[data-active] {
-    background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-hover));
-    color: var(--primary-foreground);
-    box-shadow: var(--shadow-primary-control);
+  .ui-active-gradient[data-active],
+  .ui-active-gradient[data-pressed] {
+    background: linear-gradient(
+      to bottom,
+      var(--color-primary),
+      var(--color-primary-hover)
+    ) !important;
+    color: var(--primary-foreground) !important;
+    box-shadow: var(--shadow-primary-control) !important;
   }
 
   .ui-slider-thumb::-webkit-slider-thumb {

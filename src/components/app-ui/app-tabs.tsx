@@ -17,12 +17,12 @@ export function AppTabs({
   return (
     <Tabs defaultValue={defaultValue ?? items[0]?.value}>
       <TabsList
-        className="grid h-10! w-full rounded-md bg-muted p-1"
+        className="grid h-10! w-full rounded-md border border-border bg-card p-1"
         style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
       >
         {items.map((item) => (
           <TabsTrigger
-            className="ui-active-gradient h-8! min-w-0 rounded-sm px-3 text-sm leading-none"
+            className="ui-active-gradient h-8! min-w-0 rounded-sm! px-3 text-sm leading-none"
             disabled={item.disabled}
             key={item.value}
             value={item.value}
