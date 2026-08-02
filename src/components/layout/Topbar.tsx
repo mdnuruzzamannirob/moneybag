@@ -72,6 +72,7 @@ export default function Topbar({
   const breadcrumbItems = wallet
     ? [base, { href: '/wallets', label: 'Wallets' }, { label: wallet.name }]
     : [base, { label: active?.label || 'Dashboard' }];
+  const currentLabel = wallet?.name ?? active?.label ?? 'Dashboard';
   const notifications = [
     {
       title: 'Budget reminder',
@@ -88,13 +89,17 @@ export default function Topbar({
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 backdrop-blur sm:px-6">
       <div className="flex min-w-0 items-center gap-3">
         <button
-          className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted lg:hidden"
+          aria-label="Open navigation"
+          className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted lg:hidden"
           onClick={onMenuClick}
           type="button"
         >
           <Menu className="size-4" />
         </button>
-        <AppBreadcrumb items={breadcrumbItems} />
+        <div className="hidden min-w-0 lg:block">
+          <AppBreadcrumb items={breadcrumbItems} />
+        </div>
+        <span className="max-w-28 truncate text-sm font-medium lg:hidden">{currentLabel}</span>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <AppButton

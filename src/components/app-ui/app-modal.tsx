@@ -29,7 +29,7 @@ export function AppModal({
   return (
     <Dialog {...props}>
       <DialogContent className="gap-0 overflow-visible rounded-lg p-0 max-sm:rounded-b-none">
-        <DialogHeader className="rounded-t-lg border-b border-border px-4 py-3.5 sm:px-5">
+        <DialogHeader className="rounded-t-lg border-b border-border py-3.5 pl-4 pr-14 sm:pl-5 sm:pr-14">
           <DialogTitle>{title}</DialogTitle>
           {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>

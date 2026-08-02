@@ -10,7 +10,6 @@ import {
   CreditCard,
   FileText,
   MessageCircleMore,
-  Paperclip,
   Search,
   Send,
   ShieldCheck,
@@ -21,7 +20,6 @@ import {
   Ticket,
   Users,
   WalletCards,
-  X,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -524,10 +522,10 @@ export function HelpCenter() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-w-0 space-y-6">
       <AppPageHeader
         actions={
-          <AppButton ref={supportTriggerRef} onClick={openSupport} size="sm" >
+          <AppButton ref={supportTriggerRef} onClick={openSupport} size="sm">
             <MessageCircleMore />
             Contact support
           </AppButton>
@@ -557,14 +555,14 @@ export function HelpCenter() {
           </p>
           <AppInput
             aria-label="Search help articles"
-            className="h-12 border-border bg-card pr-12 text-sm shadow-sm"
+            className="h-12 border-border bg-card text-sm shadow-sm"
             containerClassName="mx-auto mt-6 max-w-xl text-left"
             leading={<Search />}
             onChange={(event) => {
               setQuery(event.target.value);
               setCategory('all');
             }}
-            placeholder="Search wallets, transactions, billing..."
+            placeholder="Search help guides..."
             ref={searchRef}
             value={query}
           />
@@ -584,12 +582,12 @@ export function HelpCenter() {
             </div>
             <nav
               aria-labelledby="help-categories-title"
-              className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-1"
+              className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1"
             >
               <button
                 aria-pressed={category === 'all' && !normalizedQuery}
                 className={cn(
-                  'flex min-w-52 items-center gap-3 rounded-md border border-transparent px-3 py-2.5 text-left transition-colors sm:min-w-0',
+                  'flex min-w-0 items-center gap-3 rounded-md border border-transparent px-3 py-2.5 text-left transition-colors',
                   category === 'all' && !normalizedQuery
                     ? 'border-primary/20 bg-primary/10 text-primary'
                     : 'hover:bg-card',
@@ -602,7 +600,7 @@ export function HelpCenter() {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-medium">All guides</span>
-                  <span className="block text-[11px] text-muted-foreground">
+                  <span className="block truncate text-[11px] text-muted-foreground">
                     Browse every topic
                   </span>
                 </span>
@@ -615,7 +613,7 @@ export function HelpCenter() {
                   <button
                     aria-pressed={active}
                     className={cn(
-                      'flex min-w-52 items-center gap-3 rounded-md border border-transparent px-3 py-2.5 text-left transition-colors sm:min-w-0',
+                      'flex min-w-0 items-center gap-3 rounded-md border border-transparent px-3 py-2.5 text-left transition-colors',
                       active ? 'border-primary/20 bg-primary/10 text-primary' : 'hover:bg-card',
                     )}
                     key={id}
@@ -668,7 +666,7 @@ export function HelpCenter() {
                   const articleCategory = categories.find((item) => item.id === article.category);
                   return (
                     <button
-                      className="group flex w-full items-center gap-3 px-4 py-4 text-left transition-colors hover:bg-muted/55 sm:gap-4 sm:px-5"
+                      className="group flex w-full min-w-0 items-center gap-3 overflow-hidden px-4 py-4 text-left transition-colors hover:bg-muted/55 sm:gap-4 sm:px-5"
                       key={article.id}
                       onClick={() => {
                         setSelectedArticle(article);
@@ -680,8 +678,8 @@ export function HelpCenter() {
                         <FileText className="size-4" />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-center gap-2">
-                          <span className="text-sm font-medium transition-colors group-hover:text-primary">
+                        <span className="flex min-w-0 flex-wrap items-center gap-2">
+                          <span className="line-clamp-2 min-w-0 text-sm font-medium transition-colors group-hover:text-primary sm:line-clamp-1">
                             {article.title}
                           </span>
                           {article.popular ? (
@@ -690,7 +688,7 @@ export function HelpCenter() {
                             </AppBadge>
                           ) : null}
                         </span>
-                        <span className="mt-1 line-clamp-1 block text-xs text-muted-foreground">
+                        <span className="mt-1 line-clamp-2 block text-xs leading-5 text-muted-foreground sm:line-clamp-1 sm:leading-normal">
                           {article.summary}
                         </span>
                         <span className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
@@ -701,7 +699,7 @@ export function HelpCenter() {
                           </span>
                         </span>
                       </span>
-                      <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-primary" />
+                      <ChevronRight className="hidden size-4 shrink-0 text-muted-foreground transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-primary sm:block" />
                     </button>
                   );
                 })}
@@ -738,7 +736,7 @@ export function HelpCenter() {
               </p>
             </div>
           </div>
-          <div className="-mx-1 mt-5 flex gap-2 overflow-x-auto px-1 pb-1">
+          <div className="mt-5 flex flex-wrap gap-2">
             {faqFilters.map((filter) => (
               <AppButton
                 aria-pressed={faqCategory === filter.value}
@@ -863,7 +861,7 @@ export function HelpCenter() {
           supportSubmitted ? (
             <AppButton onClick={closeSupport}>Done</AppButton>
           ) : (
-            <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <div className="flex w-full flex-col-reverse gap-2 [&>button]:w-full sm:flex-row sm:justify-end sm:[&>button]:w-auto">
               <AppButton onClick={closeSupport} tone="secondary" type="button">
                 Cancel
               </AppButton>
@@ -948,10 +946,11 @@ export function HelpCenter() {
                 required
               />
             </AppField>
-            <AppField description="PNG, JPG, PDF or CSV · up to 5 MB each." label="Attachment">
+            <AppField label="Attachment">
               <AppFileUpload
                 accept=".png,.jpg,.jpeg,.pdf,.csv"
-                description="Screenshot, receipt, statement or other supporting file"
+                description="Screenshot, receipt, PDF or CSV · up to 5 MB each"
+                files={attachments}
                 label="Attach a file"
                 multiple
                 onFiles={(files) => {
@@ -962,30 +961,10 @@ export function HelpCenter() {
                       .map((file) => file.name),
                   );
                 }}
+                onRemove={(file) =>
+                  setAttachments((current) => current.filter((item) => item !== file))
+                }
               />
-              {attachments.length ? (
-                <div className="mt-2 space-y-2">
-                  {attachments.map((file) => (
-                    <div
-                      className="flex items-center gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-xs"
-                      key={file}
-                    >
-                      <Paperclip className="size-3.5 shrink-0 text-muted-foreground" />
-                      <span className="min-w-0 flex-1 truncate">{file}</span>
-                      <button
-                        aria-label={`Remove ${file}`}
-                        className="text-muted-foreground hover:text-foreground"
-                        onClick={() =>
-                          setAttachments((current) => current.filter((item) => item !== file))
-                        }
-                        type="button"
-                      >
-                        <X className="size-3.5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
             </AppField>
             <div className="rounded-md bg-muted/55 px-3 py-2.5 text-xs leading-5 text-muted-foreground">
               We’ll automatically include your current page, account plan and app version so you
@@ -1003,7 +982,7 @@ export function HelpCenter() {
         }
         footer={
           selectedArticle ? (
-            <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <div className="flex w-full flex-col-reverse gap-2 [&>button]:w-full sm:flex-row sm:justify-end sm:[&>button]:w-auto">
               <AppButton onClick={() => setSelectedArticle(null)} tone="secondary">
                 Close
               </AppButton>
