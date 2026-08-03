@@ -112,14 +112,14 @@ function ThemeSelector({ onChange, theme }: { onChange: (theme: Theme) => void; 
   return (
     <div
       aria-label="Theme preference"
-      className="flex w-fit self-start items-center rounded border border-border bg-secondary p-0.5 sm:self-auto"
+      className="flex w-fit self-start items-center rounded-md border border-border bg-secondary p-0.5 sm:self-auto"
       role="group"
     >
       {themeOptions.map(({ icon: Icon, value }) => (
         <AppButton
           aria-pressed={theme === value}
           className={cn(
-            'h-6! gap-1 px-1.5! text-[11px] rounded-sm',
+            'h-6! gap-1 px-1.5! text-[11px] rounded-md',
             theme === value &&
               'bg-primary! text-primary-foreground! shadow-xs hover:bg-primary-hover! hover:text-primary-foreground!',
           )}

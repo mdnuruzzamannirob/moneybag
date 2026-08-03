@@ -319,7 +319,7 @@ export function TrialCta({
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h2>
           <p className="mx-auto mt-3 max-w-xl text-white/85">{description}</p>
           <ButtonLink
-            className="ui-light-control mt-7 border-0! hover:brightness-95"
+            className="mt-7 border-0! bg-white! text-primary! shadow-[0_4px_10px_-6px_rgba(15,23,42,0.35)] transition-[transform,box-shadow,background-color,color] hover:bg-white! hover:text-primary! hover:shadow-lg"
             href="/register"
             tone="secondary"
           >
